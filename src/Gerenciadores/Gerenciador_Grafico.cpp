@@ -4,8 +4,7 @@ Gerenciador_Grafico::Gerenciador_Grafico() :
     janela(sf::VideoMode(800, 600), "Janela SFML") {
 }
 
-Gerenciador_Grafico::~Gerenciador_Grafico() {
-}
+Gerenciador_Grafico::~Gerenciador_Grafico() {}
 
 bool Gerenciador_Grafico::estaAberto() {
     return janela.isOpen();
@@ -21,7 +20,7 @@ void Gerenciador_Grafico::processarEventos() {
 }
 
 void Gerenciador_Grafico::renderizar() {
-    janela.clear(sf::Color::Black);
+    janela.clear(sf::Color::White);
 }
 
 void Gerenciador_Grafico::mostrar() {
