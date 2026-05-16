@@ -1,6 +1,10 @@
 #include "../include/Jogo.h"
 
-Jogo::Jogo() : GG() {}
+#include "../include/Ente.h"
+
+Jogo::Jogo() : GG() {
+    Ente::setGG(&GG);
+}
 
 Jogo::~Jogo() {}
 
