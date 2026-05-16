@@ -1,11 +1,11 @@
 #ifndef JOGO_H
 #define JOGO_H
 
-#include "./Gerenciadores/Gerenciador_Grafico.h"
+#include "Gerenciadores/Gerenciador_Grafico.h"
 
 class Jogo {
 private:
-    Gerenciador_Grafico GG;
+    Gerenciadores::Gerenciador_Grafico GG;
 
 public:
     Jogo();

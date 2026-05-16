@@ -1,6 +1,5 @@
-#include "../include/Jogo.h"
-
-#include "../include/Ente.h"
+#include "Jogo.h"
+#include "Ente.h"
 
 Jogo::Jogo() : GG() {
     Ente::setGG(&GG);

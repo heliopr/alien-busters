@@ -1,6 +1,6 @@
-#include "../include/Ente.h"
+#include "Ente.h"
 
-Gerenciador_Grafico *Ente::pGG = NULL;
+Gerenciadores::Gerenciador_Grafico *Ente::pGG = NULL;
 
 Ente::Ente() {}
 
@@ -10,6 +10,6 @@ Ente::~Ente() {}
 void Ente::desenhar() {
 }
 
-void Ente::setGG(Gerenciador_Grafico *pG) {
+void Ente::setGG(Gerenciadores::Gerenciador_Grafico *pG) {
     pGG = pG;
 }
