@@ -1,8 +1,6 @@
 #include "../include/Jogo.h"
 
-Jogo::Jogo() : GG() {
-    executar();
-}
+Jogo::Jogo() : GG() {}
 
 Jogo::~Jogo() {}
 
