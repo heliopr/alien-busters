@@ -1,5 +1,13 @@
-#include <iostream>
+#include "../include/Gerenciadores/Gerenciador_Grafico.h"
 
 int main() {
-    std::cout << "Ola, muno!" << std::endl;
+    Gerenciador_Grafico gc;
+
+    while (gc.estaAberto()) {
+        gc.processarEventos();
+        gc.renderizar();
+        gc.mostrar();
+    }
+
+    return 0;
 }
