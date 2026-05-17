@@ -24,4 +24,8 @@ clean:
 run: all
 	./$(TARGET)
 
-.PHONY: all clean run
+cleanrun:
+	$(MAKE) clean
+	$(MAKE) run
+
+.PHONY: all clean run cleanrun
