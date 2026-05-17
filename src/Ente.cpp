@@ -1,6 +1,6 @@
 #include "Ente.h"
 
-Gerenciadores::Gerenciador_Grafico *Ente::pGG = NULL;
+Gerenciadores::Gerenciador_Grafico *Ente::pGG = 0;
 
 Ente::Ente() {}
 
