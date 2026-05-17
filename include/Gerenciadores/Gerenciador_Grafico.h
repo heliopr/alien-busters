@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Ente.h"
+
 namespace Gerenciadores {
     class Gerenciador_Grafico {
     private:
@@ -12,6 +14,7 @@ namespace Gerenciadores {
         Gerenciador_Grafico();
         ~Gerenciador_Grafico();
 
+        void desenharEnte(Ente *pE);
         bool estaAberto();
         void processarEventos();
         void renderizar();

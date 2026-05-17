@@ -7,7 +7,7 @@ class Ente {
 protected:
     int id;
     static Gerenciadores::Gerenciador_Grafico *pGG;
-    // TODO: adicionar pFig
+    sf::RectangleShape *pFig;
 
 public:
     Ente();
@@ -15,6 +15,8 @@ public:
 
     virtual void executar() = 0;
     void desenhar();
+
+    sf::RectangleShape *getFig() const;
 
     void static setGG(Gerenciadores::Gerenciador_Grafico *pG);
 };

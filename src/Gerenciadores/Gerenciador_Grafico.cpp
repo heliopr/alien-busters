@@ -7,6 +7,10 @@ namespace Gerenciadores {
 
     Gerenciador_Grafico::~Gerenciador_Grafico() {}
 
+    void Gerenciador_Grafico::desenharEnte(Ente *pE) {
+        janela.draw(*pE->getFig());
+    }
+
     bool Gerenciador_Grafico::estaAberto() {
         return janela.isOpen();
     }
