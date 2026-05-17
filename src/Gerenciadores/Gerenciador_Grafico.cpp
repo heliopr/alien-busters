@@ -1,4 +1,5 @@
 #include "Gerenciadores/Gerenciador_Grafico.h"
+#include "Ente.h"
 
 namespace Gerenciadores {
     Gerenciador_Grafico::Gerenciador_Grafico() :
@@ -8,7 +9,12 @@ namespace Gerenciadores {
     Gerenciador_Grafico::~Gerenciador_Grafico() {}
 
     void Gerenciador_Grafico::desenharEnte(Ente *pE) {
-        janela.draw(*pE->getFig());
+        if (pE) {
+            sf::RectangleShape *fig = pE->getFigura();
+            if (fig) {
+                janela.draw(*fig);
+            }
+        }
     }
 
     bool Gerenciador_Grafico::estaAberto() {

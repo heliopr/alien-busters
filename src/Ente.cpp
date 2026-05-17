@@ -1,3 +1,4 @@
+#include "Gerenciadores/Gerenciador_Grafico.h"
 #include "Ente.h"
 
 Gerenciadores::Gerenciador_Grafico *Ente::pGG = 0;
@@ -6,14 +7,13 @@ Ente::Ente() {}
 
 Ente::~Ente() {}
 
-// TODO: implementar desenhar (pFig)
 void Ente::desenhar() {
     if (pGG) {
         pGG->desenharEnte(this);
     }
 }
 
-sf::RectangleShape *Ente::getFig() const {
+sf::RectangleShape *Ente::getFigura() const {
     return pFig;
 }
 

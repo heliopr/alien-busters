@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Ente.h"
+class Ente;
 
 namespace Gerenciadores {
     class Gerenciador_Grafico {

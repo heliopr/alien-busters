@@ -1,7 +1,9 @@
 #ifndef ENTE_H
 #define ENTE_H
 
-#include "Gerenciadores/Gerenciador_Grafico.h"
+#include <SFML/Graphics.hpp>
+
+namespace Gerenciadores { class Gerenciador_Grafico; }
 
 class Ente {
 protected:
@@ -16,7 +18,7 @@ public:
     virtual void executar() = 0;
     void desenhar();
 
-    sf::RectangleShape *getFig() const;
+    sf::RectangleShape *getFigura() const;
 
     void static setGG(Gerenciadores::Gerenciador_Grafico *pG);
 };
