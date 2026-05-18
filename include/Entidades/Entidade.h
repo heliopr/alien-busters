@@ -4,24 +4,26 @@
 #include "Ente.h"
 
 namespace Entidades {
-    class Entidade : public Ente {
-    protected:
-        int x;
-        int y;
 
-        void salvarDataBuffer();
-    
-    public:
-        Entidade();
-        virtual ~Entidade();
+class Entidade : public Ente {
+protected:
+    int x;
+    int y;
 
-    public:
-        virtual void executar() = 0;
-        virtual void salvar() = 0;
+    void salvarDataBuffer();
 
-        int getX() const;
-        int getY() const;
-    };
+public:
+    Entidade();
+    virtual ~Entidade();
+
+public:
+    virtual void executar() = 0;
+    virtual void salvar() = 0;
+
+    int getX() const;
+    int getY() const;
+};
+
 }
 
 #endif

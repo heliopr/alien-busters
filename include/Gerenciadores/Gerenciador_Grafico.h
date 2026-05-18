@@ -6,20 +6,22 @@
 class Ente;
 
 namespace Gerenciadores {
-    class Gerenciador_Grafico {
-    private:
-        sf::RenderWindow janela;
 
-    public:
-        Gerenciador_Grafico();
-        ~Gerenciador_Grafico();
+class Gerenciador_Grafico {
+private:
+    sf::RenderWindow janela;
 
-        void desenharEnte(Ente *pE);
-        bool estaAberto();
-        void processarEventos();
-        void renderizar();
-        void mostrar();
-    };
+public:
+    Gerenciador_Grafico();
+    ~Gerenciador_Grafico();
+
+    void desenharEnte(Ente *pE);
+    bool estaAberto();
+    void processarEventos();
+    void renderizar();
+    void mostrar();
+};
+
 }
 
 #endif

@@ -1,77 +1,85 @@
 #ifndef LISTA_H
 #define LISTA_H
 
-#include "Elemento.h"
-
 namespace Listas {
-    template <typename TL>
-    class Lista {
+
+template <typename TL>
+class Lista {
+public:
+    class Elemento {
     private:
-        Elemento<TL> *pPrimeiro;
-        Elemento<TL> *pUltimo;
+        Elemento *pProx;
+        TL *pInfo;
+
     public:
-        Lista();
-        ~Lista();
+        Elemento() : pProx(0), pInfo(0) {}
 
-        void incluir(TL* p);
-        void limpar();
+        ~Elemento() {
+            pProx = 0;
+            pInfo = 0;
+        }
 
-        Elemento<TL>* getPrimeiro() const;
-        Elemento<TL>* getUltimo() const;
-        bool vazia() const;
+        void incluir(TL *p) { pInfo = p; }
+        void setProx(Elemento *pE) { pProx = pE; }
+        Elemento *getProximo() const { return pProx; }
+        TL *getInfo() const { return pInfo; }
     };
 
-    template <typename TL>
-    Lista<TL>::Lista() : pPrimeiro(0), pUltimo(0) {}
+private:
+    Elemento *pPrimeiro;
+    Elemento *pUltimo;
 
-    template <typename TL>
-    Lista<TL>::~Lista() {
-        limpar();
+public:
+    Lista();
+    ~Lista();
+
+    void incluir(TL *p);
+    void limpar();
+    bool vazia() const;
+
+    Elemento *getPrimeiro() const { return pPrimeiro; }
+    Elemento *getUltimo() const { return pUltimo; }
+};
+
+template <typename TL>
+Lista<TL>::Lista() : pPrimeiro(0), pUltimo(0) {}
+
+template <typename TL>
+Lista<TL>::~Lista() {
+    limpar();
+}
+
+template <typename TL>
+void Lista<TL>::incluir(TL *p) {
+    Elemento *novoElem = new Elemento();
+    novoElem->incluir(p);
+
+    if (pPrimeiro == 0) {
+        pPrimeiro = novoElem;
+        pUltimo = novoElem;
+    } else {
+        pUltimo->setProx(novoElem);
+        pUltimo = novoElem;
     }
+}
 
-    template <typename TL>
-    void Lista<TL>::incluir(TL* p) {
-        Elemento<TL>* novoElem = new Elemento<TL>();
-        novoElem->incluir(p);
-
-        if (pPrimeiro == 0) {
-            pPrimeiro = novoElem;
-            pUltimo   = novoElem;
-        }
-        else {
-            pUltimo->setProx(novoElem);
-            pUltimo = novoElem;
-        }
+template <typename TL>
+void Lista<TL>::limpar() {
+    Elemento *atual = pPrimeiro;
+    while (atual != 0) {
+        Elemento *proximo = atual->getProximo();
+        delete atual;
+        atual = proximo;
     }
+    pPrimeiro = 0;
+    pUltimo = 0;
+}
 
-    template <typename TL>
-    void Lista<TL>::limpar() {
-        Elemento<TL>* atual = pPrimeiro;
+template <typename TL>
+bool Lista<TL>::vazia() const {
+    return pPrimeiro == 0;
+}
 
-        while (atual != 0) {
-            Elemento<TL>* proximo = atual->getProximo();
-            delete atual;
-            atual = proximo;
-        }
-
-        pPrimeiro = 0;
-        pUltimo   = 0;
-    }
-
-    template <typename TL>
-    Elemento<TL>* Lista<TL>::getPrimeiro() const {
-        return pPrimeiro;
-    }
-
-    template <typename TL>
-    Elemento<TL>* Lista<TL>::getUltimo() const {
-        return pUltimo;
-    }
-
-    template <typename TL>
-    bool Lista<TL>::vazia() const {
-        return pPrimeiro == 0;
-    }
 }
 
 #endif
