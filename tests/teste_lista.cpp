@@ -65,10 +65,50 @@ void teste_incluir_varios() {
     assert(cont == num);
 
     lista.limpar();
-    
+
     delete[] v;
 
     std::cout << "OK teste_incluir_varios" << std::endl;
+}
+
+void teste_ordem_elementos() {
+    Lista<int> lista;
+    int valores[3] = {10, 20, 30};
+
+    lista.incluir(&valores[0]);
+    lista.incluir(&valores[1]);
+    lista.incluir(&valores[2]);
+
+    Lista<int>::Elemento *atual = lista.getPrimeiro();
+
+    assert(atual != 0);
+    assert(*(atual->getInfo()) == 10);
+    
+    atual = atual->getProximo();
+    assert(atual != 0);
+    assert(*(atual->getInfo()) == 20);
+    
+    atual = atual->getProximo();
+    assert(atual != 0);
+    assert(*(atual->getInfo()) == 30);
+    
+    assert(atual == lista.getUltimo());
+    
+    assert(atual->getProximo() == 0);
+
+    std::cout << "OK teste_ordem_elementos" << std::endl;
+}
+
+void teste_limpar_lista_vazia() {
+    Lista<int> lista;
+    
+    lista.limpar();
+    
+    assert(lista.vazia() == true);
+    assert(lista.getPrimeiro() == 0);
+    assert(lista.getUltimo() == 0);
+
+    std::cout << "OK teste_limpar_lista_vazia" << std::endl;
 }
 
 int main() {
@@ -77,6 +117,9 @@ int main() {
     teste_incluir();
     teste_limpar();
     teste_incluir_varios();
+
+    teste_limpar_lista_vazia();
+    teste_ordem_elementos();
 
     std::cout << "PASSOU teste_lista.cpp" << std::endl;
     return 0;
