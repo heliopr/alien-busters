@@ -9,6 +9,11 @@
 - make
 
 ## Linux
+Verifique se o g++ está instalado.
+```bash
+g++ --version
+```
+
 Instalar o SFML no linux, em uma distribuição debian:
 ```bash
 sudo apt-get update
@@ -26,6 +31,11 @@ pacman -Syu
 pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-sfml
 ```
 - Adicione o gcc e o SFML ao path do Windows `C:\msys64\ucrt64\bin`
+
+Verifique se o g++ está instalado.
+```bash
+g++ --version
+```
 
 ## Como rodar
 ```bash
