@@ -15,7 +15,7 @@ sudo apt-get update
 sudo apt-get install build-essential libsfml-dev
 ```
 
-Verifique se o g++ está instalado.
+Verifique se o g++ está instalado
 ```bash
 g++ --version
 ```
@@ -30,7 +30,7 @@ pacman -Syu
 ```
 - Instale o g++, o make e o SFML:
 ```bash
-pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-sfml
+pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-sfml mingw-w64-ucrt-x86_64-make
 ```
 - Adicione o gcc e o SFML ao path do Windows: `C:\msys64\ucrt64\bin`
 
