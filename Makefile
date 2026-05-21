@@ -1,73 +1,68 @@
-TARGET_NAME = jogo
-
 ifeq ($(OS),Windows_NT)
-    TARGET = bin/$(TARGET_NAME).exe
+    TARGET = bin/jogo.exe
     TEST_EXT = .exe
-    CLEAN_CMD = if exist "build" rmdir /s /q "build" & if exist "bin" rmdir /s /q "bin"
     
-    OS_INCLUDES = -I./SFML/include
-    OS_LIB_PATHS = -L./SFML/lib
+    INCLUDES = -Iinclude -IC:\SFML-2.5.1\include
+    LIBS = -LC:\SFML-2.5.1\lib -lsfml-graphics -lsfml-window -lsfml-system
     
-    define make_dir
-		@if not exist "$(subst /,\,$1)" mkdir "$(subst /,\,$1)"
-    endef
+    MKDIR_BUILD = if not exist "$(subst /,\,$(dir $@))" mkdir "$(subst /,\,$(dir $@))"
+    MKDIR_BIN = if not exist "bin" mkdir "bin"
+    MKDIR_TESTS = if not exist "bin\tests" mkdir "bin\tests"
+    CLEAN_CMD = if exist build rmdir /S /Q build & if exist bin rmdir /S /Q bin
     
-    define setup_env
-		@if exist "SFML\bin\*.dll" copy /Y "SFML\bin\*.dll" "bin\" >nul
-    endef
+    RUN_TARGET = $(subst /,\,$(TARGET))
+    RUN_TEST = $(subst /,\,$@)
 else
-    TARGET = bin/$(TARGET_NAME)
+    TARGET = bin/jogo
     TEST_EXT = .out
+    
+    INCLUDES = -Iinclude
+    LIBS = -lsfml-graphics -lsfml-window -lsfml-system
+    
+    MKDIR_BUILD = mkdir -p $(dir $@)
+    MKDIR_BIN = mkdir -p bin
+    MKDIR_TESTS = mkdir -p bin/tests
     CLEAN_CMD = rm -rf build bin
     
-    OS_INCLUDES = 
-    OS_LIB_PATHS = 
-    
-    define make_dir
-		@mkdir -p "$1"
-    endef
-    
-    define setup_env
-    endef
+    RUN_TARGET = ./$(TARGET)
+    RUN_TEST = ./$@
 endif
 
 CXX = g++
-CXXFLAGS = -std=c++03 -Wall -Wextra -Iinclude $(OS_INCLUDES)
-LDFLAGS = $(OS_LIB_PATHS) -lsfml-graphics -lsfml-window -lsfml-system
+CXXFLAGS = -std=c++03 -Wall -Wextra $(INCLUDES)
+LDFLAGS = $(LIBS)
 
 SOURCES = $(wildcard src/*.cpp) $(wildcard src/*/*.cpp)
 OBJECTS = $(patsubst src/%.cpp, build/%.o, $(SOURCES))
 OBJECTS_NO_MAIN = $(filter-out build/main.o, $(OBJECTS))
 
 TEST_SOURCES = $(wildcard tests/*.cpp)
-TEST_BINS = $(patsubst tests/%.cpp, bin/tests/%$(TEST_EXT), $(TEST_SOURCES))
+TEST_EXECS = $(patsubst tests/%.cpp, bin/tests/%$(TEST_EXT), $(TEST_SOURCES))
 
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
-	$(call make_dir,bin)
+	@$(MKDIR_BIN)
 	$(CXX) $(OBJECTS) -o $(TARGET) $(LDFLAGS)
-	$(call setup_env)
 
 build/%.o: src/%.cpp
-	$(call make_dir,$(dir $@))
+	@$(MKDIR_BUILD)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-test: $(TEST_BINS)
+test: $(TEST_EXECS)
 	@echo PASSOU Todos os testes passaram
 
 bin/tests/%$(TEST_EXT): tests/%.cpp $(OBJECTS_NO_MAIN)
-	$(call make_dir,bin/tests)
+	@$(MKDIR_TESTS)
 	$(CXX) $(CXXFLAGS) $< $(OBJECTS_NO_MAIN) -o $@ $(LDFLAGS)
-	$(call setup_env)
-	@echo TESTANDO $<
-	@$@
+	@echo TESTANDO $(notdir $<)
+	@$(RUN_TEST)
 
 clean:
 	@$(CLEAN_CMD)
 
 run: all
-	@$(TARGET)
+	@$(RUN_TARGET)
 
 cleanrun: clean run
 

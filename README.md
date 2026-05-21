@@ -4,59 +4,53 @@
 - [Modelo Especificação para Trabalho](https://pessoal.dainf.ct.utfpr.edu.br/jeansimao/Fundamentos2/TopicosTrab/Modelo_Especificacao_para_Trabalho_TecnicasProgramacao.pdf)
 
 # Dependências
-- SFML
-- g++
+- SFML 2.5.1
+- GCC 7.3.0
 - make
 
-## Linux
-Instale as principais dependências do projeto, utilizando o apt:
+## Linux (RECOMENDADO)
+- Instale as principais dependências do projeto, utilizando o apt:
 ```bash
 sudo apt-get update
 sudo apt-get install build-essential libsfml-dev
 ```
 
-Verifique se o g++ está instalado
+- Verifique se o g++ está instalado
 ```bash
 g++ --version
 ```
 
 ## Windows
-- Instale o [MSYS2](https://www.msys2.org/)
-- Mantenha o diretório de instalação padrão `C:\msys64`
-- Abra o terminal do MSYS2
-- Atualize os pacotes do sistema
-```bash
-pacman -Syu
-```
-- Instale o g++, o make e o SFML:
-```bash
-pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-sfml mingw-w64-ucrt-x86_64-make
-```
-- Adicione o gcc e o SFML ao path do Windows: `C:\msys64\ucrt64\bin`
+- Baixe o [SFML 2.5.1](https://www.sfml-dev.org/download/sfml/2.5.1/)
+- Extraia a pasta para `C:\` para que o diretório seja `C:\SFML-2.5.1`. Esse diretório deverá conter uma pasta chamada `bin`
+- Na mesma página do SFML 2.5.1, baixe o **MinGW Build 7.3.0**
+- Extraia para `C:\` para que o diretório seja `C:\mingw64`. Esse diretório deverá conter uma pasta chamada `bin`
+- Adicione ao PATH:
+    - C:\mingw64\bin
+    - C:\SFML-2.5.1\bin
 
-Verifique se o g++ está instalado em um novo terminal do Windows
+- Abra um terminal no windows e verifique se o g++ foi instalado:
 ```bash
 g++ --version
 ```
+Se tudo foi feito corretamente, deve aparecer algo similar a isso:
+```
+g++ (x86_64-posix-seh-rev0, Built by MinGW-W64 project) 7.3.0
+Copyright (C) 2017 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+```
 
 ## Como rodar
-```bash
-make run
-```
+Atalho:
+- Linux: `make run`
+- Windows: `mingw32-make run`
 
-ou
-
+Passo a passo:
 1. Compile o projeto
-```bash
-make
-```
+- Linux: `make`
+- Windows: `mingw32-make`
 
 2. Execute o binário
-- No Linux:
-```bash
-./bin/jogo
-```
-- No windows:
-```base
-.\bin\jogo.exe
-```
+- Linux: `./bin/jogo`
+- Windows: `.\bin\jogo.exe`
