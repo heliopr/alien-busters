@@ -5,10 +5,11 @@
 
 namespace Gerenciadores { class Gerenciador_Grafico; }
 
+// Ente.h
 class Ente {
 protected:
     int id;
-    static Gerenciadores::Gerenciador_Grafico *pGG;
+    static Gerenciadores::Gerenciador_Grafico *pGrafico; 
     sf::RectangleShape *pFig;
 
 public:

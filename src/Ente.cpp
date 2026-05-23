@@ -1,7 +1,7 @@
 #include "Gerenciadores/Gerenciador_Grafico.h"
 #include "Ente.h"
 
-Gerenciadores::Gerenciador_Grafico *Ente::pGG = 0;
+Gerenciadores::Gerenciador_Grafico *Ente::pGrafico = 0;
 
 Ente::Ente() : id(0), pFig(0) {}
 
@@ -13,8 +13,8 @@ Ente::~Ente() {
 }
 
 void Ente::desenhar() {
-    if (pGG) {
-        pGG->desenharEnte(this);
+    if (pGrafico) {
+        pGrafico->desenharEnte(this);
     }
 }
 
@@ -23,5 +23,5 @@ sf::RectangleShape *Ente::getFigura() const {
 }
 
 void Ente::setGG(Gerenciadores::Gerenciador_Grafico *pG) {
-    pGG = pG;
+    pGrafico = pG;
 }
