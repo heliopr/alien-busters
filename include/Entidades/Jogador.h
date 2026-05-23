@@ -10,7 +10,7 @@ public:
     Jogador();
     ~Jogador();
 
-    void executar();
+    void executar(float dt);
     void salvar();
 };
 

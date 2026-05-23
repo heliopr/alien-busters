@@ -19,26 +19,18 @@ Jogador::~Jogador() {
     }
 }
 
-void Jogador::executar() {
+void Jogador::executar(float dt) {
     int velocidade = 5;
     int dx = 0, dy = 0;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-        dx -= 1;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-        dx += 1;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-        dy -= 1;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        dy += 1;
-    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) dx -= 1;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) dx += 1;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) dy -= 1;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) dy += 1;
 
     double d = std::sqrt(dx*dx + dy*dy);
     if (d > 0) {
-        x += velocidade * (dx/d);
-        y += velocidade * (dy/d);
+        x += (velocidade * (dx/d)) * dt;
+        y += (velocidade * (dy/d)) * dt;
     }
 
     if (pFig) {

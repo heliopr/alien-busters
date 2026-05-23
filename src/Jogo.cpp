@@ -15,10 +15,17 @@ Jogo::~Jogo() {
 }
 
 void Jogo::executar() {
+    sf::Clock clock;
+
     while (GG.estaAberto()) {
+        float dt = clock.restart().asSeconds();
+
         GG.processarEventos();
+
         GG.renderizar();
-        lista_entidades.percorrer();
+
+        lista_entidades.percorrer(dt);
+        
         GG.mostrar();
     }
 }

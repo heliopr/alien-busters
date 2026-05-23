@@ -15,7 +15,7 @@ public:
     Ente();
     virtual ~Ente();
 
-    virtual void executar() = 0;
+    virtual void executar(float dt) = 0;
     void desenhar();
 
     sf::RectangleShape *getFigura() const;
