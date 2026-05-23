@@ -3,9 +3,14 @@
 
 Gerenciadores::Gerenciador_Grafico *Ente::pGG = 0;
 
-Ente::Ente() {}
+Ente::Ente() : id(0), pFig(0) {}
 
-Ente::~Ente() {}
+Ente::~Ente() {
+    if (pFig) {
+        delete pFig;
+        pFig = 0;
+    }
+}
 
 void Ente::desenhar() {
     if (pGG) {

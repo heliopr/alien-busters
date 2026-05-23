@@ -7,8 +7,9 @@ namespace Entidades {
 
 class Entidade : public Ente {
 protected:
-    int x;
-    int y;
+    float x;
+    float y;
+    // TODO: buffer
 
     void salvarDataBuffer();
 
@@ -20,8 +21,8 @@ public:
     virtual void executar(float dt) = 0;
     virtual void salvar() = 0;
 
-    int getX() const;
-    int getY() const;
+    float getX() const;
+    float getY() const;
 };
 
 }
