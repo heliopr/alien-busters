@@ -5,6 +5,7 @@ namespace Gerenciadores {
 
 Gerenciador_Grafico::Gerenciador_Grafico() :
     janela(sf::VideoMode(800, 600), "Janela SFML") {
+    janela.setFramerateLimit(60);
 }
 
 Gerenciador_Grafico::~Gerenciador_Grafico() {}
