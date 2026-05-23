@@ -33,8 +33,6 @@ void Jogador::executar(float dt) {
     if (pFig) {
         pFig->setPosition(sf::Vector2f(x, y));
     }
-
-    desenhar(); // TODO: REMOVER
 }
 
 void Jogador::salvar() { // TODO

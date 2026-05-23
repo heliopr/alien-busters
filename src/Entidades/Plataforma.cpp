@@ -13,15 +13,13 @@ Plataforma::Plataforma() : altura(0) {
 Plataforma::~Plataforma() {}
 
 void Plataforma::executar(float dt) {
-    desenhar();
 }
 
 void Plataforma::obstaculizar(Jogador *p) {
     // TODO
 }
 
-void Plataforma::salvar() {
-    
+void Plataforma::salvar() {   
 }
 
 }

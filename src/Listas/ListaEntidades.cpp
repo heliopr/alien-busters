@@ -19,6 +19,15 @@ void ListaEntidades::percorrer(float dt) {
         }
         atual = atual->getProximo();
     }
+
+    atual = LEs.getPrimeiro();
+    while (atual != 0) {
+        Entidades::Entidade *entidade = atual->getInfo();
+        if (entidade != 0) {
+            entidade->desenhar();
+        }
+        atual = atual->getProximo();
+    }
 }
 
 }
