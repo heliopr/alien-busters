@@ -15,6 +15,9 @@ public:
     Gerenciador_Grafico();
     ~Gerenciador_Grafico();
 
+    sf::Vector2u getTamanhoJanela() const { 
+        return janela.getSize();
+    }//descobrir o tam da janela fora da classe, pra plataforma e etc
     void desenharEnte(Ente *pE);
     bool estaAberto();
     void processarEventos();

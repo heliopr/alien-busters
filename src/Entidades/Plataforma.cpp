@@ -2,10 +2,13 @@
 
 namespace Entidades {
 
-Plataforma::Plataforma() : altura(0) {
-    x = 20;
-    y = 200;
-    pFig = new sf::RectangleShape(sf::Vector2f(300.f, 30.f));
+Plataforma::Plataforma() : altura(30.f) { //mudei para 30 pra entidade nao passar reto, e .f pq praticamento tudo do sfml é em float
+    
+    sf::Vector2u tamJanela = pGrafico->getTamanhoJanela();//otimizei para que se quisermos mudar dps o tamanho da janela, a plataforma se ajusta automaticamente
+    x = 0.f; 
+    y = static_cast<float>(tamJanela.y) - altura; 
+    pFig = new sf::RectangleShape(sf::Vector2f(static_cast<float>(tamJanela.x), altura)); 
+    
     pFig->setFillColor(sf::Color(50, 50, 50));
     pFig->setPosition(sf::Vector2f(x, y));
 }
