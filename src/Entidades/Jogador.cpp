@@ -5,37 +5,100 @@
 
 namespace Entidades {
 
-Jogador::Jogador() : Entidade() {
-    x = 100;
-    y = 100;
+
+Jogador::Jogador() : Entidade(), 
+    linhaAtual(1), frameAtual(0), tempoAnimacao(0.f), 
+    vy(0.f), noChao(true), agachado(false), 
+    olhandoEsquerda(false), olhandoDireita(true) 
+{
+    
+    x = 100.0f;
+    y = 400.0f; 
+
     pFig = new sf::RectangleShape(sf::Vector2f(50.f, 50.f));
-    pFig->setFillColor(sf::Color(100, 150, 255));
-    pFig->setPosition(sf::Vector2f(x, y));
+    if (pFig != NULL) {
+        pFig->setOrigin(25.f, 50.f); 
+        pFig->setPosition(sf::Vector2f(x, y));
+
+    if (!texturaJogador.loadFromFile("assets/textures/player.png")) {
+    std::cerr << "Erro ao carregar a textura do jogador!" << std::endl;
+    } else {
+        pFig->setTexture(&texturaJogador);
+        larguraFrame = texturaJogador.getSize().x / 8;
+        alturaFrame = texturaJogador.getSize().y / 3;
+        pFig->setTextureRect(sf::IntRect(0, alturaFrame, larguraFrame, alturaFrame));
+        }
+    }
 }
 
-Jogador::~Jogador() {}
+Jogador::~Jogador() {
+    
+}
 
 void Jogador::executar(float dt) {
-    float velocidade = 200;
-    float dx = 0, dy = 0;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) dx -= 1;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) dx += 1;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) dy -= 1;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) dy += 1;
+    float velocidadeX = 200.f;
+    float forcaPulo = -350.f;  
+    float gravidade = 980.f;   
+    float dx = 0;
 
-    float d = std::sqrt(dx*dx + dy*dy);
-    // Normaliza a velocidade do jogador
-    if (d > 0) {
-        x += (velocidade * (dx/d)) * dt;
-        y += (velocidade * (dy/d)) * dt;
+    if (!noChao) {
+        vy += gravidade * dt;
     }
 
-    if (pFig) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) { 
+        dx -= 1; 
+        olhandoEsquerda = true; 
+        olhandoDireita = false; 
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) { 
+        dx += 1; 
+        olhandoDireita = true; 
+        olhandoEsquerda = false; 
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && noChao) {
+        vy = forcaPulo;
+        noChao = false;
+    }
+
+    x += dx * velocidadeX * dt;
+    y += vy * dt;
+
+
+    if (y >= 550.f) { 
+        y = 550.f; 
+        vy = 0.f; 
+        noChao = true; 
+    }
+    if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));
+        pFig->setSize(sf::Vector2f(50.f, 50.f)); 
+        pFig->setOrigin(25.f, 50.f); 
+        
+        if (!noChao) {
+            linhaAtual = 1; 
+            frameAtual = 2; 
+        } else if (dx != 0) {
+            linhaAtual = 1; 
+            tempoAnimacao += dt;
+            if (tempoAnimacao >= 0.08f) {
+                tempoAnimacao = 0.f;
+                frameAtual = (frameAtual + 1) % 8; 
+            }
+        } else {
+            linhaAtual = 1; 
+            frameAtual = 0; 
+        }
+        if (olhandoEsquerda) {
+            pFig->setTextureRect(sf::IntRect((frameAtual + 1) * larguraFrame, linhaAtual * alturaFrame, -larguraFrame, alturaFrame));
+        } else if (olhandoDireita) {
+            pFig->setTextureRect(sf::IntRect(frameAtual * larguraFrame, linhaAtual * alturaFrame, larguraFrame, alturaFrame));
+        }
     }
 }
 
-void Jogador::salvar() { // TODO
+void Jogador::salvar() {
+
 }
 
 }

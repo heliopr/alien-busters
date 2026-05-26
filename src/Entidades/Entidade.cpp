@@ -2,10 +2,16 @@
 
 namespace Entidades {
 
-Entidade::Entidade() : Ente(), x(0.0f), y(0.0f) {}
+Entidade::Entidade() : Ente(), x(0.0f), y(0.0f) {
+    pFig = NULL; 
+}
 
-Entidade::~Entidade() {}
-
+Entidade::~Entidade() {
+    if (pFig) {
+        delete pFig;
+        pFig = NULL;
+    }
+}
 void Entidade::salvarDataBuffer() {
     
 }

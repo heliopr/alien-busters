@@ -10,6 +10,8 @@ namespace Gerenciadores {
 class Gerenciador_Grafico {
 private:
     sf::RenderWindow janela;
+    sf::Texture texturaFundo;
+    sf::Sprite spriteFundo;
 
 public:
     Gerenciador_Grafico();
