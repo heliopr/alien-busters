@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "Entidades/Jogador.h"
+#include "Gerenciadores/Gerenciador_Grafico.h"
 
 namespace Entidades {
 
@@ -15,9 +16,9 @@ Jogador::Jogador() : Entidade(),
     x = 100.0f;
     y = 400.0f; 
 
-    pFig = new sf::RectangleShape(sf::Vector2f(50.f, 50.f));
+    pFig = new sf::RectangleShape(sf::Vector2f(60.f, 100.f));
     if (pFig != NULL) {
-        pFig->setOrigin(25.f, 50.f); 
+        pFig->setOrigin(30.f, 100.f); 
         pFig->setPosition(sf::Vector2f(x, y));
 
     if (!texturaJogador.loadFromFile("assets/textures/player.png")) {
@@ -72,8 +73,8 @@ void Jogador::executar(float dt) {
     }
     if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));
-        pFig->setSize(sf::Vector2f(50.f, 50.f)); 
-        pFig->setOrigin(25.f, 50.f); 
+        pFig->setSize(sf::Vector2f(60.f, 100.f)); 
+        pFig->setOrigin(30.f, 100.f); 
         
         if (!noChao) {
             linhaAtual = 1; 
@@ -94,6 +95,10 @@ void Jogador::executar(float dt) {
         } else if (olhandoDireita) {
             pFig->setTextureRect(sf::IntRect(frameAtual * larguraFrame, linhaAtual * alturaFrame, larguraFrame, alturaFrame));
         }
+    }
+
+    if (pGrafico != NULL) {
+        pGrafico->atualizarCamera(sf::Vector2f(x, y));
     }
 }
 
