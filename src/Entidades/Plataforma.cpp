@@ -36,21 +36,21 @@ void Plataforma::obstaculizar(Jogador *p) {
             // colisão lateral
             if (boxPlayer.left + boxPlayer.width / 2.f < boxPlat.left + boxPlat.width / 2.f) {
                 // empurra para a esquerda
-                p->setX(boxPlat.left - 30.f); 
+                p->setX(boxPlat.left - 20.f); 
             } else {
                 // empurra para a direita
-                p->setX(boxPlat.left + boxPlat.width + 30.f); 
+                p->setX(boxPlat.left + boxPlat.width + 20.f); 
             }
         } else {
             // colisão vertical
             if (boxPlayer.top + boxPlayer.height / 2.f < boxPlat.top + boxPlat.height / 2.f) {
                 // pousando em cima da plataforma
-                p->setY(boxPlat.top + 15.f);
+                p->setY(boxPlat.top + 10.f);
                 p->setVy(0.f);
                 p->setNoChao(true);
             } else {
                 // batendo embaixo da plataforma
-                p->setY(boxPlat.top + boxPlat.height + 100.f);
+                p->setY(boxPlat.top + boxPlat.height + 75.f);
                 if (p->getVy() < 0.f) {
                     p->setVy(0.f);
                 }

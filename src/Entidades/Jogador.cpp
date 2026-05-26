@@ -36,7 +36,7 @@ Jogador::~Jogador() {
 
 void Jogador::executar(float dt) {
     float velocidadeX = 200.f;
-    float forcaPulo = -350.f;  
+    float forcaPulo = -450.f;  
     float gravidade = 980.f;   
     float dx = 0;
 
@@ -62,6 +62,12 @@ void Jogador::executar(float dt) {
 
     x += dx * velocidadeX * dt;
     y += vy * dt;
+
+    if (y > 800.f) {
+        x = 100.f;
+        y = 400.f;
+        vy = 0.f;
+    }
 
     if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));
@@ -100,7 +106,7 @@ void Jogador::salvar() {
 }
 
 sf::FloatRect Jogador::getLimitesColisao() const {
-    return sf::FloatRect(x - 30.f, y - 100.f, 60.f, 85.f);
+    return sf::FloatRect(x - 20.f, y - 75.f, 40.f, 65.f);
 }
 
 }
