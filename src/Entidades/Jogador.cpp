@@ -43,9 +43,7 @@ void Jogador::executar(float dt) {
     bool podPular = noChao;
     noChao = false;
 
-    if (!podPular) {
-        vy += gravidade * dt;
-    }
+    vy += gravidade * dt;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) { 
         dx -= 1; 
@@ -70,7 +68,7 @@ void Jogador::executar(float dt) {
         pFig->setSize(sf::Vector2f(60.f, 100.f)); 
         pFig->setOrigin(30.f, 100.f); 
         
-        bool noAr = !podPular || (vy != 0.f);
+        bool noAr = !podPular || (vy < 0.f);
         if (noAr) {
             linhaAtual = 1; 
             frameAtual = 2; 
