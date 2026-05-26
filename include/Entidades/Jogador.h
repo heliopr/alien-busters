@@ -19,6 +19,7 @@ private:
     bool agachado;          
     bool olhandoEsquerda;   
     bool olhandoDireita; 
+    bool puloPressionado;
 
 public:
     Jogador();

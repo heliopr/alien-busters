@@ -6,7 +6,6 @@ Jogo::Jogo() : GG(), lista_entidades(), pJogador(0) {
     Ente::setGG(&GG);
 
     pJogador = new Entidades::Jogador();
-    lista_entidades.incluir(pJogador);
 
     // CHAO
     lista_entidades.incluir(new Entidades::Plataforma(0.f, 700.f, 800.f, 50.f));
@@ -41,6 +40,8 @@ Jogo::Jogo() : GG(), lista_entidades(), pJogador(0) {
 
     // FIM
     lista_entidades.incluir(new Entidades::Plataforma(2600.f, 300.f, 400.f, 450.f));
+
+    lista_entidades.incluir(pJogador);
 }
 
 Jogo::~Jogo() {

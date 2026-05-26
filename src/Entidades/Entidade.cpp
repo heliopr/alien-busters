@@ -22,6 +22,9 @@ float Entidade::getX() const {
 
 void Entidade::setX(float novoX) {
     x = novoX;
+    if (pFig) {
+        pFig->setPosition(sf::Vector2f(x, y));
+    }
 }
 
 float Entidade::getY() const {
@@ -30,6 +33,9 @@ float Entidade::getY() const {
 
 void Entidade::setY(float novoY) {
     y = novoY;
+    if (pFig) {
+        pFig->setPosition(sf::Vector2f(x, y));
+    }
 }
 
 }

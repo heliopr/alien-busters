@@ -12,7 +12,7 @@ Plataforma::Plataforma(float x, float y, float largura, float altura)
 
     pFig = new sf::RectangleShape(sf::Vector2f(largura, altura));
     pFig->setPosition(sf::Vector2f(x, y));
-    pFig->setFillColor(sf::Color::Green);
+    pFig->setFillColor(sf::Color(145, 60, 25));
 }
 
 Plataforma::~Plataforma() {}
@@ -45,12 +45,12 @@ void Plataforma::obstaculizar(Jogador *p) {
             // colisão vertical
             if (boxPlayer.top + boxPlayer.height / 2.f < boxPlat.top + boxPlat.height / 2.f) {
                 // pousando em cima da plataforma
-                p->setY(boxPlat.top + 10.f);
+                p->setY(boxPlat.top + 25.f);
                 p->setVy(0.f);
                 p->setNoChao(true);
             } else {
                 // batendo embaixo da plataforma
-                p->setY(boxPlat.top + boxPlat.height + 75.f);
+                p->setY(boxPlat.top + boxPlat.height + 90.f);
                 if (p->getVy() < 0.f) {
                     p->setVy(0.f);
                 }

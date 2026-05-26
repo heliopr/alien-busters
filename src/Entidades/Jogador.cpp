@@ -9,7 +9,7 @@ namespace Entidades {
 Jogador::Jogador() : Entidade(), 
     linhaAtual(1), frameAtual(0), tempoAnimacao(0.f), 
     vy(0.f), noChao(false), agachado(false), 
-    olhandoEsquerda(false), olhandoDireita(true) 
+    olhandoEsquerda(false), olhandoDireita(true), puloPressionado(false) 
 {
     x = 100.0f;
     y = 400.0f; 
@@ -56,9 +56,11 @@ void Jogador::executar(float dt) {
         olhandoEsquerda = false; 
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && podPular) {
+    bool puloAtual = sf::Keyboard::isKeyPressed(sf::Keyboard::W);
+    if (puloAtual && !puloPressionado && podPular) {
         vy = forcaPulo;
     }
+    puloPressionado = puloAtual;
 
     x += dx * velocidadeX * dt;
     y += vy * dt;
@@ -106,7 +108,7 @@ void Jogador::salvar() {
 }
 
 sf::FloatRect Jogador::getLimitesColisao() const {
-    return sf::FloatRect(x - 20.f, y - 75.f, 40.f, 65.f);
+    return sf::FloatRect(x - 20.f, y - 90.f, 40.f, 65.f);
 }
 
 }
