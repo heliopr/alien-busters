@@ -36,7 +36,7 @@ Jogador::~Jogador() {
 
 void Jogador::executar(float dt) {
     float velocidadeX = 200.f;
-    float forcaPulo = -450.f;  
+    float forcaPulo = -500.f;  
     float gravidade = 980.f;   
     float dx = 0;
 
@@ -73,8 +73,8 @@ void Jogador::executar(float dt) {
 
     if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));
-        pFig->setSize(sf::Vector2f(60.f, 100.f)); 
-        pFig->setOrigin(30.f, 100.f); 
+        pFig->setSize(sf::Vector2f(60.f, 100.f));
+        pFig->setOrigin(30.f, 100.f);
         
         bool noAr = !podPular || (vy < 0.f);
         if (noAr) {
@@ -85,12 +85,13 @@ void Jogador::executar(float dt) {
             tempoAnimacao += dt;
             if (tempoAnimacao >= 0.08f) {
                 tempoAnimacao = 0.f;
-                frameAtual = (frameAtual + 1) % 8; 
+                frameAtual = (frameAtual + 1) % 8;
             }
         } else {
-            linhaAtual = 1; 
-            frameAtual = 0; 
+            linhaAtual = 1;
+            frameAtual = 0;
         }
+
         if (olhandoEsquerda) {
             pFig->setTextureRect(sf::IntRect((frameAtual + 1) * larguraFrame, linhaAtual * alturaFrame, -larguraFrame, alturaFrame));
         } else if (olhandoDireita) {

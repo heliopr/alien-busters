@@ -17,7 +17,7 @@ Plataforma::Plataforma(float x, float y, float largura, float altura)
 
 Plataforma::~Plataforma() {}
 
-void Plataforma::executar(float ) {
+void Plataforma::executar(float) {
 }
 
 sf::FloatRect Plataforma::getLimitesColisao() const {

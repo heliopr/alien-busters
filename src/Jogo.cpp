@@ -8,9 +8,9 @@ Jogo::Jogo() : GG(), lista_entidades(), pJogador(0) {
     pJogador = new Entidades::Jogador();
 
     // CHAO
-    lista_entidades.incluir(new Entidades::Plataforma(0.f, 700.f, 800.f, 50.f));
-    lista_entidades.incluir(new Entidades::Plataforma(920.f, 700.f, 780.f, 50.f));
-    lista_entidades.incluir(new Entidades::Plataforma(1850.f, 700.f, 800.f, 50.f));
+    lista_entidades.incluir(new Entidades::Plataforma(0.f, 700.f, 800.f, 100.f));
+    lista_entidades.incluir(new Entidades::Plataforma(920.f, 700.f, 780.f, 100.f));
+    lista_entidades.incluir(new Entidades::Plataforma(1850.f, 700.f, 800.f, 100.f));
 
     // SECAO 1
     lista_entidades.incluir(new Entidades::Plataforma(300.f, 600.f, 150.f, 30.f));
@@ -39,7 +39,7 @@ Jogo::Jogo() : GG(), lista_entidades(), pJogador(0) {
     lista_entidades.incluir(new Entidades::Plataforma(2400.f, 300.f, 120.f, 30.f));
 
     // FIM
-    lista_entidades.incluir(new Entidades::Plataforma(2600.f, 300.f, 400.f, 450.f));
+    lista_entidades.incluir(new Entidades::Plataforma(2600.f, 300.f, 400.f, 600.f));
 
     lista_entidades.incluir(pJogador);
 }
