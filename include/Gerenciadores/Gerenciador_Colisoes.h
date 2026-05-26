@@ -5,36 +5,29 @@
 #include <list>
 #include <set>
 
-// Forward declarations
-class Entidade;
-class Jogador;
-class Inimigo;
-class Obstaculo;
-class Projetil;
+namespace Entidades {
+    class Entidade;
+    class Jogador;
+    class Obstaculo;
+}
 
 namespace Gerenciadores {
 
 class Gerenciador_Colisoes {
 private:
-    std::vector<Inimigo*> Lis;
-    std::list<Obstaculo*> LOs;
-    std::set<Projetil*> LPs;
-    Jogador* pJog1;
+    std::list<Entidades::Obstaculo*> LOs;
+    Entidades::Jogador* pJog1;
 
-    const bool verificarColisao(Entidade* pe1, Entidade* pe2) const;
+    const bool verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2) const;
     void tratarColisoesJogsObstacs();
-    void tratarColisoesJogsInimigs();
-    void tratarColisoesJogsProjeteis();
 
 public:
     Gerenciador_Colisoes();
     ~Gerenciador_Colisoes();
 
-    void setJogador(Jogador* pJ);
+    void setJogador(Entidades::Jogador* pJ);
 
-    void incluirInimigo(Inimigo* pi);
-    void incluirObstaculo(Obstaculo* po);
-    void incluirProjetil(Projetil* pj);
+    void incluirObstaculo(Entidades::Obstaculo* po);
 
     void executar();
 };
