@@ -4,6 +4,8 @@
 #include "Listas/Lista.h"
 #include "Entidades/Entidade.h"
 
+namespace Entidades { class Jogador; }
+
 namespace Listas {
 
 class ListaEntidades {
@@ -15,7 +17,7 @@ public:
     ~ListaEntidades();
 
     void incluir(Entidades::Entidade *pE);
-    void percorrer(float dt);
+    void percorrer(float dt, Entidades::Jogador *pJogador);
 };
 
 }

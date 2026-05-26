@@ -25,6 +25,7 @@ public:
     float getY() const;
     void setX(float novoX);
     void setY(float novoY);
+    virtual sf::FloatRect getLimitesColisao() const = 0;
 };
 
 }

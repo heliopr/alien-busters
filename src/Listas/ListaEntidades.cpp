@@ -12,23 +12,12 @@ void ListaEntidades::incluir(Entidades::Entidade *pE) {
     LEs.incluir(pE);
 }
 
-void ListaEntidades::percorrer(float dt) {
+void ListaEntidades::percorrer(float dt, Entidades::Jogador *pJogador) {
     Lista<Entidades::Entidade>::Elemento *atual = LEs.getPrimeiro();
     while (atual != 0) {
         Entidades::Entidade *entidade = atual->getInfo();
         if (entidade != 0) {
             entidade->executar(dt);
-        }
-        atual = atual->getProximo();
-    }
-
-    Entidades::Jogador *pJogador = 0;
-    atual = LEs.getPrimeiro();
-    while (atual != 0) {
-        Entidades::Jogador *j = dynamic_cast<Entidades::Jogador*>(atual->getInfo());
-        if (j != 0) {
-            pJogador = j;
-            break;
         }
         atual = atual->getProximo();
     }

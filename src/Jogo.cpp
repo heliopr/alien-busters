@@ -29,7 +29,7 @@ void Jogo::executar() {
 
         GG.renderizar();
 
-        lista_entidades.percorrer(dt);
+        lista_entidades.percorrer(dt, pJogador);
         
         GG.mostrar();
     }

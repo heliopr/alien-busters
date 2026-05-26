@@ -31,6 +31,7 @@ public:
     void setVy(float v) { vy = v; }
     bool getNoChao() const { return noChao; }
     void setNoChao(bool b) { noChao = b; }
+    sf::FloatRect getLimitesColisao() const;
 };
 
 }

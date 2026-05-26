@@ -20,36 +20,37 @@ Plataforma::~Plataforma() {}
 void Plataforma::executar(float ) {
 }
 
+sf::FloatRect Plataforma::getLimitesColisao() const {
+    return sf::FloatRect(x, y, largura, altura);
+}
+
 void Plataforma::obstaculizar(Jogador *p) {
     if (!p) return;
 
-    float pEsq = p->getX() - 30.f;
-    float pDir = p->getX() + 30.f;
-    float pBaixo = p->getY() - 15.f;
-    float pTopo = p->getY() - 100.f;
+    sf::FloatRect boxPlat = getLimitesColisao();
+    sf::FloatRect boxPlayer = p->getLimitesColisao();
+    sf::FloatRect interseccao;
 
-    float platEsq = x;
-    float platDir = x + largura;
-    float platTopo = y;
-    float platBaixo = y + altura;
-
-    if (pEsq < platDir && pDir > platEsq && pTopo < platBaixo && pBaixo > platTopo) {
-        float overlapX = (p->getX() < x + largura / 2.f) ? (pDir - platEsq) : (platDir - pEsq);
-        float overlapY = (p->getY() - 57.5f < y + altura / 2.f) ? (pBaixo - platTopo) : (platBaixo - pTopo);
-
-        if (overlapX < overlapY) {
-            if (p->getX() < x + largura / 2.f) {
-                p->setX(platEsq - 30.f);
+    if (boxPlayer.intersects(boxPlat, interseccao)) {
+        if (interseccao.width < interseccao.height) {
+            // colisão lateral
+            if (boxPlayer.left + boxPlayer.width / 2.f < boxPlat.left + boxPlat.width / 2.f) {
+                // empurra para a esquerda
+                p->setX(boxPlat.left - 30.f); 
             } else {
-                p->setX(platDir + 30.f);
+                // empurra para a direita
+                p->setX(boxPlat.left + boxPlat.width + 30.f); 
             }
         } else {
-            if (p->getY() - 57.5f < y + altura / 2.f) {
-                p->setY(platTopo + 15.f);
+            // colisão vertical
+            if (boxPlayer.top + boxPlayer.height / 2.f < boxPlat.top + boxPlat.height / 2.f) {
+                // pousando em cima da plataforma
+                p->setY(boxPlat.top + 15.f);
                 p->setVy(0.f);
                 p->setNoChao(true);
             } else {
-                p->setY(platBaixo + 100.f);
+                // batendo embaixo da plataforma
+                p->setY(boxPlat.top + boxPlat.height + 100.f);
                 if (p->getVy() < 0.f) {
                     p->setVy(0.f);
                 }
