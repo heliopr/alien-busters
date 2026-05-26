@@ -20,8 +20,16 @@ float Entidade::getX() const {
     return x;
 }
 
+void Entidade::setX(float novoX) {
+    x = novoX;
+}
+
 float Entidade::getY() const {
     return y;
+}
+
+void Entidade::setY(float novoY) {
+    y = novoY;
 }
 
 }

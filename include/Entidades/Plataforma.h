@@ -7,10 +7,11 @@ namespace Entidades {
 
 class Plataforma : public Obstaculo {
 private:
-    int altura;
+    float altura;
+    float largura;
 
 public:
-    Plataforma();
+    Plataforma(float x, float y, float largura, float altura);
     ~Plataforma();
 
     void executar(float dt);

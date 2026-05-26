@@ -23,6 +23,8 @@ public:
 
     float getX() const;
     float getY() const;
+    void setX(float novoX);
+    void setY(float novoY);
 };
 
 }

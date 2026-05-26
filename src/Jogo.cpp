@@ -8,8 +8,8 @@ Jogo::Jogo() : GG(), lista_entidades(), pJogador(0) {
     pJogador = new Entidades::Jogador();
     lista_entidades.incluir(pJogador);
 
-    Entidades::Plataforma *plataforma = new Entidades::Plataforma();
-    lista_entidades.incluir(plataforma);
+    Entidades::Plataforma *chao = new Entidades::Plataforma(0.f, 700.f, 600.f, 50.f);
+    lista_entidades.incluir(chao);
 }
 
 Jogo::~Jogo() {
