@@ -15,7 +15,6 @@ public:
     ~Plataforma();
 
     void executar(float dt);
-    void obstaculizar(Jogador *p);
     void salvar();
     sf::FloatRect getLimitesColisao() const;
 };

@@ -1,7 +1,7 @@
 #ifndef CHAO_H
 #define CHAO_H
 
-#include "Entidades/Entidade.h"
+#include "Entidade.h"
 
 namespace Entidades {
 

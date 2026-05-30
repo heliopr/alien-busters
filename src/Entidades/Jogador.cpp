@@ -1,8 +1,8 @@
 #include <cmath>
 #include <iostream>
 
-#include "Entidades/Jogador.h"
-#include "Gerenciadores/Gerenciador_Grafico.h"
+#include "Jogador.h"
+#include "Gerenciador_Grafico.h"
 
 namespace Entidades {
 

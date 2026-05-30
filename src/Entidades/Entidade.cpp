@@ -1,4 +1,4 @@
-#include "Entidades/Entidade.h"
+#include "Entidade.h"
 
 namespace Entidades {
 
