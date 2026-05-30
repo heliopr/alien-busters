@@ -1,8 +1,8 @@
+#include "Entidades/Jogador.h"
+#include "Gerenciadores/Gerenciador_Grafico.h"
 #include <cmath>
 #include <iostream>
-
-#include "Jogador.h"
-#include "Gerenciador_Grafico.h"
+#include <cstddef>
 
 namespace Entidades {
 
@@ -19,19 +19,18 @@ Jogador::Jogador() : Entidade(),
         pFig->setOrigin(30.f, 100.f); 
         pFig->setPosition(sf::Vector2f(x, y));
 
-    if (!texturaJogador.loadFromFile("assets/textures/player.png")) {
-    std::cerr << "Erro ao carregar a textura do jogador!" << std::endl;
-    } else {
-        pFig->setTexture(&texturaJogador);
-        larguraFrame = texturaJogador.getSize().x / 8;
-        alturaFrame = texturaJogador.getSize().y / 3;
-        pFig->setTextureRect(sf::IntRect(0, alturaFrame, larguraFrame, alturaFrame));
+        if (!texturaJogador.loadFromFile("assets/textures/player.png")) {
+            std::cerr << "Erro ao carregar a textura do jogador!" << std::endl;
+        } else {
+            pFig->setTexture(&texturaJogador);
+            larguraFrame = texturaJogador.getSize().x / 8;
+            alturaFrame = texturaJogador.getSize().y / 3;
+            pFig->setTextureRect(sf::IntRect(0, alturaFrame, larguraFrame, alturaFrame));
         }
     }
 }
 
 Jogador::~Jogador() {
-    
 }
 
 void Jogador::executar(float dt) {
@@ -105,7 +104,6 @@ void Jogador::executar(float dt) {
 }
 
 void Jogador::salvar() {
-
 }
 
 sf::FloatRect Jogador::getLimitesColisao() const {
