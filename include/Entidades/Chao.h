@@ -7,12 +7,11 @@ namespace Entidades {
 
 class Chao : public Entidade {
 private:
-    float largura;
     float altura;
-    sf::Texture texturaChao;
+    float largura;
 
 public:
-    Chao(float posX, float posY, float larg, float alt);
+    Chao(float x, float y, float largura, float altura);
     ~Chao();
 
     void executar(float dt);
