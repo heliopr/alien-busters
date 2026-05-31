@@ -3,7 +3,7 @@
 #include "Entidades/Plataforma.h"
 #include "Entidades/Chao.h"
 
-Jogo::Jogo() : GG(), gerenciadorColisoes(), lista_entidades(), pJogador(0) {
+Jogo::Jogo() : GG(), gerenciadorColisoes(), lista_entidades(), pJogador(0), menu(this), noMenu(true) {
     Ente::setGG(&GG);
 
     pJogador = new Entidades::Jogador();
