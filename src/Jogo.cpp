@@ -60,16 +60,18 @@ Jogo::~Jogo() {
 void Jogo::executar() {
     sf::Clock clock;
 
-    while (GG.estaAberto()) {
+    // 1. Usa a função que você pontuou
+    while (GG.estaAberto()) { 
         float dt = clock.restart().asSeconds();
 
         sf::Event evento;
-        
-        while (GG.getJanela()->pollEvent(evento)) { 
+        // 2. Coleta os eventos de forma limpa, sem expor a janela
+        while (GG.coletarEventos(evento)) { 
             if (evento.type == sf::Event::Closed) {
-                GG.getJanela()->close();
+                GG.fecharJanela();
             }
 
+            // Lógica de navegação do Menu
             if (noMenu && evento.type == sf::Event::KeyPressed) {
                 if (evento.key.code == sf::Keyboard::Up || evento.key.code == sf::Keyboard::W) {
                     menu.subirOpcao();
@@ -79,16 +81,16 @@ void Jogo::executar() {
                 }
                 else if (evento.key.code == sf::Keyboard::Enter) {
                     if (menu.getOpcaoSelecionada() == 0) {
-                        noMenu = false; 
+                        noMenu = false; // Começa o jogo!
                     } 
                     else if (menu.getOpcaoSelecionada() == 1) {
-                        GG.getJanela()->close();
+                        GG.fecharJanela(); // Fecha o jogo pelo Menu!
                     }
                 }
             }
         }
 
-        GG.renderizar();
+        GG.renderizar(); 
 
         if (noMenu) {
             menu.desenhar();
@@ -98,6 +100,6 @@ void Jogo::executar() {
             gerenciadorColisoes.executar();
         }
 
-        GG.mostrar(); 
+        GG.mostrar();
     }
 }

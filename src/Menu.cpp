@@ -1,5 +1,6 @@
 #include "Menu.h"
 #include "Jogo.h"
+#include "Gerenciadores/Gerenciador_Grafico.h" 
 #include <iostream>
 
 Menu::Menu(Jogo* pJ) : 
@@ -7,7 +8,7 @@ Menu::Menu(Jogo* pJ) :
     pJog(pJ), 
     opcaoSelecionada(0) 
 {
-    if (!fonte.loadFromFile("PixelifySans-Regular.ttf")) {
+    if (!fonte.loadFromFile("assets/fonts/PixelifySans-Regular.ttf")) {
         std::cerr << "Erro ao carregar a fonte Pixelify Sans!" << std::endl;
     }
 
@@ -60,9 +61,9 @@ void Menu::executar(float /*dt*/) {
 }
 
 void Menu::desenhar() {
-    if (pGG != 0) {
+    if (pGrafico != 0) {
         for (size_t i = 0; i < opcoes.size(); ++i) {
-            pGG->getJanela()->draw(opcoes[i]);
+            pGrafico->desenharTexto(&opcoes[i]); 
         }
     }
 }

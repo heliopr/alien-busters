@@ -32,10 +32,23 @@ void Gerenciador_Grafico::desenharEnte(Ente *pE) {
     }
 }
 
+void Gerenciador_Grafico::desenharTexto(sf::Text *pT) {
+    if (pT != 0) {
+        janela.draw(*pT);
+    }
+}
+
 bool Gerenciador_Grafico::estaAberto() {
     return janela.isOpen();
 }
 
+bool Gerenciador_Grafico::coletarEventos(sf::Event &evento) {
+    return janela.pollEvent(evento);
+}
+
+void Gerenciador_Grafico::fecharJanela() {
+    janela.close();
+}
 void Gerenciador_Grafico::processarEventos() {
     sf::Event evento;
     while (janela.pollEvent(evento)) {

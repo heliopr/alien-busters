@@ -23,7 +23,10 @@ public:
         return janela.getSize();
     }
     void desenharEnte(Ente *pE);
+    void desenharTexto(sf::Text *pT);
     bool estaAberto();
+    bool coletarEventos(sf::Event &evento);
+    void fecharJanela();
     void processarEventos();
     void renderizar();
     void mostrar();
