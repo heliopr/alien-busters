@@ -64,13 +64,10 @@ void Jogo::executar() {
         float dt = clock.restart().asSeconds();
 
         GG.processarEventos();
-
+        GG.renderizar(); 
         lista_entidades.percorrer(dt, pJogador);
-
         gerenciadorColisoes.executar();
 
-        GG.renderizar();
-        
         GG.mostrar();
     }
 }
