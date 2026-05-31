@@ -7,8 +7,8 @@ Menu::Menu(Jogo* pJ) :
     pJog(pJ), 
     opcaoSelecionada(0) 
 {
-    if (!fonte.loadFromFile("arial.ttf")) {
-        std::cerr << "Erro ao carregar a fonte arial.ttf!" << std::endl;
+    if (!fonte.loadFromFile("PixelifySans-Regular.ttf")) {
+        std::cerr << "Erro ao carregar a fonte Pixelify Sans!" << std::endl;
     }
 
     std::string nomesOpcoes[] = { "JOGAR", "SAIR" };

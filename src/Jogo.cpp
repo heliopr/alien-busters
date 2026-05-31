@@ -63,11 +63,41 @@ void Jogo::executar() {
     while (GG.estaAberto()) {
         float dt = clock.restart().asSeconds();
 
-        GG.processarEventos();
-        GG.renderizar(); 
-        lista_entidades.percorrer(dt, pJogador);
-        gerenciadorColisoes.executar();
+        sf::Event evento;
+        
+        while (GG.getJanela()->pollEvent(evento)) { 
+            if (evento.type == sf::Event::Closed) {
+                GG.getJanela()->close();
+            }
 
-        GG.mostrar();
+            if (noMenu && evento.type == sf::Event::KeyPressed) {
+                if (evento.key.code == sf::Keyboard::Up || evento.key.code == sf::Keyboard::W) {
+                    menu.subirOpcao();
+                }
+                else if (evento.key.code == sf::Keyboard::Down || evento.key.code == sf::Keyboard::S) {
+                    menu.descerOpcao();
+                }
+                else if (evento.key.code == sf::Keyboard::Enter) {
+                    if (menu.getOpcaoSelecionada() == 0) {
+                        noMenu = false; 
+                    } 
+                    else if (menu.getOpcaoSelecionada() == 1) {
+                        GG.getJanela()->close();
+                    }
+                }
+            }
+        }
+
+        GG.renderizar();
+
+        if (noMenu) {
+            menu.desenhar();
+        } 
+        else {
+            lista_entidades.percorrer(dt, pJogador);
+            gerenciadorColisoes.executar();
+        }
+
+        GG.mostrar(); 
     }
 }
