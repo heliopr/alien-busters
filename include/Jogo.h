@@ -5,6 +5,7 @@
 #include "Gerenciadores/Gerenciador_Colisoes.h"
 #include "Listas/ListaEntidades.h"
 #include "Entidades/Jogador.h"
+#include "Menu.h"
 
 class Jogo {
 private:
@@ -12,6 +13,8 @@ private:
     Gerenciadores::Gerenciador_Colisoes gerenciadorColisoes;
     Listas::ListaEntidades lista_entidades;
     Entidades::Jogador* pJogador;
+    Menu menu; 
+    bool noMenu;
 
 public:
     Jogo();
