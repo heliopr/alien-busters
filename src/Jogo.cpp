@@ -50,7 +50,7 @@ void Jogo::executar() {
             }
         }
 
-        GG.renderizar(); 
+        GG.renderizar();
 
         if (noMenu) {
             menu.desenhar();

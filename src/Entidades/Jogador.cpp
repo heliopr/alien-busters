@@ -1,5 +1,6 @@
 #include "Entidades/Jogador.h"
 #include "Gerenciadores/Gerenciador_Grafico.h"
+#include "Configuracao.h"
 #include <cmath>
 #include <iostream>
 #include <cstddef>
@@ -11,8 +12,8 @@ Jogador::Jogador() : Entidade(),
     vy(0.f), noChao(false), agachado(false), 
     olhandoEsquerda(false), olhandoDireita(true), puloPressionado(false) 
 {
-    x = 100.0f;
-    y = 400.0f; 
+    x = Config::POSICAO_INICIAL_X;
+    y = Config::POSICAO_INICIAL_Y; 
 
     pFig = new sf::RectangleShape(sf::Vector2f(60.f, 100.f));
     if (pFig != NULL) {
@@ -34,9 +35,9 @@ Jogador::~Jogador() {
 }
 
 void Jogador::executar(float dt) {
-    float velocidadeX = 200.f;
-    float forcaPulo = -500.f;  
-    float gravidade = 980.f;   
+    float velocidadeX = Config::VELOCIDADE_X;
+    float forcaPulo = Config::FORCA_PULO;  
+    float gravidade = Config::GRAVIDADE;   
     float dx = 0;
 
     bool podPular = noChao;
@@ -64,9 +65,9 @@ void Jogador::executar(float dt) {
     x += dx * velocidadeX * dt;
     y += vy * dt;
 
-    if (y > 800.f) {
-        x = 100.f;
-        y = 400.f;
+    if (y > Config::ALTURA_LIMITE_QUEDA) {
+        x = Config::POSICAO_INICIAL_X;
+        y = Config::POSICAO_INICIAL_Y;
         vy = 0.f;
     }
 
