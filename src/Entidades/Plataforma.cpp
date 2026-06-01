@@ -25,6 +25,7 @@ void Plataforma::executar(float) {
 }
 
 void Plataforma::obstaculizar(Jogador*) {
+    // TODO
 }
 
 sf::FloatRect Plataforma::getLimitesColisao() const {

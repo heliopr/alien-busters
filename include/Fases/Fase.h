@@ -20,6 +20,7 @@ public:
 
     virtual void executar(float dt);
     virtual void desenhar();
+    bool getPrecisaResetar() const;
 
 protected:
     virtual void criarInimigos() = 0;

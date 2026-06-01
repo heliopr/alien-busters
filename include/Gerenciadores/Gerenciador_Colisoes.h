@@ -20,16 +20,20 @@ private:
     std::list<Entidades::Chao*> LChaos;
     std::list<Entidades::Inimigo*> LIs;
     Entidades::Jogador* pJog1;
+    bool precisaResetar;
 
     bool verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2) const;
     void tratarColisoesJogsObstacs();
     void tratarColisoesJogsChao();
     void tratarColisoesInimigsObstacs();
     void tratarColisoesInimigsChao();
+    void tratarColisoesJogsInimigs();
 
 public:
     Gerenciador_Colisoes();
     ~Gerenciador_Colisoes();
+
+    bool getPrecisaResetar() const { return precisaResetar; }
 
     void setJogador(Entidades::Jogador* pJ);
     void incluirObstaculo(Entidades::Obstaculo* po);

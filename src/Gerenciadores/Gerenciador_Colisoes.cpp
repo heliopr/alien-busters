@@ -8,7 +8,7 @@
 
 namespace Gerenciadores {
 
-Gerenciador_Colisoes::Gerenciador_Colisoes() : pJog1(NULL) {
+Gerenciador_Colisoes::Gerenciador_Colisoes() : pJog1(NULL), precisaResetar(false) {
 }
 
 Gerenciador_Colisoes::~Gerenciador_Colisoes() {
@@ -213,6 +213,25 @@ void Gerenciador_Colisoes::executar() {
     tratarColisoesJogsObstacs();
     tratarColisoesInimigsChao();
     tratarColisoesInimigsObstacs();
+    tratarColisoesJogsInimigs();
+}
+
+void Gerenciador_Colisoes::tratarColisoesJogsInimigs() {
+    if (pJog1 == NULL) return;
+
+    sf::FloatRect boxPlayer = pJog1->getLimitesColisao();
+
+    for (std::list<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
+        Entidades::Inimigo* ini = *iti;
+        if (ini == NULL) continue;
+
+        sf::FloatRect boxIni = ini->getLimitesColisao();
+
+        if (boxPlayer.intersects(boxIni)) {
+            precisaResetar = true;
+            break;
+        }
+    }
 }
 
 }

@@ -12,7 +12,7 @@ Chao::Chao(float x, float y, float largura, float altura) :
     pFig = new sf::RectangleShape(sf::Vector2f(largura, altura));
     if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));
-        pFig->setFillColor(sf::Color(145, 60, 25)); // Retângulo Laranja Sólido do Chão
+        pFig->setFillColor(sf::Color(145, 60, 25));
     }
 }
 

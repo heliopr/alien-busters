@@ -26,11 +26,6 @@ void Jogo::executar() {
                 GG.fecharJanela();
             }
 
-            // habilitar/desabilitar debug de hitboexes
-            if (!noMenu && evento.type == sf::Event::KeyPressed && evento.key.code == sf::Keyboard::H) {
-                GG.setMostrarHitboxes(!GG.getMostrarHitboxes());
-            }
-
             // navegação do Menu
             if (noMenu && evento.type == sf::Event::KeyPressed) {
                 if (evento.key.code == sf::Keyboard::Up || evento.key.code == sf::Keyboard::W) {
@@ -58,6 +53,10 @@ void Jogo::executar() {
         else {
             if (faseAtual) {
                 faseAtual->executar(dt);
+                if (faseAtual->getPrecisaResetar()) {
+                    delete faseAtual;
+                    faseAtual = new Fases::Fase_Primeira();
+                }
             }
         }
 

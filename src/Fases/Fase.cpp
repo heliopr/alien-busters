@@ -23,6 +23,10 @@ void Fase::executar(float dt) {
 void Fase::desenhar() {
 }
 
+bool Fase::getPrecisaResetar() const {
+    return GC.getPrecisaResetar();
+}
+
 void Fase::criarCenario() {
     Entidades::Chao* chao1 = new Entidades::Chao(0.f, 700.f, 800.f, 100.f);
     Entidades::Chao* chao2 = new Entidades::Chao(920.f, 700.f, 780.f, 100.f);
