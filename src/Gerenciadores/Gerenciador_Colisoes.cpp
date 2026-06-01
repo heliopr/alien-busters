@@ -67,7 +67,7 @@ void Gerenciador_Colisoes::tratarColisoesJogsObstacs() {
                     pJog1->setVy(0.f);
                     pJog1->setNoChao(true);
                 } else {
-                    pJog1->setY(boxObs.top + boxObs.height + 90.f);
+                    pJog1->setY(boxObs.top + boxObs.height + 75.f);
                     if (pJog1->getVy() < 0.f) {
                         pJog1->setVy(0.f);
                     }
@@ -105,7 +105,7 @@ void Gerenciador_Colisoes::tratarColisoesJogsChao() {
                     pJog1->setVy(0.f);
                     pJog1->setNoChao(true);
                 } else {
-                    pJog1->setY(boxChao.top + boxChao.height + 90.f);
+                    pJog1->setY(boxChao.top + boxChao.height + 75.f);
                     if (pJog1->getVy() < 0.f) {
                         pJog1->setVy(0.f);
                     }

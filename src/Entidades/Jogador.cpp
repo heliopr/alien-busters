@@ -107,7 +107,7 @@ void Jogador::salvar() {
 }
 
 sf::FloatRect Jogador::getLimitesColisao() const {
-    return sf::FloatRect(x - 20.f, y - 90.f, 40.f, 65.f);
+    return sf::FloatRect(x - 20.f, y - 75.f, 40.f, 50.f);
 }
 
 }
