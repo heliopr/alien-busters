@@ -2,17 +2,13 @@
 #define JOGO_H
 
 #include "Gerenciadores/Gerenciador_Grafico.h"
-#include "Gerenciadores/Gerenciador_Colisoes.h"
-#include "Listas/ListaEntidades.h"
-#include "Entidades/Jogador.h"
+#include "Fases/Fase_Primeira.h"
 #include "Menu.h"
 
 class Jogo {
 private:
     Gerenciadores::Gerenciador_Grafico GG;
-    Gerenciadores::Gerenciador_Colisoes gerenciadorColisoes;
-    Listas::ListaEntidades lista_entidades;
-    Entidades::Jogador* pJogador;
+    Fases::Fase* faseAtual;
     Menu menu; 
     bool noMenu;
 
