@@ -18,6 +18,7 @@ public:
 
     void executar(float dt);
     void salvar();
+    void mover();
     void danificar(Jogador* p);
     sf::FloatRect getLimitesColisao() const;
 };

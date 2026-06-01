@@ -51,4 +51,8 @@ sf::FloatRect Inimigo_Facil::getLimitesColisao() const {
     return sf::FloatRect(x - 20.0f, y - 20.0f, 40.0f, 40.0f);
 }
 
+void Inimigo_Facil::mover() {
+
+}
+
 }

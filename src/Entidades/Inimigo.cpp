@@ -2,7 +2,7 @@
 
 namespace Entidades {
 
-Inimigo::Inimigo() : Entidade(), nivel_maldade(0), vy(0.f), velocidadeX(-50.f), noChao(false) {
+Inimigo::Inimigo() : Personagem(), nivel_maldade(0), velocidadeX(-50.f) {
 }
 
 Inimigo::~Inimigo() {

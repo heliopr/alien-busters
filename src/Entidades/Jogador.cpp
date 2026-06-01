@@ -7,9 +7,9 @@
 
 namespace Entidades {
 
-Jogador::Jogador() : Entidade(), 
+Jogador::Jogador() : Personagem(), 
     linhaAtual(1), frameAtual(0), tempoAnimacao(0.f), 
-    vy(0.f), noChao(false), agachado(false), 
+    agachado(false), 
     olhandoEsquerda(false), olhandoDireita(true), puloPressionado(false) 
 {
     x = Config::POSICAO_INICIAL_X;
@@ -109,6 +109,10 @@ void Jogador::salvar() {
 
 sf::FloatRect Jogador::getLimitesColisao() const {
     return sf::FloatRect(x - 20.f, y - 75.f, 40.f, 50.f);
+}
+
+void Jogador::mover() {
+    // Implementacao de mover
 }
 
 }
