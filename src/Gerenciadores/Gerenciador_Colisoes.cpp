@@ -3,6 +3,7 @@
 #include "Entidades/Jogador.h"
 #include "Entidades/Obstaculo.h"
 #include "Entidades/Chao.h"
+#include "Entidades/Inimigo.h"
 #include <cstddef>
 
 namespace Gerenciadores {
@@ -13,6 +14,7 @@ Gerenciador_Colisoes::Gerenciador_Colisoes() : pJog1(NULL) {
 Gerenciador_Colisoes::~Gerenciador_Colisoes() {
     LOs.clear();
     LChaos.clear();
+    LIs.clear();
 }
 
 void Gerenciador_Colisoes::setJogador(Entidades::Jogador* pJ) {
@@ -28,6 +30,12 @@ void Gerenciador_Colisoes::incluirObstaculo(Entidades::Obstaculo* po) {
 void Gerenciador_Colisoes::incluirChao(Entidades::Chao* pc) {
     if (pc != NULL) {
         LChaos.push_back(pc);
+    }
+}
+
+void Gerenciador_Colisoes::incluirInimigo(Entidades::Inimigo* pi) {
+    if (pi != NULL) {
+        LIs.push_back(pi);
     }
 }
 
@@ -116,9 +124,95 @@ void Gerenciador_Colisoes::tratarColisoesJogsChao() {
     }
 }
 
+void Gerenciador_Colisoes::tratarColisoesInimigsObstacs() {
+    for (std::list<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
+        Entidades::Inimigo* ini = *iti;
+        if (ini == NULL) continue;
+        
+        sf::FloatRect boxIni = ini->getLimitesColisao();
+
+        for (std::list<Entidades::Obstaculo*>::iterator ito = LOs.begin(); ito != LOs.end(); ++ito) {
+            Entidades::Obstaculo* obs = *ito;
+            if (obs == NULL) continue;
+
+            sf::FloatRect boxObs = obs->getLimitesColisao();
+            sf::FloatRect interseccao;
+
+            if (boxIni.intersects(boxObs, interseccao)) {
+                if (interseccao.width < interseccao.height) {
+                    // colisão lateral
+                    if (boxIni.left + boxIni.width / 2.f < boxObs.left + boxObs.width / 2.f) {
+                        ini->setX(boxObs.left - boxIni.width/2.f); 
+                    } else {
+                        ini->setX(boxObs.left + boxObs.width + boxIni.width/2.f); 
+                    }
+                    ini->setVelocidadeX(-ini->getVelocidadeX());
+                } else {
+                    // colisão vertical
+                    if (boxIni.top + boxIni.height / 2.f < boxObs.top + boxObs.height / 2.f) {
+                        ini->setY(boxObs.top - boxIni.height/2.f);
+                        ini->setVy(0.f);
+                        ini->setNoChao(true);
+                    } else {
+                        ini->setY(boxObs.top + boxObs.height + boxIni.height/2.f);
+                        if (ini->getVy() < 0.f) {
+                            ini->setVy(0.f);
+                        }
+                    }
+                }
+                boxIni = ini->getLimitesColisao();
+            }
+        }
+    }
+}
+
+void Gerenciador_Colisoes::tratarColisoesInimigsChao() {
+    for (std::list<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
+        Entidades::Inimigo* ini = *iti;
+        if (ini == NULL) continue;
+        
+        sf::FloatRect boxIni = ini->getLimitesColisao();
+
+        for (std::list<Entidades::Chao*>::iterator itc = LChaos.begin(); itc != LChaos.end(); ++itc) {
+            Entidades::Chao* chao = *itc;
+            if (chao == NULL) continue;
+
+            sf::FloatRect boxChao = chao->getLimitesColisao();
+            sf::FloatRect interseccao;
+
+            if (boxIni.intersects(boxChao, interseccao)) {
+                if (interseccao.width < interseccao.height) {
+                    // colisão lateral
+                    if (boxIni.left + boxIni.width / 2.f < boxChao.left + boxChao.width / 2.f) {
+                        ini->setX(boxChao.left - boxIni.width/2.f); 
+                    } else {
+                        ini->setX(boxChao.left + boxChao.width + boxIni.width/2.f); 
+                    }
+                    ini->setVelocidadeX(-ini->getVelocidadeX());
+                } else {
+                    // colisão vertical
+                    if (boxIni.top + boxIni.height / 2.f < boxChao.top + boxChao.height / 2.f) {
+                        ini->setY(boxChao.top - boxIni.height/2.f);
+                        ini->setVy(0.f);
+                        ini->setNoChao(true);
+                    } else {
+                        ini->setY(boxChao.top + boxChao.height + boxIni.height/2.f);
+                        if (ini->getVy() < 0.f) {
+                            ini->setVy(0.f);
+                        }
+                    }
+                }
+                boxIni = ini->getLimitesColisao();
+            }
+        }
+    }
+}
+
 void Gerenciador_Colisoes::executar() {
     tratarColisoesJogsChao();
     tratarColisoesJogsObstacs();
+    tratarColisoesInimigsChao();
+    tratarColisoesInimigsObstacs();
 }
 
 }

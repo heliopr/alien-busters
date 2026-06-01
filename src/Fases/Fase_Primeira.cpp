@@ -1,5 +1,6 @@
 #include "Fases/Fase_Primeira.h"
 #include "Entidades/Plataforma.h"
+#include "Entidades/Inimigo_Facil.h"
 
 namespace Fases {
 
@@ -15,7 +16,25 @@ Fase_Primeira::~Fase_Primeira() {
 }
 
 void Fase_Primeira::criarInimigos() {
-    // TODO
+    Entidades::Inimigo_Facil* inimigo1 = new Entidades::Inimigo_Facil(400.f, 300.f);
+    lista_ents.incluir(inimigo1);
+    GC.incluirInimigo(inimigo1);
+
+    Entidades::Inimigo_Facil* inimigo2 = new Entidades::Inimigo_Facil(700.f, 300.f);
+    lista_ents.incluir(inimigo2);
+    GC.incluirInimigo(inimigo2);
+
+    Entidades::Inimigo_Facil* inimigo3 = new Entidades::Inimigo_Facil(1200.f, 400.f);
+    lista_ents.incluir(inimigo3);
+    GC.incluirInimigo(inimigo3);
+
+    Entidades::Inimigo_Facil* inimigo4 = new Entidades::Inimigo_Facil(1700.f, 350.f);
+    lista_ents.incluir(inimigo4);
+    GC.incluirInimigo(inimigo4);
+
+    Entidades::Inimigo_Facil* inimigo5 = new Entidades::Inimigo_Facil(2200.f, 300.f);
+    lista_ents.incluir(inimigo5);
+    GC.incluirInimigo(inimigo5);
 }
 
 void Fase_Primeira::criarObstaculos() {
