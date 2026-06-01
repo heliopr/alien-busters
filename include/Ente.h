@@ -5,7 +5,6 @@
 
 namespace Gerenciadores { class Gerenciador_Grafico; }
 
-// Ente.h
 class Ente {
 protected:
     int id;
@@ -17,7 +16,7 @@ public:
     virtual ~Ente();
 
     virtual void executar(float dt) = 0;
-    void desenhar();
+    virtual void desenhar();
 
     sf::RectangleShape *getFigura() const;
 

@@ -31,7 +31,7 @@ void Gerenciador_Colisoes::incluirChao(Entidades::Chao* pc) {
     }
 }
 
-const bool Gerenciador_Colisoes::verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2) const {
+bool Gerenciador_Colisoes::verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2) const {
     if (pe1 == NULL || pe2 == NULL) return false;
 
     sf::FloatRect box1 = pe1->getLimitesColisao();
@@ -62,7 +62,7 @@ void Gerenciador_Colisoes::tratarColisoesJogsObstacs() {
                 }
             } else {
                 // colisão vertical
-                if (boxPlayer.top + boxPlayer.height / 2.f < boxObs.top + boxObs.width / 2.f) {
+                if (boxPlayer.top + boxPlayer.height / 2.f < boxObs.top + boxObs.height / 2.f) {
                     pJog1->setY(boxObs.top + 25.f);
                     pJog1->setVy(0.f);
                     pJog1->setNoChao(true);
@@ -100,7 +100,7 @@ void Gerenciador_Colisoes::tratarColisoesJogsChao() {
                 }
             } else {
                 // colisão vertical
-                if (boxPlayer.top + boxPlayer.height / 2.f < boxChao.top + boxChao.width / 2.f) {
+                if (boxPlayer.top + boxPlayer.height / 2.f < boxChao.top + boxChao.height / 2.f) {
                     pJog1->setY(boxChao.top + 25.f);
                     pJog1->setVy(0.f);
                     pJog1->setNoChao(true);

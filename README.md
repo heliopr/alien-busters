@@ -1,7 +1,11 @@
 # Jogo
 
 ## TODO
+- [ ] Fase e chão
 - [ ] Mudar lógica de colisões para Gerenciador_Colisoes
+- [ ] Singletons: Jogo, Gerenciador_Colisoes, Gerenciador_Grafico
+- [ ] Usar: observer, mediator, iterator... https://refactoring.guru/design-patterns
+- [ ] Cores UML: amarelinho, verde e vermelho. Tabelas também
 
 - [Diagrama Jogo Modelo](https://pessoal.dainf.ct.utfpr.edu.br/jeansimao/Fundamentos2/TopicosTrab/DiagramaJogoModelo.jpg)
 - [Modelo Especificação para Trabalho](https://pessoal.dainf.ct.utfpr.edu.br/jeansimao/Fundamentos2/TopicosTrab/Modelo_Especificacao_para_Trabalho_TecnicasProgramacao.pdf)

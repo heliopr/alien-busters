@@ -60,18 +60,21 @@ Jogo::~Jogo() {
 void Jogo::executar() {
     sf::Clock clock;
 
-    // 1. Usa a função que você pontuou
     while (GG.estaAberto()) { 
         float dt = clock.restart().asSeconds();
 
         sf::Event evento;
-        // 2. Coleta os eventos de forma limpa, sem expor a janela
         while (GG.coletarEventos(evento)) { 
             if (evento.type == sf::Event::Closed) {
                 GG.fecharJanela();
             }
 
-            // Lógica de navegação do Menu
+            // habilitar/desabilitar debug de hitboexes
+            if (!noMenu && evento.type == sf::Event::KeyPressed && evento.key.code == sf::Keyboard::H) {
+                GG.setMostrarHitboxes(!GG.getMostrarHitboxes());
+            }
+
+            // navegação do Menu
             if (noMenu && evento.type == sf::Event::KeyPressed) {
                 if (evento.key.code == sf::Keyboard::Up || evento.key.code == sf::Keyboard::W) {
                     menu.subirOpcao();

@@ -1,4 +1,5 @@
 #include "Entidades/Entidade.h"
+#include "Gerenciadores/Gerenciador_Grafico.h"
 
 namespace Entidades {
 
@@ -12,6 +13,14 @@ Entidade::~Entidade() {
         pFig = NULL;
     }
 }
+
+void Entidade::desenhar() {
+    Ente::desenhar();
+    if (pGrafico && pGrafico->getMostrarHitboxes()) {
+        pGrafico->desenharRetangulo(getLimitesColisao(), sf::Color::Red, 2.f);
+    }
+}
+
 void Entidade::salvarDataBuffer() {
     
 }

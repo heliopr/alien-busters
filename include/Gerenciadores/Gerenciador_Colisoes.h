@@ -19,7 +19,7 @@ private:
     std::list<Entidades::Chao*> LChaos;
     Entidades::Jogador* pJog1;
 
-    const bool verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2) const;
+    bool verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2) const;
     void tratarColisoesJogsObstacs();
     void tratarColisoesJogsChao();
 

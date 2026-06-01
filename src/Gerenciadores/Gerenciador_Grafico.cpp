@@ -6,7 +6,8 @@ namespace Gerenciadores {
 
 Gerenciador_Grafico::Gerenciador_Grafico() :
     janela(sf::VideoMode(1280, 720), "Janela SFML"),
-    camera(sf::FloatRect(0.f, 0.f, 1422.222f, 800.f)) {
+    camera(sf::FloatRect(0.f, 0.f, 1422.222f, 800.f)),
+    mostrarHitboxes(true) {
     janela.setFramerateLimit(60);
     janela.setView(camera);
 
@@ -36,6 +37,15 @@ void Gerenciador_Grafico::desenharTexto(sf::Text *pT) {
     if (pT != 0) {
         janela.draw(*pT);
     }
+}
+
+void Gerenciador_Grafico::desenharRetangulo(sf::FloatRect rect, sf::Color corContorno, float espessuraContorno) {
+    sf::RectangleShape shape(sf::Vector2f(rect.width, rect.height));
+    shape.setPosition(sf::Vector2f(rect.left, rect.top));
+    shape.setFillColor(sf::Color::Transparent);
+    shape.setOutlineColor(corContorno);
+    shape.setOutlineThickness(espessuraContorno);
+    janela.draw(shape);
 }
 
 bool Gerenciador_Grafico::estaAberto() {

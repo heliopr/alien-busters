@@ -20,6 +20,7 @@ public:
 public:
     virtual void executar(float dt) = 0;
     virtual void salvar() = 0;
+    virtual void desenhar();
 
     float getX() const;
     float getY() const;
