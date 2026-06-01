@@ -26,6 +26,7 @@ void Chao::executar(float dt) {
 }
 
 void Chao::salvar() {
+    // TODO
 }
 
 sf::FloatRect Chao::getLimitesColisao() const {

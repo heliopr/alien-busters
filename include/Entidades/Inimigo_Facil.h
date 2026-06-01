@@ -11,6 +11,14 @@ class Jogador;
 class Inimigo_Facil : public Inimigo {
 private:
     float raio;
+    sf::Texture texturaInimigo;
+    int linhaAtual;
+    int frameAtual;
+    float tempoAnimacao;
+    int larguraFrame;
+    int alturaFrame;
+    bool olhandoEsquerda;
+    bool olhandoDireita;
 
 public:
     Inimigo_Facil(float x = 400.f, float y = 300.f);
