@@ -23,6 +23,8 @@ void Projetil::salvar() {
 void Projetil::executar(float dt) {
     if (!ativo) return;
 
+    vy += 98.f * dt;
+
     x += vx * dt;
     y += vy * dt;
 

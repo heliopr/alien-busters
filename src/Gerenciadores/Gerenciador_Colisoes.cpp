@@ -282,6 +282,23 @@ void Gerenciador_Colisoes::tratarColisoesProjetil() {
             }
         }
 
+        if (!colidiu) {
+            for (std::list<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ) {
+                Entidades::Inimigo* ini = *iti;
+                if (ini != NULL && boxProj.intersects(ini->getLimitesColisao())) {
+                    colidiu = true;
+                    iti = LIs.erase(iti);
+                    if (pListaEntidades) {
+                        pListaEntidades->remover(ini);
+                    }
+                    delete ini;
+                    break;
+                } else {
+                    ++iti;
+                }
+            }
+        }
+
         if (colidiu) {
             it = LPs.erase(it);
             if (pListaEntidades) {
