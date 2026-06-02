@@ -14,6 +14,10 @@ private:
     float tempoPisada;
     float vy;
     float posXOriginal;
+    float posYOriginal;
+    float tempoRespawn;
+    bool surgindo;
+    float tempoSurgindo;
 
 public:
     Plataforma(float x, float y, float largura, float altura);
