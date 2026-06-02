@@ -17,6 +17,7 @@ public:
     ~ListaEntidades();
 
     void incluir(Entidades::Entidade *pE);
+    void remover(Entidades::Entidade *pE);
     void percorrer(float dt, Entidades::Jogador *pJogador);
 };
 

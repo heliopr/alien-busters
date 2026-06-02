@@ -34,6 +34,7 @@ public:
     ~Lista();
 
     void incluir(TL *p);
+    void remover(TL *p);
     void limpar();
     bool vazia() const;
 
@@ -60,6 +61,31 @@ void Lista<TL>::incluir(TL *p) {
     } else {
         pUltimo->setProx(novoElem);
         pUltimo = novoElem;
+    }
+}
+
+template <typename TL>
+void Lista<TL>::remover(TL *p) {
+    Elemento *atual = pPrimeiro;
+    Elemento *anterior = 0;
+
+    while (atual != 0) {
+        if (atual->getInfo() == p) {
+            if (anterior == 0) {
+                pPrimeiro = atual->getProximo();
+            } else {
+                anterior->setProx(atual->getProximo());
+            }
+
+            if (atual == pUltimo) {
+                pUltimo = anterior;
+            }
+
+            delete atual;
+            return;
+        }
+        anterior = atual;
+        atual = atual->getProximo();
     }
 }
 

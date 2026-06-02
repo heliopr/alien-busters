@@ -1,11 +1,14 @@
 #include "Fases/Fase.h"
 #include "Entidades/Chao.h"
 
+#include "Entidades/Projetil.h"
+
 namespace Fases {
 
 Fase::Fase() : Ente(), lista_ents(), GC(), pJogador(0) {
     pJogador = new Entidades::Jogador();
     GC.setJogador(pJogador);
+    GC.setListaEntidades(&lista_ents);
 }
 
 Fase::~Fase() {
@@ -39,6 +42,10 @@ void Fase::criarCenario() {
     lista_ents.incluir(chao1);
     lista_ents.incluir(chao2);
     lista_ents.incluir(chao3);
+
+    Entidades::Projetil* proj = new Entidades::Projetil(100.f, 600.f, 200.f, 0.f);
+    GC.incluirProjetil(proj);
+    lista_ents.incluir(proj);
 }
 
 }

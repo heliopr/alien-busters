@@ -12,6 +12,10 @@ void ListaEntidades::incluir(Entidades::Entidade *pE) {
     LEs.incluir(pE);
 }
 
+void ListaEntidades::remover(Entidades::Entidade *pE) {
+    LEs.remover(pE);
+}
+
 void ListaEntidades::percorrer(float dt, Entidades::Jogador *pJogador) {
     Lista<Entidades::Entidade>::Elemento *atual = LEs.getPrimeiro();
     while (atual != 0) {
