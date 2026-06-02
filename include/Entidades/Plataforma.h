@@ -9,6 +9,11 @@ class Plataforma : public Obstaculo {
 private:
     float altura;
     float largura;
+    bool pisada;
+    bool caindo;
+    float tempoPisada;
+    float vy;
+    float posXOriginal;
 
 public:
     Plataforma(float x, float y, float largura, float altura);
@@ -18,6 +23,7 @@ public:
     void obstaculizar(Jogador* p);
     void salvar();
     sf::FloatRect getLimitesColisao() const;
+    void jogadorPisou();
 };
 
 }

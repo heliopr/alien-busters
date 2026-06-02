@@ -1,10 +1,12 @@
 #include "Entidades/Plataforma.h"
+#include "Configuracao.h"
 #include <cstddef>
+#include <cmath>
 
 namespace Entidades {
 
 Plataforma::Plataforma(float x, float y, float largura, float altura) 
-    : Obstaculo(), altura(altura), largura(largura) {
+    : Obstaculo(), altura(altura), largura(largura), pisada(false), caindo(false), tempoPisada(0.f), vy(0.f), posXOriginal(x) {
     this->x = x;
     this->y = y;
 
@@ -18,7 +20,29 @@ Plataforma::Plataforma(float x, float y, float largura, float altura)
 Plataforma::~Plataforma() {
 }
 
-void Plataforma::executar(float) {
+void Plataforma::jogadorPisou() {
+    if (!pisada && !caindo) {
+        pisada = true;
+    }
+}
+
+void Plataforma::executar(float dt) {
+    if (pisada && !caindo) {
+        tempoPisada += dt;
+        float offset = std::sin(tempoPisada * 50.f) * 3.f; 
+        x = posXOriginal + offset;
+        
+        if (tempoPisada >= 1.0f) {
+            caindo = true;
+            x = posXOriginal;
+        }
+    }
+
+    if (caindo) {
+        vy += Config::GRAVIDADE * dt;
+        y += vy * dt;
+    }
+
     if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));
     }
