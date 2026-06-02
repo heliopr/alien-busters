@@ -3,7 +3,7 @@
 #include "Entidades/Plataforma.h"
 #include "Entidades/Chao.h"
 
-Jogo::Jogo() : GG(), faseAtual(new Fases::Fase_Primeira()), menu(this), noMenu(true) {
+Jogo::Jogo() : GG(), faseAtual(new Fases::Fase_Primeira()), menu(this), noMenu(true), pJog1(0) {
     Ente::setGG(&GG);
 }
 

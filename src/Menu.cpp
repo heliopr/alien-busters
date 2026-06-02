@@ -61,9 +61,9 @@ void Menu::executar(float /*dt*/) {
 }
 
 void Menu::desenhar() {
-    if (pGrafico != 0) {
+    if (pGG != 0) {
         for (size_t i = 0; i < opcoes.size(); ++i) {
-            pGrafico->desenharTexto(&opcoes[i]); 
+            pGG->desenharTexto(&opcoes[i]); 
         }
     }
 }

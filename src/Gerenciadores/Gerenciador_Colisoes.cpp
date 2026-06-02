@@ -48,7 +48,7 @@ void Gerenciador_Colisoes::incluirInimigo(Entidades::Inimigo* pi) {
 
 void Gerenciador_Colisoes::incluirProjetil(Entidades::Projetil* pP) {
     if (pP != NULL) {
-        LPs.push_back(pP);
+        LPs.insert(pP);
     }
 }
 
@@ -139,7 +139,7 @@ void Gerenciador_Colisoes::tratarColisoesJogsChao() {
 }
 
 void Gerenciador_Colisoes::tratarColisoesInimigsObstacs() {
-    for (std::list<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
+    for (std::vector<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
         Entidades::Inimigo* ini = *iti;
         if (ini == NULL) continue;
         
@@ -181,7 +181,7 @@ void Gerenciador_Colisoes::tratarColisoesInimigsObstacs() {
 }
 
 void Gerenciador_Colisoes::tratarColisoesInimigsChao() {
-    for (std::list<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
+    for (std::vector<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
         Entidades::Inimigo* ini = *iti;
         if (ini == NULL) continue;
         
@@ -228,7 +228,7 @@ void Gerenciador_Colisoes::executar() {
     tratarColisoesInimigsChao();
     tratarColisoesInimigsObstacs();
     tratarColisoesJogsInimigs();
-    tratarColisoesProjetil();
+    tratarColisoesJogsProjeteis();
 }
 
 void Gerenciador_Colisoes::tratarColisoesJogsInimigs() {
@@ -236,7 +236,7 @@ void Gerenciador_Colisoes::tratarColisoesJogsInimigs() {
 
     sf::FloatRect boxPlayer = pJog1->getLimitesColisao();
 
-    for (std::list<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
+    for (std::vector<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
         Entidades::Inimigo* ini = *iti;
         if (ini == NULL) continue;
 
@@ -249,12 +249,14 @@ void Gerenciador_Colisoes::tratarColisoesJogsInimigs() {
     }
 }
 
-void Gerenciador_Colisoes::tratarColisoesProjetil() {
-    std::list<Entidades::Projetil*>::iterator it;
+void Gerenciador_Colisoes::tratarColisoesJogsProjeteis() {
+    std::set<Entidades::Projetil*>::iterator it;
     for (it = LPs.begin(); it != LPs.end(); ) {
         Entidades::Projetil* p = *it;
         if (!p->getAtivo()) {
-            it = LPs.erase(it);
+            std::set<Entidades::Projetil*>::iterator toErase = it;
+            ++it;
+            LPs.erase(toErase);
             if (pListaEntidades) {
                 pListaEntidades->remover(p);
             }
@@ -284,7 +286,7 @@ void Gerenciador_Colisoes::tratarColisoesProjetil() {
         }
 
         if (!colidiu) {
-            for (std::list<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ) {
+            for (std::vector<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ) {
                 Entidades::Inimigo* ini = *iti;
                 if (ini != NULL && boxProj.intersects(ini->getLimitesColisao())) {
                     colidiu = true;
@@ -301,7 +303,9 @@ void Gerenciador_Colisoes::tratarColisoesProjetil() {
         }
 
         if (colidiu) {
-            it = LPs.erase(it);
+            std::set<Entidades::Projetil*>::iterator toErase = it;
+            ++it;
+            LPs.erase(toErase);
             if (pListaEntidades) {
                 pListaEntidades->remover(p);
             }

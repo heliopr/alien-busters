@@ -99,8 +99,8 @@ void Jogador::executar(float dt) {
         }
     }
 
-    if (pGrafico != NULL) {
-        pGrafico->atualizarCamera(sf::Vector2f(x, y));
+    if (pGG != NULL) {
+        pGG->atualizarCamera(sf::Vector2f(x, y));
     }
 }
 

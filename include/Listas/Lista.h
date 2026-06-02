@@ -21,7 +21,7 @@ public:
 
         void incluir(TL *p) { pInfo = p; }
         void setProx(Elemento *pE) { pProx = pE; }
-        Elemento *getProximo() const { return pProx; }
+        Elemento *getProx() const { return pProx; }
         TL *getInfo() const { return pInfo; }
     };
 
@@ -72,9 +72,9 @@ void Lista<TL>::remover(TL *p) {
     while (atual != 0) {
         if (atual->getInfo() == p) {
             if (anterior == 0) {
-                pPrimeiro = atual->getProximo();
+                pPrimeiro = atual->getProx();
             } else {
-                anterior->setProx(atual->getProximo());
+                anterior->setProx(atual->getProx());
             }
 
             if (atual == pUltimo) {
@@ -85,7 +85,7 @@ void Lista<TL>::remover(TL *p) {
             return;
         }
         anterior = atual;
-        atual = atual->getProximo();
+        atual = atual->getProx();
     }
 }
 
@@ -93,7 +93,7 @@ template <typename TL>
 void Lista<TL>::limpar() {
     Elemento *atual = pPrimeiro;
     while (atual != 0) {
-        Elemento *proximo = atual->getProximo();
+        Elemento *proximo = atual->getProx();
         delete atual;
         atual = proximo;
     }

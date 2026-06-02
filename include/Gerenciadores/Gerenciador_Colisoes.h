@@ -2,6 +2,8 @@
 #define GERENCIADOR_COLISOES_H
 
 #include <list>
+#include <vector>
+#include <set>
 #include <SFML/Graphics.hpp>
 
 namespace Entidades {
@@ -22,8 +24,8 @@ class Gerenciador_Colisoes {
 private:
     std::list<Entidades::Obstaculo*> LOs;
     std::list<Entidades::Chao*> LChaos;
-    std::list<Entidades::Inimigo*> LIs;
-    std::list<Entidades::Projetil*> LPs;
+    std::vector<Entidades::Inimigo*> LIs;
+    std::set<Entidades::Projetil*> LPs;
     Entidades::Jogador* pJog1;
     Listas::ListaEntidades* pListaEntidades;
     bool precisaResetar;
@@ -34,7 +36,7 @@ private:
     void tratarColisoesInimigsObstacs();
     void tratarColisoesInimigsChao();
     void tratarColisoesJogsInimigs();
-    void tratarColisoesProjetil();
+    void tratarColisoesJogsProjeteis();
 
 public:
     Gerenciador_Colisoes();

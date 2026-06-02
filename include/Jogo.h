@@ -9,6 +9,7 @@ class Jogo {
 private:
     Gerenciadores::Gerenciador_Grafico GG;
     Fases::Fase* faseAtual;
+    Entidades::Jogador* pJog1;
     Menu menu; 
     bool noMenu;
 

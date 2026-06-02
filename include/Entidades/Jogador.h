@@ -6,6 +6,8 @@
 namespace Entidades {
 
 class Jogador : public Personagem { 
+protected:
+    int pontos;
 private:
     sf::Texture texturaJogador;
     int linhaAtual;

@@ -8,7 +8,7 @@ namespace Gerenciadores { class Gerenciador_Grafico; }
 class Ente {
 protected:
     int id;
-    static Gerenciadores::Gerenciador_Grafico *pGrafico; 
+    static Gerenciadores::Gerenciador_Grafico *pGG; 
     sf::RectangleShape *pFig;
 
 public:

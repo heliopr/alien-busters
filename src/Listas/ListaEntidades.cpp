@@ -23,7 +23,7 @@ void ListaEntidades::percorrer(float dt, Entidades::Jogador *pJogador) {
         if (entidade != 0) {
             entidade->executar(dt);
         }
-        atual = atual->getProximo();
+        atual = atual->getProx();
     }
 
     if (pJogador != 0) {
@@ -33,7 +33,7 @@ void ListaEntidades::percorrer(float dt, Entidades::Jogador *pJogador) {
             if (obs != 0) {
                 obs->obstaculizar(pJogador);
             }
-            atual = atual->getProximo();
+            atual = atual->getProx();
         }
     }
 
@@ -43,7 +43,7 @@ void ListaEntidades::percorrer(float dt, Entidades::Jogador *pJogador) {
         if (entidade != 0) {
             entidade->desenhar();
         }
-        atual = atual->getProximo();
+        atual = atual->getProx();
     }
 }
 

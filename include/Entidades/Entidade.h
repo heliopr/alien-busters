@@ -2,6 +2,7 @@
 #define ENTIDADE_H
 
 #include "Ente.h"
+#include <sstream>
 
 namespace Entidades {
 
@@ -9,8 +10,8 @@ class Entidade : public Ente {
 protected:
     float x;
     float y;
-    // TODO: buffer
 
+    std::ostringstream buffer;
     void salvarDataBuffer();
 
 public:
