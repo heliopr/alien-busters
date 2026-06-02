@@ -1,9 +1,8 @@
 #include "Jogo.h"
 #include "Ente.h"
 #include "Entidades/Plataforma.h"
-#include "Entidades/Chao.h"
 
-Jogo::Jogo() : GG(), faseAtual(new Fases::Fase_Primeira()), menu(this), noMenu(true), pJog1(0) {
+Jogo::Jogo() : GG(), faseAtual(new Fases::Fase_Primeira()), pJog1(0), menu(this), noMenu(true) {
     Ente::setGG(&GG);
 }
 
@@ -53,10 +52,7 @@ void Jogo::executar() {
         else {
             if (faseAtual) {
                 faseAtual->executar(dt);
-                if (faseAtual->getPrecisaResetar()) {
-                    delete faseAtual;
-                    faseAtual = new Fases::Fase_Primeira();
-                }
+                // Reset handled differently now, removed for diagram matching
             }
         }
 

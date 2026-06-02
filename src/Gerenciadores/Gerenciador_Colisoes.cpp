@@ -2,7 +2,6 @@
 #include "Entidades/Entidade.h"
 #include "Entidades/Jogador.h"
 #include "Entidades/Obstaculo.h"
-#include "Entidades/Chao.h"
 #include "Entidades/Inimigo.h"
 #include "Entidades/Projetil.h"
 #include "Listas/ListaEntidades.h"
@@ -10,34 +9,13 @@
 
 namespace Gerenciadores {
 
-Gerenciador_Colisoes::Gerenciador_Colisoes() : pJog1(NULL), pListaEntidades(NULL), precisaResetar(false) {
+Gerenciador_Colisoes::Gerenciador_Colisoes() : pJog1(NULL), pListaEntidades(NULL) {
 }
 
 Gerenciador_Colisoes::~Gerenciador_Colisoes() {
     LOs.clear();
-    LChaos.clear();
     LIs.clear();
     LPs.clear();
-}
-
-void Gerenciador_Colisoes::setJogador(Entidades::Jogador* pJ) {
-    pJog1 = pJ;
-}
-
-void Gerenciador_Colisoes::setListaEntidades(Listas::ListaEntidades* pLE) {
-    pListaEntidades = pLE;
-}
-
-void Gerenciador_Colisoes::incluirObstaculo(Entidades::Obstaculo* po) {
-    if (po != NULL) {
-        LOs.push_back(po);
-    }
-}
-
-void Gerenciador_Colisoes::incluirChao(Entidades::Chao* pc) {
-    if (pc != NULL) {
-        LChaos.push_back(pc);
-    }
 }
 
 void Gerenciador_Colisoes::incluirInimigo(Entidades::Inimigo* pi) {
@@ -46,9 +24,15 @@ void Gerenciador_Colisoes::incluirInimigo(Entidades::Inimigo* pi) {
     }
 }
 
-void Gerenciador_Colisoes::incluirProjetil(Entidades::Projetil* pP) {
-    if (pP != NULL) {
-        LPs.insert(pP);
+void Gerenciador_Colisoes::incluirObstaculo(Entidades::Obstaculo* po) {
+    if (po != NULL) {
+        LOs.push_back(po);
+    }
+}
+
+void Gerenciador_Colisoes::incluirProjetil(Entidades::Projetil* pj) {
+    if (pj != NULL) {
+        LPs.insert(pj);
     }
 }
 
@@ -100,45 +84,79 @@ void Gerenciador_Colisoes::tratarColisoesJogsObstacs() {
     }
 }
 
-void Gerenciador_Colisoes::tratarColisoesJogsChao() {
+void Gerenciador_Colisoes::tratarColisoesJogsInimigs() {
     if (pJog1 == NULL) return;
 
-    sf::FloatRect boxPlayer = pJog1->getLimitesColisao();
+    for (std::vector<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
+        Entidades::Inimigo* ini = *iti;
+        if (ini == NULL) continue;
 
-    for (std::list<Entidades::Chao*>::iterator it = LChaos.begin(); it != LChaos.end(); ++it) {
-        Entidades::Chao* chao = *it;
-        if (chao == NULL) continue;
-
-        sf::FloatRect boxChao = chao->getLimitesColisao();
-        sf::FloatRect interseccao;
-
-        if (boxPlayer.intersects(boxChao, interseccao)) {
-            if (interseccao.width < interseccao.height) {
-                // colisão lateral
-                if (boxPlayer.left + boxPlayer.width / 2.f < boxChao.left + boxChao.width / 2.f) {
-                    pJog1->setX(boxChao.left - 20.f); 
-                } else {
-                    pJog1->setX(boxChao.left + boxChao.width + 20.f); 
-                }
-            } else {
-                // colisão vertical
-                if (boxPlayer.top + boxPlayer.height / 2.f < boxChao.top + boxChao.height / 2.f) {
-                    pJog1->setY(boxChao.top + 25.f);
-                    pJog1->setVy(0.f);
-                    pJog1->setNoChao(true);
-                } else {
-                    pJog1->setY(boxChao.top + boxChao.height + 75.f);
-                    if (pJog1->getVy() < 0.f) {
-                        pJog1->setVy(0.f);
-                    }
-                }
-            }
-            boxPlayer = pJog1->getLimitesColisao();
+        if (verificarColisao(pJog1, ini)) {
+            pJog1->colidir(ini);
         }
     }
 }
 
-void Gerenciador_Colisoes::tratarColisoesInimigsObstacs() {
+void Gerenciador_Colisoes::tratarColisoesJogsProjeteis() {
+    std::set<Entidades::Projetil*>::iterator it;
+    for (it = LPs.begin(); it != LPs.end(); ) {
+        Entidades::Projetil* p = *it;
+        if (!p->getAtivo()) {
+            std::set<Entidades::Projetil*>::iterator toErase = it;
+            ++it;
+            LPs.erase(toErase);
+            if (pListaEntidades) {
+                pListaEntidades->remover(p);
+            }
+            delete p;
+            continue;
+        }
+
+        bool colidiu = false;
+
+        for (std::list<Entidades::Obstaculo*>::iterator ito = LOs.begin(); ito != LOs.end(); ++ito) {
+            Entidades::Obstaculo* obs = *ito;
+            if (verificarColisao(p, obs)) {
+                colidiu = true;
+                break;
+            }
+        }
+
+        if (!colidiu) {
+            for (std::vector<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ) {
+                Entidades::Inimigo* ini = *iti;
+                if (ini != NULL && verificarColisao(p, ini)) {
+                    colidiu = true;
+                    iti = LIs.erase(iti);
+                    if (pListaEntidades) {
+                        pListaEntidades->remover(ini);
+                    }
+                    delete ini;
+                    break;
+                } else {
+                    ++iti;
+                }
+            }
+        }
+
+        if (colidiu) {
+            p->setAtivo(false);
+            std::set<Entidades::Projetil*>::iterator toErase = it;
+            ++it;
+            LPs.erase(toErase);
+            if (pListaEntidades) {
+                pListaEntidades->remover(p);
+            }
+            delete p;
+        } else {
+            ++it;
+        }
+    }
+}
+
+void Gerenciador_Colisoes::executar() {
+    tratarColisoesJogsObstacs();
+
     for (std::vector<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
         Entidades::Inimigo* ini = *iti;
         if (ini == NULL) continue;
@@ -178,142 +196,9 @@ void Gerenciador_Colisoes::tratarColisoesInimigsObstacs() {
             }
         }
     }
-}
 
-void Gerenciador_Colisoes::tratarColisoesInimigsChao() {
-    for (std::vector<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
-        Entidades::Inimigo* ini = *iti;
-        if (ini == NULL) continue;
-        
-        sf::FloatRect boxIni = ini->getLimitesColisao();
-
-        for (std::list<Entidades::Chao*>::iterator itc = LChaos.begin(); itc != LChaos.end(); ++itc) {
-            Entidades::Chao* chao = *itc;
-            if (chao == NULL) continue;
-
-            sf::FloatRect boxChao = chao->getLimitesColisao();
-            sf::FloatRect interseccao;
-
-            if (boxIni.intersects(boxChao, interseccao)) {
-                if (interseccao.width < interseccao.height) {
-                    // colisão lateral
-                    if (boxIni.left + boxIni.width / 2.f < boxChao.left + boxChao.width / 2.f) {
-                        ini->setX(boxChao.left - boxIni.width/2.f); 
-                    } else {
-                        ini->setX(boxChao.left + boxChao.width + boxIni.width/2.f); 
-                    }
-                    ini->setVelocidadeX(-ini->getVelocidadeX());
-                } else {
-                    // colisão vertical
-                    if (boxIni.top + boxIni.height / 2.f < boxChao.top + boxChao.height / 2.f) {
-                        ini->setY(boxChao.top - boxIni.height/2.f);
-                        ini->setVy(0.f);
-                        ini->setNoChao(true);
-                    } else {
-                        ini->setY(boxChao.top + boxChao.height + boxIni.height/2.f);
-                        if (ini->getVy() < 0.f) {
-                            ini->setVy(0.f);
-                        }
-                    }
-                }
-                boxIni = ini->getLimitesColisao();
-            }
-        }
-    }
-}
-
-void Gerenciador_Colisoes::executar() {
-    tratarColisoesJogsChao();
-    tratarColisoesJogsObstacs();
-    tratarColisoesInimigsChao();
-    tratarColisoesInimigsObstacs();
     tratarColisoesJogsInimigs();
     tratarColisoesJogsProjeteis();
-}
-
-void Gerenciador_Colisoes::tratarColisoesJogsInimigs() {
-    if (pJog1 == NULL) return;
-
-    sf::FloatRect boxPlayer = pJog1->getLimitesColisao();
-
-    for (std::vector<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
-        Entidades::Inimigo* ini = *iti;
-        if (ini == NULL) continue;
-
-        sf::FloatRect boxIni = ini->getLimitesColisao();
-
-        if (boxPlayer.intersects(boxIni)) {
-            precisaResetar = true;
-            break;
-        }
-    }
-}
-
-void Gerenciador_Colisoes::tratarColisoesJogsProjeteis() {
-    std::set<Entidades::Projetil*>::iterator it;
-    for (it = LPs.begin(); it != LPs.end(); ) {
-        Entidades::Projetil* p = *it;
-        if (!p->getAtivo()) {
-            std::set<Entidades::Projetil*>::iterator toErase = it;
-            ++it;
-            LPs.erase(toErase);
-            if (pListaEntidades) {
-                pListaEntidades->remover(p);
-            }
-            delete p;
-            continue;
-        }
-
-        sf::FloatRect boxProj = p->getLimitesColisao();
-        bool colidiu = false;
-
-        for (std::list<Entidades::Chao*>::iterator itc = LChaos.begin(); itc != LChaos.end(); ++itc) {
-            Entidades::Chao* chao = *itc;
-            if (boxProj.intersects(chao->getLimitesColisao())) {
-                colidiu = true;
-                break;
-            }
-        }
-
-        if (!colidiu) {
-            for (std::list<Entidades::Obstaculo*>::iterator ito = LOs.begin(); ito != LOs.end(); ++ito) {
-                Entidades::Obstaculo* obs = *ito;
-                if (boxProj.intersects(obs->getLimitesColisao())) {
-                    colidiu = true;
-                    break;
-                }
-            }
-        }
-
-        if (!colidiu) {
-            for (std::vector<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ) {
-                Entidades::Inimigo* ini = *iti;
-                if (ini != NULL && boxProj.intersects(ini->getLimitesColisao())) {
-                    colidiu = true;
-                    iti = LIs.erase(iti);
-                    if (pListaEntidades) {
-                        pListaEntidades->remover(ini);
-                    }
-                    delete ini;
-                    break;
-                } else {
-                    ++iti;
-                }
-            }
-        }
-
-        if (colidiu) {
-            std::set<Entidades::Projetil*>::iterator toErase = it;
-            ++it;
-            LPs.erase(toErase);
-            if (pListaEntidades) {
-                pListaEntidades->remover(p);
-            }
-            delete p;
-        } else {
-            ++it;
-        }
-    }
 }
 
 }

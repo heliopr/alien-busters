@@ -112,7 +112,6 @@ sf::FloatRect Jogador::getLimitesColisao() const {
 }
 
 void Jogador::mover() {
-    // Implementacao de mover
 }
 
 bool Jogador::getAtirou() {
@@ -120,6 +119,12 @@ bool Jogador::getAtirou() {
     bool disparou = atirouAtual && !tiroPressionado;
     tiroPressionado = atirouAtual;
     return disparou;
+}
+
+void Jogador::colidir(Inimigo* pIn) {
+    if (pIn) {
+        num_vidas--;
+    }
 }
 
 }

@@ -4,7 +4,7 @@
 namespace Entidades {
 
 Chao::Chao(float x, float y, float largura, float altura) : 
-    Entidade(), altura(altura), largura(largura) 
+    Obstaculo(), altura(altura), largura(largura) 
 {
     this->x = x;
     this->y = y;
@@ -23,6 +23,9 @@ void Chao::executar(float dt) {
     if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));
     }
+}
+
+void Chao::obstaculizar(Jogador *p) {
 }
 
 void Chao::salvar() {

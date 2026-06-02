@@ -4,6 +4,7 @@
 #include "Entidades/Personagem.h"
 
 namespace Entidades {
+class Inimigo;
 
 class Jogador : public Personagem { 
 protected:
@@ -29,6 +30,7 @@ public:
     void executar(float dt);
     void salvar();
     void mover();
+    void colidir(Inimigo* pIn);
 
     sf::FloatRect getLimitesColisao() const;
     bool getAtirou();

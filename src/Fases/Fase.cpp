@@ -35,18 +35,14 @@ void Fase::executar(float dt) {
 void Fase::desenhar() {
 }
 
-bool Fase::getPrecisaResetar() const {
-    return GC.getPrecisaResetar();
-}
-
 void Fase::criarCenario() {
     Entidades::Chao* chao1 = new Entidades::Chao(0.f, 700.f, 800.f, 100.f);
     Entidades::Chao* chao2 = new Entidades::Chao(920.f, 700.f, 780.f, 100.f);
     Entidades::Chao* chao3 = new Entidades::Chao(1850.f, 700.f, 800.f, 100.f);
 
-    GC.incluirChao(chao1);
-    GC.incluirChao(chao2);
-    GC.incluirChao(chao3);
+    GC.incluirObstaculo(chao1);
+    GC.incluirObstaculo(chao2);
+    GC.incluirObstaculo(chao3);
 
     lista_ents.incluir(chao1);
     lista_ents.incluir(chao2);
