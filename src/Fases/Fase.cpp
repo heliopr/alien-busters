@@ -19,6 +19,15 @@ Fase::~Fase() {
 }
 
 void Fase::executar(float dt) {
+    if (pJogador && pJogador->getAtirou()) {
+        float vx = pJogador->getOlhandoDireita() ? 500.f : -500.f;
+        float x_proj = pJogador->getX() + (pJogador->getOlhandoDireita() ? 40.f : -40.f);
+        float y_proj = pJogador->getY();
+        Entidades::Projetil* p = new Entidades::Projetil(x_proj, y_proj - 50.f, vx, 0.f);
+        lista_ents.incluir(p);
+        GC.incluirProjetil(p);
+    }
+
     lista_ents.percorrer(dt, pJogador);
     GC.executar();
 }
@@ -43,9 +52,9 @@ void Fase::criarCenario() {
     lista_ents.incluir(chao2);
     lista_ents.incluir(chao3);
 
-    Entidades::Projetil* proj = new Entidades::Projetil(100.f, 600.f, 200.f, 0.f);
+    /*Entidades::Projetil* proj = new Entidades::Projetil(100.f, 600.f, 200.f, 0.f);
     GC.incluirProjetil(proj);
-    lista_ents.incluir(proj);
+    lista_ents.incluir(proj);*/
 }
 
 }

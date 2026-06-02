@@ -18,6 +18,7 @@ private:
     bool olhandoEsquerda;   
     bool olhandoDireita; 
     bool puloPressionado;
+    bool tiroPressionado;
 
 public:
     Jogador();
@@ -28,6 +29,8 @@ public:
     void mover();
 
     sf::FloatRect getLimitesColisao() const;
+    bool getAtirou();
+    bool getOlhandoDireita() const { return olhandoDireita; }
 };
 
 }

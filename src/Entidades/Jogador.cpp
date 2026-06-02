@@ -10,7 +10,7 @@ namespace Entidades {
 Jogador::Jogador() : Personagem(), 
     linhaAtual(1), frameAtual(0), tempoAnimacao(0.f), 
     agachado(false), 
-    olhandoEsquerda(false), olhandoDireita(true), puloPressionado(false) 
+    olhandoEsquerda(false), olhandoDireita(true), puloPressionado(false), tiroPressionado(false)
 {
     x = Config::POSICAO_INICIAL_X;
     y = Config::POSICAO_INICIAL_Y; 
@@ -113,6 +113,13 @@ sf::FloatRect Jogador::getLimitesColisao() const {
 
 void Jogador::mover() {
     // Implementacao de mover
+}
+
+bool Jogador::getAtirou() {
+    bool atirouAtual = sf::Keyboard::isKeyPressed(sf::Keyboard::R);
+    bool disparou = atirouAtual && !tiroPressionado;
+    tiroPressionado = atirouAtual;
+    return disparou;
 }
 
 }
