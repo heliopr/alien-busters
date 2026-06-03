@@ -79,7 +79,6 @@ void Gerenciador_Colisoes::tratarColisoesJogsObstacs() {
                     pJog1->setY(boxObs.top + 25.f);
                     pJog1->setVy(0.f);
                     pJog1->setNoChao(true);
-                    obs->jogadorPisou();
                 } else {
                     pJog1->setY(boxObs.top + boxObs.height + 75.f);
                     if (pJog1->getVy() < 0.f) {

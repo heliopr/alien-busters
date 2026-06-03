@@ -76,8 +76,20 @@ void Plataforma::executar(float dt) {
     }
 }
 
-void Plataforma::obstaculizar(Jogador*) {
-    // TODO
+void Plataforma::obstaculizar(Jogador* p) {
+    if (p == NULL || caindo) return;
+
+    sf::FloatRect boxPlayer = p->getLimitesColisao();
+    sf::FloatRect boxPlat = getLimitesColisao();
+    sf::FloatRect interseccao;
+
+    if (boxPlayer.intersects(boxPlat, interseccao)) {
+        bool colisaoVertical = interseccao.width >= interseccao.height;
+        bool jogadorPorCima = boxPlayer.top + boxPlayer.height / 2.f < boxPlat.top + boxPlat.height / 2.f;
+        if (colisaoVertical && jogadorPorCima) {
+            jogadorPisou();
+        }
+    }
 }
 
 sf::FloatRect Plataforma::getLimitesColisao() const {
