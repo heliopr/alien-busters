@@ -23,6 +23,9 @@ private:
     bool puloPressionado;
     bool tiroPressionado;
 
+    bool lento;
+    float tempoLento;
+
 public:
     Jogador();
     ~Jogador();
@@ -35,6 +38,7 @@ public:
     sf::FloatRect getLimitesColisao() const;
     bool getAtirou();
     bool getOlhandoDireita() const { return olhandoDireita; }
+    void ficarLento(float duracao);
 };
 
 }

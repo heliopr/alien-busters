@@ -2,6 +2,7 @@
 #include "Entidades/Entidade.h"
 #include "Entidades/Jogador.h"
 #include "Entidades/Obstaculo.h"
+#include "Entidades/Obst_Medio.h"
 #include "Entidades/Inimigo.h"
 #include "Entidades/Projetil.h"
 #include "Listas/ListaEntidades.h"
@@ -14,6 +15,7 @@ Gerenciador_Colisoes::Gerenciador_Colisoes() : pJog1(NULL), pListaEntidades(NULL
 
 Gerenciador_Colisoes::~Gerenciador_Colisoes() {
     LOs.clear();
+    LOMs.clear();
     LIs.clear();
     LPs.clear();
 }
@@ -27,6 +29,12 @@ void Gerenciador_Colisoes::incluirInimigo(Entidades::Inimigo* pi) {
 void Gerenciador_Colisoes::incluirObstaculo(Entidades::Obstaculo* po) {
     if (po != NULL) {
         LOs.push_back(po);
+    }
+}
+
+void Gerenciador_Colisoes::incluirObstaculoMedio(Entidades::Obst_Medio* pom) {
+    if (pom != NULL) {
+        LOMs.push_back(pom);
     }
 }
 
@@ -154,8 +162,22 @@ void Gerenciador_Colisoes::tratarColisoesJogsProjeteis() {
     }
 }
 
+void Gerenciador_Colisoes::tratarColisoesJogsObstacsMedios() {
+    if (pJog1 == NULL) return;
+
+    for (std::list<Entidades::Obst_Medio*>::iterator it = LOMs.begin(); it != LOMs.end(); ++it) {
+        Entidades::Obst_Medio* om = *it;
+        if (om == NULL) continue;
+
+        if (verificarColisao(pJog1, om)) {
+            pJog1->ficarLento(3.0f);
+        }
+    }
+}
+
 void Gerenciador_Colisoes::executar() {
     tratarColisoesJogsObstacs();
+    tratarColisoesJogsObstacsMedios();
 
     for (std::vector<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
         Entidades::Inimigo* ini = *iti;

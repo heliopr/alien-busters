@@ -10,7 +10,8 @@ namespace Entidades {
 Jogador::Jogador() : Personagem(), 
     linhaAtual(1), frameAtual(0), tempoAnimacao(0.f), 
     agachado(false), 
-    olhandoEsquerda(false), olhandoDireita(true), puloPressionado(false), tiroPressionado(false)
+    olhandoEsquerda(false), olhandoDireita(true), puloPressionado(false), tiroPressionado(false),
+    lento(false), tempoLento(0.f)
 {
     x = Config::POSICAO_INICIAL_X;
     y = Config::POSICAO_INICIAL_Y; 
@@ -36,6 +37,16 @@ Jogador::~Jogador() {
 
 void Jogador::executar(float dt) {
     float velocidadeX = Config::VELOCIDADE_X;
+
+    if (lento) {
+        tempoLento -= dt;
+        if (tempoLento <= 0.f) {
+            lento = false;
+            tempoLento = 0.f;
+        } else {
+            velocidadeX *= 0.4f;
+        }
+    }
     float forcaPulo = Config::FORCA_PULO;  
     float gravidade = Config::GRAVIDADE;   
     float dx = 0;
@@ -125,6 +136,11 @@ void Jogador::colidir(Inimigo* pIn) {
     if (pIn) {
         num_vidas--;
     }
+}
+
+void Jogador::ficarLento(float duracao) {
+    lento = true;
+    tempoLento = duracao;
 }
 
 }
