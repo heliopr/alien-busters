@@ -21,7 +21,7 @@ Fase::~Fase() {
 void Fase::executar(float dt) {
     if (pJogador && pJogador->getAtirou()) {
         float vx = pJogador->getOlhandoDireita() ? 500.f : -500.f;
-        float x_proj = pJogador->getX() + (pJogador->getOlhandoDireita() ? 40.f : -40.f);
+        float x_proj = pJogador->getX() + (pJogador->getOlhandoDireita() ? 22.f : -22.f);
         float y_proj = pJogador->getY();
         Entidades::Projetil* p = new Entidades::Projetil(x_proj, y_proj - 50.f, vx, 0.f);
         lista_ents.incluir(p);

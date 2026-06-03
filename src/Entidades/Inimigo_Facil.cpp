@@ -79,7 +79,7 @@ void Inimigo_Facil::danificar(Jogador* p) {
 }
 
 sf::FloatRect Inimigo_Facil::getLimitesColisao() const {
-    return sf::FloatRect(x - 24.0f, y - 24.0f, 48.0f, 48.0f); // Hitbox correspondente ao personagem escalado
+    return sf::FloatRect(x - 24.0f, y - 24.0f, 48.0f, 48.0f);
 }
 
 void Inimigo_Facil::mover() {

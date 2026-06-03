@@ -5,6 +5,7 @@
 #include "Entidades/Obst_Medio.h"
 #include "Entidades/Inimigo.h"
 #include "Entidades/Projetil.h"
+#include "Entidades/Explosao.h"
 #include "Listas/ListaEntidades.h"
 #include <cstddef>
 
@@ -16,6 +17,7 @@ Gerenciador_Colisoes::Gerenciador_Colisoes() : pJog1(NULL), pListaEntidades(NULL
 Gerenciador_Colisoes::~Gerenciador_Colisoes() {
     LOs.clear();
     LOMs.clear();
+    LExps.clear();
     LIs.clear();
     LPs.clear();
 }
@@ -134,11 +136,14 @@ void Gerenciador_Colisoes::tratarColisoesJogsProjeteis() {
                 Entidades::Inimigo* ini = *iti;
                 if (ini != NULL && verificarColisao(p, ini)) {
                     colidiu = true;
+                    float xi = ini->getX();
+                    float yi = ini->getY();
                     iti = LIs.erase(iti);
                     if (pListaEntidades) {
                         pListaEntidades->remover(ini);
                     }
                     delete ini;
+                    criarExplosao(xi, yi - 30.f);
                     break;
                 } else {
                     ++iti;
@@ -220,6 +225,30 @@ void Gerenciador_Colisoes::executar() {
 
     tratarColisoesJogsInimigs();
     tratarColisoesJogsProjeteis();
+    limparExplosoes();
+}
+
+void Gerenciador_Colisoes::criarExplosao(float x, float y) {
+    Entidades::Explosao* exp = new Entidades::Explosao(x, y);
+    LExps.push_back(exp);
+    if (pListaEntidades) {
+        pListaEntidades->incluir(exp);
+    }
+}
+
+void Gerenciador_Colisoes::limparExplosoes() {
+    for (std::list<Entidades::Explosao*>::iterator it = LExps.begin(); it != LExps.end(); ) {
+        Entidades::Explosao* exp = *it;
+        if (exp != NULL && exp->getTerminada()) {
+            if (pListaEntidades) {
+                pListaEntidades->remover(exp);
+            }
+            delete exp;
+            it = LExps.erase(it);
+        } else {
+            ++it;
+        }
+    }
 }
 
 }

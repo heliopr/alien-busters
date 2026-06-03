@@ -35,10 +35,10 @@ void Jogo::executar() {
                 }
                 else if (evento.key.code == sf::Keyboard::Enter) {
                     if (menu.getOpcaoSelecionada() == 0) {
-                        noMenu = false; // Começa o jogo!
+                        noMenu = false;
                     } 
                     else if (menu.getOpcaoSelecionada() == 1) {
-                        GG.fecharJanela(); // Fecha o jogo pelo Menu!
+                        GG.fecharJanela();
                     }
                 }
             }
@@ -52,7 +52,6 @@ void Jogo::executar() {
         else {
             if (faseAtual) {
                 faseAtual->executar(dt);
-                // Reset handled differently now, removed for diagram matching
             }
         }
 

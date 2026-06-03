@@ -66,9 +66,9 @@ void Fase_Primeira::criarObstaculos() {
     p = new Entidades::Plataforma(2600.f, 300.f, 400.f, 600.f); GC.incluirObstaculo(p); lista_ents.incluir(p);
 
     Entidades::Obst_Medio* om = NULL;
-    om = new Entidades::Obst_Medio(640.f,  400.f, 130.f, 60.f); GC.incluirObstaculoMedio(om); lista_ents.incluir(om);
-    om = new Entidades::Obst_Medio(1100.f, 500.f, 130.f, 60.f); GC.incluirObstaculoMedio(om); lista_ents.incluir(om);
-    om = new Entidades::Obst_Medio(1750.f, 400.f, 130.f, 60.f); GC.incluirObstaculoMedio(om); lista_ents.incluir(om);
+    om = new Entidades::Obst_Medio(640.f,  400.f, 60.f, 60.f); GC.incluirObstaculoMedio(om); lista_ents.incluir(om);
+    om = new Entidades::Obst_Medio(1100.f, 500.f, 60.f, 60.f); GC.incluirObstaculoMedio(om); lista_ents.incluir(om);
+    om = new Entidades::Obst_Medio(1750.f, 400.f, 60.f, 60.f); GC.incluirObstaculoMedio(om); lista_ents.incluir(om);
 }
 
 }

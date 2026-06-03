@@ -13,9 +13,7 @@ Obst_Medio::Obst_Medio(float x, float y, float largura, float altura)
     pFig = new sf::RectangleShape(sf::Vector2f(largura, altura));
     if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));
-        pFig->setFillColor(sf::Color(120, 50, 200, 160));
-        pFig->setOutlineColor(sf::Color(180, 100, 255, 220));
-        pFig->setOutlineThickness(2.f);
+        pFig->setFillColor(sf::Color(50, 50, 200, 160));
     }
 }
 

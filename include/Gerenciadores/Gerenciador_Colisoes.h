@@ -12,6 +12,7 @@ namespace Entidades {
     class Obst_Medio;
     class Inimigo;
     class Projetil;
+    class Explosao;
 }
 
 namespace Listas {
@@ -25,6 +26,7 @@ private:
     std::vector<Entidades::Inimigo*> LIs;
     std::list<Entidades::Obstaculo*> LOs;
     std::list<Entidades::Obst_Medio*> LOMs;
+    std::list<Entidades::Explosao*> LExps;
     std::set<Entidades::Projetil*> LPs;
     Entidades::Jogador* pJog1;
     Listas::ListaEntidades* pListaEntidades;
@@ -34,6 +36,8 @@ private:
     void tratarColisoesJogsObstacsMedios();
     void tratarColisoesJogsInimigs();
     void tratarColisoesJogsProjeteis();
+    void criarExplosao(float x, float y);
+    void limparExplosoes();
 
 public:
     Gerenciador_Colisoes();
