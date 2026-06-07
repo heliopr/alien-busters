@@ -1,6 +1,7 @@
 #include "Gerenciadores/Gerenciador_Grafico.h"
 #include "Ente.h"
-#include <iostream> 
+#include <iostream>
+#include <sstream>
 
 namespace Gerenciadores {
 
@@ -20,6 +21,15 @@ Gerenciador_Grafico::Gerenciador_Grafico() :
         float scaleY = 800.f / texturaFundo.getSize().y;
         spriteFundo.setScale(scaleX, scaleY);
     }
+
+    if (!fontHUD.loadFromFile("assets/fonts/PixelifySans-Regular.ttf")) {
+        std::cerr << "Erro: Nao foi possivel carregar a fonte HUD" << std::endl;
+    }
+    textoHUD.setFont(fontHUD);
+    textoHUD.setCharacterSize(32);
+    textoHUD.setFillColor(sf::Color::White);
+    textoHUD.setString("Pontos: 0");
+    textoHUD.setPosition(20.f, 16.f);
 }
 
 Gerenciador_Grafico::~Gerenciador_Grafico() {}
@@ -46,6 +56,17 @@ void Gerenciador_Grafico::desenharRetangulo(sf::FloatRect rect, sf::Color corCon
     shape.setOutlineColor(corContorno);
     shape.setOutlineThickness(espessuraContorno);
     janela.draw(shape);
+}
+
+void Gerenciador_Grafico::desenharHUD(int pontos) {
+    std::ostringstream ss;
+    ss << "Pontos: " << pontos;
+    textoHUD.setString(ss.str());
+
+    sf::View viewHUD(sf::FloatRect(0.f, 0.f, 1422.222f, 800.f));
+    janela.setView(viewHUD);
+    janela.draw(textoHUD);
+    janela.setView(camera);
 }
 
 bool Gerenciador_Grafico::estaAberto() {

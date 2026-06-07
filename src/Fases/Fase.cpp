@@ -1,7 +1,7 @@
 #include "Fases/Fase.h"
 #include "Entidades/Chao.h"
-
 #include "Entidades/Projetil.h"
+#include "Gerenciadores/Gerenciador_Grafico.h"
 
 namespace Fases {
 
@@ -30,9 +30,14 @@ void Fase::executar(float dt) {
 
     lista_ents.percorrer(dt, pJogador);
     GC.executar();
+
+    desenhar();
 }
 
 void Fase::desenhar() {
+    if (pGG != 0 && pJogador != 0) {
+        pGG->desenharHUD(pJogador->getPontos());
+    }
 }
 
 void Fase::criarCenario() {
@@ -47,10 +52,7 @@ void Fase::criarCenario() {
     lista_ents.incluir(chao1);
     lista_ents.incluir(chao2);
     lista_ents.incluir(chao3);
-
-    /*Entidades::Projetil* proj = new Entidades::Projetil(100.f, 600.f, 200.f, 0.f);
-    GC.incluirProjetil(proj);
-    lista_ents.incluir(proj);*/
 }
 
 }
+

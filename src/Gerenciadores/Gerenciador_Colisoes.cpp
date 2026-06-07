@@ -144,6 +144,9 @@ void Gerenciador_Colisoes::tratarColisoesJogsProjeteis() {
                     }
                     delete ini;
                     criarExplosao(xi, yi - 30.f);
+                    if (pJog1) {
+                        pJog1->adicionarPontos(100);
+                    }
                     break;
                 } else {
                     ++iti;

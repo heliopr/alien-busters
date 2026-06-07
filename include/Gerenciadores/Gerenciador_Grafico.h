@@ -14,6 +14,8 @@ private:
     sf::Sprite spriteFundo;
     sf::View camera;
     bool mostrarHitboxes;
+    sf::Font fontHUD;
+    sf::Text textoHUD;
 
 public:
     Gerenciador_Grafico();
@@ -35,6 +37,7 @@ public:
     void renderizar();
     void mostrar();
     void atualizarCamera(sf::Vector2f posicaoJogador);
+    void desenharHUD(int pontos);
 };
 
 }

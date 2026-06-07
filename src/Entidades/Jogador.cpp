@@ -7,7 +7,7 @@
 
 namespace Entidades {
 
-Jogador::Jogador() : Personagem(), 
+Jogador::Jogador() : Personagem(), pontos(0),
     linhaAtual(1), frameAtual(0), tempoAnimacao(0.f), 
     agachado(false), 
     olhandoEsquerda(false), olhandoDireita(true), puloPressionado(false), tiroPressionado(false),
@@ -58,13 +58,13 @@ void Jogador::executar(float dt) {
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) { 
         dx -= 1; 
-        olhandoEsquerda = true; 
-        olhandoDireita = false; 
+        olhandoEsquerda = true;
+        olhandoDireita = false;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) { 
         dx += 1; 
-        olhandoDireita = true; 
-        olhandoEsquerda = false; 
+        olhandoDireita = true;
+        olhandoEsquerda = false;
     }
 
     bool puloAtual = sf::Keyboard::isKeyPressed(sf::Keyboard::W);

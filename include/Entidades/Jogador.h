@@ -38,6 +38,8 @@ public:
     sf::FloatRect getLimitesColisao() const;
     bool getAtirou();
     bool getOlhandoDireita() const { return olhandoDireita; }
+    int getPontos() const { return pontos; }
+    void adicionarPontos(int valor) { pontos += valor; }
     void ficarLento(float duracao);
 };
 
