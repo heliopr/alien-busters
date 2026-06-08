@@ -16,8 +16,7 @@ private:
     float tempoAnimacao;
     int larguraFrame;
     int alturaFrame;
-
-    bool agachado;          
+    
     bool olhandoEsquerda;   
     bool olhandoDireita; 
     bool puloPressionado;

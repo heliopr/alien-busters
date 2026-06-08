@@ -20,7 +20,7 @@ Fase::~Fase() {
 }
 
 void Fase::executar(float dt) {
-    if (pJogador && pJogador->getY() > Config::ALTURA_LIMITE_QUEDA) {
+    if (pJogador && (pJogador->getY() > Config::ALTURA_LIMITE_QUEDA || pJogador->getNumVidas() <= 0)) {
         reiniciar();
         return;
     }

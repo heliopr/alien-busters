@@ -10,7 +10,6 @@ namespace Entidades {
 
 Jogador::Jogador() : Personagem(), pontos(0),
     linhaAtual(1), frameAtual(0), tempoAnimacao(0.f), 
-    agachado(false), 
     olhandoEsquerda(false), olhandoDireita(true), puloPressionado(false), tiroPressionado(false),
     lento(false), tempoLento(0.f)
 {
