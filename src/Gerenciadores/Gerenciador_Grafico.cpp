@@ -12,8 +12,8 @@ Gerenciador_Grafico::Gerenciador_Grafico() :
     janela.setFramerateLimit(60);
     janela.setView(camera);
 
-    if (!texturaFundo.loadFromFile("assets/textures/marte.png")) {
-        std::cout << "Erro: Nao foi possivel carregar assets/textures/marte.png" << std::endl;
+    if (!texturaFundo.loadFromFile("assets/textures/lua.png")) {
+        std::cout << "Erro: Nao foi possivel carregar assets/textures/lua.png" << std::endl;
     } else {
         spriteFundo.setTexture(texturaFundo);
 
