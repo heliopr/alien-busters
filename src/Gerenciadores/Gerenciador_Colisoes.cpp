@@ -2,7 +2,7 @@
 #include "Entidades/Entidade.h"
 #include "Entidades/Jogador.h"
 #include "Entidades/Obstaculo.h"
-#include "Entidades/Obst_Dificil.h"
+#include "Entidades/MinaTerrestre.h"
 #include "Entidades/Inimigo.h"
 #include "Entidades/Projetil.h"
 #include "Entidades/Explosao.h"
@@ -34,7 +34,7 @@ void Gerenciador_Colisoes::incluirObstaculo(Entidades::Obstaculo* po) {
     }
 }
 
-void Gerenciador_Colisoes::incluirObstaculoDificil(Entidades::Obst_Dificil* pod) {
+void Gerenciador_Colisoes::incluirObstaculoDificil(Entidades::MinaTerrestre* pod) {
     if (pod != NULL) {
         LODs.push_back(pod);
     }
@@ -178,8 +178,8 @@ void Gerenciador_Colisoes::tratarColisoesJogsProjeteis() {
 }
 
 void Gerenciador_Colisoes::tratarColisoesJogsObstacsDificeis() {
-    for (std::list<Entidades::Obst_Dificil*>::iterator it = LODs.begin(); it != LODs.end(); ) {
-        Entidades::Obst_Dificil* od = *it;
+    for (std::list<Entidades::MinaTerrestre*>::iterator it = LODs.begin(); it != LODs.end(); ) {
+        Entidades::MinaTerrestre* od = *it;
         if (od == NULL) {
             it = LODs.erase(it);
             continue;

@@ -1,5 +1,5 @@
-#ifndef INIMIGO_FACIL_H
-#define INIMIGO_FACIL_H
+#ifndef ALIEN_H
+#define ALIEN_H
 
 #include "Entidades/Inimigo.h"
 #include <SFML/Graphics.hpp>
@@ -8,7 +8,7 @@ namespace Entidades {
 
 class Jogador;
 
-class Inimigo_Facil : public Inimigo {
+class Alien : public Inimigo {
 private:
     float raio;
     sf::Texture texturaInimigo;
@@ -21,8 +21,8 @@ private:
     bool olhandoDireita;
 
 public:
-    Inimigo_Facil(float x = 400.f, float y = 300.f);
-    ~Inimigo_Facil();
+    Alien(float x = 400.f, float y = 300.f);
+    ~Alien();
 
     void executar(float dt);
     void salvar();

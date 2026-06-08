@@ -1,11 +1,11 @@
-#include "Entidades/Inimigo_Facil.h"
+#include "Entidades/Alien.h"
 #include "Entidades/Jogador.h"
 #include "Configuracao.h"
 #include <iostream>
 
 namespace Entidades {
 
-Inimigo_Facil::Inimigo_Facil(float x_ini, float y_ini) : Inimigo(), raio(20.0f),
+Alien::Alien(float x_ini, float y_ini) : Inimigo(), raio(20.0f),
     linhaAtual(1), frameAtual(0), tempoAnimacao(0.f),
     olhandoEsquerda(true), olhandoDireita(false) 
 {
@@ -28,10 +28,10 @@ Inimigo_Facil::Inimigo_Facil(float x_ini, float y_ini) : Inimigo(), raio(20.0f),
     }
 }
 
-Inimigo_Facil::~Inimigo_Facil() {
+Alien::~Alien() {
 }
 
-void Inimigo_Facil::executar(float dt) {
+void Alien::executar(float dt) {
     vy += Config::GRAVIDADE * dt;
     
     x += velocidadeX * dt;
@@ -69,20 +69,20 @@ void Inimigo_Facil::executar(float dt) {
     }
 }
 
-void Inimigo_Facil::salvar() {
+void Alien::salvar() {
 }
 
-void Inimigo_Facil::danificar(Jogador* p) {
+void Alien::danificar(Jogador* p) {
     if (p != NULL) {
         p->perderVida();
     }
 }
 
-sf::FloatRect Inimigo_Facil::getLimitesColisao() const {
+sf::FloatRect Alien::getLimitesColisao() const {
     return sf::FloatRect(x - 24.0f, y - 24.0f, 48.0f, 48.0f);
 }
 
-void Inimigo_Facil::mover() {
+void Alien::mover() {
 
 }
 

@@ -1,4 +1,4 @@
-#include "Entidades/Obst_Dificil.h"
+#include "Entidades/MinaTerrestre.h"
 #include "Entidades/Jogador.h"
 #include <cstddef>
 #include <cmath>
@@ -6,7 +6,7 @@
 
 namespace Entidades {
 
-Obst_Dificil::Obst_Dificil(float x, float y, float largura, float altura, short int dano)
+MinaTerrestre::MinaTerrestre(float x, float y, float largura, float altura, short int dano)
     : Obstaculo(), largura(largura), altura(altura),
       danoVidas(dano), destruido(false)
 {
@@ -28,17 +28,17 @@ Obst_Dificil::Obst_Dificil(float x, float y, float largura, float altura, short 
     }
 }
 
-Obst_Dificil::~Obst_Dificil() {
+MinaTerrestre::~MinaTerrestre() {
 }
 
-void Obst_Dificil::executar(float dt) {
+void MinaTerrestre::executar(float dt) {
     (void)dt;
 }
 
-void Obst_Dificil::salvar() {
+void MinaTerrestre::salvar() {
 }
 
-void Obst_Dificil::obstaculizar(Jogador* p) {
+void MinaTerrestre::obstaculizar(Jogador* p) {
     if (p == NULL || destruido) return;
 
     if (p->getLimitesColisao().intersects(getLimitesColisao())) {
@@ -46,7 +46,7 @@ void Obst_Dificil::obstaculizar(Jogador* p) {
     }
 }
 
-void Obst_Dificil::aplicarDano(Jogador* p) {
+void MinaTerrestre::aplicarDano(Jogador* p) {
     if (p == NULL || destruido) return;
     std::cout << "Danificar jogador" << std::endl;
     for (short int i = 0; i < danoVidas; ++i) {
@@ -55,7 +55,7 @@ void Obst_Dificil::aplicarDano(Jogador* p) {
     destruido = true;
 }
 
-sf::FloatRect Obst_Dificil::getLimitesColisao() const {
+sf::FloatRect MinaTerrestre::getLimitesColisao() const {
     if (destruido) return sf::FloatRect(0.f, 0.f, 0.f, 0.f);
     return sf::FloatRect(x, y, largura, altura);
 }

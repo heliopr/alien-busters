@@ -1,10 +1,10 @@
-#include "Entidades/Obst_Medio.h"
+#include "Entidades/Gosma.h"
 #include "Entidades/Jogador.h"
 #include <cstddef>
 
 namespace Entidades {
 
-Obst_Medio::Obst_Medio(float x, float y, float largura, float altura)
+Gosma::Gosma(float x, float y, float largura, float altura)
     : Obstaculo(), largura(largura), altura(altura) {
     this->x = x;
     this->y = y;
@@ -17,16 +17,16 @@ Obst_Medio::Obst_Medio(float x, float y, float largura, float altura)
     }
 }
 
-Obst_Medio::~Obst_Medio() {
+Gosma::~Gosma() {
 }
 
-void Obst_Medio::executar(float dt) {
+void Gosma::executar(float dt) {
 }
 
-void Obst_Medio::salvar() {
+void Gosma::salvar() {
 }
 
-void Obst_Medio::obstaculizar(Jogador* p) {
+void Gosma::obstaculizar(Jogador* p) {
     if (p == NULL) return;
 
     if (p->getLimitesColisao().intersects(getLimitesColisao())) {
@@ -34,7 +34,7 @@ void Obst_Medio::obstaculizar(Jogador* p) {
     }
 }
 
-sf::FloatRect Obst_Medio::getLimitesColisao() const {
+sf::FloatRect Gosma::getLimitesColisao() const {
     return sf::FloatRect(x, y, largura, altura);
 }
 

@@ -1,8 +1,8 @@
 #include "Fases/Fase_Primeira.h"
 #include "Entidades/Plataforma.h"
-#include "Entidades/Inimigo_Facil.h"
-#include "Entidades/Obst_Medio.h"
-#include "Entidades/Obst_Dificil.h"
+#include "Entidades/Alien.h"
+#include "Entidades/Gosma.h"
+#include "Entidades/MinaTerrestre.h"
 
 namespace Fases {
 
@@ -18,23 +18,23 @@ Fase_Primeira::~Fase_Primeira() {
 }
 
 void Fase_Primeira::criarInimigos() {
-    Entidades::Inimigo_Facil* inimigo1 = new Entidades::Inimigo_Facil(400.f, 300.f);
+    Entidades::Alien* inimigo1 = new Entidades::Alien(400.f, 300.f);
     lista_ents.incluir(inimigo1);
     GC.incluirInimigo(inimigo1);
 
-    Entidades::Inimigo_Facil* inimigo2 = new Entidades::Inimigo_Facil(700.f, 300.f);
+    Entidades::Alien* inimigo2 = new Entidades::Alien(700.f, 300.f);
     lista_ents.incluir(inimigo2);
     GC.incluirInimigo(inimigo2);
 
-    Entidades::Inimigo_Facil* inimigo3 = new Entidades::Inimigo_Facil(1200.f, 400.f);
+    Entidades::Alien* inimigo3 = new Entidades::Alien(1200.f, 400.f);
     lista_ents.incluir(inimigo3);
     GC.incluirInimigo(inimigo3);
 
-    Entidades::Inimigo_Facil* inimigo4 = new Entidades::Inimigo_Facil(1700.f, 350.f);
+    Entidades::Alien* inimigo4 = new Entidades::Alien(1700.f, 350.f);
     lista_ents.incluir(inimigo4);
     GC.incluirInimigo(inimigo4);
 
-    Entidades::Inimigo_Facil* inimigo5 = new Entidades::Inimigo_Facil(2200.f, 300.f);
+    Entidades::Alien* inimigo5 = new Entidades::Alien(2200.f, 300.f);
     lista_ents.incluir(inimigo5);
     GC.incluirInimigo(inimigo5);
 }
@@ -66,15 +66,15 @@ void Fase_Primeira::criarObstaculos() {
 
     p = new Entidades::Plataforma(2600.f, 300.f, 400.f, 600.f); GC.incluirObstaculo(p); lista_ents.incluir(p);
 
-    Entidades::Obst_Medio* om = NULL;
-    om = new Entidades::Obst_Medio(640.f,  400.f, 60.f, 60.f); lista_ents.incluir(om);
-    om = new Entidades::Obst_Medio(1100.f, 500.f, 60.f, 60.f); lista_ents.incluir(om);
-    om = new Entidades::Obst_Medio(1750.f, 400.f, 60.f, 60.f); lista_ents.incluir(om);
+    Entidades::Gosma* om = NULL;
+    om = new Entidades::Gosma(640.f,  400.f, 60.f, 60.f); lista_ents.incluir(om);
+    om = new Entidades::Gosma(1100.f, 500.f, 60.f, 60.f); lista_ents.incluir(om);
+    om = new Entidades::Gosma(1750.f, 400.f, 60.f, 60.f); lista_ents.incluir(om);
 
-    Entidades::Obst_Dificil* od = NULL;
-    od = new Entidades::Obst_Dificil(850.f,  380.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
-    od = new Entidades::Obst_Dificil(1450.f, 420.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
-    od = new Entidades::Obst_Dificil(2150.f, 460.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
+    Entidades::MinaTerrestre* od = NULL;
+    od = new Entidades::MinaTerrestre(850.f,  380.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
+    od = new Entidades::MinaTerrestre(1450.f, 420.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
+    od = new Entidades::MinaTerrestre(2150.f, 460.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
 }
 
 }
