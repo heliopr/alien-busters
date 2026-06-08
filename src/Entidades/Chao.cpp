@@ -32,7 +32,7 @@ void Chao::salvar() {
     // TODO
 }
 
-sf::FloatRect Chao::getLimitesColisao() const {
+sf::FloatRect Chao::getHitbox() const {
     return sf::FloatRect(x, y, largura, altura);
 }
 

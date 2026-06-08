@@ -18,7 +18,7 @@ public:
     void executar(float dt);
     void salvar();
 
-    sf::FloatRect getLimitesColisao() const;
+    sf::FloatRect getHitbox() const;
     bool getAtivo() const { return ativo; }
     void setAtivo(bool b) { ativo = b; }
     float getVx() const { return vx; }

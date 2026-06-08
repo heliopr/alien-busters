@@ -1,12 +1,12 @@
-#ifndef MINATERRESTRE_H
-#define MINATERRESTRE_H
+#ifndef MINAEXTRATERRESTRE_H
+#define MINAEXTRATERRESTRE_H
 
 #include "Entidades/Obstaculo.h"
 #include <SFML/Graphics.hpp>
 
 namespace Entidades {
 
-class MinaTerrestre : public Obstaculo {
+class MinaExtraterrestre : public Obstaculo {
 private:
     float largura;
     float altura;
@@ -15,15 +15,15 @@ private:
     sf::Texture texturaMina;
 
 public:
-    MinaTerrestre(float x, float y, float largura = 45.f, float altura = 45.f, short int dano = 1);
-    ~MinaTerrestre();
+    MinaExtraterrestre(float x, float y, float largura = 45.f, float altura = 45.f, short int dano = 1);
+    ~MinaExtraterrestre();
 
     void executar(float dt);
     void salvar();
     void obstaculizar(Jogador* p);
     void aplicarDano(Jogador* p);
 
-    sf::FloatRect getLimitesColisao() const;
+    sf::FloatRect getHitbox() const;
 
     bool getDestruido() const { return destruido; }
     void destruir() { destruido = true; }

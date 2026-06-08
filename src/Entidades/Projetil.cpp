@@ -37,7 +37,7 @@ void Projetil::executar(float dt) {
     }
 }
 
-sf::FloatRect Projetil::getLimitesColisao() const {
+sf::FloatRect Projetil::getHitbox() const {
     return sf::FloatRect(x - 5.f, y - 5.f, 10.f, 10.f);
 }
 

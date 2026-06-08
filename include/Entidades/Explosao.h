@@ -23,7 +23,7 @@ public:
 
     void executar(float dt);
     void salvar();
-    sf::FloatRect getLimitesColisao() const;
+    sf::FloatRect getHitbox() const;
 
     bool getTerminada() const { return terminada; }
 };

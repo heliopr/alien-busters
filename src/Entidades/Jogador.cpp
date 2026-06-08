@@ -115,7 +115,7 @@ void Jogador::executar(float dt) {
 void Jogador::salvar() {
 }
 
-sf::FloatRect Jogador::getLimitesColisao() const {
+sf::FloatRect Jogador::getHitbox() const {
     return sf::FloatRect(x - 20.f, y - 75.f, 40.f, 50.f);
 }
 

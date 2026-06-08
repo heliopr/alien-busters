@@ -2,7 +2,7 @@
 #include "Entidades/Plataforma.h"
 #include "Entidades/Alien.h"
 #include "Entidades/Gosma.h"
-#include "Entidades/MinaTerrestre.h"
+#include "Entidades/MinaExtraterrestre.h"
 #include <cstdlib>
 #include <ctime>
 
@@ -97,10 +97,10 @@ void Fase_Primeira::criarObstaculos() {
     om = new Entidades::Gosma(940.f, 640.f, 60.f, 60.f); lista_ents.incluir(om);
     om = new Entidades::Gosma(1980.f, 640.f, 60.f, 60.f); lista_ents.incluir(om);
 
-    Entidades::MinaTerrestre* od = NULL;
-    od = new Entidades::MinaTerrestre(600.f,  660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
-    od = new Entidades::MinaTerrestre(1450.f, 660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
-    od = new Entidades::MinaTerrestre(2250.f, 660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
+    Entidades::MinaExtraterrestre* od = NULL;
+    od = new Entidades::MinaExtraterrestre(600.f,  660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
+    od = new Entidades::MinaExtraterrestre(1450.f, 660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
+    od = new Entidades::MinaExtraterrestre(2250.f, 660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
 }
 
 }

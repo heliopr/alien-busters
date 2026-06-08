@@ -28,7 +28,7 @@ public:
     void salvar();
     void mover();
     void danificar(Jogador* p);
-    sf::FloatRect getLimitesColisao() const;
+    sf::FloatRect getHitbox() const;
 };
 
 }

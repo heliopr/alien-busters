@@ -35,7 +35,7 @@ public:
     void mover();
     void colidir(Inimigo* pIn);
 
-    sf::FloatRect getLimitesColisao() const;
+    sf::FloatRect getHitbox() const;
     bool getAtirou();
     bool getOlhandoDireita() const { return olhandoDireita; }
     int getPontos() const { return pontos; }

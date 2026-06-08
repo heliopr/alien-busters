@@ -17,7 +17,7 @@ public:
     void executar(float dt);
     void salvar();
     void obstaculizar(Jogador *p);
-    sf::FloatRect getLimitesColisao() const;
+    sf::FloatRect getHitbox() const;
 };
 
 }

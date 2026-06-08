@@ -9,7 +9,7 @@ namespace Entidades {
     class Entidade;
     class Jogador;
     class Obstaculo;
-    class MinaTerrestre;
+    class MinaExtraterrestre;
     class Inimigo;
     class Projetil;
     class Explosao;
@@ -25,7 +25,7 @@ class Gerenciador_Colisoes {
 private:
     std::vector<Entidades::Inimigo*> LIs;
     std::list<Entidades::Obstaculo*> LOs;
-    std::list<Entidades::MinaTerrestre*> LODs;
+    std::list<Entidades::MinaExtraterrestre*> LODs;
     std::list<Entidades::Explosao*> LExps;
     std::set<Entidades::Projetil*> LPs;
     Entidades::Jogador* pJog1;
@@ -48,7 +48,7 @@ public:
 
     void incluirInimigo(Entidades::Inimigo* pi);
     void incluirObstaculo(Entidades::Obstaculo* po);
-    void incluirObstaculoDificil(Entidades::MinaTerrestre* pod);
+    void incluirObstaculoDificil(Entidades::MinaExtraterrestre* pod);
     void incluirProjetil(Entidades::Projetil* pj);
     void limpar();
     

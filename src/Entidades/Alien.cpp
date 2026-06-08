@@ -78,7 +78,7 @@ void Alien::danificar(Jogador* p) {
     }
 }
 
-sf::FloatRect Alien::getLimitesColisao() const {
+sf::FloatRect Alien::getHitbox() const {
     return sf::FloatRect(x - 24.0f, y - 24.0f, 48.0f, 48.0f);
 }
 

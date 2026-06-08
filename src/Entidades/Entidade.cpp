@@ -17,7 +17,7 @@ Entidade::~Entidade() {
 void Entidade::desenhar() {
     Ente::desenhar();
     if (pGG && pGG->getMostrarHitboxes()) {
-        pGG->desenharRetangulo(getLimitesColisao(), sf::Color::Red, 2.f);
+        pGG->desenharRetangulo(getHitbox(), sf::Color::Red, 2.f);
     }
 }
 

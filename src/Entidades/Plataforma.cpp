@@ -79,8 +79,8 @@ void Plataforma::executar(float dt) {
 void Plataforma::obstaculizar(Jogador* p) {
     if (p == NULL || caindo) return;
 
-    sf::FloatRect boxPlayer = p->getLimitesColisao();
-    sf::FloatRect boxPlat = getLimitesColisao();
+    sf::FloatRect boxPlayer = p->getHitbox();
+    sf::FloatRect boxPlat = getHitbox();
     sf::FloatRect interseccao;
 
     if (boxPlayer.intersects(boxPlat, interseccao)) {
@@ -92,7 +92,7 @@ void Plataforma::obstaculizar(Jogador* p) {
     }
 }
 
-sf::FloatRect Plataforma::getLimitesColisao() const {
+sf::FloatRect Plataforma::getHitbox() const {
     return sf::FloatRect(x, y, largura, altura);
 }
 

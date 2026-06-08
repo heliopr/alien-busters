@@ -19,7 +19,7 @@ public:
     virtual void executar(float dt) = 0;
     virtual void salvar() = 0;
     virtual void danificar(Jogador* p) = 0;
-    virtual sf::FloatRect getLimitesColisao() const = 0;
+    virtual sf::FloatRect getHitbox() const = 0;
 
     float getVelocidadeX() const { return velocidadeX; }
     void setVelocidadeX(float v) { velocidadeX = v; }

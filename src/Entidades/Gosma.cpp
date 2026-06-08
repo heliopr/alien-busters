@@ -29,12 +29,12 @@ void Gosma::salvar() {
 void Gosma::obstaculizar(Jogador* p) {
     if (p == NULL) return;
 
-    if (p->getLimitesColisao().intersects(getLimitesColisao())) {
+    if (p->getHitbox().intersects(getHitbox())) {
         p->ficarLento(3.0f);
     }
 }
 
-sf::FloatRect Gosma::getLimitesColisao() const {
+sf::FloatRect Gosma::getHitbox() const {
     return sf::FloatRect(x, y, largura, altura);
 }
 

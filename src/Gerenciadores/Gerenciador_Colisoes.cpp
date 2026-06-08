@@ -2,7 +2,7 @@
 #include "Entidades/Entidade.h"
 #include "Entidades/Jogador.h"
 #include "Entidades/Obstaculo.h"
-#include "Entidades/MinaTerrestre.h"
+#include "Entidades/MinaExtraterrestre.h"
 #include "Entidades/Inimigo.h"
 #include "Entidades/Projetil.h"
 #include "Entidades/Explosao.h"
@@ -34,7 +34,7 @@ void Gerenciador_Colisoes::incluirObstaculo(Entidades::Obstaculo* po) {
     }
 }
 
-void Gerenciador_Colisoes::incluirObstaculoDificil(Entidades::MinaTerrestre* pod) {
+void Gerenciador_Colisoes::incluirObstaculoDificil(Entidades::MinaExtraterrestre* pod) {
     if (pod != NULL) {
         LODs.push_back(pod);
     }
@@ -57,8 +57,8 @@ void Gerenciador_Colisoes::limpar() {
 bool Gerenciador_Colisoes::verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2) const {
     if (pe1 == NULL || pe2 == NULL) return false;
 
-    sf::FloatRect box1 = pe1->getLimitesColisao();
-    sf::FloatRect box2 = pe2->getLimitesColisao();
+    sf::FloatRect box1 = pe1->getHitbox();
+    sf::FloatRect box2 = pe2->getHitbox();
 
     return box1.intersects(box2);
 }
@@ -66,13 +66,13 @@ bool Gerenciador_Colisoes::verificarColisao(Entidades::Entidade* pe1, Entidades:
 void Gerenciador_Colisoes::tratarColisoesJogsObstacs() {
     if (pJog1 == NULL) return;
     
-    sf::FloatRect boxPlayer = pJog1->getLimitesColisao();
+    sf::FloatRect boxPlayer = pJog1->getHitbox();
 
     for (std::list<Entidades::Obstaculo*>::iterator it = LOs.begin(); it != LOs.end(); ++it) {
         Entidades::Obstaculo* obs = *it;
         if (obs == NULL) continue;
 
-        sf::FloatRect boxObs = obs->getLimitesColisao();
+        sf::FloatRect boxObs = obs->getHitbox();
         sf::FloatRect interseccao;
 
         if (boxPlayer.intersects(boxObs, interseccao)) {
@@ -96,7 +96,7 @@ void Gerenciador_Colisoes::tratarColisoesJogsObstacs() {
                     }
                 }
             }
-            boxPlayer = pJog1->getLimitesColisao();
+            boxPlayer = pJog1->getHitbox();
         }
     }
 }
@@ -178,8 +178,8 @@ void Gerenciador_Colisoes::tratarColisoesJogsProjeteis() {
 }
 
 void Gerenciador_Colisoes::tratarColisoesJogsObstacsDificeis() {
-    for (std::list<Entidades::MinaTerrestre*>::iterator it = LODs.begin(); it != LODs.end(); ) {
-        Entidades::MinaTerrestre* od = *it;
+    for (std::list<Entidades::MinaExtraterrestre*>::iterator it = LODs.begin(); it != LODs.end(); ) {
+        Entidades::MinaExtraterrestre* od = *it;
         if (od == NULL) {
             it = LODs.erase(it);
             continue;
@@ -210,13 +210,13 @@ void Gerenciador_Colisoes::executar() {
         Entidades::Inimigo* ini = *iti;
         if (ini == NULL) continue;
         
-        sf::FloatRect boxIni = ini->getLimitesColisao();
+        sf::FloatRect boxIni = ini->getHitbox();
 
         for (std::list<Entidades::Obstaculo*>::iterator ito = LOs.begin(); ito != LOs.end(); ++ito) {
             Entidades::Obstaculo* obs = *ito;
             if (obs == NULL) continue;
 
-            sf::FloatRect boxObs = obs->getLimitesColisao();
+            sf::FloatRect boxObs = obs->getHitbox();
             sf::FloatRect interseccao;
 
             if (boxIni.intersects(boxObs, interseccao)) {
@@ -241,7 +241,7 @@ void Gerenciador_Colisoes::executar() {
                         }
                     }
                 }
-                boxIni = ini->getLimitesColisao();
+                boxIni = ini->getHitbox();
             }
         }
     }

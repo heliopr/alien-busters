@@ -59,7 +59,7 @@ void Explosao::executar(float dt) {
 void Explosao::salvar() {
 }
 
-sf::FloatRect Explosao::getLimitesColisao() const {
+sf::FloatRect Explosao::getHitbox() const {
     return sf::FloatRect(x, y, 0.f, 0.f); // sem colisão
 }
 
