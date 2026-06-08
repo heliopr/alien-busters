@@ -54,6 +54,7 @@ public:
     void incluirObstaculoMedio(Entidades::Obst_Medio* pom);
     void incluirObstaculoDificil(Entidades::Obst_Dificil* pod);
     void incluirProjetil(Entidades::Projetil* pj);
+    void limpar();
     
     void executar();
 };

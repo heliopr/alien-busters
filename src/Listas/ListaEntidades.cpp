@@ -16,6 +16,18 @@ void ListaEntidades::remover(Entidades::Entidade *pE) {
     LEs.remover(pE);
 }
 
+void ListaEntidades::limpar() {
+    Lista<Entidades::Entidade>::Elemento *atual = LEs.getPrimeiro();
+    while (atual != 0) {
+        Entidades::Entidade *ent = atual->getInfo();
+        atual = atual->getProx();
+        if (ent != 0) {
+            delete ent;
+        }
+    }
+    LEs.limpar();
+}
+
 void ListaEntidades::percorrer(float dt, Entidades::Jogador *pJogador) {
     Lista<Entidades::Entidade>::Elemento *atual = LEs.getPrimeiro();
     while (atual != 0) {

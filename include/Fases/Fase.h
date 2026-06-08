@@ -20,6 +20,7 @@ public:
 
     virtual void executar(float dt);
     virtual void desenhar();
+    virtual void reiniciar();
 
 protected:
     virtual void criarInimigos() = 0;

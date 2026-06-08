@@ -54,6 +54,15 @@ void Gerenciador_Colisoes::incluirProjetil(Entidades::Projetil* pj) {
     }
 }
 
+void Gerenciador_Colisoes::limpar() {
+    LOs.clear();
+    LOMs.clear();
+    LODs.clear();
+    LExps.clear();
+    LIs.clear();
+    LPs.clear();
+}
+
 bool Gerenciador_Colisoes::verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2) const {
     if (pe1 == NULL || pe2 == NULL) return false;
 

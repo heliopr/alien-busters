@@ -76,11 +76,8 @@ void Jogador::executar(float dt) {
     x += dx * velocidadeX * dt;
     y += vy * dt;
 
-    if (y > Config::ALTURA_LIMITE_QUEDA) {
-        x = Config::POSICAO_INICIAL_X;
-        y = Config::POSICAO_INICIAL_Y;
-        vy = 0.f;
-    }
+
+
 
     if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));

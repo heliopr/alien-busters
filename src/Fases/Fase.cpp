@@ -2,6 +2,7 @@
 #include "Entidades/Chao.h"
 #include "Entidades/Projetil.h"
 #include "Gerenciadores/Gerenciador_Grafico.h"
+#include "Configuracao.h"
 
 namespace Fases {
 
@@ -19,6 +20,11 @@ Fase::~Fase() {
 }
 
 void Fase::executar(float dt) {
+    if (pJogador && pJogador->getY() > Config::ALTURA_LIMITE_QUEDA) {
+        reiniciar();
+        return;
+    }
+
     if (pJogador && pJogador->getAtirou()) {
         float vx = pJogador->getOlhandoDireita() ? 500.f : -500.f;
         float x_proj = pJogador->getX() + (pJogador->getOlhandoDireita() ? 22.f : -22.f);
@@ -52,6 +58,21 @@ void Fase::criarCenario() {
     lista_ents.incluir(chao1);
     lista_ents.incluir(chao2);
     lista_ents.incluir(chao3);
+}
+
+void Fase::reiniciar() {
+    GC.limpar();
+    lista_ents.limpar();
+
+    pJogador = new Entidades::Jogador();
+    GC.setJogador(pJogador);
+    GC.setListaEntidades(&lista_ents);
+
+    criarCenario();
+    criarObstaculos();
+    criarInimigos();
+
+    lista_ents.incluir(pJogador);
 }
 
 }

@@ -1,6 +1,9 @@
 # Jogo
 
 ## TODO
+- [ ] PLATAFORMAS ALEATÓRIAS
+- [ ] MUDAR NOMES DE CLASSES
+- [ ] CONSERTAR GRAVIDADE
 - [x] Fase e chão
 - [x] Mudar lógica de colisões para Gerenciador_Colisoes
 - [x] Refatorar Gerenciador_Colisoes
