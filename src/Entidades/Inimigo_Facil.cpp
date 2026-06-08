@@ -74,7 +74,7 @@ void Inimigo_Facil::salvar() {
 
 void Inimigo_Facil::danificar(Jogador* p) {
     if (p != NULL) {
-
+        p->perderVida();
     }
 }
 

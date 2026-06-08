@@ -39,10 +39,16 @@ void Obst_Dificil::salvar() {
 }
 
 void Obst_Dificil::obstaculizar(Jogador* p) {
+    if (p == NULL || destruido) return;
+
+    if (p->getLimitesColisao().intersects(getLimitesColisao())) {
+        aplicarDano(p);
+    }
 }
 
 void Obst_Dificil::aplicarDano(Jogador* p) {
     if (p == NULL || destruido) return;
+    std::cout << "Danificar jogador" << std::endl;
     for (short int i = 0; i < danoVidas; ++i) {
         p->perderVida();
     }

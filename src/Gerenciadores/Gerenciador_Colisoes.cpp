@@ -2,7 +2,6 @@
 #include "Entidades/Entidade.h"
 #include "Entidades/Jogador.h"
 #include "Entidades/Obstaculo.h"
-#include "Entidades/Obst_Medio.h"
 #include "Entidades/Obst_Dificil.h"
 #include "Entidades/Inimigo.h"
 #include "Entidades/Projetil.h"
@@ -17,7 +16,6 @@ Gerenciador_Colisoes::Gerenciador_Colisoes() : pJog1(NULL), pListaEntidades(NULL
 
 Gerenciador_Colisoes::~Gerenciador_Colisoes() {
     LOs.clear();
-    LOMs.clear();
     LODs.clear();
     LExps.clear();
     LIs.clear();
@@ -36,12 +34,6 @@ void Gerenciador_Colisoes::incluirObstaculo(Entidades::Obstaculo* po) {
     }
 }
 
-void Gerenciador_Colisoes::incluirObstaculoMedio(Entidades::Obst_Medio* pom) {
-    if (pom != NULL) {
-        LOMs.push_back(pom);
-    }
-}
-
 void Gerenciador_Colisoes::incluirObstaculoDificil(Entidades::Obst_Dificil* pod) {
     if (pod != NULL) {
         LODs.push_back(pod);
@@ -56,7 +48,6 @@ void Gerenciador_Colisoes::incluirProjetil(Entidades::Projetil* pj) {
 
 void Gerenciador_Colisoes::limpar() {
     LOs.clear();
-    LOMs.clear();
     LODs.clear();
     LExps.clear();
     LIs.clear();
@@ -187,20 +178,16 @@ void Gerenciador_Colisoes::tratarColisoesJogsProjeteis() {
 }
 
 void Gerenciador_Colisoes::tratarColisoesJogsObstacsDificeis() {
-    if (pJog1 == NULL) return;
-
     for (std::list<Entidades::Obst_Dificil*>::iterator it = LODs.begin(); it != LODs.end(); ) {
         Entidades::Obst_Dificil* od = *it;
-        if (od == NULL || od->getDestruido()) {
-            ++it;
+        if (od == NULL) {
+            it = LODs.erase(it);
             continue;
         }
 
-        if (verificarColisao(pJog1, od)) {
+        if (od->getDestruido()) {
             float xExp = od->getX() + 30.f;
             float yExp = od->getY() + 30.f;
-
-            od->aplicarDano(pJog1);
 
             criarExplosao(xExp, yExp - 50.f);
 
@@ -215,22 +202,8 @@ void Gerenciador_Colisoes::tratarColisoesJogsObstacsDificeis() {
     }
 }
 
-void Gerenciador_Colisoes::tratarColisoesJogsObstacsMedios() {
-    if (pJog1 == NULL) return;
-
-    for (std::list<Entidades::Obst_Medio*>::iterator it = LOMs.begin(); it != LOMs.end(); ++it) {
-        Entidades::Obst_Medio* om = *it;
-        if (om == NULL) continue;
-
-        if (verificarColisao(pJog1, om)) {
-            pJog1->ficarLento(3.0f);
-        }
-    }
-}
-
 void Gerenciador_Colisoes::executar() {
     tratarColisoesJogsObstacs();
-    tratarColisoesJogsObstacsMedios();
     tratarColisoesJogsObstacsDificeis();
 
     for (std::vector<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {

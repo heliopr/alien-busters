@@ -9,7 +9,6 @@ namespace Entidades {
     class Entidade;
     class Jogador;
     class Obstaculo;
-    class Obst_Medio;
     class Obst_Dificil;
     class Inimigo;
     class Projetil;
@@ -26,7 +25,6 @@ class Gerenciador_Colisoes {
 private:
     std::vector<Entidades::Inimigo*> LIs;
     std::list<Entidades::Obstaculo*> LOs;
-    std::list<Entidades::Obst_Medio*> LOMs;
     std::list<Entidades::Obst_Dificil*> LODs;
     std::list<Entidades::Explosao*> LExps;
     std::set<Entidades::Projetil*> LPs;
@@ -35,7 +33,6 @@ private:
 
     bool verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2) const;
     void tratarColisoesJogsObstacs();
-    void tratarColisoesJogsObstacsMedios();
     void tratarColisoesJogsObstacsDificeis();
     void tratarColisoesJogsInimigs();
     void tratarColisoesJogsProjeteis();
@@ -51,7 +48,6 @@ public:
 
     void incluirInimigo(Entidades::Inimigo* pi);
     void incluirObstaculo(Entidades::Obstaculo* po);
-    void incluirObstaculoMedio(Entidades::Obst_Medio* pom);
     void incluirObstaculoDificil(Entidades::Obst_Dificil* pod);
     void incluirProjetil(Entidades::Projetil* pj);
     void limpar();

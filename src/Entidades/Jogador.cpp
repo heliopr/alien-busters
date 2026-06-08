@@ -1,4 +1,5 @@
 #include "Entidades/Jogador.h"
+#include "Entidades/Inimigo.h"
 #include "Gerenciadores/Gerenciador_Grafico.h"
 #include "Configuracao.h"
 #include <cmath>
@@ -18,7 +19,7 @@ Jogador::Jogador() : Personagem(), pontos(0),
 
     pFig = new sf::RectangleShape(sf::Vector2f(60.f, 100.f));
     if (pFig != NULL) {
-        pFig->setOrigin(30.f, 100.f); 
+        pFig->setOrigin(30.f, 100.f);
         pFig->setPosition(sf::Vector2f(x, y));
 
         if (!texturaJogador.loadFromFile("assets/textures/player.png")) {
@@ -77,8 +78,6 @@ void Jogador::executar(float dt) {
     y += vy * dt;
 
 
-
-
     if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));
         pFig->setSize(sf::Vector2f(60.f, 100.f));
@@ -130,8 +129,8 @@ bool Jogador::getAtirou() {
 }
 
 void Jogador::colidir(Inimigo* pIn) {
-    if (pIn) {
-        num_vidas--;
+    if (pIn != NULL) {
+        pIn->danificar(this);
     }
 }
 

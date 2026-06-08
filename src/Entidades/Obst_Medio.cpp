@@ -27,6 +27,11 @@ void Obst_Medio::salvar() {
 }
 
 void Obst_Medio::obstaculizar(Jogador* p) {
+    if (p == NULL) return;
+
+    if (p->getLimitesColisao().intersects(getLimitesColisao())) {
+        p->ficarLento(3.0f);
+    }
 }
 
 sf::FloatRect Obst_Medio::getLimitesColisao() const {
