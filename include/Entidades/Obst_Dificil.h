@@ -2,6 +2,7 @@
 #define OBST_DIFICIL_H
 
 #include "Entidades/Obstaculo.h"
+#include <SFML/Graphics.hpp>
 
 namespace Entidades {
 
@@ -11,9 +12,10 @@ private:
     float altura;
     short int danoVidas;
     bool destruido;
+    sf::Texture texturaMina;
 
 public:
-    Obst_Dificil(float x, float y, float largura = 60.f, float altura = 60.f, short int dano = 1);
+    Obst_Dificil(float x, float y, float largura = 45.f, float altura = 45.f, short int dano = 1);
     ~Obst_Dificil();
 
     void executar(float dt);

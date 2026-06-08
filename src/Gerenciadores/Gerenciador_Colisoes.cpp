@@ -193,7 +193,7 @@ void Gerenciador_Colisoes::tratarColisoesJogsObstacsDificeis() {
 
             od->aplicarDano(pJog1);
 
-            criarExplosao(xExp, yExp - 30.f);
+            criarExplosao(xExp, yExp - 50.f);
 
             if (pListaEntidades) {
                 pListaEntidades->remover(od);

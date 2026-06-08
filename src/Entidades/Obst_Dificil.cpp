@@ -2,6 +2,7 @@
 #include "Entidades/Jogador.h"
 #include <cstddef>
 #include <cmath>
+#include <iostream>
 
 namespace Entidades {
 
@@ -16,7 +17,14 @@ Obst_Dificil::Obst_Dificil(float x, float y, float largura, float altura, short 
     pFig = new sf::RectangleShape(sf::Vector2f(largura, altura));
     if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));
-        static_cast<sf::RectangleShape*>(pFig)->setFillColor(sf::Color(200, 30, 30, 220));
+
+        if (!texturaMina.loadFromFile("assets/textures/mina.png")) {
+            std::cerr << "Erro ao carregar a textura da mina!" << std::endl;
+            static_cast<sf::RectangleShape*>(pFig)->setFillColor(sf::Color(200, 30, 30, 220));
+        } else {
+            pFig->setTexture(&texturaMina);
+            pFig->setScale(sf::Vector2f(.75f, .75f));
+        }
     }
 }
 
