@@ -3,6 +3,7 @@
 #include "Entidades/Jogador.h"
 #include "Entidades/Obstaculo.h"
 #include "Entidades/Obst_Medio.h"
+#include "Entidades/Obst_Dificil.h"
 #include "Entidades/Inimigo.h"
 #include "Entidades/Projetil.h"
 #include "Entidades/Explosao.h"
@@ -17,6 +18,7 @@ Gerenciador_Colisoes::Gerenciador_Colisoes() : pJog1(NULL), pListaEntidades(NULL
 Gerenciador_Colisoes::~Gerenciador_Colisoes() {
     LOs.clear();
     LOMs.clear();
+    LODs.clear();
     LExps.clear();
     LIs.clear();
     LPs.clear();
@@ -37,6 +39,12 @@ void Gerenciador_Colisoes::incluirObstaculo(Entidades::Obstaculo* po) {
 void Gerenciador_Colisoes::incluirObstaculoMedio(Entidades::Obst_Medio* pom) {
     if (pom != NULL) {
         LOMs.push_back(pom);
+    }
+}
+
+void Gerenciador_Colisoes::incluirObstaculoDificil(Entidades::Obst_Dificil* pod) {
+    if (pod != NULL) {
+        LODs.push_back(pod);
     }
 }
 
@@ -169,6 +177,35 @@ void Gerenciador_Colisoes::tratarColisoesJogsProjeteis() {
     }
 }
 
+void Gerenciador_Colisoes::tratarColisoesJogsObstacsDificeis() {
+    if (pJog1 == NULL) return;
+
+    for (std::list<Entidades::Obst_Dificil*>::iterator it = LODs.begin(); it != LODs.end(); ) {
+        Entidades::Obst_Dificil* od = *it;
+        if (od == NULL || od->getDestruido()) {
+            ++it;
+            continue;
+        }
+
+        if (verificarColisao(pJog1, od)) {
+            float xExp = od->getX() + 30.f;
+            float yExp = od->getY() + 30.f;
+
+            od->aplicarDano(pJog1);
+
+            criarExplosao(xExp, yExp);
+
+            if (pListaEntidades) {
+                pListaEntidades->remover(od);
+            }
+            delete od;
+            it = LODs.erase(it);
+        } else {
+            ++it;
+        }
+    }
+}
+
 void Gerenciador_Colisoes::tratarColisoesJogsObstacsMedios() {
     if (pJog1 == NULL) return;
 
@@ -185,6 +222,7 @@ void Gerenciador_Colisoes::tratarColisoesJogsObstacsMedios() {
 void Gerenciador_Colisoes::executar() {
     tratarColisoesJogsObstacs();
     tratarColisoesJogsObstacsMedios();
+    tratarColisoesJogsObstacsDificeis();
 
     for (std::vector<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
         Entidades::Inimigo* ini = *iti;

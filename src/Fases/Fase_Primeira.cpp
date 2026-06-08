@@ -2,6 +2,7 @@
 #include "Entidades/Plataforma.h"
 #include "Entidades/Inimigo_Facil.h"
 #include "Entidades/Obst_Medio.h"
+#include "Entidades/Obst_Dificil.h"
 
 namespace Fases {
 
@@ -69,6 +70,11 @@ void Fase_Primeira::criarObstaculos() {
     om = new Entidades::Obst_Medio(640.f,  400.f, 60.f, 60.f); GC.incluirObstaculoMedio(om); lista_ents.incluir(om);
     om = new Entidades::Obst_Medio(1100.f, 500.f, 60.f, 60.f); GC.incluirObstaculoMedio(om); lista_ents.incluir(om);
     om = new Entidades::Obst_Medio(1750.f, 400.f, 60.f, 60.f); GC.incluirObstaculoMedio(om); lista_ents.incluir(om);
+
+    Entidades::Obst_Dificil* od = NULL;
+    od = new Entidades::Obst_Dificil(850.f,  380.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
+    od = new Entidades::Obst_Dificil(1450.f, 420.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
+    od = new Entidades::Obst_Dificil(2150.f, 460.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
 }
 
 }

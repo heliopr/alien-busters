@@ -3,7 +3,7 @@
 ## TODO
 - [x] Fase e chão
 - [x] Mudar lógica de colisões para Gerenciador_Colisoes
-- [ ] Refatorar Gerenciador_Colisoes
+- [x] Refatorar Gerenciador_Colisoes
 - [ ] Singletons: Jogo, Gerenciador_Colisoes, Gerenciador_Grafico
 - [ ] Usar: observer, mediator, iterator... https://refactoring.guru/design-patterns
 - [ ] Cores UML: amarelinho, verde e vermelho. Tabelas também

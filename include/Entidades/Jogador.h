@@ -41,6 +41,7 @@ public:
     int getPontos() const { return pontos; }
     void adicionarPontos(int valor) { pontos += valor; }
     void ficarLento(float duracao);
+    void perderVida() { num_vidas--; }
 };
 
 }
