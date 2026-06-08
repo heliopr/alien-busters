@@ -30,6 +30,12 @@ Gerenciador_Grafico::Gerenciador_Grafico() :
     textoHUD.setFillColor(sf::Color::White);
     textoHUD.setString("Pontos: 0");
     textoHUD.setPosition(20.f, 16.f);
+
+    textoDebug.setFont(fontHUD);
+    textoDebug.setCharacterSize(26);
+    textoDebug.setFillColor(sf::Color::White);
+    textoDebug.setString("X: 0  Y: 0");
+    textoDebug.setPosition(20.f, 56.f);
 }
 
 Gerenciador_Grafico::~Gerenciador_Grafico() {}
@@ -58,14 +64,19 @@ void Gerenciador_Grafico::desenharRetangulo(sf::FloatRect rect, sf::Color corCon
     janela.draw(shape);
 }
 
-void Gerenciador_Grafico::desenharHUD(int pontos) {
+void Gerenciador_Grafico::desenharHUD(int pontos, float posX, float posY) {
     std::ostringstream ss;
     ss << "Pontos: " << pontos;
     textoHUD.setString(ss.str());
 
+    std::ostringstream ssDebug;
+    ssDebug << "X: " << static_cast<int>(posX) << "  Y: " << static_cast<int>(posY);
+    textoDebug.setString(ssDebug.str());
+
     sf::View viewHUD(sf::FloatRect(0.f, 0.f, 1422.222f, 800.f));
     janela.setView(viewHUD);
     janela.draw(textoHUD);
+    janela.draw(textoDebug);
     janela.setView(camera);
 }
 

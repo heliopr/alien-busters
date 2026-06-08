@@ -16,6 +16,7 @@ private:
     bool mostrarHitboxes;
     sf::Font fontHUD;
     sf::Text textoHUD;
+    sf::Text textoDebug;
 
 public:
     Gerenciador_Grafico();
@@ -37,7 +38,7 @@ public:
     void renderizar();
     void mostrar();
     void atualizarCamera(sf::Vector2f posicaoJogador);
-    void desenharHUD(int pontos);
+    void desenharHUD(int pontos, float posX, float posY);
 };
 
 }

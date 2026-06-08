@@ -3,6 +3,8 @@
 #include "Entidades/Alien.h"
 #include "Entidades/Gosma.h"
 #include "Entidades/MinaTerrestre.h"
+#include <cstdlib>
+#include <ctime>
 
 namespace Fases {
 
@@ -40,41 +42,65 @@ void Fase_Primeira::criarInimigos() {
 }
 
 void Fase_Primeira::criarObstaculos() {
-    Entidades::Plataforma* p = 0;
+    struct plataforma { float x, y, largura, altura; };
 
-    p = new Entidades::Plataforma(300.f, 600.f, 150.f, 30.f); GC.incluirObstaculo(p); lista_ents.incluir(p);
-    p = new Entidades::Plataforma(450.f, 540.f, 150.f, 30.f); GC.incluirObstaculo(p); lista_ents.incluir(p);
-    p = new Entidades::Plataforma(600.f, 460.f, 150.f, 30.f); GC.incluirObstaculo(p); lista_ents.incluir(p);
+    static const plataforma plataformas[] = {
+        {300.f,  600.f, 150.f,  30.f},
+        {450.f,  540.f, 150.f,  30.f},
+        {600.f,  460.f, 150.f,  30.f},
+        {200.f,  480.f, 100.f,  30.f},
+        {350.f,  400.f, 100.f,  30.f},
+        {500.f,  320.f, 100.f,  30.f},
+        {770.f,  420.f, 180.f,  30.f},
+        {1020.f, 620.f, 120.f,  80.f},
+        //{1180.f, 540.f, 120.f, 160.f},
+        //{1340.f, 460.f, 120.f, 240.f},
+        {1520.f, 380.f, 150.f,  30.f},
+        {1680.f, 480.f, 180.f,  30.f},
+        {1950.f, 600.f, 120.f,  30.f},
+        {2100.f, 500.f, 120.f,  30.f},
+        {2250.f, 400.f, 120.f,  30.f},
+        {2400.f, 300.f, 120.f,  30.f},
+        {2600.f, 300.f, 400.f, 600.f}
+    };
+    const int totalPlataformas = sizeof(plataformas) / sizeof(plataformas[0]);
+    const int minimoPlataformas = 6;
 
-    p = new Entidades::Plataforma(200.f, 480.f, 100.f, 30.f); GC.incluirObstaculo(p); lista_ents.incluir(p);
-    p = new Entidades::Plataforma(350.f, 400.f, 100.f, 30.f); GC.incluirObstaculo(p); lista_ents.incluir(p);
-    p = new Entidades::Plataforma(500.f, 320.f, 100.f, 30.f); GC.incluirObstaculo(p); lista_ents.incluir(p);
-    
-    p = new Entidades::Plataforma(770.f, 420.f, 180.f, 30.f); GC.incluirObstaculo(p); lista_ents.incluir(p);
+    static bool sementeInicializada = false;
+    if (!sementeInicializada) {
+        std::srand(static_cast<unsigned int>(std::time(0)));
+        sementeInicializada = true;
+    }
 
-    p = new Entidades::Plataforma(1020.f, 620.f, 120.f, 80.f);  GC.incluirObstaculo(p); lista_ents.incluir(p);
-    p = new Entidades::Plataforma(1180.f, 540.f, 120.f, 160.f); GC.incluirObstaculo(p); lista_ents.incluir(p);
-    p = new Entidades::Plataforma(1340.f, 460.f, 120.f, 240.f); GC.incluirObstaculo(p); lista_ents.incluir(p);
+    int indices[totalPlataformas];
+    for (int i = 0; i < totalPlataformas; ++i) {
+        indices[i] = i;
+    }
+    for (int i = totalPlataformas - 1; i > 0; --i) {
+        int j = std::rand() % (i + 1);
+        int tmp = indices[i];
+        indices[i] = indices[j];
+        indices[j] = tmp;
+    }
 
-    p = new Entidades::Plataforma(1520.f, 380.f, 150.f, 30.f);  GC.incluirObstaculo(p); lista_ents.incluir(p);
-    p = new Entidades::Plataforma(1680.f, 480.f, 180.f, 30.f);  GC.incluirObstaculo(p); lista_ents.incluir(p);
+    int quantidade = minimoPlataformas + (std::rand() % (totalPlataformas - minimoPlataformas + 1));
 
-    p = new Entidades::Plataforma(1950.f, 600.f, 120.f, 30.f); GC.incluirObstaculo(p); lista_ents.incluir(p);
-    p = new Entidades::Plataforma(2100.f, 500.f, 120.f, 30.f); GC.incluirObstaculo(p); lista_ents.incluir(p);
-    p = new Entidades::Plataforma(2250.f, 400.f, 120.f, 30.f); GC.incluirObstaculo(p); lista_ents.incluir(p);
-    p = new Entidades::Plataforma(2400.f, 300.f, 120.f, 30.f); GC.incluirObstaculo(p); lista_ents.incluir(p);
-
-    p = new Entidades::Plataforma(2600.f, 300.f, 400.f, 600.f); GC.incluirObstaculo(p); lista_ents.incluir(p);
+    for (int i = 0; i < quantidade; ++i) {
+        const plataforma& d = plataformas[indices[i]];
+        Entidades::Plataforma* p = new Entidades::Plataforma(d.x, d.y, d.largura, d.altura);
+        GC.incluirObstaculo(p);
+        lista_ents.incluir(p);
+    }
 
     Entidades::Gosma* om = NULL;
-    om = new Entidades::Gosma(640.f,  400.f, 60.f, 60.f); lista_ents.incluir(om);
-    om = new Entidades::Gosma(1100.f, 500.f, 60.f, 60.f); lista_ents.incluir(om);
-    om = new Entidades::Gosma(1750.f, 400.f, 60.f, 60.f); lista_ents.incluir(om);
+    om = new Entidades::Gosma(300.f,  640.f, 60.f, 60.f); lista_ents.incluir(om);
+    om = new Entidades::Gosma(940.f, 640.f, 60.f, 60.f); lista_ents.incluir(om);
+    om = new Entidades::Gosma(1980.f, 640.f, 60.f, 60.f); lista_ents.incluir(om);
 
     Entidades::MinaTerrestre* od = NULL;
-    od = new Entidades::MinaTerrestre(850.f,  380.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
-    od = new Entidades::MinaTerrestre(1450.f, 420.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
-    od = new Entidades::MinaTerrestre(2150.f, 460.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
+    od = new Entidades::MinaTerrestre(600.f,  660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
+    od = new Entidades::MinaTerrestre(1450.f, 660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
+    od = new Entidades::MinaTerrestre(2250.f, 660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
 }
 
 }
