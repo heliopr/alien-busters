@@ -36,6 +36,14 @@ Gerenciador_Grafico::Gerenciador_Grafico() :
     textoDebug.setFillColor(sf::Color::White);
     textoDebug.setString("X: 0  Y: 0");
     textoDebug.setPosition(20.f, 56.f);
+
+    if (!texturaCoracao.loadFromFile("assets/textures/heart.png")) {
+        std::cerr << "Erro: Nao foi possivel carregar a textura do coracao" << std::endl;
+    } else {
+        spriteCoracao.setTexture(texturaCoracao);
+        float escala = 54.f / texturaCoracao.getSize().x;
+        spriteCoracao.setScale(escala, escala);
+    }
 }
 
 Gerenciador_Grafico::~Gerenciador_Grafico() {}
@@ -64,7 +72,7 @@ void Gerenciador_Grafico::desenharRetangulo(sf::FloatRect rect, sf::Color corCon
     janela.draw(shape);
 }
 
-void Gerenciador_Grafico::desenharHUD(int pontos, float posX, float posY) {
+void Gerenciador_Grafico::desenharHUD(int pontos, float posX, float posY, int vidas) {
     std::ostringstream ss;
     ss << "Pontos: " << pontos;
     textoHUD.setString(ss.str());
@@ -77,6 +85,20 @@ void Gerenciador_Grafico::desenharHUD(int pontos, float posX, float posY) {
     janela.setView(viewHUD);
     janela.draw(textoHUD);
     janela.draw(textoDebug);
+
+    if (texturaCoracao.getSize().x > 0) {
+        const float margem = 20.f;
+        const float tamanhoCoracao = 54.f;
+        const float espacamento = 8.f;
+        float baseY = 800.f - margem - tamanhoCoracao;
+
+        for (int i = 0; i < vidas; ++i) {
+            float posXCoracao = margem + i * (tamanhoCoracao + espacamento);
+            spriteCoracao.setPosition(posXCoracao, baseY);
+            janela.draw(spriteCoracao);
+        }
+    }
+
     janela.setView(camera);
 }
 

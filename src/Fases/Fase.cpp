@@ -42,7 +42,7 @@ void Fase::executar(float dt) {
 
 void Fase::desenhar() {
     if (pGG != 0 && pJogador != 0) {
-        pGG->desenharHUD(pJogador->getPontos(), pJogador->getX(), pJogador->getY());
+        pGG->desenharHUD(pJogador->getPontos(), pJogador->getX(), pJogador->getY(), pJogador->getNumVidas());
     }
 }
 

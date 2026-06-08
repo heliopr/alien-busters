@@ -12,6 +12,8 @@ private:
     sf::RenderWindow janela;
     sf::Texture texturaFundo;
     sf::Sprite spriteFundo;
+    sf::Texture texturaCoracao;
+    sf::Sprite spriteCoracao;
     sf::View camera;
     bool mostrarHitboxes;
     sf::Font fontHUD;
@@ -38,7 +40,7 @@ public:
     void renderizar();
     void mostrar();
     void atualizarCamera(sf::Vector2f posicaoJogador);
-    void desenharHUD(int pontos, float posX, float posY);
+    void desenharHUD(int pontos, float posX, float posY, int vidas);
 };
 
 }

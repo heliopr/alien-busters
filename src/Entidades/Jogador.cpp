@@ -15,7 +15,8 @@ Jogador::Jogador() : Personagem(), pontos(0),
     lento(false), tempoLento(0.f)
 {
     x = Config::POSICAO_INICIAL_X;
-    y = Config::POSICAO_INICIAL_Y; 
+    y = Config::POSICAO_INICIAL_Y;
+    num_vidas = 3;
 
     pFig = new sf::RectangleShape(sf::Vector2f(60.f, 100.f));
     if (pFig != NULL) {
