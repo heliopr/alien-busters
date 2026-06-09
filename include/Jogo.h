@@ -3,6 +3,7 @@
 
 #include "Gerenciadores/Gerenciador_Grafico.h"
 #include "Fases/Fase_Lua.h"
+#include "Fases/Fase_Marte.h"
 #include "Menu.h"
 
 class Jogo {

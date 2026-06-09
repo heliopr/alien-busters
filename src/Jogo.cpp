@@ -2,7 +2,7 @@
 #include "Ente.h"
 #include "Entidades/Plataforma.h"
 
-Jogo::Jogo() : GG(), faseAtual(new Fases::Fase_Lua()), pJog1(0), menu(this), noMenu(true) {
+Jogo::Jogo() : GG(), faseAtual(0), pJog1(0), menu(this), noMenu(true) {
     Ente::setGG(&GG);
 }
 
@@ -34,11 +34,25 @@ void Jogo::executar() {
                     menu.descerOpcao();
                 }
                 else if (evento.key.code == sf::Keyboard::Enter) {
-                    if (menu.getOpcaoSelecionada() == 0) {
-                        noMenu = false;
-                    } 
-                    else if (menu.getOpcaoSelecionada() == 1) {
-                        GG.fecharJanela();
+                    if (menu.getEmSubmenu()) {
+                        int fase = menu.getOpcaoFaseSelecionada();
+                        if (fase == 0) {
+                            delete faseAtual;
+                            faseAtual = new Fases::Fase_Lua();
+                            noMenu = false;
+                        } else if (fase == 1) {
+                            delete faseAtual;
+                            faseAtual = new Fases::Fase_Marte();
+                            noMenu = false;
+                        } else if (fase == 2) {
+                            menu.sairSubmenu();
+                        }
+                    } else {
+                        if (menu.getOpcaoSelecionada() == 0) {
+                            menu.entrarSubmenu();
+                        } else if (menu.getOpcaoSelecionada() == 1) {
+                            GG.fecharJanela();
+                        }
                     }
                 }
             }

@@ -14,7 +14,7 @@ Alien::Alien(float x_ini, float y_ini) : Inimigo(), velocidade(0.f),
     x = x_ini;
     y = y_ini;
 
-    float v = 50.f + std::rand() % 101;
+    float v = 50.f + std::rand() % 50;
     velocidade = (std::rand() % 2 == 0) ? v : -v;
     velocidadeX = velocidade;
 
