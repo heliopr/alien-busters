@@ -11,6 +11,7 @@ public:
     ~Fase_Lua();
 
 protected:
+    void criarCenario();
     void criarInimigos();
     void criarObstaculos();
     void criarAliens();

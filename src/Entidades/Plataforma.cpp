@@ -7,15 +7,15 @@
 namespace Entidades {
 namespace Obstaculos {
 
-Plataforma::Plataforma(float x, float y, float largura, float altura)
-    : Obstaculo(), altura(altura), largura(largura), pisada(false), caindo(false), tempoPisada(0.f), vy(0.f), posXOriginal(x), posYOriginal(y), tempoRespawn(0.f), surgindo(false), tempoSurgindo(0.f) {
+Plataforma::Plataforma(float x, float y, float largura, float altura, sf::Color cor)
+    : Obstaculo(), altura(altura), largura(largura), cor(cor), pisada(false), caindo(false), tempoPisada(0.f), vy(0.f), posXOriginal(x), posYOriginal(y), tempoRespawn(0.f), surgindo(false), tempoSurgindo(0.f) {
     this->x = x;
     this->y = y;
 
     pFig = new sf::RectangleShape(sf::Vector2f(largura, altura));
     if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));
-        pFig->setFillColor(sf::Color(145, 60, 25));
+        pFig->setFillColor(cor);
     }
 }
 
@@ -38,7 +38,7 @@ void Plataforma::executar(float dt) {
             tempoSurgindo = 0.f;
         }
         if (pFig != NULL) {
-            pFig->setFillColor(sf::Color(145, 60, 25, alpha));
+            pFig->setFillColor(sf::Color(cor.r, cor.g, cor.b, alpha));
         }
     }
 
@@ -68,7 +68,7 @@ void Plataforma::executar(float dt) {
             y = posYOriginal;
             surgindo = true;
             if (pFig != NULL) {
-                pFig->setFillColor(sf::Color(145, 60, 25, 0));
+                pFig->setFillColor(sf::Color(cor.r, cor.g, cor.b, 0));
             }
         }
     }

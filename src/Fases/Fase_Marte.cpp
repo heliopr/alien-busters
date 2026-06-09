@@ -1,6 +1,7 @@
 #include "Fases/Fase_Marte.h"
 #include "Entidades/Plataforma.h"
 #include "Entidades/Alien.h"
+#include "Entidades/Slime.h"
 #include "Entidades/Gosma.h"
 #include "Entidades/MinaExtraterrestre.h"
 #include <cstdlib>
@@ -21,6 +22,7 @@ Fase_Marte::~Fase_Marte() {
 
 void Fase_Marte::criarInimigos() {
     criarAliens();
+    criarSlimes();
 }
 
 void Fase_Marte::criarAliens() {
@@ -105,6 +107,34 @@ void Fase_Marte::criarObstaculos() {
     od = new Entidades::Obstaculos::MinaExtraterrestre(1100.f, 660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
     od = new Entidades::Obstaculos::MinaExtraterrestre(1700.f, 660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
     od = new Entidades::Obstaculos::MinaExtraterrestre(2300.f, 660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
+}
+
+void Fase_Marte::criarSlimes() {
+    static const float posicoes[][2] = {
+        { 200.f, 300.f},
+        { 500.f, 400.f},
+        { 850.f, 300.f},
+        {1200.f, 350.f},
+        {1600.f, 300.f},
+        {2000.f, 400.f},
+        {2400.f, 300.f}
+    };
+    const int total   = sizeof(posicoes) / sizeof(posicoes[0]);
+    const int minimo  = 3;
+
+    int indices[total];
+    for (int i = 0; i < total; ++i) indices[i] = i;
+    for (int i = total - 1; i > 0; --i) {
+        int j = std::rand() % (i + 1);
+        int tmp = indices[i]; indices[i] = indices[j]; indices[j] = tmp;
+    }
+
+    int quantidade = minimo + std::rand() % (total - minimo + 1);
+    for (int i = 0; i < quantidade; ++i) {
+        Entidades::Personagens::Slime* s = new Entidades::Personagens::Slime(posicoes[indices[i]][0], posicoes[indices[i]][1]);
+        lista_ents.incluir(s);
+        GC.incluirInimigo(s);
+    }
 }
 
 void Fase_Marte::criarGosmas() {

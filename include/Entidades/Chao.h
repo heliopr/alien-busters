@@ -12,7 +12,7 @@ private:
     float largura;
 
 public:
-    Chao(float x, float y, float largura, float altura);
+    Chao(float x, float y, float largura, float altura, sf::Color cor = sf::Color(145, 60, 25));
     ~Chao();
 
     void executar(float dt);

@@ -1,5 +1,6 @@
 #include "Fases/Fase_Lua.h"
 #include "Entidades/Plataforma.h"
+#include "Entidades/Chao.h"
 #include "Entidades/Alien.h"
 #include "Entidades/Gosma.h"
 #include "Entidades/MinaExtraterrestre.h"
@@ -17,6 +18,22 @@ Fase_Lua::Fase_Lua() : Fase() {
 }
 
 Fase_Lua::~Fase_Lua() {
+}
+
+void Fase_Lua::criarCenario() {
+    static const sf::Color corLua(190, 190, 200);
+
+    Entidades::Obstaculos::Chao* chao1 = new Entidades::Obstaculos::Chao(0.f,    700.f, 800.f, 100.f, corLua);
+    Entidades::Obstaculos::Chao* chao2 = new Entidades::Obstaculos::Chao(920.f,  700.f, 780.f, 100.f, corLua);
+    Entidades::Obstaculos::Chao* chao3 = new Entidades::Obstaculos::Chao(1850.f, 700.f, 800.f, 100.f, corLua);
+
+    GC.incluirObstaculo(chao1);
+    GC.incluirObstaculo(chao2);
+    GC.incluirObstaculo(chao3);
+
+    lista_ents.incluir(chao1);
+    lista_ents.incluir(chao2);
+    lista_ents.incluir(chao3);
 }
 
 void Fase_Lua::criarInimigos() {
@@ -46,6 +63,8 @@ void Fase_Lua::criarAliens() {
 }
 
 void Fase_Lua::criarObstaculos() {
+    static const sf::Color corLua(190, 190, 200);
+
     struct plataforma { float x, y, largura, altura; };
 
     static const plataforma plataformas[] = {
@@ -91,7 +110,7 @@ void Fase_Lua::criarObstaculos() {
 
     for (int i = 0; i < quantidade; ++i) {
         const plataforma& d = plataformas[indices[i]];
-        Entidades::Obstaculos::Plataforma* p = new Entidades::Obstaculos::Plataforma(d.x, d.y, d.largura, d.altura);
+        Entidades::Obstaculos::Plataforma* p = new Entidades::Obstaculos::Plataforma(d.x, d.y, d.largura, d.altura, corLua);
         GC.incluirObstaculo(p);
         lista_ents.incluir(p);
     }

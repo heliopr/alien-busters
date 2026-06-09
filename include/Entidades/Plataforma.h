@@ -10,6 +10,7 @@ class Plataforma : public Obstaculo {
 private:
     float altura;
     float largura;
+    sf::Color cor;
     bool pisada;
     bool caindo;
     float tempoPisada;
@@ -21,7 +22,7 @@ private:
     float tempoSurgindo;
 
 public:
-    Plataforma(float x, float y, float largura, float altura);
+    Plataforma(float x, float y, float largura, float altura, sf::Color cor = sf::Color(145, 60, 25));
     ~Plataforma();
 
     void executar(float dt);

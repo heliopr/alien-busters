@@ -25,7 +25,7 @@ public:
 protected:
     virtual void criarInimigos() = 0;
     virtual void criarObstaculos() = 0;
-    void criarCenario();
+    virtual void criarCenario();
 };
 
 }

@@ -4,7 +4,7 @@
 namespace Entidades {
 namespace Obstaculos {
 
-Chao::Chao(float x, float y, float largura, float altura) :
+Chao::Chao(float x, float y, float largura, float altura, sf::Color cor) :
     Obstaculo(), altura(altura), largura(largura)
 {
     this->x = x;
@@ -13,7 +13,7 @@ Chao::Chao(float x, float y, float largura, float altura) :
     pFig = new sf::RectangleShape(sf::Vector2f(largura, altura));
     if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));
-        pFig->setFillColor(sf::Color(145, 60, 25));
+        pFig->setFillColor(cor);
     }
 }
 
