@@ -2,7 +2,7 @@
 #include "Ente.h"
 #include "Entidades/Plataforma.h"
 
-Jogo::Jogo() : GG(), faseAtual(new Fases::Fase_Primeira()), pJog1(0), menu(this), noMenu(true) {
+Jogo::Jogo() : GG(), faseAtual(new Fases::Fase_Lua()), pJog1(0), menu(this), noMenu(true) {
     Ente::setGG(&GG);
 }
 

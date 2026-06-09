@@ -2,7 +2,7 @@
 #define JOGO_H
 
 #include "Gerenciadores/Gerenciador_Grafico.h"
-#include "Fases/Fase_Primeira.h"
+#include "Fases/Fase_Lua.h"
 #include "Menu.h"
 
 class Jogo {

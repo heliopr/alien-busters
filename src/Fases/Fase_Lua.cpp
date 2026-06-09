@@ -1,4 +1,4 @@
-#include "Fases/Fase_Primeira.h"
+#include "Fases/Fase_Lua.h"
 #include "Entidades/Plataforma.h"
 #include "Entidades/Alien.h"
 #include "Entidades/Gosma.h"
@@ -8,7 +8,7 @@
 
 namespace Fases {
 
-Fase_Primeira::Fase_Primeira() : Fase() {
+Fase_Lua::Fase_Lua() : Fase() {
     criarCenario();
     criarObstaculos();
     criarInimigos();
@@ -16,10 +16,10 @@ Fase_Primeira::Fase_Primeira() : Fase() {
     lista_ents.incluir(pJogador);
 }
 
-Fase_Primeira::~Fase_Primeira() {
+Fase_Lua::~Fase_Lua() {
 }
 
-void Fase_Primeira::criarInimigos() {
+void Fase_Lua::criarInimigos() {
     Entidades::Personagens::Alien* inimigo1 = new Entidades::Personagens::Alien(400.f, 300.f);
     lista_ents.incluir(inimigo1);
     GC.incluirInimigo(inimigo1);
@@ -41,7 +41,7 @@ void Fase_Primeira::criarInimigos() {
     GC.incluirInimigo(inimigo5);
 }
 
-void Fase_Primeira::criarObstaculos() {
+void Fase_Lua::criarObstaculos() {
     struct plataforma { float x, y, largura, altura; };
 
     static const plataforma plataformas[] = {

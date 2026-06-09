@@ -1,14 +1,14 @@
-#ifndef FASE_PRIMEIRA_H
-#define FASE_PRIMEIRA_H
+#ifndef FASE_LUA_H
+#define FASE_LUA_H
 
 #include "Fases/Fase.h"
 
 namespace Fases {
 
-class Fase_Primeira : public Fase {
+class Fase_Lua : public Fase {
 public:
-    Fase_Primeira();
-    ~Fase_Primeira();
+    Fase_Lua();
+    ~Fase_Lua();
 
 protected:
     void criarInimigos();
