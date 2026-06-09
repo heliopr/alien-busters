@@ -16,9 +16,9 @@ Slime::Slime(float x_ini, float y_ini)
     float v = 40.f + std::rand() % 40;
     velocidadeX = (std::rand() % 2 == 0) ? v : -v;
 
-    pFig = new sf::RectangleShape(sf::Vector2f(64.f, 64.f));
+    pFig = new sf::RectangleShape(sf::Vector2f(128.f, 128.f));
     if (pFig != NULL) {
-        pFig->setOrigin(32.f, 48.f);
+        pFig->setOrigin(64.f, 50.f);
         pFig->setPosition(sf::Vector2f(x, y));
 
         if (!textura.loadFromFile("assets/textures/slime.png")) {

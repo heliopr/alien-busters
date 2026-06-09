@@ -2,6 +2,7 @@
 #define GOSMA_H
 
 #include "Entidades/Obstaculo.h"
+#include <SFML/Graphics.hpp>
 
 namespace Entidades {
 namespace Obstaculos {
@@ -10,6 +11,7 @@ class Gosma : public Obstaculo {
 private:
     float largura;
     float altura;
+    sf::Texture textura;
 
 public:
     Gosma(float x, float y, float largura = 120.f, float altura = 80.f);

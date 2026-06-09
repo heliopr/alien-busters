@@ -1,6 +1,7 @@
 #include "Entidades/Gosma.h"
 #include "Entidades/Jogador.h"
 #include <cstddef>
+#include <iostream>
 
 namespace Entidades {
 namespace Obstaculos {
@@ -14,7 +15,13 @@ Gosma::Gosma(float x, float y, float largura, float altura)
     pFig = new sf::RectangleShape(sf::Vector2f(largura, altura));
     if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));
-        pFig->setFillColor(sf::Color(50, 50, 200, 160));
+
+        if (!textura.loadFromFile("assets/textures/gosma.png")) {
+            std::cerr << "Erro ao carregar textura da gosma!" << std::endl;
+            pFig->setFillColor(sf::Color(50, 50, 200, 160));
+        } else {
+            pFig->setTexture(&textura);
+        }
     }
 }
 
