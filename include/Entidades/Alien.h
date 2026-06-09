@@ -9,7 +9,7 @@ namespace Personagens {
 
 class Alien : public Inimigo {
 private:
-    float raio;
+    float velocidade;
     sf::Texture texturaInimigo;
     int linhaAtual;
     int frameAtual;

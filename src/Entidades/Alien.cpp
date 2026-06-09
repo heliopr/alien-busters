@@ -1,17 +1,22 @@
 #include "Entidades/Alien.h"
 #include "Entidades/Jogador.h"
 #include "Configuracao.h"
+#include <cstdlib>
 #include <iostream>
 
 namespace Entidades {
 namespace Personagens {
 
-Alien::Alien(float x_ini, float y_ini) : Inimigo(), raio(20.0f),
+Alien::Alien(float x_ini, float y_ini) : Inimigo(), velocidade(0.f),
     linhaAtual(1), frameAtual(0), tempoAnimacao(0.f),
     olhandoEsquerda(true), olhandoDireita(false)
 {
     x = x_ini;
     y = y_ini;
+
+    float v = 50.f + std::rand() % 101;
+    velocidade = (std::rand() % 2 == 0) ? v : -v;
+    velocidadeX = velocidade;
 
     pFig = new sf::RectangleShape(sf::Vector2f(72.0f, 72.0f));
     if (pFig != NULL) {
