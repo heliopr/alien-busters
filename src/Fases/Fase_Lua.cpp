@@ -20,11 +20,15 @@ Fase_Lua::~Fase_Lua() {
 }
 
 void Fase_Lua::criarInimigos() {
+    criarAliens();
+}
+
+void Fase_Lua::criarAliens() {
     Entidades::Personagens::Alien* inimigo1 = new Entidades::Personagens::Alien(400.f, 300.f);
     lista_ents.incluir(inimigo1);
     GC.incluirInimigo(inimigo1);
 
-    Entidades::Personagens::Alien* inimigo2 = new Entidades::Personagens::Alien(700.f, 300.f);
+    Entidades::Personagens::Alien* inimigo2 = new Entidades::Personagens::Alien(500.f, 300.f);
     lista_ents.incluir(inimigo2);
     GC.incluirInimigo(inimigo2);
 
@@ -92,15 +96,19 @@ void Fase_Lua::criarObstaculos() {
         lista_ents.incluir(p);
     }
 
-    Entidades::Obstaculos::Gosma* om = NULL;
-    om = new Entidades::Obstaculos::Gosma(300.f,  640.f, 60.f, 60.f); lista_ents.incluir(om);
-    om = new Entidades::Obstaculos::Gosma(940.f, 640.f, 60.f, 60.f); lista_ents.incluir(om);
-    om = new Entidades::Obstaculos::Gosma(1980.f, 640.f, 60.f, 60.f); lista_ents.incluir(om);
+    criarGosmas();
 
     Entidades::Obstaculos::MinaExtraterrestre* od = NULL;
     od = new Entidades::Obstaculos::MinaExtraterrestre(600.f,  660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
     od = new Entidades::Obstaculos::MinaExtraterrestre(1450.f, 660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
     od = new Entidades::Obstaculos::MinaExtraterrestre(2250.f, 660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
+}
+
+void Fase_Lua::criarGosmas() {
+    Entidades::Obstaculos::Gosma* om = NULL;
+    om = new Entidades::Obstaculos::Gosma(300.f,  640.f, 60.f, 60.f); lista_ents.incluir(om);
+    om = new Entidades::Obstaculos::Gosma(940.f,  640.f, 60.f, 60.f); lista_ents.incluir(om);
+    om = new Entidades::Obstaculos::Gosma(1980.f, 640.f, 60.f, 60.f); lista_ents.incluir(om);
 }
 
 }

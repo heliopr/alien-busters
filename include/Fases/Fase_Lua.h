@@ -13,6 +13,8 @@ public:
 protected:
     void criarInimigos();
     void criarObstaculos();
+    void criarAliens();
+    void criarGosmas();
 };
 
 }
