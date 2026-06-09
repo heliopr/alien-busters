@@ -7,9 +7,10 @@
 #include <cstddef>
 
 namespace Entidades {
+namespace Personagens {
 
 Jogador::Jogador() : Personagem(), pontos(0),
-    linhaAtual(1), frameAtual(0), tempoAnimacao(0.f), 
+    linhaAtual(1), frameAtual(0), tempoAnimacao(0.f),
     olhandoEsquerda(false), olhandoDireita(true), puloPressionado(false), tiroPressionado(false),
     lento(false), tempoLento(0.f)
 {
@@ -48,8 +49,8 @@ void Jogador::executar(float dt) {
             velocidadeX *= 0.4f;
         }
     }
-    float forcaPulo = Config::FORCA_PULO;  
-    float gravidade = Config::GRAVIDADE;   
+    float forcaPulo = Config::FORCA_PULO;
+    float gravidade = Config::GRAVIDADE;
     float dx = 0;
 
     bool podPular = noChao;
@@ -57,13 +58,13 @@ void Jogador::executar(float dt) {
 
     vy += gravidade * dt;
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) { 
-        dx -= 1; 
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+        dx -= 1;
         olhandoEsquerda = true;
         olhandoDireita = false;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) { 
-        dx += 1; 
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+        dx += 1;
         olhandoDireita = true;
         olhandoEsquerda = false;
     }
@@ -82,13 +83,13 @@ void Jogador::executar(float dt) {
         pFig->setPosition(sf::Vector2f(x, y));
         pFig->setSize(sf::Vector2f(60.f, 100.f));
         pFig->setOrigin(30.f, 100.f);
-        
+
         bool noAr = !podPular || (vy < 0.f);
         if (noAr) {
-            linhaAtual = 1; 
-            frameAtual = 2; 
+            linhaAtual = 1;
+            frameAtual = 2;
         } else if (dx != 0) {
-            linhaAtual = 1; 
+            linhaAtual = 1;
             tempoAnimacao += dt;
             if (tempoAnimacao >= 0.08f) {
                 tempoAnimacao = 0.f;
@@ -139,4 +140,5 @@ void Jogador::ficarLento(float duracao) {
     tempoLento = duracao;
 }
 
+}
 }

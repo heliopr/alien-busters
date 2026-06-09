@@ -2,9 +2,10 @@
 #include <cstddef>
 
 namespace Entidades {
+namespace Obstaculos {
 
-Chao::Chao(float x, float y, float largura, float altura) : 
-    Obstaculo(), altura(altura), largura(largura) 
+Chao::Chao(float x, float y, float largura, float altura) :
+    Obstaculo(), altura(altura), largura(largura)
 {
     this->x = x;
     this->y = y;
@@ -25,7 +26,7 @@ void Chao::executar(float dt) {
     }
 }
 
-void Chao::obstaculizar(Jogador *p) {
+void Chao::obstaculizar(Personagens::Jogador *p) {
 }
 
 void Chao::salvar() {
@@ -36,4 +37,5 @@ sf::FloatRect Chao::getHitbox() const {
     return sf::FloatRect(x, y, largura, altura);
 }
 
+}
 }

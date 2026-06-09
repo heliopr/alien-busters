@@ -2,9 +2,10 @@
 #define OBSTACULO_H
 
 #include "Entidades/Entidade.h"
-#include "Entidades/Jogador.h"
 
 namespace Entidades {
+namespace Personagens { class Jogador; }
+namespace Obstaculos {
 
 class Obstaculo : public Entidade {
 protected:
@@ -18,10 +19,11 @@ public:
 
     virtual void executar(float dt) = 0;
     virtual void salvar() = 0;
-    virtual void obstaculizar(Jogador *p) = 0;
+    virtual void obstaculizar(Personagens::Jogador *p) = 0;
     virtual void jogadorPisou() {}
 };
 
+}
 }
 
 #endif

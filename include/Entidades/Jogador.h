@@ -4,9 +4,11 @@
 #include "Entidades/Personagem.h"
 
 namespace Entidades {
+namespace Personagens {
+
 class Inimigo;
 
-class Jogador : public Personagem { 
+class Jogador : public Personagem {
 protected:
     int pontos;
 private:
@@ -16,9 +18,9 @@ private:
     float tempoAnimacao;
     int larguraFrame;
     int alturaFrame;
-    
-    bool olhandoEsquerda;   
-    bool olhandoDireita; 
+
+    bool olhandoEsquerda;
+    bool olhandoDireita;
     bool puloPressionado;
     bool tiroPressionado;
 
@@ -44,6 +46,7 @@ public:
     int getNumVidas() const { return num_vidas; }
 };
 
+}
 }
 
 #endif

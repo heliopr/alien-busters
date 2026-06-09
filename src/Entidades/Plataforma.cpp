@@ -1,11 +1,13 @@
 #include "Entidades/Plataforma.h"
+#include "Entidades/Jogador.h"
 #include "Configuracao.h"
 #include <cstddef>
 #include <cmath>
 
 namespace Entidades {
+namespace Obstaculos {
 
-Plataforma::Plataforma(float x, float y, float largura, float altura) 
+Plataforma::Plataforma(float x, float y, float largura, float altura)
     : Obstaculo(), altura(altura), largura(largura), pisada(false), caindo(false), tempoPisada(0.f), vy(0.f), posXOriginal(x), posYOriginal(y), tempoRespawn(0.f), surgindo(false), tempoSurgindo(0.f) {
     this->x = x;
     this->y = y;
@@ -42,9 +44,9 @@ void Plataforma::executar(float dt) {
 
     if (pisada && !caindo) {
         tempoPisada += dt;
-        float offset = std::sin(tempoPisada * 50.f) * 3.f; 
+        float offset = std::sin(tempoPisada * 50.f) * 3.f;
         x = posXOriginal + offset;
-        
+
         if (tempoPisada >= 2.0f) {
             caindo = true;
             x = posXOriginal;
@@ -76,7 +78,7 @@ void Plataforma::executar(float dt) {
     }
 }
 
-void Plataforma::obstaculizar(Jogador* p) {
+void Plataforma::obstaculizar(Personagens::Jogador* p) {
     if (p == NULL || caindo) return;
 
     sf::FloatRect boxPlayer = p->getHitbox();
@@ -96,7 +98,8 @@ sf::FloatRect Plataforma::getHitbox() const {
     return sf::FloatRect(x, y, largura, altura);
 }
 
-void Plataforma::salvar() {   
+void Plataforma::salvar() {
 }
 
+}
 }

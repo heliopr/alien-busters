@@ -4,14 +4,15 @@
 #include <iostream>
 
 namespace Entidades {
+namespace Personagens {
 
 Alien::Alien(float x_ini, float y_ini) : Inimigo(), raio(20.0f),
     linhaAtual(1), frameAtual(0), tempoAnimacao(0.f),
-    olhandoEsquerda(true), olhandoDireita(false) 
+    olhandoEsquerda(true), olhandoDireita(false)
 {
     x = x_ini;
-    y = y_ini; 
-    
+    y = y_ini;
+
     pFig = new sf::RectangleShape(sf::Vector2f(72.0f, 72.0f));
     if (pFig != NULL) {
         pFig->setOrigin(36.0f, 48.0f);
@@ -33,7 +34,7 @@ Alien::~Alien() {
 
 void Alien::executar(float dt) {
     vy += Config::GRAVIDADE * dt;
-    
+
     x += velocidadeX * dt;
     y += vy * dt;
 
@@ -83,7 +84,7 @@ sf::FloatRect Alien::getHitbox() const {
 }
 
 void Alien::mover() {
-
 }
 
+}
 }

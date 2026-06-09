@@ -1,9 +1,10 @@
 #ifndef CHAO_H
 #define CHAO_H
 
-#include "Obstaculo.h"
+#include "Entidades/Obstaculo.h"
 
 namespace Entidades {
+namespace Obstaculos {
 
 class Chao : public Obstaculo {
 private:
@@ -16,10 +17,11 @@ public:
 
     void executar(float dt);
     void salvar();
-    void obstaculizar(Jogador *p);
+    void obstaculizar(Personagens::Jogador *p);
     sf::FloatRect getHitbox() const;
 };
 
+}
 }
 
 #endif

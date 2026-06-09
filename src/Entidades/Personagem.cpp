@@ -1,6 +1,7 @@
 #include "Entidades/Personagem.h"
 
 namespace Entidades {
+namespace Personagens {
 
 Personagem::Personagem() : Entidade(), num_vidas(1), vy(0.f), noChao(false) {
 }
@@ -12,4 +13,5 @@ void Personagem::salvarDataBuffer() {
     // TODO
 }
 
+}
 }

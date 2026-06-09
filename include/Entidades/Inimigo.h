@@ -4,6 +4,7 @@
 #include "Entidades/Personagem.h"
 
 namespace Entidades {
+namespace Personagens {
 
 class Jogador;
 
@@ -25,6 +26,7 @@ public:
     void setVelocidadeX(float v) { velocidadeX = v; }
 };
 
+}
 }
 
 #endif

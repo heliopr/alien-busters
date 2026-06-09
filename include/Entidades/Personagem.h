@@ -4,6 +4,7 @@
 #include "Entidades/Entidade.h"
 
 namespace Entidades {
+namespace Personagens {
 
 class Personagem : public Entidade {
 protected:
@@ -26,6 +27,7 @@ public:
     void setNoChao(bool b) { noChao = b; }
 };
 
+}
 }
 
 #endif

@@ -5,6 +5,7 @@
 #include <iostream>
 
 namespace Entidades {
+namespace Obstaculos {
 
 MinaExtraterrestre::MinaExtraterrestre(float x, float y, float largura, float altura, short int dano)
     : Obstaculo(), largura(largura), altura(altura),
@@ -38,7 +39,7 @@ void MinaExtraterrestre::executar(float dt) {
 void MinaExtraterrestre::salvar() {
 }
 
-void MinaExtraterrestre::obstaculizar(Jogador* p) {
+void MinaExtraterrestre::obstaculizar(Personagens::Jogador* p) {
     if (p == NULL || destruido) return;
 
     if (p->getHitbox().intersects(getHitbox())) {
@@ -46,7 +47,7 @@ void MinaExtraterrestre::obstaculizar(Jogador* p) {
     }
 }
 
-void MinaExtraterrestre::aplicarDano(Jogador* p) {
+void MinaExtraterrestre::aplicarDano(Personagens::Jogador* p) {
     if (p == NULL || destruido) return;
     std::cout << "Danificar jogador" << std::endl;
     for (short int i = 0; i < danoVidas; ++i) {
@@ -60,4 +61,5 @@ sf::FloatRect MinaExtraterrestre::getHitbox() const {
     return sf::FloatRect(x, y, largura, altura);
 }
 
+}
 }

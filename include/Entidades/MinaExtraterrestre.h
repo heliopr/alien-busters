@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 namespace Entidades {
+namespace Obstaculos {
 
 class MinaExtraterrestre : public Obstaculo {
 private:
@@ -20,8 +21,8 @@ public:
 
     void executar(float dt);
     void salvar();
-    void obstaculizar(Jogador* p);
-    void aplicarDano(Jogador* p);
+    void obstaculizar(Personagens::Jogador* p);
+    void aplicarDano(Personagens::Jogador* p);
 
     sf::FloatRect getHitbox() const;
 
@@ -29,6 +30,7 @@ public:
     void destruir() { destruido = true; }
 };
 
+}
 }
 
 #endif

@@ -28,7 +28,7 @@ void ListaEntidades::limpar() {
     LEs.limpar();
 }
 
-void ListaEntidades::percorrer(float dt, Entidades::Jogador *pJogador) {
+void ListaEntidades::percorrer(float dt, Entidades::Personagens::Jogador *pJogador) {
     Lista<Entidades::Entidade>::Elemento *atual = LEs.getPrimeiro();
     while (atual != 0) {
         Entidades::Entidade *entidade = atual->getInfo();
@@ -41,7 +41,7 @@ void ListaEntidades::percorrer(float dt, Entidades::Jogador *pJogador) {
     if (pJogador != 0) {
         atual = LEs.getPrimeiro();
         while (atual != 0) {
-            Entidades::Obstaculo *obs = dynamic_cast<Entidades::Obstaculo*>(atual->getInfo());
+            Entidades::Obstaculos::Obstaculo *obs = dynamic_cast<Entidades::Obstaculos::Obstaculo*>(atual->getInfo());
             if (obs != 0) {
                 obs->obstaculizar(pJogador);
             }

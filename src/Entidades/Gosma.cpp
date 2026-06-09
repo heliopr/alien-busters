@@ -3,6 +3,7 @@
 #include <cstddef>
 
 namespace Entidades {
+namespace Obstaculos {
 
 Gosma::Gosma(float x, float y, float largura, float altura)
     : Obstaculo(), largura(largura), altura(altura) {
@@ -26,7 +27,7 @@ void Gosma::executar(float dt) {
 void Gosma::salvar() {
 }
 
-void Gosma::obstaculizar(Jogador* p) {
+void Gosma::obstaculizar(Personagens::Jogador* p) {
     if (p == NULL) return;
 
     if (p->getHitbox().intersects(getHitbox())) {
@@ -38,4 +39,5 @@ sf::FloatRect Gosma::getHitbox() const {
     return sf::FloatRect(x, y, largura, altura);
 }
 
+}
 }

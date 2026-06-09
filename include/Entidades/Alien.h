@@ -5,8 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 namespace Entidades {
-
-class Jogador;
+namespace Personagens {
 
 class Alien : public Inimigo {
 private:
@@ -31,6 +30,7 @@ public:
     sf::FloatRect getHitbox() const;
 };
 
-}
+} // namespace Personagens
+} // namespace Entidades
 
 #endif

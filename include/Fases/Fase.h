@@ -12,7 +12,7 @@ class Fase : public Ente {
 protected:
     Listas::ListaEntidades lista_ents;
     Gerenciadores::Gerenciador_Colisoes GC;
-    Entidades::Jogador* pJogador;
+    Entidades::Personagens::Jogador* pJogador;
 
 public:
     Fase();

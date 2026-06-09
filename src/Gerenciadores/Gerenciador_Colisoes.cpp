@@ -22,19 +22,19 @@ Gerenciador_Colisoes::~Gerenciador_Colisoes() {
     LPs.clear();
 }
 
-void Gerenciador_Colisoes::incluirInimigo(Entidades::Inimigo* pi) {
+void Gerenciador_Colisoes::incluirInimigo(Entidades::Personagens::Inimigo* pi) {
     if (pi != NULL) {
         LIs.push_back(pi);
     }
 }
 
-void Gerenciador_Colisoes::incluirObstaculo(Entidades::Obstaculo* po) {
+void Gerenciador_Colisoes::incluirObstaculo(Entidades::Obstaculos::Obstaculo* po) {
     if (po != NULL) {
         LOs.push_back(po);
     }
 }
 
-void Gerenciador_Colisoes::incluirObstaculoDificil(Entidades::MinaExtraterrestre* pod) {
+void Gerenciador_Colisoes::incluirObstaculoDificil(Entidades::Obstaculos::MinaExtraterrestre* pod) {
     if (pod != NULL) {
         LODs.push_back(pod);
     }
@@ -65,11 +65,11 @@ bool Gerenciador_Colisoes::verificarColisao(Entidades::Entidade* pe1, Entidades:
 
 void Gerenciador_Colisoes::tratarColisoesJogsObstacs() {
     if (pJog1 == NULL) return;
-    
+
     sf::FloatRect boxPlayer = pJog1->getHitbox();
 
-    for (std::list<Entidades::Obstaculo*>::iterator it = LOs.begin(); it != LOs.end(); ++it) {
-        Entidades::Obstaculo* obs = *it;
+    for (std::list<Entidades::Obstaculos::Obstaculo*>::iterator it = LOs.begin(); it != LOs.end(); ++it) {
+        Entidades::Obstaculos::Obstaculo* obs = *it;
         if (obs == NULL) continue;
 
         sf::FloatRect boxObs = obs->getHitbox();
@@ -79,9 +79,9 @@ void Gerenciador_Colisoes::tratarColisoesJogsObstacs() {
             if (interseccao.width < interseccao.height) {
                 // colisão lateral
                 if (boxPlayer.left + boxPlayer.width / 2.f < boxObs.left + boxObs.width / 2.f) {
-                    pJog1->setX(boxObs.left - 20.f); 
+                    pJog1->setX(boxObs.left - 20.f);
                 } else {
-                    pJog1->setX(boxObs.left + boxObs.width + 20.f); 
+                    pJog1->setX(boxObs.left + boxObs.width + 20.f);
                 }
             } else {
                 // colisão vertical
@@ -104,8 +104,8 @@ void Gerenciador_Colisoes::tratarColisoesJogsObstacs() {
 void Gerenciador_Colisoes::tratarColisoesJogsInimigs() {
     if (pJog1 == NULL) return;
 
-    for (std::vector<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
-        Entidades::Inimigo* ini = *iti;
+    for (std::vector<Entidades::Personagens::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
+        Entidades::Personagens::Inimigo* ini = *iti;
         if (ini == NULL) continue;
 
         if (verificarColisao(pJog1, ini)) {
@@ -131,8 +131,8 @@ void Gerenciador_Colisoes::tratarColisoesJogsProjeteis() {
 
         bool colidiu = false;
 
-        for (std::list<Entidades::Obstaculo*>::iterator ito = LOs.begin(); ito != LOs.end(); ++ito) {
-            Entidades::Obstaculo* obs = *ito;
+        for (std::list<Entidades::Obstaculos::Obstaculo*>::iterator ito = LOs.begin(); ito != LOs.end(); ++ito) {
+            Entidades::Obstaculos::Obstaculo* obs = *ito;
             if (verificarColisao(p, obs)) {
                 colidiu = true;
                 break;
@@ -140,8 +140,8 @@ void Gerenciador_Colisoes::tratarColisoesJogsProjeteis() {
         }
 
         if (!colidiu) {
-            for (std::vector<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ) {
-                Entidades::Inimigo* ini = *iti;
+            for (std::vector<Entidades::Personagens::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ) {
+                Entidades::Personagens::Inimigo* ini = *iti;
                 if (ini != NULL && verificarColisao(p, ini)) {
                     colidiu = true;
                     float xi = ini->getX();
@@ -178,8 +178,8 @@ void Gerenciador_Colisoes::tratarColisoesJogsProjeteis() {
 }
 
 void Gerenciador_Colisoes::tratarColisoesJogsObstacsDificeis() {
-    for (std::list<Entidades::MinaExtraterrestre*>::iterator it = LODs.begin(); it != LODs.end(); ) {
-        Entidades::MinaExtraterrestre* od = *it;
+    for (std::list<Entidades::Obstaculos::MinaExtraterrestre*>::iterator it = LODs.begin(); it != LODs.end(); ) {
+        Entidades::Obstaculos::MinaExtraterrestre* od = *it;
         if (od == NULL) {
             it = LODs.erase(it);
             continue;
@@ -206,14 +206,14 @@ void Gerenciador_Colisoes::executar() {
     tratarColisoesJogsObstacs();
     tratarColisoesJogsObstacsDificeis();
 
-    for (std::vector<Entidades::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
-        Entidades::Inimigo* ini = *iti;
+    for (std::vector<Entidades::Personagens::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
+        Entidades::Personagens::Inimigo* ini = *iti;
         if (ini == NULL) continue;
-        
+
         sf::FloatRect boxIni = ini->getHitbox();
 
-        for (std::list<Entidades::Obstaculo*>::iterator ito = LOs.begin(); ito != LOs.end(); ++ito) {
-            Entidades::Obstaculo* obs = *ito;
+        for (std::list<Entidades::Obstaculos::Obstaculo*>::iterator ito = LOs.begin(); ito != LOs.end(); ++ito) {
+            Entidades::Obstaculos::Obstaculo* obs = *ito;
             if (obs == NULL) continue;
 
             sf::FloatRect boxObs = obs->getHitbox();
@@ -223,9 +223,9 @@ void Gerenciador_Colisoes::executar() {
                 if (interseccao.width < interseccao.height) {
                     // colisão lateral
                     if (boxIni.left + boxIni.width / 2.f < boxObs.left + boxObs.width / 2.f) {
-                        ini->setX(boxObs.left - boxIni.width/2.f); 
+                        ini->setX(boxObs.left - boxIni.width/2.f);
                     } else {
-                        ini->setX(boxObs.left + boxObs.width + boxIni.width/2.f); 
+                        ini->setX(boxObs.left + boxObs.width + boxIni.width/2.f);
                     }
                     ini->setVelocidadeX(-ini->getVelocidadeX());
                 } else {

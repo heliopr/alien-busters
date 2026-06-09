@@ -4,6 +4,7 @@
 #include "Entidades/Obstaculo.h"
 
 namespace Entidades {
+namespace Obstaculos {
 
 class Gosma : public Obstaculo {
 private:
@@ -16,11 +17,12 @@ public:
 
     void executar(float dt);
     void salvar();
-    void obstaculizar(Jogador* p);
+    void obstaculizar(Personagens::Jogador* p);
 
     sf::FloatRect getHitbox() const;
 };
 
+}
 }
 
 #endif
