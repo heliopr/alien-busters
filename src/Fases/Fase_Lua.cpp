@@ -21,7 +21,7 @@ Fase_Lua::~Fase_Lua() {
 }
 
 void Fase_Lua::criarCenario() {
-    static const sf::Color corLua(190, 190, 200);
+    static const sf::Color corLua(140, 140, 160);
 
     Entidades::Obstaculos::Chao* chao1 = new Entidades::Obstaculos::Chao(0.f,    700.f, 800.f, 100.f, corLua);
     Entidades::Obstaculos::Chao* chao2 = new Entidades::Obstaculos::Chao(920.f,  700.f, 780.f, 100.f, corLua);
@@ -63,28 +63,24 @@ void Fase_Lua::criarAliens() {
 }
 
 void Fase_Lua::criarObstaculos() {
-    static const sf::Color corLua(190, 190, 200);
+    static const sf::Color corLua(140, 140, 160);
 
-    struct plataforma { float x, y, largura, altura; };
+    struct plataforma { float x, y; };
 
     static const plataforma plataformas[] = {
-        {300.f,  600.f, 150.f,  30.f},
-        {450.f,  540.f, 150.f,  30.f},
-        {600.f,  460.f, 150.f,  30.f},
-        {200.f,  480.f, 100.f,  30.f},
-        {350.f,  400.f, 100.f,  30.f},
-        {500.f,  320.f, 100.f,  30.f},
-        {770.f,  420.f, 180.f,  30.f},
-        {1020.f, 620.f, 120.f,  80.f},
-        //{1180.f, 540.f, 120.f, 160.f},
-        //{1340.f, 460.f, 120.f, 240.f},
-        {1520.f, 380.f, 150.f,  30.f},
-        {1680.f, 480.f, 180.f,  30.f},
-        {1950.f, 600.f, 120.f,  30.f},
-        {2100.f, 500.f, 120.f,  30.f},
-        {2250.f, 400.f, 120.f,  30.f},
-        {2400.f, 300.f, 120.f,  30.f},
-        {2600.f, 300.f, 400.f, 600.f}
+        {300.f,  600.f},
+        {450.f,  540.f},
+        {600.f,  460.f},
+        {200.f,  480.f},
+        {350.f,  400.f},
+        {500.f,  320.f},
+        {770.f,  420.f},
+        {1520.f, 380.f},
+        {1680.f, 480.f},
+        {1950.f, 600.f},
+        {2100.f, 500.f},
+        {2250.f, 400.f},
+        {2400.f, 300.f}
     };
     const int totalPlataformas = sizeof(plataformas) / sizeof(plataformas[0]);
     const int minimoPlataformas = 6;
@@ -110,10 +106,17 @@ void Fase_Lua::criarObstaculos() {
 
     for (int i = 0; i < quantidade; ++i) {
         const plataforma& d = plataformas[indices[i]];
-        Entidades::Obstaculos::Plataforma* p = new Entidades::Obstaculos::Plataforma(d.x, d.y, d.largura, d.altura, corLua);
+        Entidades::Obstaculos::Plataforma* p = new Entidades::Obstaculos::Plataforma(d.x, d.y, corLua);
         GC.incluirObstaculo(p);
         lista_ents.incluir(p);
     }
+
+    Entidades::Obstaculos::Chao* parede1 = new Entidades::Obstaculos::Chao(1020.f, 620.f, 120.f, 80.f, corLua);
+    Entidades::Obstaculos::Chao* parede2 = new Entidades::Obstaculos::Chao(2600.f, 300.f, 400.f, 600.f, corLua);
+    GC.incluirObstaculo(parede1);
+    GC.incluirObstaculo(parede2);
+    lista_ents.incluir(parede1);
+    lista_ents.incluir(parede2);
 
     criarGosmas();
 

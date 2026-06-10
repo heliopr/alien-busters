@@ -8,8 +8,9 @@ namespace Obstaculos {
 
 class Plataforma : public Obstaculo {
 private:
-    float altura;
-    float largura;
+    static const float LARGURA;
+    static const float ALTURA;
+
     sf::Color cor;
     bool pisada;
     bool caindo;
@@ -22,7 +23,7 @@ private:
     float tempoSurgindo;
 
 public:
-    Plataforma(float x, float y, float largura, float altura, sf::Color cor = sf::Color(145, 60, 25));
+    Plataforma(float x, float y, sf::Color cor = sf::Color(145, 60, 25));
     ~Plataforma();
 
     void executar(float dt);

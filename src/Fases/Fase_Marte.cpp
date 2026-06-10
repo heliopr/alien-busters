@@ -1,5 +1,6 @@
 #include "Fases/Fase_Marte.h"
 #include "Entidades/Plataforma.h"
+#include "Entidades/Chao.h"
 #include "Entidades/Alien.h"
 #include "Entidades/Slime.h"
 #include "Entidades/Gosma.h"
@@ -52,24 +53,22 @@ void Fase_Marte::criarAliens() {
 }
 
 void Fase_Marte::criarObstaculos() {
-    struct plataforma { float x, y, largura, altura; };
+    struct plataforma { float x, y; };
 
     static const plataforma plataformas[] = {
-        {250.f,  580.f, 150.f,  30.f},
-        {420.f,  500.f, 150.f,  30.f},
-        {580.f,  420.f, 150.f,  30.f},
-        {150.f,  460.f, 100.f,  30.f},
-        {320.f,  380.f, 100.f,  30.f},
-        {480.f,  300.f, 100.f,  30.f},
-        {720.f,  440.f, 180.f,  30.f},
-        {980.f,  600.f, 120.f,  80.f},
-        {1300.f, 360.f, 150.f,  30.f},
-        {1550.f, 460.f, 180.f,  30.f},
-        {1750.f, 560.f, 120.f,  30.f},
-        {1900.f, 480.f, 120.f,  30.f},
-        {2050.f, 380.f, 120.f,  30.f},
-        {2200.f, 280.f, 120.f,  30.f},
-        {2500.f, 300.f, 400.f, 600.f}
+        {250.f,  580.f},
+        {420.f,  500.f},
+        {580.f,  420.f},
+        {150.f,  460.f},
+        {320.f,  380.f},
+        {480.f,  300.f},
+        {720.f,  440.f},
+        {1300.f, 360.f},
+        {1550.f, 460.f},
+        {1750.f, 560.f},
+        {1900.f, 480.f},
+        {2050.f, 380.f},
+        {2200.f, 280.f}
     };
     const int totalPlataformas = sizeof(plataformas) / sizeof(plataformas[0]);
     const int minimoPlataformas = 7;
@@ -95,10 +94,17 @@ void Fase_Marte::criarObstaculos() {
 
     for (int i = 0; i < quantidade; ++i) {
         const plataforma& d = plataformas[indices[i]];
-        Entidades::Obstaculos::Plataforma* p = new Entidades::Obstaculos::Plataforma(d.x, d.y, d.largura, d.altura);
+        Entidades::Obstaculos::Plataforma* p = new Entidades::Obstaculos::Plataforma(d.x, d.y);
         GC.incluirObstaculo(p);
         lista_ents.incluir(p);
     }
+
+    Entidades::Obstaculos::Chao* parede1 = new Entidades::Obstaculos::Chao(980.f, 600.f, 120.f, 80.f);
+    Entidades::Obstaculos::Chao* parede2 = new Entidades::Obstaculos::Chao(2500.f, 300.f, 400.f, 600.f);
+    GC.incluirObstaculo(parede1);
+    GC.incluirObstaculo(parede2);
+    lista_ents.incluir(parede1);
+    lista_ents.incluir(parede2);
 
     criarGosmas();
 

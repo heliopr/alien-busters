@@ -6,7 +6,7 @@
 namespace Gerenciadores {
 
 Gerenciador_Grafico::Gerenciador_Grafico() :
-    janela(sf::VideoMode(1280, 720), "Janela SFML"),
+    janela(sf::VideoMode(1280, 720), "Janela SFML", sf::Style::Titlebar | sf::Style::Close),
     camera(sf::FloatRect(0.f, 0.f, 1422.222f, 800.f)),
     mostrarHitboxes(false) {
     janela.setFramerateLimit(60);
@@ -118,32 +118,6 @@ void Gerenciador_Grafico::processarEventos() {
     while (janela.pollEvent(evento)) {
         if (evento.type == sf::Event::Closed) {
             janela.close();
-        }
-        if (evento.type == sf::Event::Resized) {
-            float windowWidth = static_cast<float>(evento.size.width);
-            float windowHeight = static_cast<float>(evento.size.height);
-            
-            float targetRatio = 16.f / 9.f; // aspect ratio16:9
-            float windowRatio = windowWidth / windowHeight;
-            
-            float viewportWidth = 1.f;
-            float viewportHeight = 1.f;
-            float viewportX = 0.f;
-            float viewportY = 0.f;
-
-            // serve para manter o aspect ratio da tela
-            if (windowRatio > targetRatio) {
-                // barras pretas nas laterais
-                viewportWidth = targetRatio / windowRatio;
-                viewportX = (1.f - viewportWidth) / 2.f;
-            } else {
-                // barras pretas no topo
-                viewportHeight = windowRatio / targetRatio;
-                viewportY = (1.f - viewportHeight) / 2.f;
-            }
-            
-            camera.setViewport(sf::FloatRect(viewportX, viewportY, viewportWidth, viewportHeight));
-            janela.setView(camera);
         }
     }
 }
