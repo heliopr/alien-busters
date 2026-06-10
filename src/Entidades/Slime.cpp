@@ -1,14 +1,12 @@
 #include "Entidades/Slime.h"
-#include "Entidades/Jogador.h"
-#include "Configuracao.h"
 #include <cstdlib>
-#include <iostream>
+#include <cstddef>
 
 namespace Entidades {
 namespace Personagens {
 
 Slime::Slime(float x_ini, float y_ini)
-    : Inimigo(), frameAtual(0), tempoAnimacao(0.f), larguraFrame(0), alturaFrame(0)
+    : Inimigo()
 {
     x = x_ini;
     y = y_ini;
@@ -21,14 +19,11 @@ Slime::Slime(float x_ini, float y_ini)
         pFig->setOrigin(64.f, 50.f);
         pFig->setPosition(sf::Vector2f(x, y));
 
-        if (!textura.loadFromFile("assets/textures/slime.png")) {
-            std::cerr << "Erro ao carregar textura do slime!" << std::endl;
-            pFig->setFillColor(sf::Color(0, 200, 80));
+        if (animacao.carregar("assets/textures/slime.png", 8, 4, "Erro ao carregar textura do slime!")) {
+            pFig->setTexture(animacao.getTextura());
+            animacao.aplicar(pFig, 0, false);
         } else {
-            pFig->setTexture(&textura);
-            larguraFrame = textura.getSize().x / 8;
-            alturaFrame  = textura.getSize().y / 4;
-            pFig->setTextureRect(sf::IntRect(0, 0, larguraFrame, alturaFrame));
+            pFig->setFillColor(sf::Color(0, 200, 80));
         }
     }
 }
@@ -37,29 +32,13 @@ Slime::~Slime() {
 }
 
 void Slime::executar(float dt) {
-    vy += Config::GRAVIDADE * dt;
-    x  += velocidadeX * dt;
-    y  += vy * dt;
-
-    if (y > Config::ALTURA_LIMITE_QUEDA) {
-        y  = Config::POSICAO_INICIAL_Y;
-        vy = 0.f;
-    }
+    moverComGravidade(dt);
 
     if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));
 
-        tempoAnimacao += dt;
-        if (tempoAnimacao >= 0.2f) {
-            tempoAnimacao = 0.f;
-            frameAtual = (frameAtual + 1) % 8;
-        }
-
-        if (velocidadeX < 0) {
-            pFig->setTextureRect(sf::IntRect((frameAtual + 1) * larguraFrame, 0, -larguraFrame, alturaFrame));
-        } else {
-            pFig->setTextureRect(sf::IntRect(frameAtual * larguraFrame, 0, larguraFrame, alturaFrame));
-        }
+        animacao.atualizar(dt, 0.2f, 8);
+        animacao.aplicar(pFig, 0, velocidadeX < 0);
     }
 }
 
@@ -67,12 +46,6 @@ void Slime::salvar() {
 }
 
 void Slime::mover() {
-}
-
-void Slime::danificar(Jogador* p) {
-    if (p != NULL) {
-        p->perderVida();
-    }
 }
 
 sf::FloatRect Slime::getHitbox() const {

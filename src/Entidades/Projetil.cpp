@@ -2,10 +2,11 @@
 
 namespace Entidades {
 
-Projetil::Projetil(float x, float y, float vx, float vy) : Entidade(), ativo(true), vx(vx), vy(vy) {
+Projetil::Projetil(float x, float y, float vx, float vy) : Entidade(), ativo(true), vx(vx) {
     this->x = x;
     this->y = y;
-    
+    this->vy = vy;
+
     pFig = new sf::RectangleShape(sf::Vector2f(10.f, 10.f));
     if (pFig != NULL) {
         pFig->setOrigin(5.f, 5.f);
@@ -23,10 +24,8 @@ void Projetil::salvar() {
 void Projetil::executar(float dt) {
     if (!ativo) return;
 
-    vy += 98.f * dt;
-
     x += vx * dt;
-    y += vy * dt;
+    sofrerGravidade(dt, 98.f);
 
     if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));

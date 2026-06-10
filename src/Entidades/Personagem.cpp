@@ -3,7 +3,7 @@
 namespace Entidades {
 namespace Personagens {
 
-Personagem::Personagem() : Entidade(), num_vidas(1), vy(0.f), noChao(false) {
+Personagem::Personagem() : Entidade(), num_vidas(1), noChao(false) {
 }
 
 Personagem::~Personagem() {

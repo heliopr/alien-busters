@@ -2,6 +2,7 @@
 #define JOGADOR_H
 
 #include "Entidades/Personagem.h"
+#include "Entidades/AnimacaoSprite.h"
 
 namespace Entidades {
 namespace Personagens {
@@ -12,12 +13,7 @@ class Jogador : public Personagem {
 protected:
     int pontos;
 private:
-    sf::Texture texturaJogador;
-    int linhaAtual;
-    int frameAtual;
-    float tempoAnimacao;
-    int larguraFrame;
-    int alturaFrame;
+    AnimacaoSprite animacao;
 
     bool olhandoEsquerda;
     bool olhandoDireita;

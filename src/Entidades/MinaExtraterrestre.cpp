@@ -33,16 +33,15 @@ MinaExtraterrestre::~MinaExtraterrestre() {
 }
 
 void MinaExtraterrestre::executar(float dt) {
-    (void)dt;
+    sofrerGravidade(dt);
+    contrariarGravidade(dt);
 }
 
 void MinaExtraterrestre::salvar() {
 }
 
 void MinaExtraterrestre::obstaculizar(Personagens::Jogador* p) {
-    if (p == NULL || destruido) return;
-
-    if (p->getHitbox().intersects(getHitbox())) {
+    if (!destruido && colidiuComJogador(p)) {
         aplicarDano(p);
     }
 }

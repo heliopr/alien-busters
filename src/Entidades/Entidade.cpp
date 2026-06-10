@@ -3,8 +3,8 @@
 
 namespace Entidades {
 
-Entidade::Entidade() : Ente(), x(0.0f), y(0.0f) {
-    pFig = NULL; 
+Entidade::Entidade() : Ente(), x(0.0f), y(0.0f), vy(0.0f) {
+    pFig = NULL;
 }
 
 Entidade::~Entidade() {
@@ -45,6 +45,24 @@ void Entidade::setY(float novoY) {
     if (pFig) {
         pFig->setPosition(sf::Vector2f(x, y));
     }
+}
+
+float Entidade::getVy() const {
+    return vy;
+}
+
+void Entidade::setVy(float v) {
+    vy = v;
+}
+
+void Entidade::sofrerGravidade(float dt, float gravidade) {
+    vy += gravidade * dt;
+    y += vy * dt;
+}
+
+void Entidade::contrariarGravidade(float dt) {
+    y -= vy * dt;
+    vy = 0.f;
 }
 
 }

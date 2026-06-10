@@ -29,15 +29,15 @@ Gosma::~Gosma() {
 }
 
 void Gosma::executar(float dt) {
+    sofrerGravidade(dt);
+    contrariarGravidade(dt);
 }
 
 void Gosma::salvar() {
 }
 
 void Gosma::obstaculizar(Personagens::Jogador* p) {
-    if (p == NULL) return;
-
-    if (p->getHitbox().intersects(getHitbox())) {
+    if (colidiuComJogador(p)) {
         p->ficarLento(3.0f);
     }
 }

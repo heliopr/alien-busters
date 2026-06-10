@@ -9,7 +9,6 @@ namespace Personagens {
 class Personagem : public Entidade {
 protected:
     int num_vidas;
-    float vy;
     bool noChao;
 
 public:
@@ -21,8 +20,6 @@ public:
     virtual void salvar() = 0;
     virtual void mover() = 0;
 
-    float getVy() const { return vy; }
-    void setVy(float v) { vy = v; }
     bool getNoChao() const { return noChao; }
     void setNoChao(bool b) { noChao = b; }
 };

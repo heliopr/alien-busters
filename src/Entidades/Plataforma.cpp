@@ -1,6 +1,5 @@
 #include "Entidades/Plataforma.h"
 #include "Entidades/Jogador.h"
-#include "Configuracao.h"
 #include <cstddef>
 #include <cmath>
 
@@ -11,7 +10,7 @@ const float Plataforma::LARGURA = 150.f;
 const float Plataforma::ALTURA = 30.f;
 
 Plataforma::Plataforma(float x, float y, sf::Color cor)
-    : Obstaculo(), cor(cor), pisada(false), caindo(false), tempoPisada(0.f), vy(0.f), posXOriginal(x), posYOriginal(y), tempoRespawn(0.f), surgindo(false), tempoSurgindo(0.f) {
+    : Obstaculo(), cor(cor), pisada(false), caindo(false), tempoPisada(0.f), posXOriginal(x), posYOriginal(y), tempoRespawn(0.f), surgindo(false), tempoSurgindo(0.f) {
     this->x = x;
     this->y = y;
 
@@ -57,8 +56,7 @@ void Plataforma::executar(float dt) {
     }
 
     if (caindo) {
-        vy += Config::GRAVIDADE * dt;
-        y += vy * dt;
+        sofrerGravidade(dt);
 
         tempoRespawn += dt;
         if (tempoRespawn >= 5.0f) {
@@ -74,6 +72,9 @@ void Plataforma::executar(float dt) {
                 pFig->setFillColor(sf::Color(cor.r, cor.g, cor.b, 0));
             }
         }
+    } else {
+        sofrerGravidade(dt);
+        contrariarGravidade(dt);
     }
 
     if (pFig != NULL) {

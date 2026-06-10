@@ -3,14 +3,12 @@
 #include "Gerenciadores/Gerenciador_Grafico.h"
 #include "Configuracao.h"
 #include <cmath>
-#include <iostream>
 #include <cstddef>
 
 namespace Entidades {
 namespace Personagens {
 
 Jogador::Jogador() : Personagem(), pontos(0),
-    linhaAtual(1), frameAtual(0), tempoAnimacao(0.f),
     olhandoEsquerda(false), olhandoDireita(true), puloPressionado(false), tiroPressionado(false),
     lento(false), tempoLento(0.f)
 {
@@ -23,13 +21,9 @@ Jogador::Jogador() : Personagem(), pontos(0),
         pFig->setOrigin(30.f, 100.f);
         pFig->setPosition(sf::Vector2f(x, y));
 
-        if (!texturaJogador.loadFromFile("assets/textures/player.png")) {
-            std::cerr << "Erro ao carregar a textura do jogador!" << std::endl;
-        } else {
-            pFig->setTexture(&texturaJogador);
-            larguraFrame = texturaJogador.getSize().x / 8;
-            alturaFrame = texturaJogador.getSize().y / 3;
-            pFig->setTextureRect(sf::IntRect(0, alturaFrame, larguraFrame, alturaFrame));
+        if (animacao.carregar("assets/textures/player.png", 8, 3, "Erro ao carregar a textura do jogador!")) {
+            pFig->setTexture(animacao.getTextura());
+            animacao.aplicar(pFig, 1, false);
         }
     }
 }
@@ -50,13 +44,10 @@ void Jogador::executar(float dt) {
         }
     }
     float forcaPulo = Config::FORCA_PULO;
-    float gravidade = Config::GRAVIDADE;
     float dx = 0;
 
     bool podPular = noChao;
     noChao = false;
-
-    vy += gravidade * dt;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
         dx -= 1;
@@ -76,7 +67,7 @@ void Jogador::executar(float dt) {
     puloPressionado = puloAtual;
 
     x += dx * velocidadeX * dt;
-    y += vy * dt;
+    sofrerGravidade(dt);
 
 
     if (pFig != NULL) {
@@ -86,25 +77,14 @@ void Jogador::executar(float dt) {
 
         bool noAr = !podPular || (vy < 0.f);
         if (noAr) {
-            linhaAtual = 1;
-            frameAtual = 2;
+            animacao.setFrameAtual(2);
         } else if (dx != 0) {
-            linhaAtual = 1;
-            tempoAnimacao += dt;
-            if (tempoAnimacao >= 0.08f) {
-                tempoAnimacao = 0.f;
-                frameAtual = (frameAtual + 1) % 8;
-            }
+            animacao.atualizar(dt, 0.08f, 8);
         } else {
-            linhaAtual = 1;
-            frameAtual = 0;
+            animacao.setFrameAtual(0);
         }
 
-        if (olhandoEsquerda) {
-            pFig->setTextureRect(sf::IntRect((frameAtual + 1) * larguraFrame, linhaAtual * alturaFrame, -larguraFrame, alturaFrame));
-        } else if (olhandoDireita) {
-            pFig->setTextureRect(sf::IntRect(frameAtual * larguraFrame, linhaAtual * alturaFrame, larguraFrame, alturaFrame));
-        }
+        animacao.aplicar(pFig, 1, olhandoEsquerda);
     }
 
     if (pGG != NULL) {

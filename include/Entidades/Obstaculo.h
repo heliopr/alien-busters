@@ -11,6 +11,8 @@ class Obstaculo : public Entidade {
 protected:
     bool danoso;
 
+    bool colidiuComJogador(Personagens::Jogador *p) const;
+
 public:
     Obstaculo();
     virtual ~Obstaculo();

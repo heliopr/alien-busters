@@ -39,6 +39,9 @@ Explosao::~Explosao() {
 }
 
 void Explosao::executar(float dt) {
+    sofrerGravidade(dt);
+    contrariarGravidade(dt);
+
     if (terminada) return;
 
     tempoAnimacao += dt;

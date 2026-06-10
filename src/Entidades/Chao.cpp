@@ -21,6 +21,9 @@ Chao::~Chao() {
 }
 
 void Chao::executar(float dt) {
+    sofrerGravidade(dt);
+    contrariarGravidade(dt);
+
     if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));
     }

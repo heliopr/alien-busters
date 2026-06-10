@@ -9,7 +9,6 @@ class Projetil : public Entidade {
 protected:
     bool ativo;
     float vx;
-    float vy;
 
 public:
     Projetil(float x = 0.f, float y = 0.f, float vx = 0.f, float vy = 0.f);
@@ -22,7 +21,6 @@ public:
     bool getAtivo() const { return ativo; }
     void setAtivo(bool b) { ativo = b; }
     float getVx() const { return vx; }
-    float getVy() const { return vy; }
 };
 
 }

@@ -2,6 +2,7 @@
 #define ENTIDADE_H
 
 #include "Ente.h"
+#include "Configuracao.h"
 #include <sstream>
 
 namespace Entidades {
@@ -10,9 +11,13 @@ class Entidade : public Ente {
 protected:
     float x;
     float y;
+    float vy;
 
     std::ostringstream buffer;
     void salvarDataBuffer();
+
+    void sofrerGravidade(float dt, float gravidade = Config::GRAVIDADE);
+    void contrariarGravidade(float dt);
 
 public:
     Entidade();
@@ -27,6 +32,8 @@ public:
     float getY() const;
     void setX(float novoX);
     void setY(float novoY);
+    float getVy() const;
+    void setVy(float v);
     virtual sf::FloatRect getHitbox() const = 0;
 };
 
