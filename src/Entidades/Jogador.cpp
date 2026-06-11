@@ -33,15 +33,11 @@ Jogador::~Jogador() {
 }
 
 void Jogador::executar(float dt) {
-    float velocidadeX = Config::VELOCIDADE_X;
-
     if (lento) {
         tempoLento -= dt;
         if (tempoLento <= 0.f) {
             lento = false;
             tempoLento = 0.f;
-        } else {
-            velocidadeX *= 0.4f;
         }
     }
 
@@ -59,10 +55,17 @@ void Jogador::executar(float dt) {
             tempoFlashDano = 0.f;
         }
     }
-    float forcaPulo = Config::FORCA_PULO;
-    float dx = 0;
 
-    bool podPular = noChao;
+    float dx = processarMovimento(dt);
+    sofrerGravidade(dt);
+
+    atualizarSprite(dt, dx);
+    atualizarCamera();
+}
+
+float Jogador::processarMovimento(float dt) {
+    float velocidadeX = lento ? Config::VELOCIDADE_X * 0.4f : Config::VELOCIDADE_X;
+    float dx = 0;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
         dx -= 1;
@@ -76,38 +79,44 @@ void Jogador::executar(float dt) {
     }
 
     bool puloAtual = sf::Keyboard::isKeyPressed(sf::Keyboard::W);
-    if (puloAtual && !puloPressionado && podPular) {
-        vy = forcaPulo;
+    if (puloAtual && !puloPressionado && noChao) {
+        vy = Config::FORCA_PULO;
     }
     puloPressionado = puloAtual;
 
     x += dx * velocidadeX * dt;
-    sofrerGravidade(dt);
 
+    return dx;
+}
 
-    if (pFig != NULL) {
-        pFig->setPosition(sf::Vector2f(x, y));
-        pFig->setSize(sf::Vector2f(60.f, 100.f));
-        pFig->setOrigin(30.f, 100.f);
-
-        bool noAr = !podPular || (vy < 0.f);
-        if (noAr) {
-            animacao.setFrameAtual(2);
-        } else if (dx != 0) {
-            animacao.atualizar(dt, 0.08f, 8);
-        } else {
-            animacao.setFrameAtual(0);
-        }
-
-        animacao.aplicar(pFig, 1, olhandoEsquerda);
-
-        if (tempoFlashDano > 0.f) {
-            pFig->setTexture(animacao.getTexturaBranca());
-        } else {
-            pFig->setTexture(animacao.getTextura());
-        }
+void Jogador::atualizarSprite(float dt, float dx) {
+    if (pFig == NULL) {
+        return;
     }
 
+    pFig->setPosition(sf::Vector2f(x, y));
+    pFig->setSize(sf::Vector2f(60.f, 100.f));
+    pFig->setOrigin(30.f, 100.f);
+
+    bool noAr = !noChao || (vy < 0.f);
+    if (noAr) {
+        animacao.setFrameAtual(2);
+    } else if (dx != 0) {
+        animacao.atualizar(dt, 0.08f, 8);
+    } else {
+        animacao.setFrameAtual(0);
+    }
+
+    animacao.aplicar(pFig, 1, olhandoEsquerda);
+
+    if (tempoFlashDano > 0.f) {
+        pFig->setTexture(animacao.getTexturaBranca());
+    } else {
+        pFig->setTexture(animacao.getTextura());
+    }
+}
+
+void Jogador::atualizarCamera() {
     if (pGG != NULL) {
         pGG->atualizarCamera(sf::Vector2f(x, y));
     }

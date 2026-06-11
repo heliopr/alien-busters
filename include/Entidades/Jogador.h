@@ -27,6 +27,10 @@ private:
     float tempoInvulneravel;
     float tempoFlashDano;
 
+    float processarMovimento(float dt);
+    void atualizarSprite(float dt, float dx);
+    void atualizarCamera();
+
 public:
     Jogador();
     ~Jogador();
