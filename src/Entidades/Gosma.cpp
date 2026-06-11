@@ -1,13 +1,14 @@
 #include "Entidades/Gosma.h"
 #include "Entidades/Jogador.h"
 #include <cstddef>
+#include <cstdlib>
 #include <iostream>
 
 namespace Entidades {
 namespace Obstaculos {
 
-Gosma::Gosma(float x, float y, float tempoLentidao)
-    : Obstaculo(), largura(60.f), altura(60.f), tempoLentidao(tempoLentidao) {
+Gosma::Gosma(float x, float y)
+    : Obstaculo(), largura(60.f), altura(60.f), tempoLentidao(1.f + (std::rand() % 51) / 100.f) {
     this->x = x;
     this->y = y;
     danoso = false;

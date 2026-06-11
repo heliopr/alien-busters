@@ -15,7 +15,7 @@ private:
     float tempoLentidao;
 
 public:
-    Gosma(float x, float y, float tempoLentidao = 1.0f);
+    Gosma(float x, float y);
     ~Gosma();
 
     void executar(float dt);

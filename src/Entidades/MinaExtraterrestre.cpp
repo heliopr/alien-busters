@@ -1,6 +1,7 @@
 #include "Entidades/MinaExtraterrestre.h"
 #include "Entidades/Jogador.h"
 #include <cstddef>
+#include <cstdlib>
 #include <cmath>
 #include <iostream>
 
@@ -12,9 +13,9 @@ namespace {
     const float RAIO_EXPLOSAO = 100.f;
 }
 
-MinaExtraterrestre::MinaExtraterrestre(float x, float y, float tempoExplosao)
+MinaExtraterrestre::MinaExtraterrestre(float x, float y)
     : Obstaculo(), largura(60.f), altura(60.f),
-      tempoExplosao(tempoExplosao), tempoRestante(tempoExplosao),
+      tempoExplosao(0.5f + (std::rand() % 101) / 100.f), tempoRestante(tempoExplosao),
       ativada(false), destruido(false)
 {
     this->x = x;
@@ -30,7 +31,7 @@ MinaExtraterrestre::MinaExtraterrestre(float x, float y, float tempoExplosao)
             static_cast<sf::RectangleShape*>(pFig)->setFillColor(sf::Color(200, 30, 30, 220));
         } else {
             pFig->setTexture(&texturaMina);
-            pFig->setOrigin(sf::Vector2f(0, -10.f));
+            pFig->setOrigin(sf::Vector2f(-18.f, -10.f));
             pFig->setScale(sf::Vector2f(.65f, .65f));
         }
     }

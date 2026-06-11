@@ -8,7 +8,7 @@ namespace Gerenciadores {
 Gerenciador_Grafico::Gerenciador_Grafico() :
     janela(sf::VideoMode(1280, 720), "Janela SFML", sf::Style::Titlebar | sf::Style::Close),
     camera(sf::FloatRect(0.f, 0.f, 1422.222f, 800.f)),
-    mostrarHitboxes(false) {
+    mostrarHitboxes(true) {
     janela.setFramerateLimit(60);
     janela.setView(camera);
 
