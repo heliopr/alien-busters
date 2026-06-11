@@ -26,6 +26,7 @@ void Projetil::executar(float dt) {
 
     x += vx * dt;
     sofrerGravidade(dt, 98.f);
+    contrariarGravidade(dt);
 
     if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));
