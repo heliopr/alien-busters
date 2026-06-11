@@ -8,10 +8,12 @@ namespace Entidades {
 namespace Obstaculos {
 
 Gosma::Gosma(float x, float y)
-    : Obstaculo(), largura(60.f), altura(60.f), tempoLentidao(1.f + (std::rand() % 51) / 100.f) {
+    : Obstaculo(), largura(60.f), altura(60.f), tempoLentidao(0) {
     this->x = x;
     this->y = y;
     danoso = false;
+
+    tempoLentidao = 1.f + (std::rand() % 51) / 100.f;
 
     pFig = new sf::RectangleShape(sf::Vector2f(largura, altura));
     if (pFig != NULL) {

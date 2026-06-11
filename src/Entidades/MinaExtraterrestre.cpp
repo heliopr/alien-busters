@@ -15,12 +15,14 @@ namespace {
 
 MinaExtraterrestre::MinaExtraterrestre(float x, float y)
     : Obstaculo(), largura(60.f), altura(60.f),
-      tempoExplosao(0.5f + (std::rand() % 101) / 100.f), tempoRestante(tempoExplosao),
+      tempoExplosao(0), tempoRestante(tempoExplosao),
       ativada(false), destruido(false)
 {
     this->x = x;
     this->y = y;
     danoso = true;
+
+    tempoExplosao = 0.5f + (std::rand() % 101) / 100.f;
 
     pFig = new sf::RectangleShape(sf::Vector2f(largura, altura));
     if (pFig != NULL) {

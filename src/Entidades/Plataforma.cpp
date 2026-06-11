@@ -1,6 +1,7 @@
 #include "Entidades/Plataforma.h"
 #include "Entidades/Jogador.h"
 #include <cstddef>
+#include <cstdlib>
 #include <cmath>
 
 namespace Entidades {
@@ -10,9 +11,11 @@ const float Plataforma::LARGURA = 150.f;
 const float Plataforma::ALTURA = 30.f;
 
 Plataforma::Plataforma(float x, float y, sf::Color cor)
-    : Obstaculo(), cor(cor), pisada(false), caindo(false), tempoPisada(0.f), posXOriginal(x), posYOriginal(y), tempoRespawn(0.f), surgindo(false), tempoSurgindo(0.f) {
+    : Obstaculo(), cor(cor), pisada(false), caindo(false), tempoPisada(0.f), tempoParaCair(0), posXOriginal(x), posYOriginal(y), tempoRespawn(0.f), surgindo(false), tempoSurgindo(0.f) {
     this->x = x;
     this->y = y;
+
+    tempoParaCair = 1.5f + (std::rand() % 101) / 100.f;
 
     pFig = new sf::RectangleShape(sf::Vector2f(LARGURA, ALTURA));
     if (pFig != NULL) {
@@ -49,7 +52,7 @@ void Plataforma::executar(float dt) {
         float offset = std::sin(tempoPisada * 50.f) * 3.f;
         x = posXOriginal + offset;
 
-        if (tempoPisada >= 2.0f) {
+        if (tempoPisada >= tempoParaCair) {
             caindo = true;
             x = posXOriginal;
         }

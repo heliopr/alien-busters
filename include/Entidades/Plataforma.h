@@ -15,6 +15,7 @@ private:
     bool pisada;
     bool caindo;
     float tempoPisada;
+    float tempoParaCair;
     float posXOriginal;
     float posYOriginal;
     float tempoRespawn;
