@@ -4,6 +4,7 @@
 
 Jogo::Jogo() : GG(), faseAtual(0), pJog1(0), menu(this), telaMorte(), estado(ESTADO_MENU) {
     Ente::setGG(&GG);
+    pJog1 = new Entidades::Personagens::Jogador();
 }
 
 Jogo::~Jogo() {
@@ -11,6 +12,9 @@ Jogo::~Jogo() {
         delete faseAtual;
         faseAtual = 0;
     }
+
+    delete pJog1;
+    pJog1 = 0;
 }
 
 void Jogo::executar() {
@@ -39,11 +43,11 @@ void Jogo::executar() {
                             int fase = menu.getOpcaoFaseSelecionada();
                             if (fase == 0) {
                                 delete faseAtual;
-                                faseAtual = new Fases::Fase_Lua();
+                                faseAtual = new Fases::Fase_Lua(pJog1);
                                 estado = ESTADO_JOGANDO;
                             } else if (fase == 1) {
                                 delete faseAtual;
-                                faseAtual = new Fases::Fase_Marte();
+                                faseAtual = new Fases::Fase_Marte(pJog1);
                                 estado = ESTADO_JOGANDO;
                             } else if (fase == 2) {
                                 menu.sairSubmenu();

@@ -35,6 +35,7 @@ public:
     Jogador();
     ~Jogador();
 
+    void resetar();
     void executar(float dt);
     void salvar();
     void mover();

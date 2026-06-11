@@ -8,12 +8,10 @@
 
 namespace Fases {
 
-Fase_Marte::Fase_Marte() : Fase() {
+Fase_Marte::Fase_Marte(Entidades::Personagens::Jogador* pJogador) : Fase(pJogador) {
     criarCenario();
     criarObstaculos();
     criarInimigos();
-
-    lista_ents.incluir(pJogador);
 }
 
 Fase_Marte::~Fase_Marte() {

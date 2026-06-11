@@ -48,7 +48,6 @@ void MinaExtraterrestre::obstaculizar(Personagens::Jogador* p) {
 
 void MinaExtraterrestre::aplicarDano(Personagens::Jogador* p) {
     if (p == NULL || destruido) return;
-    std::cout << "Danificar jogador" << std::endl;
     for (short int i = 0; i < danoVidas; ++i) {
         p->perderVida();
     }

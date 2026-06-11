@@ -15,7 +15,7 @@ protected:
     Entidades::Personagens::Jogador* pJogador;
 
 public:
-    Fase();
+    Fase(Entidades::Personagens::Jogador* pJogador);
     virtual ~Fase();
 
     virtual void executar(float dt);
@@ -29,9 +29,6 @@ protected:
     virtual void criarCenario();
     void criarCenario(const sf::Color& cor);
     virtual void criarSlimes() = 0;
-
-private:
-    void criarJogador();
 };
 
 }

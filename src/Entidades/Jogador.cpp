@@ -32,6 +32,28 @@ Jogador::Jogador() : Personagem(), pontos(0),
 Jogador::~Jogador() {
 }
 
+void Jogador::resetar() {
+    setX(Config::POSICAO_INICIAL_X);
+    setY(Config::POSICAO_INICIAL_Y);
+    setVy(0.f);
+    setNoChao(false);
+
+    num_vidas = 3;
+    pontos = 0;
+
+    olhandoEsquerda = false;
+    olhandoDireita = true;
+    puloPressionado = false;
+    tiroPressionado = false;
+
+    lento = false;
+    tempoLento = 0.f;
+
+    invulneravel = false;
+    tempoInvulneravel = 0.f;
+    tempoFlashDano = 0.f;
+}
+
 void Jogador::executar(float dt) {
     if (lento) {
         tempoLento -= dt;

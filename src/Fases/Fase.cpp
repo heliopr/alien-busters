@@ -6,19 +6,15 @@
 
 namespace Fases {
 
-Fase::Fase() : Ente(), lista_ents(), GC(), pJogador(0) {
-    criarJogador();
+Fase::Fase(Entidades::Personagens::Jogador* pJogador) : Ente(), lista_ents(), GC(), pJogador(pJogador) {
+    GC.setJogador(pJogador);
+    GC.setListaEntidades(&lista_ents);
+    pJogador->resetar();
 }
 
 Fase::~Fase() {
     GC.limpar();
     lista_ents.limpar();
-}
-
-void Fase::criarJogador() {
-    pJogador = new Entidades::Personagens::Jogador();
-    GC.setJogador(pJogador);
-    GC.setListaEntidades(&lista_ents);
 }
 
 void Fase::executar(float dt) {
@@ -40,6 +36,10 @@ void Fase::executar(float dt) {
         GC.incluirProjetil(p);
     }
 
+    if (pJogador) {
+        pJogador->executar(dt);
+    }
+
     lista_ents.percorrer(dt, pJogador);
     GC.executar();
 
@@ -47,6 +47,10 @@ void Fase::executar(float dt) {
 }
 
 void Fase::desenhar() {
+    if (pJogador != 0 && !jogadorPerdeu()) {
+        pJogador->desenhar();
+    }
+
     if (pGG != 0 && pJogador != 0) {
         pGG->desenharHUD(pJogador->getPontos(), pJogador->getX(), pJogador->getY(), pJogador->getNumVidas());
     }
@@ -78,13 +82,11 @@ void Fase::reiniciar() {
     GC.limpar();
     lista_ents.limpar();
 
-    criarJogador();
+    pJogador->resetar();
 
     criarCenario();
     criarObstaculos();
     criarInimigos();
-
-    lista_ents.incluir(pJogador);
 }
 
 }
