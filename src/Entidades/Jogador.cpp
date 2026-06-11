@@ -151,5 +151,9 @@ void Jogador::perderVida() {
     tempoFlashDano = Config::DURACAO_FLASH_DANO;
 }
 
+void Jogador::morrer() {
+    num_vidas = 0;
+}
+
 }
 }

@@ -43,6 +43,7 @@ public:
     void adicionarPontos(int valor) { pontos += valor; }
     void ficarLento(float duracao);
     void perderVida();
+    void morrer();
     bool estaInvulneravel() const { return invulneravel; }
     void ativarInvulnerabilidade();
     int getNumVidas() const { return num_vidas; }

@@ -32,6 +32,7 @@ public:
     void setMostrarHitboxes(bool b) { mostrarHitboxes = b; }
     void desenharEnte(Ente *pE);
     void desenharTexto(sf::Text *pT);
+    void desenharTextoTela(sf::Text *pT);
     void desenharRetangulo(sf::FloatRect rect, sf::Color corContorno, float espessuraContorno);
     bool estaAberto();
     bool coletarEventos(sf::Event &evento);

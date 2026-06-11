@@ -22,8 +22,12 @@ void Fase::criarJogador() {
 }
 
 void Fase::executar(float dt) {
-    if (pJogador && (pJogador->getY() > Config::ALTURA_LIMITE_QUEDA || pJogador->getNumVidas() <= 0)) {
-        reiniciar();
+    if (pJogador && pJogador->getY() > Config::ALTURA_LIMITE_QUEDA) {
+        pJogador->morrer();
+    }
+
+    if (jogadorPerdeu()) {
+        desenhar();
         return;
     }
 
@@ -64,6 +68,10 @@ void Fase::criarCenario(const sf::Color& cor) {
     lista_ents.incluir(chao1);
     lista_ents.incluir(chao2);
     lista_ents.incluir(chao3);
+}
+
+bool Fase::jogadorPerdeu() const {
+    return pJogador != 0 && pJogador->getNumVidas() <= 0;
 }
 
 void Fase::reiniciar() {

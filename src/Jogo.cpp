@@ -2,7 +2,7 @@
 #include "Ente.h"
 #include "Entidades/Plataforma.h"
 
-Jogo::Jogo() : GG(), faseAtual(0), pJog1(0), menu(this), noMenu(true) {
+Jogo::Jogo() : GG(), faseAtual(0), pJog1(0), menu(this), telaMorte(), estado(ESTADO_MENU) {
     Ente::setGG(&GG);
 }
 
@@ -25,33 +25,58 @@ void Jogo::executar() {
                 GG.fecharJanela();
             }
 
-            // navegação do Menu
-            if (noMenu && evento.type == sf::Event::KeyPressed) {
-                if (evento.key.code == sf::Keyboard::Up || evento.key.code == sf::Keyboard::W) {
-                    menu.subirOpcao();
-                }
-                else if (evento.key.code == sf::Keyboard::Down || evento.key.code == sf::Keyboard::S) {
-                    menu.descerOpcao();
-                }
-                else if (evento.key.code == sf::Keyboard::Enter) {
-                    if (menu.getEmSubmenu()) {
-                        int fase = menu.getOpcaoFaseSelecionada();
-                        if (fase == 0) {
-                            delete faseAtual;
-                            faseAtual = new Fases::Fase_Lua();
-                            noMenu = false;
-                        } else if (fase == 1) {
-                            delete faseAtual;
-                            faseAtual = new Fases::Fase_Marte();
-                            noMenu = false;
-                        } else if (fase == 2) {
-                            menu.sairSubmenu();
+            if (evento.type == sf::Event::KeyPressed) {
+                // navegação do Menu
+                if (estado == ESTADO_MENU) {
+                    if (evento.key.code == sf::Keyboard::Up || evento.key.code == sf::Keyboard::W) {
+                        menu.subirOpcao();
+                    }
+                    else if (evento.key.code == sf::Keyboard::Down || evento.key.code == sf::Keyboard::S) {
+                        menu.descerOpcao();
+                    }
+                    else if (evento.key.code == sf::Keyboard::Enter) {
+                        if (menu.getEmSubmenu()) {
+                            int fase = menu.getOpcaoFaseSelecionada();
+                            if (fase == 0) {
+                                delete faseAtual;
+                                faseAtual = new Fases::Fase_Lua();
+                                estado = ESTADO_JOGANDO;
+                            } else if (fase == 1) {
+                                delete faseAtual;
+                                faseAtual = new Fases::Fase_Marte();
+                                estado = ESTADO_JOGANDO;
+                            } else if (fase == 2) {
+                                menu.sairSubmenu();
+                            }
+                        } else {
+                            if (menu.getOpcaoSelecionada() == 0) {
+                                menu.entrarSubmenu();
+                            } else if (menu.getOpcaoSelecionada() == 1) {
+                                GG.fecharJanela();
+                            }
                         }
-                    } else {
-                        if (menu.getOpcaoSelecionada() == 0) {
-                            menu.entrarSubmenu();
-                        } else if (menu.getOpcaoSelecionada() == 1) {
-                            GG.fecharJanela();
+                    }
+                }
+                else if (estado == ESTADO_TELA_MORTE) {
+                    if (evento.key.code == sf::Keyboard::Up || evento.key.code == sf::Keyboard::W) {
+                        telaMorte.subirOpcao();
+                    }
+                    else if (evento.key.code == sf::Keyboard::Down || evento.key.code == sf::Keyboard::S) {
+                        telaMorte.descerOpcao();
+                    }
+                    else if (evento.key.code == sf::Keyboard::Enter) {
+                        if (telaMorte.getOpcaoSelecionada() == 0) {
+                            if (faseAtual) {
+                                faseAtual->reiniciar();
+                            }
+                            telaMorte.resetar();
+                            estado = ESTADO_JOGANDO;
+                        } else {
+                            delete faseAtual;
+                            faseAtual = 0;
+                            menu.sairSubmenu();
+                            telaMorte.resetar();
+                            estado = ESTADO_MENU;
                         }
                     }
                 }
@@ -60,13 +85,22 @@ void Jogo::executar() {
 
         GG.renderizar();
 
-        if (noMenu) {
+        if (estado == ESTADO_MENU) {
             menu.desenhar();
-        } 
-        else {
+        }
+        else if (estado == ESTADO_JOGANDO) {
             if (faseAtual) {
                 faseAtual->executar(dt);
+                if (faseAtual->jogadorPerdeu()) {
+                    estado = ESTADO_TELA_MORTE;
+                }
             }
+        }
+        else {
+            if (faseAtual) {
+                faseAtual->desenhar();
+            }
+            telaMorte.desenhar();
         }
 
         GG.mostrar();

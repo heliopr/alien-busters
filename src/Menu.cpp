@@ -96,6 +96,6 @@ void Menu::desenhar() {
 
     std::vector<sf::Text>& lista = emSubmenu ? opcoesFases : opcoes;
     for (size_t i = 0; i < lista.size(); ++i) {
-        pGG->desenharTexto(&lista[i]);
+        pGG->desenharTextoTela(&lista[i]);
     }
 }

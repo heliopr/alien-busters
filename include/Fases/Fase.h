@@ -21,6 +21,7 @@ public:
     virtual void executar(float dt);
     virtual void desenhar();
     virtual void reiniciar();
+    bool jogadorPerdeu() const;
 
 protected:
     virtual void criarInimigos() = 0;

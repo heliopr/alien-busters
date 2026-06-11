@@ -63,6 +63,17 @@ void Gerenciador_Grafico::desenharTexto(sf::Text *pT) {
     }
 }
 
+void Gerenciador_Grafico::desenharTextoTela(sf::Text *pT) {
+    if (pT != 0) {
+        sf::View viewAnterior = janela.getView();
+        sf::View viewTela(sf::FloatRect(0.f, 0.f, 1422.222f, 800.f));
+
+        janela.setView(viewTela);
+        janela.draw(*pT);
+        janela.setView(viewAnterior);
+    }
+}
+
 void Gerenciador_Grafico::desenharRetangulo(sf::FloatRect rect, sf::Color corContorno, float espessuraContorno) {
     sf::RectangleShape shape(sf::Vector2f(rect.width, rect.height));
     shape.setPosition(sf::Vector2f(rect.left, rect.top));

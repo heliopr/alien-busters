@@ -5,14 +5,22 @@
 #include "Fases/Fase_Lua.h"
 #include "Fases/Fase_Marte.h"
 #include "Menu.h"
+#include "TelaMorte.h"
 
 class Jogo {
 private:
+    enum Estado {
+        ESTADO_MENU,
+        ESTADO_JOGANDO,
+        ESTADO_TELA_MORTE
+    };
+
     Gerenciadores::Gerenciador_Grafico GG;
     Fases::Fase* faseAtual;
     Entidades::Personagens::Jogador* pJog1;
-    Menu menu; 
-    bool noMenu;
+    Menu menu;
+    TelaMorte telaMorte;
+    Estado estado;
 
 public:
     Jogo();
