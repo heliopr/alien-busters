@@ -16,6 +16,7 @@ protected:
     void criarObstaculos();
     void criarAliens();
     void criarGosmas();
+    void criarSlimes();
 };
 
 }

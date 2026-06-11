@@ -27,6 +27,7 @@ protected:
     virtual void criarObstaculos() = 0;
     virtual void criarCenario();
     void criarCenario(const sf::Color& cor);
+    virtual void criarSlimes() = 0;
 
 private:
     void criarJogador();

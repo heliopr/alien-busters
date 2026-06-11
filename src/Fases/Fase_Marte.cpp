@@ -1,9 +1,7 @@
 #include "Fases/Fase_Marte.h"
 #include "Entidades/Plataforma.h"
 #include "Entidades/Chao.h"
-#include "Entidades/Alien.h"
 #include "Entidades/Slime.h"
-#include "Entidades/Gosma.h"
 #include "Entidades/MinaExtraterrestre.h"
 #include <cstdlib>
 #include <ctime>
@@ -22,34 +20,7 @@ Fase_Marte::~Fase_Marte() {
 }
 
 void Fase_Marte::criarInimigos() {
-    criarAliens();
     criarSlimes();
-}
-
-void Fase_Marte::criarAliens() {
-    Entidades::Personagens::Alien* inimigo1 = new Entidades::Personagens::Alien(350.f, 300.f);
-    lista_ents.incluir(inimigo1);
-    GC.incluirInimigo(inimigo1);
-
-    Entidades::Personagens::Alien* inimigo2 = new Entidades::Personagens::Alien(600.f, 300.f);
-    lista_ents.incluir(inimigo2);
-    GC.incluirInimigo(inimigo2);
-
-    Entidades::Personagens::Alien* inimigo3 = new Entidades::Personagens::Alien(900.f, 400.f);
-    lista_ents.incluir(inimigo3);
-    GC.incluirInimigo(inimigo3);
-
-    Entidades::Personagens::Alien* inimigo4 = new Entidades::Personagens::Alien(1400.f, 350.f);
-    lista_ents.incluir(inimigo4);
-    GC.incluirInimigo(inimigo4);
-
-    Entidades::Personagens::Alien* inimigo5 = new Entidades::Personagens::Alien(1800.f, 300.f);
-    lista_ents.incluir(inimigo5);
-    GC.incluirInimigo(inimigo5);
-
-    Entidades::Personagens::Alien* inimigo6 = new Entidades::Personagens::Alien(2300.f, 350.f);
-    lista_ents.incluir(inimigo6);
-    GC.incluirInimigo(inimigo6);
 }
 
 void Fase_Marte::criarObstaculos() {
@@ -106,15 +77,16 @@ void Fase_Marte::criarObstaculos() {
     lista_ents.incluir(parede1);
     lista_ents.incluir(parede2);
 
-    criarGosmas();
+    criarMinasExtraterrestres();
+}
 
+void Fase_Marte::criarMinasExtraterrestres() {
     Entidades::Obstaculos::MinaExtraterrestre* od = NULL;
     od = new Entidades::Obstaculos::MinaExtraterrestre(500.f,  660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
     od = new Entidades::Obstaculos::MinaExtraterrestre(1100.f, 660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
     od = new Entidades::Obstaculos::MinaExtraterrestre(1700.f, 660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
     od = new Entidades::Obstaculos::MinaExtraterrestre(2300.f, 660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
 }
-
 void Fase_Marte::criarSlimes() {
     static const float posicoes[][2] = {
         { 200.f, 300.f},
@@ -143,12 +115,5 @@ void Fase_Marte::criarSlimes() {
     }
 }
 
-void Fase_Marte::criarGosmas() {
-    Entidades::Obstaculos::Gosma* om = NULL;
-    om = new Entidades::Obstaculos::Gosma(250.f,  640.f, 60.f, 60.f); lista_ents.incluir(om);
-    om = new Entidades::Obstaculos::Gosma(800.f,  640.f, 60.f, 60.f); lista_ents.incluir(om);
-    om = new Entidades::Obstaculos::Gosma(1500.f, 640.f, 60.f, 60.f); lista_ents.incluir(om);
-    om = new Entidades::Obstaculos::Gosma(2100.f, 640.f, 60.f, 60.f); lista_ents.incluir(om);
 }
 
-}

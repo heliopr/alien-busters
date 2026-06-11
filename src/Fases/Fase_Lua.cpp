@@ -2,8 +2,8 @@
 #include "Entidades/Plataforma.h"
 #include "Entidades/Chao.h"
 #include "Entidades/Alien.h"
+#include "Entidades/Slime.h"
 #include "Entidades/Gosma.h"
-#include "Entidades/MinaExtraterrestre.h"
 #include <cstdlib>
 #include <ctime>
 
@@ -26,6 +26,7 @@ void Fase_Lua::criarCenario() {
 }
 
 void Fase_Lua::criarInimigos() {
+    criarSlimes();
     criarAliens();
 }
 
@@ -108,11 +109,6 @@ void Fase_Lua::criarObstaculos() {
     lista_ents.incluir(parede2);
 
     criarGosmas();
-
-    Entidades::Obstaculos::MinaExtraterrestre* od = NULL;
-    od = new Entidades::Obstaculos::MinaExtraterrestre(600.f,  660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
-    od = new Entidades::Obstaculos::MinaExtraterrestre(1450.f, 660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
-    od = new Entidades::Obstaculos::MinaExtraterrestre(2250.f, 660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
 }
 
 void Fase_Lua::criarGosmas() {
@@ -120,6 +116,33 @@ void Fase_Lua::criarGosmas() {
     om = new Entidades::Obstaculos::Gosma(300.f,  640.f, 60.f, 60.f); lista_ents.incluir(om);
     om = new Entidades::Obstaculos::Gosma(940.f,  640.f, 60.f, 60.f); lista_ents.incluir(om);
     om = new Entidades::Obstaculos::Gosma(1980.f, 640.f, 60.f, 60.f); lista_ents.incluir(om);
+}
+
+void Fase_Lua::criarSlimes() {
+    static const float posicoes[][2] = {
+        { 350.f, 300.f},
+        { 700.f, 400.f},
+        {1100.f, 350.f},
+        {1500.f, 300.f},
+        {1900.f, 400.f},
+        {2350.f, 300.f}
+    };
+    const int total  = sizeof(posicoes) / sizeof(posicoes[0]);
+    const int minimo = 2;
+
+    int indices[total];
+    for (int i = 0; i < total; ++i) indices[i] = i;
+    for (int i = total - 1; i > 0; --i) {
+        int j = std::rand() % (i + 1);
+        int tmp = indices[i]; indices[i] = indices[j]; indices[j] = tmp;
+    }
+
+    int quantidade = minimo + std::rand() % (total - minimo + 1);
+    for (int i = 0; i < quantidade; ++i) {
+        Entidades::Personagens::Slime* s = new Entidades::Personagens::Slime(posicoes[indices[i]][0], posicoes[indices[i]][1]);
+        lista_ents.incluir(s);
+        GC.incluirInimigo(s);
+    }
 }
 
 }

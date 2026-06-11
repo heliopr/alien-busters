@@ -13,9 +13,8 @@ public:
 protected:
     void criarInimigos();
     void criarObstaculos();
-    void criarAliens();
+    void criarMinasExtraterrestres();
     void criarSlimes();
-    void criarGosmas();
 };
 
 }
