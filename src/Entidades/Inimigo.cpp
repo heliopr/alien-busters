@@ -6,7 +6,7 @@
 namespace Entidades {
 namespace Personagens {
 
-Inimigo::Inimigo() : Personagem(), nivel_maldade(0), velocidadeX(-50.f) {
+Inimigo::Inimigo() : Personagem(), nivel_maldade(0), velocidadeX(-50.f), tempoFlashDano(0.f) {
 }
 
 Inimigo::~Inimigo() {
@@ -20,6 +20,20 @@ void Inimigo::moverComGravidade(float dt) {
         y = Config::POSICAO_INICIAL_Y;
         vy = 0.f;
     }
+}
+
+void Inimigo::atualizarFlashDano(float dt) {
+    if (tempoFlashDano > 0.f) {
+        tempoFlashDano -= dt;
+        if (tempoFlashDano < 0.f) {
+            tempoFlashDano = 0.f;
+        }
+    }
+}
+
+void Inimigo::levarDano() {
+    num_vidas--;
+    tempoFlashDano = Config::DURACAO_FLASH_DANO;
 }
 
 void Inimigo::danificar(Jogador* p) {

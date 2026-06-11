@@ -10,6 +10,7 @@ Alien::Alien(float x_ini, float y_ini) : Inimigo(), velocidade(0.f),
 {
     x = x_ini;
     y = y_ini;
+    num_vidas = 3;
 
     float v = 50.f + std::rand() % 50;
     velocidade = (std::rand() % 2 == 0) ? v : -v;
@@ -32,6 +33,7 @@ Alien::~Alien() {
 
 void Alien::executar(float dt) {
     moverComGravidade(dt);
+    atualizarFlashDano(dt);
 
     if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));
@@ -47,6 +49,12 @@ void Alien::executar(float dt) {
         }
 
         animacao.aplicar(pFig, 2, olhandoEsquerda);
+
+        if (estaFlashando()) {
+            pFig->setTexture(animacao.getTexturaBranca());
+        } else {
+            pFig->setTexture(animacao.getTextura());
+        }
     }
 }
 

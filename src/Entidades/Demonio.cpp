@@ -10,6 +10,7 @@ Demonio::Demonio(float x_ini, float y_ini)
 {
     x = x_ini;
     y = y_ini;
+    num_vidas = 5;
 
     float v = 40.f + std::rand() % 40;
     velocidadeX = (std::rand() % 2 == 0) ? v : -v;
@@ -27,9 +28,11 @@ Demonio::~Demonio() {
 
 void Demonio::executar(float dt) {
     moverComGravidade(dt);
+    atualizarFlashDano(dt);
 
     if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));
+        pFig->setFillColor(estaFlashando() ? sf::Color::White : sf::Color::Red);
     }
 }
 

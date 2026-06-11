@@ -178,18 +178,22 @@ bool Gerenciador_Colisoes::projetilColidiuComInimigo(Entidades::Projetil* p) {
     for (std::vector<Entidades::Personagens::Inimigo*>::iterator it = LIs.begin(); it != LIs.end(); ++it) {
         Entidades::Personagens::Inimigo* ini = *it;
         if (ini != NULL && verificarColisao(p, ini)) {
-            float xi = ini->getX();
-            float yi = ini->getY();
+            ini->levarDano();
 
-            LIs.erase(it);
-            if (pListaEntidades) {
-                pListaEntidades->remover(ini);
-            }
-            delete ini;
+            if (ini->morreu()) {
+                float xi = ini->getX();
+                float yi = ini->getY();
 
-            criarExplosao(xi, yi - 30.f);
-            if (pJog1) {
-                pJog1->adicionarPontos(100);
+                LIs.erase(it);
+                if (pListaEntidades) {
+                    pListaEntidades->remover(ini);
+                }
+                delete ini;
+
+                criarExplosao(xi, yi - 30.f);
+                if (pJog1) {
+                    pJog1->adicionarPontos(100);
+                }
             }
             return true;
         }
