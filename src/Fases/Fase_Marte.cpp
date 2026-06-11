@@ -92,10 +92,10 @@ void Fase_Marte::criarDemonios() {
 
 void Fase_Marte::criarMinasExtraterrestres() {
     Entidades::Obstaculos::MinaExtraterrestre* od = NULL;
-    od = new Entidades::Obstaculos::MinaExtraterrestre(500.f,  660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
-    od = new Entidades::Obstaculos::MinaExtraterrestre(1100.f, 660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
-    od = new Entidades::Obstaculos::MinaExtraterrestre(1700.f, 660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
-    od = new Entidades::Obstaculos::MinaExtraterrestre(2300.f, 660.f, 60.f, 60.f, 1); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
+    od = new Entidades::Obstaculos::MinaExtraterrestre(500.f,  660.f); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
+    od = new Entidades::Obstaculos::MinaExtraterrestre(1100.f, 660.f); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
+    od = new Entidades::Obstaculos::MinaExtraterrestre(1700.f, 660.f); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
+    od = new Entidades::Obstaculos::MinaExtraterrestre(2300.f, 660.f); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
 }
 void Fase_Marte::criarSlimes() {
     static const float posicoes[][2] = {

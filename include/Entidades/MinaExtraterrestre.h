@@ -11,12 +11,12 @@ class MinaExtraterrestre : public Obstaculo {
 private:
     float largura;
     float altura;
-    short int danoVidas;
+    float tempoExplosao;
     bool destruido;
     sf::Texture texturaMina;
 
 public:
-    MinaExtraterrestre(float x, float y, float largura = 45.f, float altura = 45.f, short int dano = 1);
+    MinaExtraterrestre(float x, float y, float tempoExplosao = 1.0f);
     ~MinaExtraterrestre();
 
     void executar(float dt);

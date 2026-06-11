@@ -12,9 +12,10 @@ private:
     float largura;
     float altura;
     sf::Texture textura;
+    float tempoLentidao;
 
 public:
-    Gosma(float x, float y);
+    Gosma(float x, float y, float tempoLentidao = 1.0f);
     ~Gosma();
 
     void executar(float dt);

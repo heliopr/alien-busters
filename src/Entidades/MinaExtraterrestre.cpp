@@ -7,9 +7,9 @@
 namespace Entidades {
 namespace Obstaculos {
 
-MinaExtraterrestre::MinaExtraterrestre(float x, float y, float largura, float altura, short int dano)
-    : Obstaculo(), largura(largura), altura(altura),
-      danoVidas(dano), destruido(false)
+MinaExtraterrestre::MinaExtraterrestre(float x, float y, float tempoExplosao)
+    : Obstaculo(), largura(60.f), altura(60.f),
+      tempoExplosao(tempoExplosao), destruido(false)
 {
     this->x = x;
     this->y = y;
@@ -48,9 +48,7 @@ void MinaExtraterrestre::obstaculizar(Personagens::Jogador* p) {
 
 void MinaExtraterrestre::aplicarDano(Personagens::Jogador* p) {
     if (p == NULL || destruido) return;
-    for (short int i = 0; i < danoVidas; ++i) {
-        p->perderVida();
-    }
+    p->perderVida();
     destruido = true;
 }
 

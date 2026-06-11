@@ -6,8 +6,8 @@
 namespace Entidades {
 namespace Obstaculos {
 
-Gosma::Gosma(float x, float y)
-    : Obstaculo(), largura(60.f), altura(60.f) {
+Gosma::Gosma(float x, float y, float tempoLentidao)
+    : Obstaculo(), largura(60.f), altura(60.f), tempoLentidao(tempoLentidao) {
     this->x = x;
     this->y = y;
     danoso = false;
@@ -39,7 +39,7 @@ void Gosma::salvar() {
 
 void Gosma::obstaculizar(Personagens::Jogador* p) {
     if (colidiuComJogador(p) && p->getNoChao()) {
-        p->ficarLento(1.0f);
+        p->ficarLento(tempoLentidao);
     }
 }
 
