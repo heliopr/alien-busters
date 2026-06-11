@@ -1,6 +1,7 @@
 #ifndef GERENCIADOR_COLISOES_H
 #define GERENCIADOR_COLISOES_H
 
+#include <SFML/Graphics.hpp>
 #include <list>
 #include <vector>
 #include <set>
@@ -27,6 +28,14 @@ namespace Gerenciadores {
 
 class Gerenciador_Colisoes {
 private:
+    enum ResultadoColisao {
+        SEM_COLISAO,
+        COLISAO_ESQUERDA,
+        COLISAO_DIREITA,
+        COLISAO_CIMA,
+        COLISAO_BAIXO
+    };
+
     std::vector<Entidades::Personagens::Inimigo*> LIs;
     std::list<Entidades::Obstaculos::Obstaculo*> LOs;
     std::list<Entidades::Obstaculos::MinaExtraterrestre*> LODs;
@@ -36,10 +45,18 @@ private:
     Listas::ListaEntidades* pListaEntidades;
 
     bool verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2) const;
+    ResultadoColisao detectarColisaoObstaculo(const sf::FloatRect& box, const sf::FloatRect& boxObs) const;
+
     void tratarColisoesJogsObstacs();
-    void tratarColisoesJogsObstacsDificeis();
+    void tratarColisoesInimigosObstacs();
+    void removerMinasDestruidas();
     void tratarColisoesJogsInimigs();
     void tratarColisoesJogsProjeteis();
+
+    bool projetilColidiuComObstaculo(Entidades::Projetil* p) const;
+    bool projetilColidiuComInimigo(Entidades::Projetil* p);
+    void removerProjetil(std::set<Entidades::Projetil*>::iterator it);
+
     void criarExplosao(float x, float y);
     void limparExplosoes();
 

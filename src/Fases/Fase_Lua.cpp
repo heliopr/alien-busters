@@ -22,18 +22,7 @@ Fase_Lua::~Fase_Lua() {
 
 void Fase_Lua::criarCenario() {
     static const sf::Color corLua(140, 140, 160);
-
-    Entidades::Obstaculos::Chao* chao1 = new Entidades::Obstaculos::Chao(0.f,    700.f, 800.f, 100.f, corLua);
-    Entidades::Obstaculos::Chao* chao2 = new Entidades::Obstaculos::Chao(920.f,  700.f, 780.f, 100.f, corLua);
-    Entidades::Obstaculos::Chao* chao3 = new Entidades::Obstaculos::Chao(1850.f, 700.f, 800.f, 100.f, corLua);
-
-    GC.incluirObstaculo(chao1);
-    GC.incluirObstaculo(chao2);
-    GC.incluirObstaculo(chao3);
-
-    lista_ents.incluir(chao1);
-    lista_ents.incluir(chao2);
-    lista_ents.incluir(chao3);
+    Fase::criarCenario(corLua);
 }
 
 void Fase_Lua::criarInimigos() {

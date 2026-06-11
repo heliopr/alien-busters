@@ -15,11 +15,7 @@ Gerenciador_Colisoes::Gerenciador_Colisoes() : pJog1(NULL), pListaEntidades(NULL
 }
 
 Gerenciador_Colisoes::~Gerenciador_Colisoes() {
-    LOs.clear();
-    LODs.clear();
-    LExps.clear();
-    LIs.clear();
-    LPs.clear();
+    limpar();
 }
 
 void Gerenciador_Colisoes::incluirInimigo(Entidades::Personagens::Inimigo* pi) {
@@ -63,40 +59,93 @@ bool Gerenciador_Colisoes::verificarColisao(Entidades::Entidade* pe1, Entidades:
     return box1.intersects(box2);
 }
 
+Gerenciador_Colisoes::ResultadoColisao Gerenciador_Colisoes::detectarColisaoObstaculo(const sf::FloatRect& box, const sf::FloatRect& boxObs) const {
+    sf::FloatRect interseccao;
+    if (!box.intersects(boxObs, interseccao)) {
+        return SEM_COLISAO;
+    }
+
+    if (interseccao.width < interseccao.height) {
+        if (box.left + box.width / 2.f < boxObs.left + boxObs.width / 2.f) {
+            return COLISAO_ESQUERDA;
+        }
+        return COLISAO_DIREITA;
+    }
+
+    if (box.top + box.height / 2.f < boxObs.top + boxObs.height / 2.f) {
+        return COLISAO_CIMA;
+    }
+    return COLISAO_BAIXO;
+}
+
 void Gerenciador_Colisoes::tratarColisoesJogsObstacs() {
     if (pJog1 == NULL) return;
-
-    sf::FloatRect boxPlayer = pJog1->getHitbox();
 
     for (std::list<Entidades::Obstaculos::Obstaculo*>::iterator it = LOs.begin(); it != LOs.end(); ++it) {
         Entidades::Obstaculos::Obstaculo* obs = *it;
         if (obs == NULL) continue;
 
         sf::FloatRect boxObs = obs->getHitbox();
-        sf::FloatRect interseccao;
 
-        if (boxPlayer.intersects(boxObs, interseccao)) {
-            if (interseccao.width < interseccao.height) {
-                // colisão lateral
-                if (boxPlayer.left + boxPlayer.width / 2.f < boxObs.left + boxObs.width / 2.f) {
-                    pJog1->setX(boxObs.left - 20.f);
-                } else {
-                    pJog1->setX(boxObs.left + boxObs.width + 20.f);
-                }
-            } else {
-                // colisão vertical
-                if (boxPlayer.top + boxPlayer.height / 2.f < boxObs.top + boxObs.height / 2.f) {
-                    pJog1->setY(boxObs.top + 25.f);
+        switch (detectarColisaoObstaculo(pJog1->getHitbox(), boxObs)) {
+            case COLISAO_ESQUERDA:
+                pJog1->setX(boxObs.left - 20.f);
+                break;
+            case COLISAO_DIREITA:
+                pJog1->setX(boxObs.left + boxObs.width + 20.f);
+                break;
+            case COLISAO_CIMA:
+                pJog1->setY(boxObs.top + 25.f);
+                pJog1->setVy(0.f);
+                pJog1->setNoChao(true);
+                break;
+            case COLISAO_BAIXO:
+                pJog1->setY(boxObs.top + boxObs.height + 75.f);
+                if (pJog1->getVy() < 0.f) {
                     pJog1->setVy(0.f);
-                    pJog1->setNoChao(true);
-                } else {
-                    pJog1->setY(boxObs.top + boxObs.height + 75.f);
-                    if (pJog1->getVy() < 0.f) {
-                        pJog1->setVy(0.f);
-                    }
                 }
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+void Gerenciador_Colisoes::tratarColisoesInimigosObstacs() {
+    for (std::vector<Entidades::Personagens::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
+        Entidades::Personagens::Inimigo* ini = *iti;
+        if (ini == NULL) continue;
+
+        for (std::list<Entidades::Obstaculos::Obstaculo*>::iterator ito = LOs.begin(); ito != LOs.end(); ++ito) {
+            Entidades::Obstaculos::Obstaculo* obs = *ito;
+            if (obs == NULL) continue;
+
+            sf::FloatRect boxIni = ini->getHitbox();
+            sf::FloatRect boxObs = obs->getHitbox();
+
+            switch (detectarColisaoObstaculo(boxIni, boxObs)) {
+                case COLISAO_ESQUERDA:
+                    ini->setX(boxObs.left - boxIni.width / 2.f);
+                    ini->setVelocidadeX(-ini->getVelocidadeX());
+                    break;
+                case COLISAO_DIREITA:
+                    ini->setX(boxObs.left + boxObs.width + boxIni.width / 2.f);
+                    ini->setVelocidadeX(-ini->getVelocidadeX());
+                    break;
+                case COLISAO_CIMA:
+                    ini->setY(boxObs.top - boxIni.height / 2.f);
+                    ini->setVy(0.f);
+                    ini->setNoChao(true);
+                    break;
+                case COLISAO_BAIXO:
+                    ini->setY(boxObs.top + boxObs.height + boxIni.height / 2.f);
+                    if (ini->getVy() < 0.f) {
+                        ini->setVy(0.f);
+                    }
+                    break;
+                default:
+                    break;
             }
-            boxPlayer = pJog1->getHitbox();
         }
     }
 }
@@ -114,70 +163,73 @@ void Gerenciador_Colisoes::tratarColisoesJogsInimigs() {
     }
 }
 
-void Gerenciador_Colisoes::tratarColisoesJogsProjeteis() {
-    std::set<Entidades::Projetil*>::iterator it;
-    for (it = LPs.begin(); it != LPs.end(); ) {
-        Entidades::Projetil* p = *it;
-        if (!p->getAtivo()) {
-            std::set<Entidades::Projetil*>::iterator toErase = it;
-            ++it;
-            LPs.erase(toErase);
+bool Gerenciador_Colisoes::projetilColidiuComObstaculo(Entidades::Projetil* p) const {
+    for (std::list<Entidades::Obstaculos::Obstaculo*>::const_iterator it = LOs.begin(); it != LOs.end(); ++it) {
+        if (verificarColisao(p, *it)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Gerenciador_Colisoes::projetilColidiuComInimigo(Entidades::Projetil* p) {
+    for (std::vector<Entidades::Personagens::Inimigo*>::iterator it = LIs.begin(); it != LIs.end(); ++it) {
+        Entidades::Personagens::Inimigo* ini = *it;
+        if (ini != NULL && verificarColisao(p, ini)) {
+            float xi = ini->getX();
+            float yi = ini->getY();
+
+            LIs.erase(it);
             if (pListaEntidades) {
-                pListaEntidades->remover(p);
+                pListaEntidades->remover(ini);
             }
-            delete p;
+            delete ini;
+
+            criarExplosao(xi, yi - 30.f);
+            if (pJog1) {
+                pJog1->adicionarPontos(100);
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+void Gerenciador_Colisoes::removerProjetil(std::set<Entidades::Projetil*>::iterator it) {
+    Entidades::Projetil* p = *it;
+    LPs.erase(it);
+    if (pListaEntidades) {
+        pListaEntidades->remover(p);
+    }
+    delete p;
+}
+
+void Gerenciador_Colisoes::tratarColisoesJogsProjeteis() {
+    std::set<Entidades::Projetil*>::iterator it = LPs.begin();
+    while (it != LPs.end()) {
+        Entidades::Projetil* p = *it;
+
+        if (!p->getAtivo()) {
+            std::set<Entidades::Projetil*>::iterator atual = it;
+            ++it;
+            removerProjetil(atual);
             continue;
         }
 
-        bool colidiu = false;
-
-        for (std::list<Entidades::Obstaculos::Obstaculo*>::iterator ito = LOs.begin(); ito != LOs.end(); ++ito) {
-            Entidades::Obstaculos::Obstaculo* obs = *ito;
-            if (verificarColisao(p, obs)) {
-                colidiu = true;
-                break;
-            }
-        }
-
-        if (!colidiu) {
-            for (std::vector<Entidades::Personagens::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ) {
-                Entidades::Personagens::Inimigo* ini = *iti;
-                if (ini != NULL && verificarColisao(p, ini)) {
-                    colidiu = true;
-                    float xi = ini->getX();
-                    float yi = ini->getY();
-                    iti = LIs.erase(iti);
-                    if (pListaEntidades) {
-                        pListaEntidades->remover(ini);
-                    }
-                    delete ini;
-                    criarExplosao(xi, yi - 30.f);
-                    if (pJog1) {
-                        pJog1->adicionarPontos(100);
-                    }
-                    break;
-                } else {
-                    ++iti;
-                }
-            }
-        }
+        bool colidiu = projetilColidiuComObstaculo(p) || projetilColidiuComInimigo(p);
 
         if (colidiu) {
             p->setAtivo(false);
-            std::set<Entidades::Projetil*>::iterator toErase = it;
+            std::set<Entidades::Projetil*>::iterator atual = it;
             ++it;
-            LPs.erase(toErase);
-            if (pListaEntidades) {
-                pListaEntidades->remover(p);
-            }
-            delete p;
+            removerProjetil(atual);
         } else {
             ++it;
         }
     }
 }
 
-void Gerenciador_Colisoes::tratarColisoesJogsObstacsDificeis() {
+void Gerenciador_Colisoes::removerMinasDestruidas() {
     for (std::list<Entidades::Obstaculos::MinaExtraterrestre*>::iterator it = LODs.begin(); it != LODs.end(); ) {
         Entidades::Obstaculos::MinaExtraterrestre* od = *it;
         if (od == NULL) {
@@ -204,48 +256,8 @@ void Gerenciador_Colisoes::tratarColisoesJogsObstacsDificeis() {
 
 void Gerenciador_Colisoes::executar() {
     tratarColisoesJogsObstacs();
-    tratarColisoesJogsObstacsDificeis();
-
-    for (std::vector<Entidades::Personagens::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
-        Entidades::Personagens::Inimigo* ini = *iti;
-        if (ini == NULL) continue;
-
-        sf::FloatRect boxIni = ini->getHitbox();
-
-        for (std::list<Entidades::Obstaculos::Obstaculo*>::iterator ito = LOs.begin(); ito != LOs.end(); ++ito) {
-            Entidades::Obstaculos::Obstaculo* obs = *ito;
-            if (obs == NULL) continue;
-
-            sf::FloatRect boxObs = obs->getHitbox();
-            sf::FloatRect interseccao;
-
-            if (boxIni.intersects(boxObs, interseccao)) {
-                if (interseccao.width < interseccao.height) {
-                    // colisão lateral
-                    if (boxIni.left + boxIni.width / 2.f < boxObs.left + boxObs.width / 2.f) {
-                        ini->setX(boxObs.left - boxIni.width/2.f);
-                    } else {
-                        ini->setX(boxObs.left + boxObs.width + boxIni.width/2.f);
-                    }
-                    ini->setVelocidadeX(-ini->getVelocidadeX());
-                } else {
-                    // colisão vertical
-                    if (boxIni.top + boxIni.height / 2.f < boxObs.top + boxObs.height / 2.f) {
-                        ini->setY(boxObs.top - boxIni.height/2.f);
-                        ini->setVy(0.f);
-                        ini->setNoChao(true);
-                    } else {
-                        ini->setY(boxObs.top + boxObs.height + boxIni.height/2.f);
-                        if (ini->getVy() < 0.f) {
-                            ini->setVy(0.f);
-                        }
-                    }
-                }
-                boxIni = ini->getHitbox();
-            }
-        }
-    }
-
+    removerMinasDestruidas();
+    tratarColisoesInimigosObstacs();
     tratarColisoesJogsInimigs();
     tratarColisoesJogsProjeteis();
     limparExplosoes();
