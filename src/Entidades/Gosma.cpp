@@ -6,8 +6,8 @@
 namespace Entidades {
 namespace Obstaculos {
 
-Gosma::Gosma(float x, float y, float largura, float altura)
-    : Obstaculo(), largura(largura), altura(altura) {
+Gosma::Gosma(float x, float y)
+    : Obstaculo(), largura(60.f), altura(60.f) {
     this->x = x;
     this->y = y;
     danoso = false;
@@ -21,6 +21,7 @@ Gosma::Gosma(float x, float y, float largura, float altura)
             pFig->setFillColor(sf::Color(50, 50, 200, 160));
         } else {
             pFig->setTexture(&textura);
+            pFig->setOrigin(sf::Vector2f(0.0f, -30.0f));
         }
     }
 }
@@ -37,8 +38,9 @@ void Gosma::salvar() {
 }
 
 void Gosma::obstaculizar(Personagens::Jogador* p) {
-    if (colidiuComJogador(p)) {
-        p->ficarLento(3.0f);
+    std::cout << p->getNoChao() << std::endl;
+    if (colidiuComJogador(p) && p->getNoChao()) {
+        p->ficarLento(1.0f);
     }
 }
 

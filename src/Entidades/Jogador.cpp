@@ -47,7 +47,6 @@ void Jogador::executar(float dt) {
     float dx = 0;
 
     bool podPular = noChao;
-    noChao = false;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
         dx -= 1;

@@ -113,9 +113,9 @@ void Fase_Lua::criarObstaculos() {
 
 void Fase_Lua::criarGosmas() {
     Entidades::Obstaculos::Gosma* om = NULL;
-    om = new Entidades::Obstaculos::Gosma(300.f,  640.f, 60.f, 60.f); lista_ents.incluir(om);
-    om = new Entidades::Obstaculos::Gosma(940.f,  640.f, 60.f, 60.f); lista_ents.incluir(om);
-    om = new Entidades::Obstaculos::Gosma(1980.f, 640.f, 60.f, 60.f); lista_ents.incluir(om);
+    om = new Entidades::Obstaculos::Gosma(300.f,  640.f); lista_ents.incluir(om);
+    om = new Entidades::Obstaculos::Gosma(940.f,  640.f); lista_ents.incluir(om);
+    om = new Entidades::Obstaculos::Gosma(1980.f, 640.f); lista_ents.incluir(om);
 }
 
 void Fase_Lua::criarSlimes() {

@@ -81,6 +81,8 @@ Gerenciador_Colisoes::ResultadoColisao Gerenciador_Colisoes::detectarColisaoObst
 void Gerenciador_Colisoes::tratarColisoesJogsObstacs() {
     if (pJog1 == NULL) return;
 
+    pJog1->setNoChao(false);
+
     for (std::list<Entidades::Obstaculos::Obstaculo*>::iterator it = LOs.begin(); it != LOs.end(); ++it) {
         Entidades::Obstaculos::Obstaculo* obs = *it;
         if (obs == NULL) continue;

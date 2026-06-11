@@ -14,7 +14,7 @@ private:
     sf::Texture textura;
 
 public:
-    Gosma(float x, float y, float largura = 120.f, float altura = 80.f);
+    Gosma(float x, float y);
     ~Gosma();
 
     void executar(float dt);
