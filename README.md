@@ -1,12 +1,9 @@
 # Jogo
 
 ## TODO
-- [x] PLATAFORMAS ALEATÓRIAS
-- [x] MUDAR NOMES DE CLASSES
-- [ ] CONSERTAR GRAVIDADE
-- [x] Fase e chão
-- [x] Mudar lógica de colisões para Gerenciador_Colisoes
-- [x] Refatorar Gerenciador_Colisoes
+- [ ] Implementar tempoExplosao na MinaExtraterrestre
+- [ ] Usar nivel de maldade nos inimigos
+- [ ] Fazer demonio lançar projétil
 - [ ] Singletons: Jogo, Gerenciador_Colisoes, Gerenciador_Grafico
 - [ ] Usar: observer, mediator, iterator... https://refactoring.guru/design-patterns
 - [ ] Cores UML: amarelinho, verde e vermelho. Tabelas também
