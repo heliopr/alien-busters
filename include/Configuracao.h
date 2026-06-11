@@ -13,6 +13,7 @@ namespace Config {
 
     const float TEMPO_INVULNERAVEL = 1.0f;
     const float DURACAO_FLASH_DANO = 0.1f;
+    const float TEMPO_RECARGA_TIRO = 1.0f;
 }
 
 #endif

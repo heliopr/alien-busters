@@ -19,6 +19,7 @@ private:
     bool olhandoDireita;
     bool puloPressionado;
     bool tiroPressionado;
+    float tempoRecargaTiro;
 
     bool lento;
     float tempoLento;

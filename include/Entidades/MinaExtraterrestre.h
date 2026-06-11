@@ -12,8 +12,12 @@ private:
     float largura;
     float altura;
     float tempoExplosao;
+    float tempoRestante;
+    bool ativada;
     bool destruido;
     sf::Texture texturaMina;
+
+    bool jogadorDentroDoRaio(Personagens::Jogador* p) const;
 
 public:
     MinaExtraterrestre(float x, float y, float tempoExplosao = 1.0f);

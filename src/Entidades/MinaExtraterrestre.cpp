@@ -7,9 +7,15 @@
 namespace Entidades {
 namespace Obstaculos {
 
+namespace {
+    const float INTERVALO_PISCAR = 0.15f;
+    const float RAIO_EXPLOSAO = 100.f;
+}
+
 MinaExtraterrestre::MinaExtraterrestre(float x, float y, float tempoExplosao)
     : Obstaculo(), largura(60.f), altura(60.f),
-      tempoExplosao(tempoExplosao), destruido(false)
+      tempoExplosao(tempoExplosao), tempoRestante(tempoExplosao),
+      ativada(false), destruido(false)
 {
     this->x = x;
     this->y = y;
@@ -24,7 +30,8 @@ MinaExtraterrestre::MinaExtraterrestre(float x, float y, float tempoExplosao)
             static_cast<sf::RectangleShape*>(pFig)->setFillColor(sf::Color(200, 30, 30, 220));
         } else {
             pFig->setTexture(&texturaMina);
-            pFig->setScale(sf::Vector2f(.75f, .75f));
+            pFig->setOrigin(sf::Vector2f(0, -10.f));
+            pFig->setScale(sf::Vector2f(.65f, .65f));
         }
     }
 }
@@ -35,21 +42,63 @@ MinaExtraterrestre::~MinaExtraterrestre() {
 void MinaExtraterrestre::executar(float dt) {
     sofrerGravidade(dt);
     contrariarGravidade(dt);
+
+    if (ativada && !destruido) {
+        tempoRestante -= dt;
+
+        if (pFig != NULL) {
+            int piscar = static_cast<int>(tempoRestante / INTERVALO_PISCAR);
+            if (piscar % 2 == 0) {
+                pFig->setFillColor(sf::Color(255, 0, 0));
+            } else {
+                pFig->setFillColor(sf::Color::White);
+            }
+        }
+    }
 }
 
 void MinaExtraterrestre::salvar() {
 }
 
 void MinaExtraterrestre::obstaculizar(Personagens::Jogador* p) {
-    if (!destruido && colidiuComJogador(p)) {
+    if (destruido) return;
+
+    if (!ativada) {
+        if (colidiuComJogador(p)) {
+            ativada = true;
+            tempoRestante = tempoExplosao;
+        }
+        return;
+    }
+
+    if (tempoRestante <= 0.f) {
         aplicarDano(p);
     }
 }
 
 void MinaExtraterrestre::aplicarDano(Personagens::Jogador* p) {
-    if (p == NULL || destruido) return;
-    p->perderVida();
+    if (destruido) return;
+
+    if (jogadorDentroDoRaio(p)) {
+        p->perderVida();
+    }
+
     destruido = true;
+}
+
+bool MinaExtraterrestre::jogadorDentroDoRaio(Personagens::Jogador* p) const {
+    if (p == NULL) return false;
+
+    sf::FloatRect boxJogador = p->getHitbox();
+    float centroMinaX = x + largura / 2.f;
+    float centroMinaY = y + altura / 2.f;
+    float centroJogadorX = boxJogador.left + boxJogador.width / 2.f;
+    float centroJogadorY = boxJogador.top + boxJogador.height / 2.f;
+
+    float dx = centroJogadorX - centroMinaX;
+    float dy = centroJogadorY - centroMinaY;
+
+    return std::sqrt(dx * dx + dy * dy) <= RAIO_EXPLOSAO;
 }
 
 sf::FloatRect MinaExtraterrestre::getHitbox() const {

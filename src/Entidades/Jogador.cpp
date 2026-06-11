@@ -10,6 +10,7 @@ namespace Personagens {
 
 Jogador::Jogador() : Personagem(), pontos(0),
     olhandoEsquerda(false), olhandoDireita(true), puloPressionado(false), tiroPressionado(false),
+    tempoRecargaTiro(0.f),
     lento(false), tempoLento(0.f),
     invulneravel(false), tempoInvulneravel(0.f), tempoFlashDano(0.f)
 {
@@ -45,6 +46,7 @@ void Jogador::resetar() {
     olhandoDireita = true;
     puloPressionado = false;
     tiroPressionado = false;
+    tempoRecargaTiro = 0.f;
 
     lento = false;
     tempoLento = 0.f;
@@ -75,6 +77,13 @@ void Jogador::executar(float dt) {
         tempoFlashDano -= dt;
         if (tempoFlashDano < 0.f) {
             tempoFlashDano = 0.f;
+        }
+    }
+
+    if (tempoRecargaTiro > 0.f) {
+        tempoRecargaTiro -= dt;
+        if (tempoRecargaTiro < 0.f) {
+            tempoRecargaTiro = 0.f;
         }
     }
 
@@ -156,8 +165,13 @@ void Jogador::mover() {
 
 bool Jogador::getAtirou() {
     bool atirouAtual = sf::Keyboard::isKeyPressed(sf::Keyboard::R);
-    bool disparou = atirouAtual && !tiroPressionado;
+    bool disparou = atirouAtual && !tiroPressionado && tempoRecargaTiro <= 0.f;
     tiroPressionado = atirouAtual;
+
+    if (disparou) {
+        tempoRecargaTiro = Config::TEMPO_RECARGA_TIRO;
+    }
+
     return disparou;
 }
 
