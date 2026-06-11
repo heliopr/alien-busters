@@ -38,7 +38,6 @@ void Gosma::salvar() {
 }
 
 void Gosma::obstaculizar(Personagens::Jogador* p) {
-    std::cout << p->getNoChao() << std::endl;
     if (colidiuComJogador(p) && p->getNoChao()) {
         p->ficarLento(1.0f);
     }

@@ -10,6 +10,9 @@ namespace Config {
     const float FORCA_PULO = -500.f;
     const float POSICAO_INICIAL_X = 100.f;
     const float POSICAO_INICIAL_Y = 400.f;
+
+    const float TEMPO_INVULNERAVEL = 1.0f;
+    const float DURACAO_FLASH_DANO = 0.1f;
 }
 
 #endif

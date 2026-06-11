@@ -10,7 +10,8 @@ namespace Personagens {
 
 Jogador::Jogador() : Personagem(), pontos(0),
     olhandoEsquerda(false), olhandoDireita(true), puloPressionado(false), tiroPressionado(false),
-    lento(false), tempoLento(0.f)
+    lento(false), tempoLento(0.f),
+    invulneravel(false), tempoInvulneravel(0.f), tempoFlashDano(0.f)
 {
     x = Config::POSICAO_INICIAL_X;
     y = Config::POSICAO_INICIAL_Y;
@@ -41,6 +42,21 @@ void Jogador::executar(float dt) {
             tempoLento = 0.f;
         } else {
             velocidadeX *= 0.4f;
+        }
+    }
+
+    if (invulneravel) {
+        tempoInvulneravel -= dt;
+        if (tempoInvulneravel <= 0.f) {
+            invulneravel = false;
+            tempoInvulneravel = 0.f;
+        }
+    }
+
+    if (tempoFlashDano > 0.f) {
+        tempoFlashDano -= dt;
+        if (tempoFlashDano < 0.f) {
+            tempoFlashDano = 0.f;
         }
     }
     float forcaPulo = Config::FORCA_PULO;
@@ -84,6 +100,12 @@ void Jogador::executar(float dt) {
         }
 
         animacao.aplicar(pFig, 1, olhandoEsquerda);
+
+        if (tempoFlashDano > 0.f) {
+            pFig->setTexture(animacao.getTexturaBranca());
+        } else {
+            pFig->setTexture(animacao.getTextura());
+        }
     }
 
     if (pGG != NULL) {
@@ -117,6 +139,16 @@ void Jogador::colidir(Inimigo* pIn) {
 void Jogador::ficarLento(float duracao) {
     lento = true;
     tempoLento = duracao;
+}
+
+void Jogador::ativarInvulnerabilidade() {
+    invulneravel = true;
+    tempoInvulneravel = Config::TEMPO_INVULNERAVEL;
+}
+
+void Jogador::perderVida() {
+    num_vidas--;
+    tempoFlashDano = Config::DURACAO_FLASH_DANO;
 }
 
 }

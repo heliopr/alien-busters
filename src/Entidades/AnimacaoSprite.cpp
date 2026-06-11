@@ -16,6 +16,19 @@ bool AnimacaoSprite::carregar(const std::string &caminho, int colunas, int linha
 
     larguraFrame = static_cast<int>(textura.getSize().x) / colunas;
     alturaFrame = static_cast<int>(textura.getSize().y) / linhas;
+
+    sf::Image imagemBranca = textura.copyToImage();
+    sf::Vector2u tamanho = imagemBranca.getSize();
+    for (unsigned int j = 0; j < tamanho.y; ++j) {
+        for (unsigned int i = 0; i < tamanho.x; ++i) {
+            sf::Color pixel = imagemBranca.getPixel(i, j);
+            if (pixel.a > 0) {
+                imagemBranca.setPixel(i, j, sf::Color(255, 255, 255, pixel.a));
+            }
+        }
+    }
+    texturaBranca.loadFromImage(imagemBranca);
+
     return true;
 }
 
@@ -39,6 +52,10 @@ void AnimacaoSprite::aplicar(sf::RectangleShape *fig, int linha, bool espelhado)
 
 sf::Texture *AnimacaoSprite::getTextura() {
     return &textura;
+}
+
+sf::Texture *AnimacaoSprite::getTexturaBranca() {
+    return &texturaBranca;
 }
 
 int AnimacaoSprite::getLarguraFrame() const {

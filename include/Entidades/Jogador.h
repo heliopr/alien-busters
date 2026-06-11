@@ -23,6 +23,10 @@ private:
     bool lento;
     float tempoLento;
 
+    bool invulneravel;
+    float tempoInvulneravel;
+    float tempoFlashDano;
+
 public:
     Jogador();
     ~Jogador();
@@ -38,7 +42,9 @@ public:
     int getPontos() const { return pontos; }
     void adicionarPontos(int valor) { pontos += valor; }
     void ficarLento(float duracao);
-    void perderVida() { num_vidas--; }
+    void perderVida();
+    bool estaInvulneravel() const { return invulneravel; }
+    void ativarInvulnerabilidade();
     int getNumVidas() const { return num_vidas; }
 };
 

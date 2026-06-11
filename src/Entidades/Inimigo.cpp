@@ -23,8 +23,9 @@ void Inimigo::moverComGravidade(float dt) {
 }
 
 void Inimigo::danificar(Jogador* p) {
-    if (p != NULL) {
+    if (p != NULL && !p->estaInvulneravel()) {
         p->perderVida();
+        p->ativarInvulnerabilidade();
     }
 }
 

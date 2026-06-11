@@ -9,6 +9,7 @@ namespace Entidades {
 class AnimacaoSprite {
 private:
     sf::Texture textura;
+    sf::Texture texturaBranca;
     int larguraFrame;
     int alturaFrame;
     int frameAtual;
@@ -23,6 +24,7 @@ public:
     void aplicar(sf::RectangleShape *fig, int linha, bool espelhado) const;
 
     sf::Texture *getTextura();
+    sf::Texture *getTexturaBranca();
     int getLarguraFrame() const;
     int getAlturaFrame() const;
     int getFrameAtual() const;
