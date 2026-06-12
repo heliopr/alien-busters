@@ -114,6 +114,7 @@ void Jogo::executar() {
             if (faseAtual) {
                 faseAtual->executar(dt);
                 if (faseAtual->jogadorPerdeu()) {
+                    telaMorte.tocarGameOver();
                     estado = ESTADO_TELA_MORTE;
                 }
             }

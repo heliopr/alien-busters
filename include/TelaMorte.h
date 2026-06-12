@@ -4,6 +4,7 @@
 #include "Ente.h"
 #include <vector>
 #include <string>
+#include <SFML/Audio.hpp>
 
 class TelaMorte : public Ente {
 private:
@@ -11,6 +12,9 @@ private:
     sf::Text titulo;
     std::vector<sf::Text> opcoes;
     sf::Font fonte;
+
+    sf::SoundBuffer bufferGameOver;
+    sf::Sound somGameOver;
 
 public:
     TelaMorte();
@@ -24,6 +28,8 @@ public:
 
     void executar(float dt = 0.f);
     void desenhar();
+    
+    void tocarGameOver();
 };
 
 #endif

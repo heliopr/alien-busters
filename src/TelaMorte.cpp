@@ -32,6 +32,12 @@ TelaMorte::TelaMorte() : Ente(), opcaoSelecionada(0) {
 
         opcoes.push_back(texto);
     }
+
+    if (bufferGameOver.loadFromFile("assets/sounds/gameover.mp3")) {
+        somGameOver.setBuffer(bufferGameOver);
+    } else {
+        std::cerr << "Erro ao carregar som assets/sounds/gameover.mp3!" << std::endl;
+    }
 }
 
 TelaMorte::~TelaMorte() {
@@ -71,4 +77,8 @@ void TelaMorte::desenhar() {
     for (size_t i = 0; i < opcoes.size(); ++i) {
         pGG->desenharTextoTela(&opcoes[i]);
     }
+}
+
+void TelaMorte::tocarGameOver() {
+    somGameOver.play();
 }
