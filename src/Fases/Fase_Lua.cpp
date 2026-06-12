@@ -71,7 +71,7 @@ void Fase_Lua::criarObstaculos() {
         {2400.f, 300.f}
     };
     const int totalPlataformas = sizeof(plataformas) / sizeof(plataformas[0]);
-    const int minimoPlataformas = 6;
+    const int minimoPlataformas = 3;
 
     static bool sementeInicializada = false;
     if (!sementeInicializada) {
@@ -110,10 +110,31 @@ void Fase_Lua::criarObstaculos() {
 }
 
 void Fase_Lua::criarGosmas() {
-    Entidades::Obstaculos::Gosma* om = NULL;
-    om = new Entidades::Obstaculos::Gosma(300.f,  640.f); lista_ents.incluir(om);
-    om = new Entidades::Obstaculos::Gosma(940.f,  640.f); lista_ents.incluir(om);
-    om = new Entidades::Obstaculos::Gosma(1980.f, 640.f); lista_ents.incluir(om);
+    static const float posicoes[][2] = {
+        { 150.f, 640.f},
+        { 300.f, 640.f},
+        { 600.f, 640.f},
+        { 940.f, 640.f},
+        {1300.f, 640.f},
+        {1550.f, 640.f},
+        {1980.f, 640.f},
+        {2400.f, 640.f}
+    };
+    const int total  = sizeof(posicoes) / sizeof(posicoes[0]);
+    const int minimo = 3;
+
+    int indices[total];
+    for (int i = 0; i < total; ++i) indices[i] = i;
+    for (int i = total - 1; i > 0; --i) {
+        int j = std::rand() % (i + 1);
+        int tmp = indices[i]; indices[i] = indices[j]; indices[j] = tmp;
+    }
+
+    int quantidade = minimo + std::rand() % (total - minimo + 1);
+    for (int i = 0; i < quantidade; ++i) {
+        Entidades::Obstaculos::Gosma* om = new Entidades::Obstaculos::Gosma(posicoes[indices[i]][0], posicoes[indices[i]][1]);
+        lista_ents.incluir(om);
+    }
 }
 
 void Fase_Lua::criarSlimes() {

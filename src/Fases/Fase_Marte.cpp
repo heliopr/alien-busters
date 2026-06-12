@@ -36,13 +36,12 @@ void Fase_Marte::criarObstaculos() {
         {720.f,  440.f},
         {1300.f, 360.f},
         {1550.f, 460.f},
-        {1750.f, 560.f},
         {1900.f, 480.f},
         {2050.f, 380.f},
         {2200.f, 280.f}
     };
     const int totalPlataformas = sizeof(plataformas) / sizeof(plataformas[0]);
-    const int minimoPlataformas = 7;
+    const int minimoPlataformas = 3;
 
     static bool sementeInicializada = false;
     if (!sementeInicializada) {
@@ -91,11 +90,29 @@ void Fase_Marte::criarDemonios() {
 }
 
 void Fase_Marte::criarMinasExtraterrestres() {
-    Entidades::Obstaculos::MinaExtraterrestre* od = NULL;
-    od = new Entidades::Obstaculos::MinaExtraterrestre(500.f,  660.f); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
-    od = new Entidades::Obstaculos::MinaExtraterrestre(1130.f, 660.f); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
-    od = new Entidades::Obstaculos::MinaExtraterrestre(1600.f, 660.f); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
-    od = new Entidades::Obstaculos::MinaExtraterrestre(2300.f, 660.f); GC.incluirObstaculoDificil(od); lista_ents.incluir(od);
+    static const float posicoes[][2] = {
+        { 500.f, 660.f},
+        {1130.f, 660.f},
+        {1600.f, 660.f},
+        {1980.f, 660.f},
+        {2300.f, 660.f}
+    };
+    const int total  = sizeof(posicoes) / sizeof(posicoes[0]);
+    const int minimo = 3;
+
+    int indices[total];
+    for (int i = 0; i < total; ++i) indices[i] = i;
+    for (int i = total - 1; i > 0; --i) {
+        int j = std::rand() % (i + 1);
+        int tmp = indices[i]; indices[i] = indices[j]; indices[j] = tmp;
+    }
+
+    int quantidade = minimo + std::rand() % (total - minimo + 1);
+    for (int i = 0; i < quantidade; ++i) {
+        Entidades::Obstaculos::MinaExtraterrestre* od = new Entidades::Obstaculos::MinaExtraterrestre(posicoes[indices[i]][0], posicoes[indices[i]][1]);
+        GC.incluirObstaculoDificil(od);
+        lista_ents.incluir(od);
+    }
 }
 void Fase_Marte::criarSlimes() {
     static const float posicoes[][2] = {
