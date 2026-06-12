@@ -21,6 +21,7 @@ public:
     void limpar();
     void percorrer(float dt, Entidades::Personagens::Jogador *pJogador,
                    Entidades::Personagens::Jogador *pJogador2 = 0);
+    void desenhar();
 };
 
 }

@@ -89,6 +89,8 @@ void Fase::executar(float dt) {
 }
 
 void Fase::desenhar() {
+    lista_ents.desenhar();
+
     if (!jogadorPerdeu()) {
         if (pJogador != 0 && !pJogador->estaMorto()) {
             pJogador->desenhar();

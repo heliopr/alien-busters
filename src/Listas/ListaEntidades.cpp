@@ -51,8 +51,10 @@ void ListaEntidades::percorrer(float dt, Entidades::Personagens::Jogador *pJogad
         }
         atual = atual->getProx();
     }
+}
 
-    atual = LEs.getPrimeiro();
+void ListaEntidades::desenhar() {
+    Lista<Entidades::Entidade>::Elemento *atual = LEs.getPrimeiro();
     while (atual != 0) {
         Entidades::Entidade *entidade = atual->getInfo();
         if (entidade != 0) {
