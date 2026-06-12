@@ -34,6 +34,7 @@ public:
     void desenharTexto(sf::Text *pT);
     void desenharTextoTela(sf::Text *pT);
     void desenharRetangulo(sf::FloatRect rect, sf::Color corContorno, float espessuraContorno);
+    void desenharTelaEscura();
     bool estaAberto();
     bool coletarEventos(sf::Event &evento);
     void fecharJanela();

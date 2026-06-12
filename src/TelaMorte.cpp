@@ -73,6 +73,8 @@ void TelaMorte::executar(float /*dt*/) {
 void TelaMorte::desenhar() {
     if (pGG == 0) return;
 
+    pGG->desenharTelaEscura();
+
     pGG->desenharTextoTela(&titulo);
     for (size_t i = 0; i < opcoes.size(); ++i) {
         pGG->desenharTextoTela(&opcoes[i]);
