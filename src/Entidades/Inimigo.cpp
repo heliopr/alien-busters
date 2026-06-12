@@ -14,7 +14,7 @@ Inimigo::~Inimigo() {
 
 void Inimigo::moverComGravidade(float dt) {
     x += velocidadeX * dt;
-    sofrerGravidade(dt);
+    aplicarGravidade(dt);
 
     if (y > Config::ALTURA_LIMITE_QUEDA) {
         y = Config::POSICAO_INICIAL_Y;

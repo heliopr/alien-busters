@@ -33,7 +33,7 @@ Gosma::~Gosma() {
 }
 
 void Gosma::executar(float dt) {
-    sofrerGravidade(dt);
+    aplicarGravidade(dt);
     contrariarGravidade(dt);
 }
 

@@ -95,7 +95,7 @@ void Jogador::executar(float dt) {
     }
 
     float dx = processarMovimento(dt);
-    sofrerGravidade(dt);
+    aplicarGravidade(dt);
 
     atualizarSprite(dt, dx);
 }

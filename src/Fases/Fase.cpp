@@ -1,6 +1,7 @@
 #include "Fases/Fase.h"
 #include "Entidades/Chao.h"
 #include "Entidades/Projetil.h"
+#include "Entidades/Laser.h"
 #include "Gerenciadores/Gerenciador_Grafico.h"
 #include "Configuracao.h"
 
@@ -39,7 +40,7 @@ void Fase::processarJogador(Entidades::Personagens::Jogador* pJog, float dt) {
         float vx = pJog->getOlhandoDireita() ? 500.f : -500.f;
         float x_proj = pJog->getX() + (pJog->getOlhandoDireita() ? 22.f : -22.f);
         float y_proj = pJog->getY();
-        Entidades::Projetil* p = new Entidades::Projetil(x_proj, y_proj - 50.f, vx, 0.f, pJog);
+        Entidades::Projetil* p = new Entidades::Laser(x_proj, y_proj - 50.f, vx, 0.f, pJog);
         lista_ents.incluir(p);
         GC.incluirProjetil(p);
     }

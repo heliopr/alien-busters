@@ -16,7 +16,7 @@ protected:
     std::ostringstream buffer;
     void salvarDataBuffer();
 
-    void sofrerGravidade(float dt, float gravidade = Config::GRAVIDADE);
+    void aplicarGravidade(float dt, float gravidade = Config::GRAVIDADE);
     void contrariarGravidade(float dt);
 
 public:

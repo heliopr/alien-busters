@@ -21,7 +21,7 @@ Chao::~Chao() {
 }
 
 void Chao::executar(float dt) {
-    sofrerGravidade(dt);
+    aplicarGravidade(dt);
     contrariarGravidade(dt);
 
     if (pFig != NULL) {

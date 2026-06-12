@@ -2,17 +2,11 @@
 
 namespace Entidades {
 
-Projetil::Projetil(float x, float y, float vx, float vy, Personagens::Jogador* dono) : Entidade(), ativo(true), vx(vx), dono(dono) {
+Projetil::Projetil(float x, float y, float vx, float vy, Personagens::Jogador* dono)
+    : Entidade(), ativo(true), vx(vx), dono(dono), sofreGravidade(false) {
     this->x = x;
     this->y = y;
     this->vy = vy;
-
-    pFig = new sf::RectangleShape(sf::Vector2f(10.f, 10.f));
-    if (pFig != NULL) {
-        pFig->setOrigin(5.f, 5.f);
-        pFig->setPosition(sf::Vector2f(x, y));
-        static_cast<sf::RectangleShape*>(pFig)->setFillColor(sf::Color::Red);
-    }
 }
 
 Projetil::~Projetil() {}
@@ -25,8 +19,11 @@ void Projetil::executar(float dt) {
     if (!ativo) return;
 
     x += vx * dt;
-    sofrerGravidade(dt, 98.f);
-    contrariarGravidade(dt);
+    aplicarGravidade(dt, 98.f);
+
+    if (!sofreGravidade) {
+        contrariarGravidade(dt);
+    }
 
     if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));
@@ -35,10 +32,6 @@ void Projetil::executar(float dt) {
     if (x < -1000.f || x > 5000.f || y > 3000.f || y < -1000.f) {
         ativo = false;
     }
-}
-
-sf::FloatRect Projetil::getHitbox() const {
-    return sf::FloatRect(x - 5.f, y - 5.f, 10.f, 10.f);
 }
 
 }

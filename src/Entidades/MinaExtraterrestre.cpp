@@ -43,7 +43,7 @@ MinaExtraterrestre::~MinaExtraterrestre() {
 }
 
 void MinaExtraterrestre::executar(float dt) {
-    sofrerGravidade(dt);
+    aplicarGravidade(dt);
     contrariarGravidade(dt);
 
     if (ativada && !destruido) {

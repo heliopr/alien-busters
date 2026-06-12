@@ -59,7 +59,7 @@ void Plataforma::executar(float dt) {
     }
 
     if (caindo) {
-        sofrerGravidade(dt);
+        aplicarGravidade(dt);
 
         tempoRespawn += dt;
         if (tempoRespawn >= 5.0f) {
@@ -76,7 +76,7 @@ void Plataforma::executar(float dt) {
             }
         }
     } else {
-        sofrerGravidade(dt);
+        aplicarGravidade(dt);
         contrariarGravidade(dt);
     }
 

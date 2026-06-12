@@ -39,7 +39,7 @@ Explosao::~Explosao() {
 }
 
 void Explosao::executar(float dt) {
-    sofrerGravidade(dt);
+    aplicarGravidade(dt);
     contrariarGravidade(dt);
 
     if (terminada) return;

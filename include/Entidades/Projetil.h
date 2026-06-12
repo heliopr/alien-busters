@@ -12,6 +12,7 @@ protected:
     bool ativo;
     float vx;
     Personagens::Jogador* dono;
+    bool sofreGravidade;
 
 public:
     Projetil(float x = 0.f, float y = 0.f, float vx = 0.f, float vy = 0.f, Personagens::Jogador* dono = 0);
@@ -20,7 +21,6 @@ public:
     void executar(float dt);
     void salvar();
 
-    sf::FloatRect getHitbox() const;
     bool getAtivo() const { return ativo; }
     void setAtivo(bool b) { ativo = b; }
     float getVx() const { return vx; }

@@ -55,7 +55,7 @@ void Entidade::setVy(float v) {
     vy = v;
 }
 
-void Entidade::sofrerGravidade(float dt, float gravidade) {
+void Entidade::aplicarGravidade(float dt, float gravidade) {
     vy += gravidade * dt;
     y += vy * dt;
 }
