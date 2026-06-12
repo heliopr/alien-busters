@@ -6,7 +6,7 @@ namespace Entidades {
 namespace Personagens {
 
 Alien::Alien(float x_ini, float y_ini) : Inimigo(), velocidade(0.f),
-    olhandoEsquerda(true), olhandoDireita(false)
+    olhandoDireita(false)
 {
     x = x_ini;
     y = y_ini;
@@ -40,15 +40,8 @@ void Alien::executar(float dt) {
 
         animacao.atualizar(dt, 0.15f, 4);
 
-        if (velocidadeX < 0) {
-            olhandoEsquerda = true;
-            olhandoDireita = false;
-        } else if (velocidadeX > 0) {
-            olhandoEsquerda = false;
-            olhandoDireita = true;
-        }
-
-        animacao.aplicar(pFig, 2, olhandoEsquerda);
+        olhandoDireita = velocidadeX > 0;
+        animacao.aplicar(pFig, 2, !olhandoDireita);
 
         if (estaFlashando()) {
             pFig->setTexture(animacao.getTexturaBranca());

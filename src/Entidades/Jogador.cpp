@@ -11,7 +11,7 @@ namespace Personagens {
 
 Jogador::Jogador(float xInicial, float yInicial, const ControlesJogador& controles, const sf::Color& cor) : Personagem(), pontos(0),
     controles(controles), xInicial(xInicial), yInicial(yInicial), cor(cor),
-    olhandoEsquerda(false), olhandoDireita(true), puloPressionado(false), tiroPressionado(false),
+    olhandoDireita(true), puloPressionado(false), tiroPressionado(false),
     tempoRecargaTiro(0.f),
     lento(false), tempoLento(0.f),
     invulneravel(false), tempoInvulneravel(0.f), tempoFlashDano(0.f)
@@ -50,7 +50,6 @@ void Jogador::resetar() {
     num_vidas = 3;
     pontos = 0;
 
-    olhandoEsquerda = false;
     olhandoDireita = true;
     puloPressionado = false;
     tiroPressionado = false;
@@ -107,13 +106,11 @@ float Jogador::processarMovimento(float dt) {
 
     if (sf::Keyboard::isKeyPressed(controles.esquerda)) {
         dx -= 1;
-        olhandoEsquerda = true;
         olhandoDireita = false;
     }
     if (sf::Keyboard::isKeyPressed(controles.direita)) {
         dx += 1;
         olhandoDireita = true;
-        olhandoEsquerda = false;
     }
 
     bool puloAtual = sf::Keyboard::isKeyPressed(controles.pulo);
@@ -145,7 +142,7 @@ void Jogador::atualizarSprite(float dt, float dx) {
         animacao.setFrameAtual(0);
     }
 
-    animacao.aplicar(pFig, 1, olhandoEsquerda);
+    animacao.aplicar(pFig, 1, !olhandoDireita);
 
     if (tempoFlashDano > 0.f) {
         pFig->setTexture(animacao.getTexturaBranca());

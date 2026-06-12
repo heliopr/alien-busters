@@ -44,9 +44,7 @@ g++ --version
 Se tudo foi feito corretamente, deve aparecer algo similar a isso:
 ```
 g++ (x86_64-posix-seh-rev0, Built by MinGW-W64 project) 7.3.0
-Copyright (C) 2017 Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+...
 ```
 
 ## Como rodar

@@ -12,7 +12,7 @@ Jogo::Jogo() : GG(), faseAtual(0), pJog1(0), pJog2(0), menu(this), telaMorte(), 
         Config::POSICAO_INICIAL_X, Config::POSICAO_INICIAL_Y, controles1);
 
     Entidades::Personagens::ControlesJogador controles2(
-        sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::RControl);
+        sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Enter);
     pJog2 = new Entidades::Personagens::Jogador(
         Config::POSICAO_INICIAL_X + 70.f, Config::POSICAO_INICIAL_Y, controles2,
         sf::Color(120, 170, 255));

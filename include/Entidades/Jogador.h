@@ -32,7 +32,6 @@ private:
     float yInicial;
     sf::Color cor;
 
-    bool olhandoEsquerda;
     bool olhandoDireita;
     bool puloPressionado;
     bool tiroPressionado;

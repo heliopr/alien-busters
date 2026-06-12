@@ -12,7 +12,6 @@ class Alien : public Inimigo {
 private:
     float velocidade;
     AnimacaoSprite animacao;
-    bool olhandoEsquerda;
     bool olhandoDireita;
 
 public:
