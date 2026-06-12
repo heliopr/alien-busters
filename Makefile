@@ -3,7 +3,7 @@ ifeq ($(OS),Windows_NT)
     TEST_EXT = .exe
     
     INCLUDES = -Iinclude -IC:\SFML-2.5.1\include
-    LIBS = -LC:\SFML-2.5.1\lib -lsfml-graphics -lsfml-window -lsfml-system
+    LIBS = -LC:\SFML-2.5.1\lib -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
     
     MKDIR_BUILD = if not exist "$(subst /,\,$(dir $@))" mkdir "$(subst /,\,$(dir $@))"
     MKDIR_BIN = if not exist "bin" mkdir "bin"
@@ -17,7 +17,7 @@ else
     TEST_EXT = .out
     
     INCLUDES = -Iinclude
-    LIBS = -lsfml-graphics -lsfml-window -lsfml-system
+    LIBS = -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
     
     MKDIR_BUILD = mkdir -p $(dir $@)
     MKDIR_BIN = mkdir -p bin

@@ -11,7 +11,7 @@ Projetil::Projetil(float x, float y, float vx, float vy, Personagens::Jogador* d
     if (pFig != NULL) {
         pFig->setOrigin(5.f, 5.f);
         pFig->setPosition(sf::Vector2f(x, y));
-        static_cast<sf::RectangleShape*>(pFig)->setFillColor(sf::Color::Yellow);
+        static_cast<sf::RectangleShape*>(pFig)->setFillColor(sf::Color::Red);
     }
 }
 

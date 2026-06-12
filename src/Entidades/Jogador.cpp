@@ -4,6 +4,7 @@
 #include "Configuracao.h"
 #include <cmath>
 #include <cstddef>
+#include <iostream>
 
 namespace Entidades {
 namespace Personagens {
@@ -28,6 +29,12 @@ Jogador::Jogador(float xInicial, float yInicial, const ControlesJogador& control
             pFig->setTexture(animacao.getTextura());
             animacao.aplicar(pFig, 1, false);
         }
+    }
+
+    if (bufferDano.loadFromFile("assets/sounds/hit.mp3")) {
+        somDano.setBuffer(bufferDano);
+    } else {
+        std::cerr << "Erro ao carregar som assets/sounds/hit.mp3!" << std::endl;
     }
 }
 
@@ -190,6 +197,7 @@ void Jogador::ativarInvulnerabilidade() {
 void Jogador::perderVida() {
     num_vidas--;
     tempoFlashDano = Config::DURACAO_FLASH_DANO;
+    somDano.play();
 }
 
 void Jogador::morrer() {

@@ -3,6 +3,7 @@
 
 #include "Entidades/Personagem.h"
 #include "Entidades/AnimacaoSprite.h"
+#include <SFML/Audio.hpp>
 
 namespace Entidades {
 namespace Personagens {
@@ -43,6 +44,9 @@ private:
     bool invulneravel;
     float tempoInvulneravel;
     float tempoFlashDano;
+
+    sf::SoundBuffer bufferDano;
+    sf::Sound somDano;
 
     float processarMovimento(float dt);
     void atualizarSprite(float dt, float dx);

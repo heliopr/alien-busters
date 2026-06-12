@@ -12,7 +12,7 @@ Slime::Slime(float x_ini, float y_ini)
     y = y_ini;
     num_vidas = 1;
 
-    float v = 40.f + std::rand() % 40;
+    float v = 40.f + std::rand() % 60;
     velocidadeX = (std::rand() % 2 == 0) ? v : -v;
 
     pFig = new sf::RectangleShape(sf::Vector2f(128.f, 128.f));
@@ -39,7 +39,7 @@ void Slime::executar(float dt) {
     if (pFig != NULL) {
         pFig->setPosition(sf::Vector2f(x, y));
 
-        animacao.atualizar(dt, 0.2f, 8);
+        animacao.atualizar(dt, 0.1f, 8);
         animacao.aplicar(pFig, 0, velocidadeX < 0);
 
         if (estaFlashando()) {
