@@ -24,14 +24,15 @@ Menu::Menu(Jogo* pJ) :
     pJog(pJ),
     opcaoSelecionada(0),
     opcaoFaseSelecionada(0),
+    numJogadores(1),
     emSubmenu(false)
 {
     if (!fonte.loadFromFile("assets/fonts/PixelifySans-Regular.ttf")) {
         std::cerr << "Erro ao carregar a fonte Pixelify Sans!" << std::endl;
     }
 
-    std::string nomesOpcoes[] = { "FASES", "SAIR" };
-    criarTextos(opcoes, nomesOpcoes, 2, 250.f);
+    std::string nomesOpcoes[] = { "1 JOGADOR", "FASES", "SAIR" };
+    criarTextos(opcoes, nomesOpcoes, 3, 200.f);
 
     std::string nomesFases[] = { "FASE LUA", "FASE MARTE", "VOLTAR" };
     criarTextos(opcoesFases, nomesFases, 3, 190.f);
@@ -85,6 +86,20 @@ void Menu::entrarSubmenu() {
 
 void Menu::sairSubmenu() {
     emSubmenu = false;
+}
+
+void Menu::alternarJogadores() {
+    numJogadores = (numJogadores == 1) ? 2 : 1;
+    atualizarTextoJogadores();
+}
+
+void Menu::atualizarTextoJogadores() {
+    if (opcoes.empty()) return;
+
+    opcoes[0].setString(numJogadores == 1 ? "1 JOGADOR" : "2 JOGADORES");
+
+    sf::FloatRect limites = opcoes[0].getLocalBounds();
+    opcoes[0].setOrigin(limites.left + limites.width / 2.0f, limites.top + limites.height / 2.0f);
 }
 
 void Menu::executar(float /*dt*/) {

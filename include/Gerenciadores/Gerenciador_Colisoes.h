@@ -42,15 +42,16 @@ private:
     std::list<Entidades::Explosao*> LExps;
     std::set<Entidades::Projetil*> LPs;
     Entidades::Personagens::Jogador* pJog1;
+    Entidades::Personagens::Jogador* pJog2;
     Listas::ListaEntidades* pListaEntidades;
 
     bool verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2) const;
     ResultadoColisao detectarColisaoObstaculo(const sf::FloatRect& box, const sf::FloatRect& boxObs) const;
 
-    void tratarColisoesJogsObstacs();
+    void tratarColisoesJogObstacs(Entidades::Personagens::Jogador* jog);
     void tratarColisoesInimigosObstacs();
     void removerMinasDestruidas();
-    void tratarColisoesJogsInimigs();
+    void tratarColisoesJogInimigs(Entidades::Personagens::Jogador* jog);
     void tratarColisoesJogsProjeteis();
 
     bool projetilColidiuComObstaculo(Entidades::Projetil* p) const;
@@ -65,6 +66,7 @@ public:
     ~Gerenciador_Colisoes();
 
     void setJogador(Entidades::Personagens::Jogador* pJ) { pJog1 = pJ; }
+    void setJogador2(Entidades::Personagens::Jogador* pJ) { pJog2 = pJ; }
     void setListaEntidades(Listas::ListaEntidades* pLE) { pListaEntidades = pLE; }
 
     void incluirInimigo(Entidades::Personagens::Inimigo* pi);

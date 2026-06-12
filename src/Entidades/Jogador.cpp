@@ -8,14 +8,15 @@
 namespace Entidades {
 namespace Personagens {
 
-Jogador::Jogador() : Personagem(), pontos(0),
+Jogador::Jogador(float xInicial, float yInicial, const ControlesJogador& controles, const sf::Color& cor) : Personagem(), pontos(0),
+    controles(controles), xInicial(xInicial), yInicial(yInicial), cor(cor),
     olhandoEsquerda(false), olhandoDireita(true), puloPressionado(false), tiroPressionado(false),
     tempoRecargaTiro(0.f),
     lento(false), tempoLento(0.f),
     invulneravel(false), tempoInvulneravel(0.f), tempoFlashDano(0.f)
 {
-    x = Config::POSICAO_INICIAL_X;
-    y = Config::POSICAO_INICIAL_Y;
+    x = xInicial;
+    y = yInicial;
     num_vidas = 3;
 
     pFig = new sf::RectangleShape(sf::Vector2f(60.f, 100.f));
@@ -34,8 +35,8 @@ Jogador::~Jogador() {
 }
 
 void Jogador::resetar() {
-    setX(Config::POSICAO_INICIAL_X);
-    setY(Config::POSICAO_INICIAL_Y);
+    setX(xInicial);
+    setY(yInicial);
     setVy(0.f);
     setNoChao(false);
 
@@ -91,25 +92,24 @@ void Jogador::executar(float dt) {
     sofrerGravidade(dt);
 
     atualizarSprite(dt, dx);
-    atualizarCamera();
 }
 
 float Jogador::processarMovimento(float dt) {
     float velocidadeX = lento ? Config::VELOCIDADE_X * 0.4f : Config::VELOCIDADE_X;
     float dx = 0;
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+    if (sf::Keyboard::isKeyPressed(controles.esquerda)) {
         dx -= 1;
         olhandoEsquerda = true;
         olhandoDireita = false;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+    if (sf::Keyboard::isKeyPressed(controles.direita)) {
         dx += 1;
         olhandoDireita = true;
         olhandoEsquerda = false;
     }
 
-    bool puloAtual = sf::Keyboard::isKeyPressed(sf::Keyboard::W);
+    bool puloAtual = sf::Keyboard::isKeyPressed(controles.pulo);
     if (puloAtual && !puloPressionado && noChao) {
         vy = Config::FORCA_PULO;
     }
@@ -142,14 +142,10 @@ void Jogador::atualizarSprite(float dt, float dx) {
 
     if (tempoFlashDano > 0.f) {
         pFig->setTexture(animacao.getTexturaBranca());
+        pFig->setFillColor(sf::Color::White);
     } else {
         pFig->setTexture(animacao.getTextura());
-    }
-}
-
-void Jogador::atualizarCamera() {
-    if (pGG != NULL) {
-        pGG->atualizarCamera(sf::Vector2f(x, y));
+        pFig->setFillColor(cor);
     }
 }
 
@@ -164,7 +160,7 @@ void Jogador::mover() {
 }
 
 bool Jogador::getAtirou() {
-    bool atirouAtual = sf::Keyboard::isKeyPressed(sf::Keyboard::R);
+    bool atirouAtual = sf::Keyboard::isKeyPressed(controles.tiro);
     bool disparou = atirouAtual && !tiroPressionado && tempoRecargaTiro <= 0.f;
     tiroPressionado = atirouAtual;
 

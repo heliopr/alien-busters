@@ -16,7 +16,7 @@ namespace {
 MinaExtraterrestre::MinaExtraterrestre(float x, float y)
     : Obstaculo(), largura(60.f), altura(60.f),
       tempoExplosao(0), tempoRestante(tempoExplosao),
-      ativada(false), destruido(false)
+      ativada(false), explodiu(false), destruido(false)
 {
     this->x = x;
     this->y = y;
@@ -80,13 +80,11 @@ void MinaExtraterrestre::obstaculizar(Personagens::Jogador* p) {
 }
 
 void MinaExtraterrestre::aplicarDano(Personagens::Jogador* p) {
-    if (destruido) return;
-
     if (jogadorDentroDoRaio(p)) {
         p->perderVida();
     }
 
-    destruido = true;
+    explodiu = true;
 }
 
 bool MinaExtraterrestre::jogadorDentroDoRaio(Personagens::Jogador* p) const {

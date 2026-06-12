@@ -41,7 +41,7 @@ public:
     void renderizar();
     void mostrar();
     void atualizarCamera(sf::Vector2f posicaoJogador);
-    void desenharHUD(int pontos, float posX, float posY, int vidas);
+    void desenharHUD(int pontos, float posX, float posY, int vidas, bool ladoDireito = false, bool mostrarDebug = true);
 };
 
 }

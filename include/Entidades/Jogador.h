@@ -9,11 +9,27 @@ namespace Personagens {
 
 class Inimigo;
 
+struct ControlesJogador {
+    sf::Keyboard::Key esquerda;
+    sf::Keyboard::Key direita;
+    sf::Keyboard::Key pulo;
+    sf::Keyboard::Key tiro;
+
+    ControlesJogador(sf::Keyboard::Key esq, sf::Keyboard::Key dir,
+                     sf::Keyboard::Key pul, sf::Keyboard::Key tir)
+        : esquerda(esq), direita(dir), pulo(pul), tiro(tir) {}
+};
+
 class Jogador : public Personagem {
 protected:
     int pontos;
 private:
     AnimacaoSprite animacao;
+
+    ControlesJogador controles;
+    float xInicial;
+    float yInicial;
+    sf::Color cor;
 
     bool olhandoEsquerda;
     bool olhandoDireita;
@@ -30,10 +46,10 @@ private:
 
     float processarMovimento(float dt);
     void atualizarSprite(float dt, float dx);
-    void atualizarCamera();
 
 public:
-    Jogador();
+    Jogador(float xInicial, float yInicial, const ControlesJogador& controles,
+            const sf::Color& cor = sf::Color::White);
     ~Jogador();
 
     void resetar();
@@ -53,6 +69,7 @@ public:
     bool estaInvulneravel() const { return invulneravel; }
     void ativarInvulnerabilidade();
     int getNumVidas() const { return num_vidas; }
+    bool estaMorto() const { return num_vidas <= 0; }
 };
 
 }

@@ -2,7 +2,7 @@
 
 namespace Entidades {
 
-Projetil::Projetil(float x, float y, float vx, float vy) : Entidade(), ativo(true), vx(vx) {
+Projetil::Projetil(float x, float y, float vx, float vy, Personagens::Jogador* dono) : Entidade(), ativo(true), vx(vx), dono(dono) {
     this->x = x;
     this->y = y;
     this->vy = vy;

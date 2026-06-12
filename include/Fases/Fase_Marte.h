@@ -7,7 +7,8 @@ namespace Fases {
 
 class Fase_Marte : public Fase {
 public:
-    Fase_Marte(Entidades::Personagens::Jogador* pJogador);
+    Fase_Marte(Entidades::Personagens::Jogador* pJogador,
+               Entidades::Personagens::Jogador* pJogador2 = 0);
     ~Fase_Marte();
 
 protected:

@@ -83,28 +83,45 @@ void Gerenciador_Grafico::desenharRetangulo(sf::FloatRect rect, sf::Color corCon
     janela.draw(shape);
 }
 
-void Gerenciador_Grafico::desenharHUD(int pontos, float posX, float posY, int vidas) {
+void Gerenciador_Grafico::desenharHUD(int pontos, float posX, float posY, int vidas, bool ladoDireito, bool mostrarDebug) {
+    const float larguraTela = 1422.222f;
+    const float margem = 20.f;
+
     std::ostringstream ss;
     ss << "Pontos: " << pontos;
     textoHUD.setString(ss.str());
 
-    std::ostringstream ssDebug;
-    ssDebug << "X: " << static_cast<int>(posX) << "  Y: " << static_cast<int>(posY);
-    textoDebug.setString(ssDebug.str());
-
-    sf::View viewHUD(sf::FloatRect(0.f, 0.f, 1422.222f, 800.f));
+    sf::View viewHUD(sf::FloatRect(0.f, 0.f, larguraTela, 800.f));
     janela.setView(viewHUD);
+
+    if (!ladoDireito) {
+        textoHUD.setPosition(margem, 16.f);
+    } else {
+        float largura = textoHUD.getLocalBounds().width;
+        textoHUD.setPosition(larguraTela - margem - largura, 16.f);
+    }
     janela.draw(textoHUD);
-    janela.draw(textoDebug);
+
+    if (mostrarDebug) {
+        std::ostringstream ssDebug;
+        ssDebug << "X: " << static_cast<int>(posX) << "  Y: " << static_cast<int>(posY);
+        textoDebug.setString(ssDebug.str());
+        textoDebug.setPosition(margem, 56.f);
+        janela.draw(textoDebug);
+    }
 
     if (texturaCoracao.getSize().x > 0) {
-        const float margem = 20.f;
         const float tamanhoCoracao = 54.f;
         const float espacamento = 8.f;
         float baseY = 800.f - margem - tamanhoCoracao;
 
         for (int i = 0; i < vidas; ++i) {
-            float posXCoracao = margem + i * (tamanhoCoracao + espacamento);
+            float posXCoracao;
+            if (!ladoDireito) {
+                posXCoracao = margem + i * (tamanhoCoracao + espacamento);
+            } else {
+                posXCoracao = larguraTela - margem - tamanhoCoracao - i * (tamanhoCoracao + espacamento);
+            }
             spriteCoracao.setPosition(posXCoracao, baseY);
             janela.draw(spriteCoracao);
         }

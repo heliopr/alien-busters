@@ -14,6 +14,7 @@ private:
     float tempoExplosao;
     float tempoRestante;
     bool ativada;
+    bool explodiu;
     bool destruido;
     sf::Texture texturaMina;
 
@@ -30,7 +31,7 @@ public:
 
     sf::FloatRect getHitbox() const;
 
-    bool getDestruido() const { return destruido; }
+    bool getDestruido() const { return destruido || explodiu; }
     void destruir() { destruido = true; }
 };
 

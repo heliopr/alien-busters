@@ -1,10 +1,21 @@
 #include "Jogo.h"
 #include "Ente.h"
 #include "Entidades/Plataforma.h"
+#include "Configuracao.h"
 
-Jogo::Jogo() : GG(), faseAtual(0), pJog1(0), menu(this), telaMorte(), estado(ESTADO_MENU) {
+Jogo::Jogo() : GG(), faseAtual(0), pJog1(0), pJog2(0), menu(this), telaMorte(), estado(ESTADO_MENU) {
     Ente::setGG(&GG);
-    pJog1 = new Entidades::Personagens::Jogador();
+
+    Entidades::Personagens::ControlesJogador controles1(
+        sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::R);
+    pJog1 = new Entidades::Personagens::Jogador(
+        Config::POSICAO_INICIAL_X, Config::POSICAO_INICIAL_Y, controles1);
+
+    Entidades::Personagens::ControlesJogador controles2(
+        sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::RControl);
+    pJog2 = new Entidades::Personagens::Jogador(
+        Config::POSICAO_INICIAL_X + 70.f, Config::POSICAO_INICIAL_Y, controles2,
+        sf::Color(120, 170, 255));
 }
 
 Jogo::~Jogo() {
@@ -15,6 +26,9 @@ Jogo::~Jogo() {
 
     delete pJog1;
     pJog1 = 0;
+
+    delete pJog2;
+    pJog2 = 0;
 }
 
 void Jogo::executar() {
@@ -40,22 +54,26 @@ void Jogo::executar() {
                     }
                     else if (evento.key.code == sf::Keyboard::Enter) {
                         if (menu.getEmSubmenu()) {
+                            Entidades::Personagens::Jogador* p2 =
+                                (menu.getNumJogadores() == 2) ? pJog2 : 0;
                             int fase = menu.getOpcaoFaseSelecionada();
                             if (fase == 0) {
                                 delete faseAtual;
-                                faseAtual = new Fases::Fase_Lua(pJog1);
+                                faseAtual = new Fases::Fase_Lua(pJog1, p2);
                                 estado = ESTADO_JOGANDO;
                             } else if (fase == 1) {
                                 delete faseAtual;
-                                faseAtual = new Fases::Fase_Marte(pJog1);
+                                faseAtual = new Fases::Fase_Marte(pJog1, p2);
                                 estado = ESTADO_JOGANDO;
                             } else if (fase == 2) {
                                 menu.sairSubmenu();
                             }
                         } else {
                             if (menu.getOpcaoSelecionada() == 0) {
-                                menu.entrarSubmenu();
+                                menu.alternarJogadores();
                             } else if (menu.getOpcaoSelecionada() == 1) {
+                                menu.entrarSubmenu();
+                            } else if (menu.getOpcaoSelecionada() == 2) {
                                 GG.fecharJanela();
                             }
                         }

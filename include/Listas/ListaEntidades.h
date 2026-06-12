@@ -19,7 +19,8 @@ public:
     void incluir(Entidades::Entidade *pE);
     void remover(Entidades::Entidade *pE);
     void limpar();
-    void percorrer(float dt, Entidades::Personagens::Jogador *pJogador);
+    void percorrer(float dt, Entidades::Personagens::Jogador *pJogador,
+                   Entidades::Personagens::Jogador *pJogador2 = 0);
 };
 
 }

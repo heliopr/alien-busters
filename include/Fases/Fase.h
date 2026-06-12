@@ -13,9 +13,11 @@ protected:
     Listas::ListaEntidades lista_ents;
     Gerenciadores::Gerenciador_Colisoes GC;
     Entidades::Personagens::Jogador* pJogador;
+    Entidades::Personagens::Jogador* pJogador2;
 
 public:
-    Fase(Entidades::Personagens::Jogador* pJogador);
+    Fase(Entidades::Personagens::Jogador* pJogador,
+         Entidades::Personagens::Jogador* pJogador2 = 0);
     virtual ~Fase();
 
     virtual void executar(float dt);
@@ -24,6 +26,8 @@ public:
     bool jogadorPerdeu() const;
 
 protected:
+    void processarJogador(Entidades::Personagens::Jogador* pJog, float dt);
+    void atualizarCamera();
     virtual void criarInimigos() = 0;
     virtual void criarObstaculos() = 0;
     virtual void criarCenario();

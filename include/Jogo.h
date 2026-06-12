@@ -18,6 +18,7 @@ private:
     Gerenciadores::Gerenciador_Grafico GG;
     Fases::Fase* faseAtual;
     Entidades::Personagens::Jogador* pJog1;
+    Entidades::Personagens::Jogador* pJog2;
     Menu menu;
     TelaMorte telaMorte;
     Estado estado;

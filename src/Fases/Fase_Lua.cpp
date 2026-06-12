@@ -9,7 +9,7 @@
 
 namespace Fases {
 
-Fase_Lua::Fase_Lua(Entidades::Personagens::Jogador* pJogador) : Fase(pJogador) {
+Fase_Lua::Fase_Lua(Entidades::Personagens::Jogador* pJogador, Entidades::Personagens::Jogador* pJogador2) : Fase(pJogador, pJogador2) {
     criarCenario();
     criarObstaculos();
     criarInimigos();
