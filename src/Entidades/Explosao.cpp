@@ -20,6 +20,13 @@ Explosao::Explosao(float x, float y)
         return;
     }
 
+    if (bufferExplosao.loadFromFile("assets/sounds/explosao.mp3")) {
+        somExplosao.setBuffer(bufferExplosao);
+        somExplosao.play();
+    } else {
+        std::cerr << "Erro ao carregar som assets/sounds/explosao.mp3!" << std::endl;
+    }
+
     larguraFrame = static_cast<int>(textura.getSize().x) / NUM_FRAMES;
     alturaFrame  = static_cast<int>(textura.getSize().y);
 

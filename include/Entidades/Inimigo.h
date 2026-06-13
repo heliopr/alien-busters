@@ -3,6 +3,8 @@
 
 #include "Entidades/Personagem.h"
 
+#include <SFML/Audio.hpp>
+
 namespace Entidades {
 namespace Personagens {
 
@@ -13,6 +15,10 @@ protected:
     int nivel_maldade;
     float velocidadeX;
     float tempoFlashDano;
+
+    static sf::SoundBuffer bufferDano;
+    static sf::Sound somDano;
+    static bool somCarregado;
 
     void moverComGravidade(float dt);
     void atualizarFlashDano(float dt);

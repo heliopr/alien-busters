@@ -2,12 +2,15 @@
 #define EXPLOSAO_H
 
 #include "Entidades/Entidade.h"
+#include <SFML/Audio.hpp>
 
 namespace Entidades {
 
 class Explosao : public Entidade {
 private:
     sf::Texture textura;
+    sf::SoundBuffer bufferExplosao;
+    sf::Sound somExplosao;
     int frameAtual;
     float tempoAnimacao;
     int larguraFrame;
