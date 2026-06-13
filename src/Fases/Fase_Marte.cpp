@@ -3,7 +3,7 @@
 #include "Entidades/Chao.h"
 #include "Entidades/Slime.h"
 #include "Entidades/MinaExtraterrestre.h"
-#include "Entidades/Demonio.h"
+#include "Entidades/Golem.h"
 #include <cstdlib>
 #include <ctime>
 
@@ -20,7 +20,7 @@ Fase_Marte::~Fase_Marte() {
 
 void Fase_Marte::criarInimigos() {
     criarSlimes();
-    criarDemonios();
+    criarGolems();
 }
 
 void Fase_Marte::criarObstaculos() {
@@ -79,12 +79,12 @@ void Fase_Marte::criarObstaculos() {
     criarMinasExtraterrestres();
 }
 
-void Fase_Marte::criarDemonios() {
-    Entidades::Personagens::Demonio* inimigo1 = new Entidades::Personagens::Demonio(800.f, 300.f);
+void Fase_Marte::criarGolems() {
+    Entidades::Personagens::Golem* inimigo1 = new Entidades::Personagens::Golem(800.f, 300.f);
     lista_ents.incluir(inimigo1);
     GC.incluirInimigo(inimigo1);
 
-    Entidades::Personagens::Demonio* inimigo2 = new Entidades::Personagens::Demonio(2000.f, 350.f);
+    Entidades::Personagens::Golem* inimigo2 = new Entidades::Personagens::Golem(2000.f, 350.f);
     lista_ents.incluir(inimigo2);
     GC.incluirInimigo(inimigo2);
 }

@@ -1,16 +1,20 @@
-#ifndef DEMONIO_H
-#define DEMONIO_H
+#ifndef GOLEM_H
+#define GOLEM_H
 
 #include "Entidades/Inimigo.h"
+#include "Entidades/AnimacaoSprite.h"
 #include <SFML/Graphics.hpp>
 
 namespace Entidades {
 namespace Personagens {
 
-class Demonio : public Inimigo {
+class Golem : public Inimigo {
+private:
+    AnimacaoSprite animacao;
+
 public:
-    Demonio(float x = 400.f, float y = 300.f);
-    ~Demonio();
+    Golem(float x = 400.f, float y = 300.f);
+    ~Golem();
 
     void executar(float dt);
     void salvar();

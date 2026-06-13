@@ -16,7 +16,7 @@ protected:
     void criarObstaculos();
     void criarMinasExtraterrestres();
     void criarSlimes();
-    void criarDemonios();
+    void criarGolems();
 };
 
 }
