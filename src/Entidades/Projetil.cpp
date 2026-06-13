@@ -1,9 +1,10 @@
 #include "Entidades/Projetil.h"
+#include "Configuracao.h"
 
 namespace Entidades {
 
-Projetil::Projetil(float x, float y, float vx, float vy, Personagens::Jogador* dono)
-    : Entidade(), ativo(true), vx(vx), dono(dono), sofreGravidade(false) {
+Projetil::Projetil(float x, float y, float vx, float vy, Personagens::Jogador* dono, bool inimigo)
+    : Entidade(), ativo(true), vx(vx), dono(dono), sofreGravidade(false), inimigo(inimigo) {
     this->x = x;
     this->y = y;
     this->vy = vy;
@@ -19,10 +20,11 @@ void Projetil::executar(float dt) {
     if (!ativo) return;
 
     x += vx * dt;
-    aplicarGravidade(dt, 98.f);
 
-    if (!sofreGravidade) {
-        contrariarGravidade(dt);
+    if (sofreGravidade) {
+        aplicarGravidade(dt, Config::GRAVIDADE_PROJETIL);
+    } else {
+        y += vy * dt;
     }
 
     if (pFig != NULL) {

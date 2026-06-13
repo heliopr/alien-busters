@@ -56,6 +56,8 @@ private:
 
     bool projetilColidiuComObstaculo(Entidades::Projetil* p) const;
     bool projetilColidiuComInimigo(Entidades::Projetil* p);
+    bool projetilColidiuComJogador(Entidades::Projetil* p);
+    bool projetilAtingiuJogador(Entidades::Projetil* p, Entidades::Personagens::Jogador* jog);
     void removerProjetil(std::set<Entidades::Projetil*>::iterator it);
 
     void criarExplosao(float x, float y);
@@ -74,6 +76,8 @@ public:
     void incluirObstaculoDificil(Entidades::Obstaculos::MinaExtraterrestre* pod);
     void incluirProjetil(Entidades::Projetil* pj);
     void limpar();
+
+    const std::vector<Entidades::Personagens::Inimigo*>& getInimigos() const { return LIs; }
 
     void executar();
 };

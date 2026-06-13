@@ -11,6 +11,7 @@ namespace Personagens {
 class Golem : public Inimigo {
 private:
     AnimacaoSprite animacao;
+    float tempoRecarga;
 
 public:
     Golem(float x = 400.f, float y = 300.f);
@@ -20,6 +21,8 @@ public:
     void salvar();
     void mover();
     sf::FloatRect getHitbox() const;
+
+    bool querAtirar(float dt);
 };
 
 }

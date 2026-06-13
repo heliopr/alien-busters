@@ -2,8 +2,12 @@
 #include "Entidades/Chao.h"
 #include "Entidades/Projetil.h"
 #include "Entidades/Laser.h"
+#include "Entidades/Pedra.h"
+#include "Entidades/Inimigo.h"
 #include "Gerenciadores/Gerenciador_Grafico.h"
 #include "Configuracao.h"
+#include <cmath>
+#include <vector>
 
 namespace Fases {
 
@@ -48,6 +52,66 @@ void Fase::processarJogador(Entidades::Personagens::Jogador* pJog, float dt) {
     pJog->executar(dt);
 }
 
+Entidades::Personagens::Jogador* Fase::jogadorMaisProximo(float x, float y) const {
+    Entidades::Personagens::Jogador* maisProximo = 0;
+    float menorDist = 0.f;
+
+    Entidades::Personagens::Jogador* candidatos[2] = { pJogador, pJogador2 };
+    for (int i = 0; i < 2; ++i) {
+        Entidades::Personagens::Jogador* jog = candidatos[i];
+        if (jog == 0 || jog->estaMorto()) {
+            continue;
+        }
+        float dx = jog->getX() - x;
+        float dy = jog->getY() - y;
+        float dist = dx * dx + dy * dy;
+        if (maisProximo == 0 || dist < menorDist) {
+            menorDist = dist;
+            maisProximo = jog;
+        }
+    }
+
+    return maisProximo;
+}
+
+void Fase::processarInimigos(float dt) {
+    const std::vector<Entidades::Personagens::Inimigo*>& inimigos = GC.getInimigos();
+
+    for (std::size_t i = 0; i < inimigos.size(); ++i) {
+        Entidades::Personagens::Inimigo* ini = inimigos[i];
+        if (ini == 0) {
+            continue;
+        }
+
+        Entidades::Personagens::Jogador* alvo = jogadorMaisProximo(ini->getX(), ini->getY());
+        if (alvo == 0) {
+            continue;
+        }
+
+        float dx = alvo->getX() - ini->getX();
+        float dy = (alvo->getY() - 50.f) - ini->getY();
+        float dist = std::sqrt(dx * dx + dy * dy);
+
+        if (dist > Config::ALCANCE_TIRO_GOLEM || !ini->querAtirar(dt)) {
+            continue;
+        }
+
+        float vx, vy;
+        if (std::fabs(dx) < 1.f) {
+            vx = 0.f;
+            vy = -Config::VELOCIDADE_PEDRA;
+        } else {
+            vx = (dx > 0.f) ? Config::VELOCIDADE_PEDRA : -Config::VELOCIDADE_PEDRA;
+            float t = dx / vx;
+            vy = (dy - 0.5f * Config::GRAVIDADE_PROJETIL * t * t) / t;
+        }
+
+        Entidades::Projetil* p = new Entidades::Pedra(ini->getX(), ini->getY(), vx, vy, 0, true);
+        lista_ents.incluir(p);
+        GC.incluirProjetil(p);
+    }
+}
+
 void Fase::atualizarCamera() {
     if (pGG == 0) {
         return;
@@ -74,6 +138,7 @@ void Fase::atualizarCamera() {
 void Fase::executar(float dt) {
     processarJogador(pJogador, dt);
     processarJogador(pJogador2, dt);
+    processarInimigos(dt);
 
     if (jogadorPerdeu()) {
         desenhar();

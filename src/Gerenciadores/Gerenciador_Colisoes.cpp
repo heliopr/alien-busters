@@ -205,6 +205,25 @@ bool Gerenciador_Colisoes::projetilColidiuComInimigo(Entidades::Projetil* p) {
     return false;
 }
 
+bool Gerenciador_Colisoes::projetilAtingiuJogador(Entidades::Projetil* p, Entidades::Personagens::Jogador* jog) {
+    if (jog == NULL || jog->estaMorto()) return false;
+
+    if (verificarColisao(p, jog)) {
+        if (!jog->estaInvulneravel()) {
+            jog->perderVida();
+            jog->ativarInvulnerabilidade();
+        }
+        return true;
+    }
+    return false;
+}
+
+bool Gerenciador_Colisoes::projetilColidiuComJogador(Entidades::Projetil* p) {
+    bool atingiu = projetilAtingiuJogador(p, pJog1);
+    atingiu = projetilAtingiuJogador(p, pJog2) || atingiu;
+    return atingiu;
+}
+
 void Gerenciador_Colisoes::removerProjetil(std::set<Entidades::Projetil*>::iterator it) {
     Entidades::Projetil* p = *it;
     LPs.erase(it);
@@ -226,7 +245,12 @@ void Gerenciador_Colisoes::tratarColisoesJogsProjeteis() {
             continue;
         }
 
-        bool colidiu = projetilColidiuComObstaculo(p) || projetilColidiuComInimigo(p);
+        bool colidiu;
+        if (p->getInimigo()) {
+            colidiu = projetilColidiuComObstaculo(p) || projetilColidiuComJogador(p);
+        } else {
+            colidiu = projetilColidiuComObstaculo(p) || projetilColidiuComInimigo(p);
+        }
 
         if (colidiu) {
             p->setAtivo(false);

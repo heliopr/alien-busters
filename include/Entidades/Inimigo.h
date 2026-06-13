@@ -32,6 +32,8 @@ public:
     virtual void danificar(Jogador* p);
     virtual sf::FloatRect getHitbox() const = 0;
 
+    virtual bool querAtirar(float dt) { return false; }
+
     float getVelocidadeX() const { return velocidadeX; }
     void setVelocidadeX(float v) { velocidadeX = v; }
 

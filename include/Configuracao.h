@@ -14,6 +14,10 @@ namespace Config {
     const float TEMPO_INVULNERAVEL = 1.0f;
     const float DURACAO_FLASH_DANO = 0.1f;
     const float TEMPO_RECARGA_TIRO = 1.0f;
+
+    const float VELOCIDADE_PEDRA = 350.f;
+    const float GRAVIDADE_PROJETIL = 98.f;
+    const float ALCANCE_TIRO_GOLEM = 600.f;
 }
 
 #endif

@@ -13,9 +13,11 @@ protected:
     float vx;
     Personagens::Jogador* dono;
     bool sofreGravidade;
+    bool inimigo;
 
 public:
-    Projetil(float x = 0.f, float y = 0.f, float vx = 0.f, float vy = 0.f, Personagens::Jogador* dono = 0);
+    Projetil(float x = 0.f, float y = 0.f, float vx = 0.f, float vy = 0.f,
+             Personagens::Jogador* dono = 0, bool inimigo = false);
     ~Projetil();
 
     void executar(float dt);
@@ -25,6 +27,7 @@ public:
     void setAtivo(bool b) { ativo = b; }
     float getVx() const { return vx; }
     Personagens::Jogador* getDono() const { return dono; }
+    bool getInimigo() const { return inimigo; }
 };
 
 }

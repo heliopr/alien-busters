@@ -27,6 +27,8 @@ public:
 
 protected:
     void processarJogador(Entidades::Personagens::Jogador* pJog, float dt);
+    void processarInimigos(float dt);
+    Entidades::Personagens::Jogador* jogadorMaisProximo(float x, float y) const;
     void atualizarCamera();
     virtual void criarInimigos() = 0;
     virtual void criarObstaculos() = 0;
