@@ -31,6 +31,13 @@ Menu::Menu(Jogo* pJ) :
         std::cerr << "Erro ao carregar a fonte Pixelify Sans!" << std::endl;
     }
 
+    if (!texturaFundo.loadFromFile("assets/textures/menu.png")) {
+        std::cerr << "Erro ao carregar assets/textures/menu.png!" << std::endl;
+    } else {
+        spriteFundo.setTexture(texturaFundo);
+        spriteFundo.setScale(1422.222f / texturaFundo.getSize().x, 800.f / texturaFundo.getSize().y);
+    }
+
     std::string nomesOpcoes[] = { "1 JOGADOR", "FASES", "SAIR" };
     criarTextos(opcoes, nomesOpcoes, 3, 200.f);
 
@@ -108,6 +115,8 @@ void Menu::executar(float /*dt*/) {
 
 void Menu::desenhar() {
     if (pGG == 0) return;
+
+    pGG->desenharSpriteTela(&spriteFundo);
 
     std::vector<sf::Text>& lista = emSubmenu ? opcoesFases : opcoes;
     for (size_t i = 0; i < lista.size(); ++i) {

@@ -116,8 +116,8 @@ void Fase_Marte::criarMinasExtraterrestres() {
 }
 void Fase_Marte::criarSlimes() {
     static const float posicoes[][2] = {
-        { 200.f, 300.f},
         { 500.f, 400.f},
+        { 600.f, 300.f},
         { 850.f, 300.f},
         {1200.f, 350.f},
         {1600.f, 300.f},

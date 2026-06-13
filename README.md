@@ -1,10 +1,8 @@
 # Jogo
 
 ## TODO
-- [x] Implementar tempoExplosao na MinaExtraterrestre
 - [ ] Usar nivel de maldade nos inimigos
 - [ ] Fazer demonio lançar projétil
-- [ ] Minas e gosmas aleatórias
 - [ ] Singletons: Jogo, Gerenciador_Colisoes, Gerenciador_Grafico
 - [ ] Usar: observer, mediator, iterator... https://refactoring.guru/design-patterns
 

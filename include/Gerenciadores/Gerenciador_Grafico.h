@@ -33,6 +33,7 @@ public:
     void desenharEnte(Ente *pE);
     void desenharTexto(sf::Text *pT);
     void desenharTextoTela(sf::Text *pT);
+    void desenharSpriteTela(sf::Sprite *pS);
     void desenharRetangulo(sf::FloatRect rect, sf::Color corContorno, float espessuraContorno);
     void desenharTelaEscura();
     bool estaAberto();

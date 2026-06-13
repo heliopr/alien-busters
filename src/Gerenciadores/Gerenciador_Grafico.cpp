@@ -8,7 +8,7 @@ namespace Gerenciadores {
 Gerenciador_Grafico::Gerenciador_Grafico() :
     janela(sf::VideoMode(1280, 720), "Janela SFML", sf::Style::Titlebar | sf::Style::Close),
     camera(sf::FloatRect(0.f, 0.f, 1422.222f, 800.f)),
-    mostrarHitboxes(true) {
+    mostrarHitboxes(false) {
     janela.setFramerateLimit(60);
     janela.setView(camera);
 
@@ -70,6 +70,17 @@ void Gerenciador_Grafico::desenharTextoTela(sf::Text *pT) {
 
         janela.setView(viewTela);
         janela.draw(*pT);
+        janela.setView(viewAnterior);
+    }
+}
+
+void Gerenciador_Grafico::desenharSpriteTela(sf::Sprite *pS) {
+    if (pS != 0) {
+        sf::View viewAnterior = janela.getView();
+        sf::View viewTela(sf::FloatRect(0.f, 0.f, 1422.222f, 800.f));
+
+        janela.setView(viewTela);
+        janela.draw(*pS);
         janela.setView(viewAnterior);
     }
 }

@@ -17,6 +17,8 @@ private:
     std::vector<sf::Text> opcoes;
     std::vector<sf::Text> opcoesFases;
     sf::Font fonte;
+    sf::Texture texturaFundo;
+    sf::Sprite spriteFundo;
 
     void criarTextos(std::vector<sf::Text>& lista, std::string nomes[], int total, float yInicio);
     void atualizarTextoJogadores();
