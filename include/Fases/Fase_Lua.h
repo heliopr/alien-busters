@@ -18,6 +18,7 @@ protected:
     void criarAliens();
     void criarGosmas();
     void criarSlimes();
+    void criarFoguete();
 };
 
 }

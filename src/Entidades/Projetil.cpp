@@ -21,10 +21,10 @@ void Projetil::executar(float dt) {
 
     x += vx * dt;
 
-    if (sofreGravidade) {
-        aplicarGravidade(dt, Config::GRAVIDADE_PROJETIL);
-    } else {
-        y += vy * dt;
+    aplicarGravidade(dt, Config::GRAVIDADE_PROJETIL);
+
+    if (!sofreGravidade) {
+        contrariarGravidade(dt);
     }
 
     if (pFig != NULL) {

@@ -2,7 +2,6 @@
 
 ## TODO
 - [ ] Usar nivel de maldade nos inimigos
-- [ ] Fazer demonio lançar projétil
 - [ ] Singletons: Jogo, Gerenciador_Colisoes, Gerenciador_Grafico
 - [ ] Usar: observer, mediator, iterator... https://refactoring.guru/design-patterns
 

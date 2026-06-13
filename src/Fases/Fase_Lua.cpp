@@ -4,6 +4,7 @@
 #include "Entidades/Alien.h"
 #include "Entidades/Slime.h"
 #include "Entidades/Gosma.h"
+#include "Entidades/Foguete.h"
 #include <cstdlib>
 #include <ctime>
 
@@ -13,6 +14,7 @@ Fase_Lua::Fase_Lua(Entidades::Personagens::Jogador* pJogador, Entidades::Persona
     criarCenario();
     criarObstaculos();
     criarInimigos();
+    criarFoguete();
 }
 
 Fase_Lua::~Fase_Lua() {
@@ -135,6 +137,11 @@ void Fase_Lua::criarGosmas() {
         Entidades::Obstaculos::Gosma* om = new Entidades::Obstaculos::Gosma(posicoes[indices[i]][0], posicoes[indices[i]][1]);
         lista_ents.incluir(om);
     }
+}
+
+void Fase_Lua::criarFoguete() {
+    Entidades::Foguete* foguete = new Entidades::Foguete(2380.f, 540.f);
+    lista_ents.incluir(foguete);
 }
 
 void Fase_Lua::criarSlimes() {
