@@ -60,6 +60,7 @@ public:
     void confirmarNomeJ2();
     void voltarDaTelaNome();
     void voltarDoRanking();
+    void resetarMenu();
 
     bool getEmSubmenu() const { return emSubmenu; }
     bool emTelaEntradaNome() const { return telaAtual == TELA_ENTRADA_NOME; }

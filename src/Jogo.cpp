@@ -60,8 +60,41 @@ void Jogo::executar() {
             }
 
             if (evento.type == sf::Event::KeyPressed) {
+                if (estado == ESTADO_TELA_MORTE) {
+                    if (evento.key.code == sf::Keyboard::Up || evento.key.code == sf::Keyboard::W) {
+                        telaMorte.subirOpcao();
+                    }
+                    else if (evento.key.code == sf::Keyboard::Down || evento.key.code == sf::Keyboard::S) {
+                        telaMorte.descerOpcao();
+                    }
+                    else if (evento.key.code == sf::Keyboard::Enter) {
+                        if (telaMorte.getOpcaoSelecionada() == 0) {
+                            if (faseAtual) {
+                                faseAtual->reiniciar();
+                            }
+                            telaMorte.resetar();
+                            estado = ESTADO_JOGANDO;
+                        } else {
+                            // Salvar pontuação quando volta ao menu
+                            if (!nomeJogadorAtual.empty() && pJog1->getPontos() > 0) {
+                                pGerenciadorPontuacoes->adicionarPontuacao(nomeJogadorAtual, pJog1->getPontos());
+                            }
+                            if (!nomeJogador2Atual.empty() && pJog2->getPontos() > 0) {
+                                pGerenciadorPontuacoes->adicionarPontuacao(nomeJogador2Atual, pJog2->getPontos());
+                            }
+                            delete faseAtual;
+                            faseAtual = 0;
+                            menu.resetarMenu();
+                            telaMorte.resetar();
+                            estado = ESTADO_MENU;
+                            nomeJogadorAtual = "";
+                            nomeJogador2Atual = "";
+                            faseSelecionada = -1;
+                        }
+                    }
+                }
                 // Tratamento para tela de entrada de nome
-                if (menu.emTelaEntradaNome()) {
+                else if (menu.emTelaEntradaNome()) {
                     if (evento.key.code == sf::Keyboard::Enter) {
                         std::string nome = menu.getNomeJogador();
                         if (!nome.empty() && faseSelecionada >= 0) {
@@ -167,39 +200,7 @@ void Jogo::executar() {
                         }
                     }
                 }
-                else if (estado == ESTADO_TELA_MORTE) {
-                    if (evento.key.code == sf::Keyboard::Up || evento.key.code == sf::Keyboard::W) {
-                        telaMorte.subirOpcao();
-                    }
-                    else if (evento.key.code == sf::Keyboard::Down || evento.key.code == sf::Keyboard::S) {
-                        telaMorte.descerOpcao();
-                    }
-                    else if (evento.key.code == sf::Keyboard::Enter) {
-                        if (telaMorte.getOpcaoSelecionada() == 0) {
-                            if (faseAtual) {
-                                faseAtual->reiniciar();
-                            }
-                            telaMorte.resetar();
-                            estado = ESTADO_JOGANDO;
-                        } else {
-                            // Salvar pontuação quando volta ao menu
-                            if (!nomeJogadorAtual.empty() && pJog1->getPontos() > 0) {
-                                pGerenciadorPontuacoes->adicionarPontuacao(nomeJogadorAtual, pJog1->getPontos());
-                            }
-                            if (!nomeJogador2Atual.empty() && pJog2->getPontos() > 0) {
-                                pGerenciadorPontuacoes->adicionarPontuacao(nomeJogador2Atual, pJog2->getPontos());
-                            }
-                            delete faseAtual;
-                            faseAtual = 0;
-                            menu.sairSubmenu();
-                            telaMorte.resetar();
-                            estado = ESTADO_MENU;
-                            nomeJogadorAtual = "";
-                            nomeJogador2Atual = "";
-                            faseSelecionada = -1;
-                        }
-                    }
-                }
+                
             }
         }
 

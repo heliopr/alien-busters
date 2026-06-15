@@ -230,6 +230,24 @@ void Menu::voltarDoRanking() {
     telaAtual = TELA_PRINCIPAL;
 }
 
+void Menu::resetarMenu() {
+    telaAtual = TELA_PRINCIPAL;
+    opcaoSelecionada = 0;
+    opcaoFaseSelecionada = 0;
+    numJogadores = 1;
+    emSubmenu = false;
+    nomeJogador = "";
+    nomeJogador2 = "";
+    
+    // Resetar cores das opções
+    for (size_t i = 0; i < opcoes.size(); ++i) {
+        opcoes[i].setFillColor(i == 0 ? sf::Color::Red : sf::Color::White);
+    }
+    for (size_t i = 0; i < opcoesFases.size(); ++i) {
+        opcoesFases[i].setFillColor(i == 0 ? sf::Color::Red : sf::Color::White);
+    }
+}
+
 void Menu::atualizarTextoJogadores() {
     if (opcoes.empty()) return;
 
