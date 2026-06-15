@@ -9,7 +9,7 @@
 
 namespace Fases {
 
-Fase_Marte::Fase_Marte(Entidades::Personagens::Jogador* pJogador, Entidades::Personagens::Jogador* pJogador2) : Fase(pJogador, pJogador2) {
+Fase_Marte::Fase_Marte(Entidades::Personagens::Jogador* pJogador, Entidades::Personagens::Jogador* pJogador2, const std::string& nome1, const std::string& nome2) : Fase(pJogador, pJogador2, nome1, nome2) {
     criarCenario();
     criarObstaculos();
     criarInimigos();

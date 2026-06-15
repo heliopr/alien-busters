@@ -5,6 +5,7 @@
 #include "Listas/ListaEntidades.h"
 #include "Gerenciadores/Gerenciador_Colisoes.h"
 #include "Entidades/Jogador.h"
+#include <string>
 
 namespace Fases {
 
@@ -14,10 +15,13 @@ protected:
     Gerenciadores::Gerenciador_Colisoes GC;
     Entidades::Personagens::Jogador* pJogador;
     Entidades::Personagens::Jogador* pJogador2;
+    std::string nomeJogador;
+    std::string nomeJogador2;
 
 public:
     Fase(Entidades::Personagens::Jogador* pJogador,
-         Entidades::Personagens::Jogador* pJogador2 = 0);
+         Entidades::Personagens::Jogador* pJogador2 = 0,
+         const std::string& nome1 = "", const std::string& nome2 = "");
     virtual ~Fase();
 
     virtual void executar(float dt);

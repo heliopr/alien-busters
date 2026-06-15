@@ -30,6 +30,7 @@ public:
     }
     bool getMostrarHitboxes() const { return mostrarHitboxes; }
     void setMostrarHitboxes(bool b) { mostrarHitboxes = b; }
+    const sf::Font& getFont() const { return fontHUD; }
     void desenharEnte(Ente *pE);
     void desenharTexto(sf::Text *pT);
     void desenharTextoTela(sf::Text *pT);

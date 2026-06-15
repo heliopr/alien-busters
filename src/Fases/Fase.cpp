@@ -11,8 +11,10 @@
 
 namespace Fases {
 
-Fase::Fase(Entidades::Personagens::Jogador* pJogador, Entidades::Personagens::Jogador* pJogador2)
-    : Ente(), lista_ents(), GC(), pJogador(pJogador), pJogador2(pJogador2) {
+Fase::Fase(Entidades::Personagens::Jogador* pJogador, Entidades::Personagens::Jogador* pJogador2,
+           const std::string& nome1, const std::string& nome2)
+    : Ente(), lista_ents(), GC(), pJogador(pJogador), pJogador2(pJogador2), 
+      nomeJogador(nome1), nomeJogador2(nome2) {
     GC.setJogador(pJogador);
     GC.setJogador2(pJogador2);
     GC.setListaEntidades(&lista_ents);
@@ -170,10 +172,32 @@ void Fase::desenhar() {
         if (pJogador != 0) {
             pGG->desenharHUD(pJogador->getPontos(), pJogador->getX(), pJogador->getY(),
                              pJogador->getNumVidas(), false, true);
+            
+            // Desenhar nome do jogador 1 embaixo da pontuação
+            if (!nomeJogador.empty()) {
+                sf::Text nomeText;
+                nomeText.setFont(pGG->getFont());
+                nomeText.setString(nomeJogador);
+                nomeText.setCharacterSize(20);
+                nomeText.setFillColor(sf::Color::White);
+                nomeText.setPosition(sf::Vector2f(50.f, 115.f));
+                pGG->desenharTextoTela(&nomeText);
+            }
         }
         if (pJogador2 != 0) {
             pGG->desenharHUD(pJogador2->getPontos(), pJogador2->getX(), pJogador2->getY(),
                              pJogador2->getNumVidas(), true, false);
+            
+            // Desenhar nome do jogador 2 embaixo da pontuação
+            if (!nomeJogador2.empty()) {
+                sf::Text nomeText;
+                nomeText.setFont(pGG->getFont());
+                nomeText.setString(nomeJogador2);
+                nomeText.setCharacterSize(20);
+                nomeText.setFillColor(sf::Color(120, 170, 255));
+                nomeText.setPosition(sf::Vector2f(1220.f, 115.f));
+                pGG->desenharTextoTela(&nomeText);
+            }
         }
     }
 }

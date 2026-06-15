@@ -2,6 +2,7 @@
 #define MENU_H
 
 #include "Ente.h"
+#include "Gerenciadores/Gerenciador_Pontuacoes.h"
 #include <vector>
 #include <string>
 
@@ -9,19 +10,38 @@ class Jogo;
 
 class Menu : public Ente {
 private:
+    enum TelaMenu {
+        TELA_PRINCIPAL,
+        TELA_ENTRADA_NOME,
+        TELA_ENTRADA_NOME_J2,
+        TELA_RANKING,
+        TELA_FASES
+    };
+
     Jogo* pJog;
     int opcaoSelecionada;
     int opcaoFaseSelecionada;
     int numJogadores;
     bool emSubmenu;
+    TelaMenu telaAtual;
+    
+    std::string nomeJogador;
+    std::string nomeJogador2;
+    Gerenciadores::Gerenciador_Pontuacoes* pGerenciadorPontuacoes;
+    
     std::vector<sf::Text> opcoes;
     std::vector<sf::Text> opcoesFases;
+    std::vector<sf::Text> textoRanking;
+    
     sf::Font fonte;
     sf::Texture texturaFundo;
     sf::Sprite spriteFundo;
+    sf::Text textoCursor;
+    sf::Text textoTitulo;
 
     void criarTextos(std::vector<sf::Text>& lista, std::string nomes[], int total, float yInicio);
     void atualizarTextoJogadores();
+    void gerarTextoRanking();
 
 public:
     Menu(Jogo* pJ = 0);
@@ -32,11 +52,25 @@ public:
     void entrarSubmenu();
     void sairSubmenu();
     void alternarJogadores();
+    void entrarTelaNome();
+    void irParaNomeJogador2();
+    void adicionarLetraAoNome(sf::Uint32 unicode);
+    void removerLetraDoNome();
+    void confirmarNome();
+    void confirmarNomeJ2();
+    void voltarDaTelaNome();
+    void voltarDoRanking();
 
     bool getEmSubmenu() const { return emSubmenu; }
+    bool emTelaEntradaNome() const { return telaAtual == TELA_ENTRADA_NOME; }
+    bool emTelaEntradaNomeJ2() const { return telaAtual == TELA_ENTRADA_NOME_J2; }
+    bool emTelaRanking() const { return telaAtual == TELA_RANKING; }
+    bool emTelaFases() const { return telaAtual == TELA_FASES; }
     int getOpcaoSelecionada() const { return opcaoSelecionada; }
     int getOpcaoFaseSelecionada() const { return opcaoFaseSelecionada; }
     int getNumJogadores() const { return numJogadores; }
+    std::string getNomeJogador() const { return nomeJogador; }
+    std::string getNomeJogador2() const { return nomeJogador2; }
 
     void executar(float dt = 0.f);
     void desenhar();
