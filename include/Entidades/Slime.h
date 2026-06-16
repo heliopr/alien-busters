@@ -20,6 +20,7 @@ public:
     void executar(float dt);
     void salvar();
     void danificar(Jogador* p);
+    int pontosAoMorrer() const;
     sf::FloatRect getHitbox() const;
 };
 

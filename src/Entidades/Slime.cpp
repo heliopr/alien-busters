@@ -12,6 +12,8 @@ Slime::Slime(float x_ini, float y_ini)
     y = y_ini;
     num_vidas = 1;
 
+    nivel = (std::rand() % 100);
+
     float v = 40.f + std::rand() % 60;
     velocidadeX = (std::rand() % 2 == 0) ? v : -v;
 
@@ -55,6 +57,17 @@ void Slime::salvar() {
 
 void Slime::danificar(Jogador* p) {
     Inimigo::danificar(p);
+}
+
+int Slime::pontosAoMorrer() const {
+    int pontos = Inimigo::pontosAoMorrer();
+
+    float sorteio = std::rand() % 100;
+    if (sorteio < nivel) {
+        pontos += 50;
+    }
+
+    return pontos;
 }
 
 sf::FloatRect Slime::getHitbox() const {

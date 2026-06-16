@@ -36,6 +36,7 @@ public:
     virtual sf::FloatRect getHitbox() const = 0;
 
     virtual Projetil* atirar(Jogador*, float) { return 0; }
+    virtual int pontosAoMorrer() const { return 100; }
 
     float getVelocidadeX() const { return velocidadeX; }
     void setVelocidadeX(float v) { velocidadeX = v; }

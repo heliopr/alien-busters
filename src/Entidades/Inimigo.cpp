@@ -2,6 +2,7 @@
 #include "Entidades/Jogador.h"
 #include "Configuracao.h"
 #include <cstddef>
+#include <cstdlib>
 #include <iostream>
 
 namespace Entidades {
@@ -11,7 +12,7 @@ sf::SoundBuffer Inimigo::bufferDano;
 sf::Sound Inimigo::somDano;
 bool Inimigo::somCarregado = false;
 
-Inimigo::Inimigo() : Personagem(), nivel_maldade(0), velocidadeX(-50.f), tempoFlashDano(0.f) {
+Inimigo::Inimigo() : Personagem(), nivel_maldade(std::rand() % 31), velocidadeX(-50.f), tempoFlashDano(0.f) {
     if (!somCarregado) {
         if (bufferDano.loadFromFile("assets/sounds/hit.mp3")) {
             somDano.setBuffer(bufferDano);
@@ -45,6 +46,10 @@ void Inimigo::atualizarFlashDano(float dt) {
 }
 
 void Inimigo::levarDano() {
+    if (std::rand() % 100 < nivel_maldade) {
+        return;
+    }
+
     num_vidas--;
     tempoFlashDano = Config::DURACAO_FLASH_DANO;
     if (somCarregado && num_vidas > 0) {

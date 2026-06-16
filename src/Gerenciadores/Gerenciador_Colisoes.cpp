@@ -183,6 +183,7 @@ bool Gerenciador_Colisoes::projetilColidiuComInimigo(Entidades::Projetil* p) {
             if (ini->morreu()) {
                 float xi = ini->getX();
                 float yi = ini->getY();
+                int pontos = ini->pontosAoMorrer();
 
                 LIs.erase(it);
                 if (pListaEntidades) {
@@ -196,7 +197,7 @@ bool Gerenciador_Colisoes::projetilColidiuComInimigo(Entidades::Projetil* p) {
                     dono = pJog1;
                 }
                 if (dono) {
-                    dono->adicionarPontos(100);
+                    dono->adicionarPontos(pontos);
                 }
             }
             return true;
