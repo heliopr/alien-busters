@@ -154,9 +154,8 @@ void Fase::desenhar() {
     if (pGG != 0) {
         if (pJogador != 0) {
             pGG->desenharHUD(pJogador->getPontos(), pJogador->getX(), pJogador->getY(),
-                             pJogador->getNumVidas(), false, true);
+                             pJogador->getNumVidas(), false, false);
             
-            // Desenhar nome do jogador 1 embaixo da pontuação
             if (!nomeJogador.empty()) {
                 sf::Text nomeText;
                 nomeText.setFont(pGG->getFont());
@@ -171,7 +170,6 @@ void Fase::desenhar() {
             pGG->desenharHUD(pJogador2->getPontos(), pJogador2->getX(), pJogador2->getY(),
                              pJogador2->getNumVidas(), true, false);
             
-            // Desenhar nome do jogador 2 embaixo da pontuação
             if (!nomeJogador2.empty()) {
                 sf::Text nomeText;
                 nomeText.setFont(pGG->getFont());

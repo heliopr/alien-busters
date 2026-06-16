@@ -14,7 +14,7 @@ Fase_Lua::Fase_Lua(Entidades::Personagens::Jogador* pJogador, Entidades::Persona
     criarCenario();
     criarObstaculos();
     criarInimigos();
-    criarFoguete();
+    //criarFoguete();
 }
 
 Fase_Lua::~Fase_Lua() {

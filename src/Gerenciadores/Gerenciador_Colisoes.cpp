@@ -113,10 +113,22 @@ void Gerenciador_Colisoes::tratarColisoesJogObstacs(Entidades::Personagens::Joga
     }
 }
 
+bool Gerenciador_Colisoes::haPlataformaEm(float x, float y) const {
+    for (std::list<Entidades::Obstaculos::Obstaculo*>::const_iterator it = LOs.begin(); it != LOs.end(); ++it) {
+        Entidades::Obstaculos::Obstaculo* obs = *it;
+        if (obs != NULL && obs->getHitbox().contains(x, y)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void Gerenciador_Colisoes::tratarColisoesInimigosObstacs() {
     for (std::vector<Entidades::Personagens::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
         Entidades::Personagens::Inimigo* ini = *iti;
         if (ini == NULL) continue;
+
+        bool noChao = false;
 
         for (std::list<Entidades::Obstaculos::Obstaculo*>::iterator ito = LOs.begin(); ito != LOs.end(); ++ito) {
             Entidades::Obstaculos::Obstaculo* obs = *ito;
@@ -138,6 +150,7 @@ void Gerenciador_Colisoes::tratarColisoesInimigosObstacs() {
                     ini->setY(boxObs.top - boxIni.height / 2.f);
                     ini->setVy(0.f);
                     ini->setNoChao(true);
+                    noChao = true;
                     break;
                 case COLISAO_BAIXO:
                     ini->setY(boxObs.top + boxObs.height + boxIni.height / 2.f);
@@ -147,6 +160,19 @@ void Gerenciador_Colisoes::tratarColisoesInimigosObstacs() {
                     break;
                 default:
                     break;
+            }
+        }
+
+        if (noChao && ini->getVelocidadeX() != 0.f) {
+            sf::FloatRect boxIni = ini->getHitbox();
+            float margem = 5.f;
+            float frenteX = (ini->getVelocidadeX() > 0.f)
+                                ? boxIni.left + boxIni.width + margem
+                                : boxIni.left - margem;
+            float peY = boxIni.top + boxIni.height + 2.f;
+
+            if (!haPlataformaEm(frenteX, peY)) {
+                ini->setVelocidadeX(-ini->getVelocidadeX());
             }
         }
     }

@@ -47,6 +47,7 @@ private:
 
     bool verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2) const;
     ResultadoColisao detectarColisaoObstaculo(const sf::FloatRect& box, const sf::FloatRect& boxObs) const;
+    bool haPlataformaEm(float x, float y) const;
 
     void tratarColisoesJogObstacs(Entidades::Personagens::Jogador* jog);
     void tratarColisoesInimigosObstacs();
