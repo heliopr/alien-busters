@@ -19,7 +19,6 @@ public:
 
     void executar(float dt);
     void salvar();
-    void mover();
     sf::FloatRect getHitbox() const;
 
     bool querAtirar(float dt);

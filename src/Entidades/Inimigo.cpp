@@ -25,7 +25,7 @@ Inimigo::Inimigo() : Personagem(), nivel_maldade(0), velocidadeX(-50.f), tempoFl
 Inimigo::~Inimigo() {
 }
 
-void Inimigo::moverComGravidade(float dt) {
+void Inimigo::mover(float dt) {
     x += velocidadeX * dt;
     aplicarGravidade(dt);
 

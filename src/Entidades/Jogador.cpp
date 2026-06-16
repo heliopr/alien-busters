@@ -11,6 +11,7 @@ namespace Personagens {
 
 Jogador::Jogador(float xInicial, float yInicial, const ControlesJogador& controles, const sf::Color& cor) : Personagem(), pontos(0),
     controles(controles), xInicial(xInicial), yInicial(yInicial), cor(cor),
+    ultimoDx(0.f),
     olhandoDireita(true), puloPressionado(false), tiroPressionado(false),
     tempoRecargaTiro(0.f),
     lento(false), tempoLento(0.f),
@@ -47,6 +48,7 @@ void Jogador::resetar() {
     setVy(0.f);
     setNoChao(false);
 
+    ultimoDx = 0.f;
     num_vidas = 3;
     pontos = 0;
 
@@ -94,10 +96,9 @@ void Jogador::executar(float dt) {
         }
     }
 
-    float dx = processarMovimento(dt);
-    aplicarGravidade(dt);
+    mover(dt);
 
-    atualizarSprite(dt, dx);
+    atualizarSprite(dt, ultimoDx);
 }
 
 float Jogador::processarMovimento(float dt) {
@@ -160,7 +161,9 @@ sf::FloatRect Jogador::getHitbox() const {
     return sf::FloatRect(x - 20.f, y - 75.f, 40.f, 50.f);
 }
 
-void Jogador::mover() {
+void Jogador::mover(float dt) {
+    ultimoDx = processarMovimento(dt);
+    aplicarGravidade(dt);
 }
 
 bool Jogador::getAtirou() {

@@ -20,7 +20,6 @@ protected:
     static sf::Sound somDano;
     static bool somCarregado;
 
-    void moverComGravidade(float dt);
     void atualizarFlashDano(float dt);
 
 public:
@@ -29,6 +28,7 @@ public:
 
     virtual void executar(float dt) = 0;
     virtual void salvar() = 0;
+    void mover(float dt = 0);
     virtual void danificar(Jogador* p);
     virtual sf::FloatRect getHitbox() const = 0;
 

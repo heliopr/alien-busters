@@ -18,7 +18,7 @@ public:
     void salvarDataBuffer();
     virtual void executar(float dt) = 0;
     virtual void salvar() = 0;
-    virtual void mover() = 0;
+    virtual void mover(float dt = 0) = 0;
 
     bool getNoChao() const { return noChao; }
     void setNoChao(bool b) { noChao = b; }

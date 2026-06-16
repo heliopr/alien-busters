@@ -32,7 +32,7 @@ Alien::~Alien() {
 }
 
 void Alien::executar(float dt) {
-    moverComGravidade(dt);
+    mover(dt);
     atualizarFlashDano(dt);
 
     if (pFig != NULL) {
@@ -56,9 +56,6 @@ void Alien::salvar() {
 
 sf::FloatRect Alien::getHitbox() const {
     return sf::FloatRect(x - 24.0f, y - 24.0f, 48.0f, 48.0f);
-}
-
-void Alien::mover() {
 }
 
 }

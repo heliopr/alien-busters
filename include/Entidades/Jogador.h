@@ -32,6 +32,7 @@ private:
     float yInicial;
     sf::Color cor;
 
+    float ultimoDx;
     bool olhandoDireita;
     bool puloPressionado;
     bool tiroPressionado;
@@ -58,7 +59,7 @@ public:
     void resetar();
     void executar(float dt);
     void salvar();
-    void mover();
+    void mover(float dt = 0);
     void colidir(Inimigo* pIn);
 
     sf::FloatRect getHitbox() const;

@@ -33,7 +33,7 @@ Slime::~Slime() {
 }
 
 void Slime::executar(float dt) {
-    moverComGravidade(dt);
+    mover(dt);
     atualizarFlashDano(dt);
 
     if (pFig != NULL) {
@@ -51,9 +51,6 @@ void Slime::executar(float dt) {
 }
 
 void Slime::salvar() {
-}
-
-void Slime::mover() {
 }
 
 sf::FloatRect Slime::getHitbox() const {

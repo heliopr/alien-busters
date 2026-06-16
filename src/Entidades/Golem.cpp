@@ -36,7 +36,7 @@ Golem::~Golem() {
 }
 
 void Golem::executar(float dt) {
-    moverComGravidade(dt);
+    mover(dt);
     atualizarFlashDano(dt);
 
     if (pFig != NULL) {
@@ -54,9 +54,6 @@ void Golem::executar(float dt) {
 }
 
 void Golem::salvar() {
-}
-
-void Golem::mover() {
 }
 
 sf::FloatRect Golem::getHitbox() const {

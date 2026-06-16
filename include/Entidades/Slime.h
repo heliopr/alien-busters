@@ -10,6 +10,7 @@ namespace Personagens {
 
 class Slime : public Inimigo {
 private:
+    float nivel;
     AnimacaoSprite animacao;
 
 public:
@@ -18,7 +19,6 @@ public:
 
     void executar(float dt);
     void salvar();
-    void mover();
     sf::FloatRect getHitbox() const;
 };
 
