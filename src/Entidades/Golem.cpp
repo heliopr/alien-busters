@@ -56,6 +56,10 @@ void Golem::executar(float dt) {
 void Golem::salvar() {
 }
 
+void Golem::danificar(Jogador* p) {
+    Inimigo::danificar(p);
+}
+
 sf::FloatRect Golem::getHitbox() const {
     return sf::FloatRect(x - 52.5f, y - 48, 105.f, 96.f);
 }

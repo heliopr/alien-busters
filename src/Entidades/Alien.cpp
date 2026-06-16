@@ -54,6 +54,10 @@ void Alien::executar(float dt) {
 void Alien::salvar() {
 }
 
+void Alien::danificar(Jogador* p) {
+    Inimigo::danificar(p);
+}
+
 sf::FloatRect Alien::getHitbox() const {
     return sf::FloatRect(x - 24.0f, y - 24.0f, 48.0f, 48.0f);
 }

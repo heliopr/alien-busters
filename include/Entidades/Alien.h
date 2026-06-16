@@ -20,10 +20,11 @@ public:
 
     void executar(float dt);
     void salvar();
+    void danificar(Jogador* p);
     sf::FloatRect getHitbox() const;
 };
 
-} // namespace Personagens
-} // namespace Entidades
+}
+}
 
 #endif

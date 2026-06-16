@@ -53,6 +53,10 @@ void Slime::executar(float dt) {
 void Slime::salvar() {
 }
 
+void Slime::danificar(Jogador* p) {
+    Inimigo::danificar(p);
+}
+
 sf::FloatRect Slime::getHitbox() const {
     return sf::FloatRect(x - 28.f, y - 28.f, 56.f, 56.f);
 }
