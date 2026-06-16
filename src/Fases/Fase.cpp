@@ -2,7 +2,6 @@
 #include "Entidades/Chao.h"
 #include "Entidades/Projetil.h"
 #include "Entidades/Laser.h"
-#include "Entidades/Pedra.h"
 #include "Entidades/Inimigo.h"
 #include "Gerenciadores/Gerenciador_Grafico.h"
 #include "Configuracao.h"
@@ -90,27 +89,11 @@ void Fase::processarInimigos(float dt) {
             continue;
         }
 
-        float dx = alvo->getX() - ini->getX();
-        float dy = (alvo->getY() - 50.f) - ini->getY();
-        float dist = std::sqrt(dx * dx + dy * dy);
-
-        if (dist > Config::ALCANCE_TIRO_GOLEM || !ini->querAtirar(dt)) {
-            continue;
+        Entidades::Projetil* p = ini->atirar(alvo, dt);
+        if (p != 0) {
+            lista_ents.incluir(p);
+            GC.incluirProjetil(p);
         }
-
-        float vx, vy;
-        if (std::fabs(dx) < 1.f) {
-            vx = 0.f;
-            vy = -Config::VELOCIDADE_PEDRA;
-        } else {
-            vx = (dx > 0.f) ? Config::VELOCIDADE_PEDRA : -Config::VELOCIDADE_PEDRA;
-            float t = dx / vx;
-            vy = (dy - 0.5f * Config::GRAVIDADE_PROJETIL * t * t) / t;
-        }
-
-        Entidades::Projetil* p = new Entidades::Pedra(ini->getX(), ini->getY(), vx, vy, 0, true);
-        lista_ents.incluir(p);
-        GC.incluirProjetil(p);
     }
 }
 

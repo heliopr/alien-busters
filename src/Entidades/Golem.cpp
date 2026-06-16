@@ -1,7 +1,10 @@
 #include "Entidades/Golem.h"
+#include "Entidades/Jogador.h"
+#include "Entidades/Pedra.h"
 #include "Configuracao.h"
 #include <cstdlib>
 #include <cstddef>
+#include <cmath>
 
 namespace Entidades {
 namespace Personagens {
@@ -64,13 +67,36 @@ sf::FloatRect Golem::getHitbox() const {
     return sf::FloatRect(x - 52.5f, y - 48, 105.f, 96.f);
 }
 
-bool Golem::querAtirar(float dt) {
-    tempoRecarga -= dt;
-    if (tempoRecarga <= 0.f) {
-        tempoRecarga = tempoRecarga = 1.5f + ((std::rand() % 100) / 100.f * 0.5f);
-        return true;
+Projetil* Golem::atirar(Jogador* alvo, float dt) {
+    if (alvo == NULL) {
+        return NULL;
     }
-    return false;
+
+    float dx = alvo->getX() - x;
+    float dy = (alvo->getY() - 50.f) - y;
+    float dist = std::sqrt(dx * dx + dy * dy);
+
+    if (dist > Config::ALCANCE_TIRO_GOLEM) {
+        return NULL;
+    }
+
+    tempoRecarga -= dt;
+    if (tempoRecarga > 0.f) {
+        return NULL;
+    }
+    tempoRecarga = 1.5f + ((std::rand() % 100) / 100.f * 0.5f);
+
+    float vx, vy;
+    if (std::fabs(dx) < 1.f) {
+        vx = 0.f;
+        vy = -Config::VELOCIDADE_PEDRA;
+    } else {
+        vx = (dx > 0.f) ? Config::VELOCIDADE_PEDRA : -Config::VELOCIDADE_PEDRA;
+        float t = dx / vx;
+        vy = (dy - 0.5f * Config::GRAVIDADE_PROJETIL * t * t) / t;
+    }
+
+    return new Pedra(x, y, vx, vy, 0, true);
 }
 
 }

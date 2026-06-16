@@ -22,7 +22,7 @@ public:
     void danificar(Jogador* p);
     sf::FloatRect getHitbox() const;
 
-    bool querAtirar(float dt);
+    Projetil* atirar(Jogador* alvo, float dt);
 };
 
 }
