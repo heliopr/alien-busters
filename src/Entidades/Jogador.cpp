@@ -9,8 +9,8 @@
 namespace Entidades {
 namespace Personagens {
 
-Jogador::Jogador(float xInicial, float yInicial, const ControlesJogador& controles, const sf::Color& cor) : Personagem(), pontos(0),
-    controles(controles), xInicial(xInicial), yInicial(yInicial), cor(cor),
+Jogador::Jogador(float xInicial, float yInicial, const ControlesJogador& controles, const std::string& texturaSprite) : Personagem(), pontos(0),
+    controles(controles), xInicial(xInicial), yInicial(yInicial),
     ultimoDx(0.f),
     olhandoDireita(true), puloPressionado(false), tiroPressionado(false),
     tempoRecargaTiro(0.f),
@@ -26,7 +26,7 @@ Jogador::Jogador(float xInicial, float yInicial, const ControlesJogador& control
         pFig->setOrigin(30.f, 100.f);
         pFig->setPosition(sf::Vector2f(x, y));
 
-        if (animacao.carregar("assets/textures/player.png", 8, 3, "Erro ao carregar a textura do jogador!")) {
+        if (animacao.carregar(texturaSprite, 8, 3, "Erro ao carregar a textura do jogador!")) {
             pFig->setTexture(animacao.getTextura());
             animacao.aplicar(pFig, 1, false);
         }
@@ -150,7 +150,6 @@ void Jogador::atualizarSprite(float dt, float dx) {
         pFig->setFillColor(sf::Color::White);
     } else {
         pFig->setTexture(animacao.getTextura());
-        pFig->setFillColor(cor);
     }
 }
 

@@ -16,8 +16,7 @@ Jogo::Jogo() : GG(), pGerenciadorPontuacoes(0), faseAtual(0), pJog1(0), pJog2(0)
     Entidades::Personagens::ControlesJogador controles2(
         sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Enter);
     pJog2 = new Entidades::Personagens::Jogador(
-        Config::POSICAO_INICIAL_X + 70.f, Config::POSICAO_INICIAL_Y, controles2,
-        sf::Color(120, 170, 255));
+        Config::POSICAO_INICIAL_X + 70.f, Config::POSICAO_INICIAL_Y, controles2, "assets/textures/player2.png");
 
     pGerenciadorPontuacoes = new Gerenciadores::Gerenciador_Pontuacoes("ranking.dat");
 }

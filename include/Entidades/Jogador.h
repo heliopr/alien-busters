@@ -4,6 +4,7 @@
 #include "Entidades/Personagem.h"
 #include "Entidades/AnimacaoSprite.h"
 #include <SFML/Audio.hpp>
+#include <string>
 
 namespace Entidades {
 namespace Personagens {
@@ -53,7 +54,7 @@ private:
 
 public:
     Jogador(float xInicial, float yInicial, const ControlesJogador& controles,
-            const sf::Color& cor = sf::Color::White);
+            const std::string& texturaSprite = "assets/textures/player.png");
     ~Jogador();
 
     void resetar();
