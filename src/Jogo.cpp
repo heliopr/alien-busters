@@ -133,14 +133,13 @@ void Jogo::executar() {
                         menu.voltarDaTelaNome();
                     }
                 }
-                // Tratamento para tela de entrada de nome do jogador 2
+                // tratamento para tela de entrada de nome do jogador 2
                 else if (menu.emTelaEntradaNomeJ2()) {
                     if (evento.key.code == sf::Keyboard::Enter) {
                         std::string nome2 = menu.getNomeJogador2();
                         if (!nome2.empty() && faseSelecionada >= 0) {
                             nomeJogador2Atual = nome2;
                             
-                            // 2 jogadores: iniciar jogo com ambos
                             Entidades::Personagens::Jogador* p2 = pJog2;
                             
                             if (faseSelecionada == 0) {

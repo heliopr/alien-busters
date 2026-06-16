@@ -1,4 +1,5 @@
 #include "Listas/ListaEntidades.h"
+#include "Entidades/Explosao.h"
 
 namespace Listas {
 
@@ -26,14 +27,23 @@ void ListaEntidades::limpar() {
     LEs.limpar();
 }
 
+void ListaEntidades::criarExplosao(float x, float y) {
+    LEs.incluir(new Entidades::Explosao(x, y));
+}
+
 void ListaEntidades::percorrer(float dt) {
     Lista<Entidades::Entidade>::Elemento *atual = LEs.getPrimeiro();
     while (atual != 0) {
         Entidades::Entidade *entidade = atual->getInfo();
+        Lista<Entidades::Entidade>::Elemento *prox = atual->getProx();
         if (entidade != 0) {
             entidade->executar(dt);
+            if (entidade->finalizada()) {
+                LEs.remover(entidade);
+                delete entidade;
+            }
         }
-        atual = atual->getProx();
+        atual = prox;
     }
 }
 

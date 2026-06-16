@@ -30,7 +30,7 @@ public:
 
     sf::FloatRect getHitbox() const;
 
-    bool ehSolido() const { return false; }
+    bool colide() const { return false; }
     bool getDestruido() const { return destruido; }
     void destruir() { destruido = true; }
 };

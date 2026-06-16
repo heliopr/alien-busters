@@ -28,7 +28,7 @@ public:
     void salvar();
     sf::FloatRect getHitbox() const;
 
-    bool getTerminada() const { return terminada; }
+    bool finalizada() const { return terminada; }
 };
 
 }

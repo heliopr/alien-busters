@@ -23,7 +23,7 @@ public:
     virtual void salvar() = 0;
     virtual void obstaculizar(Personagens::Jogador *p) = 0;
 
-    virtual bool ehSolido() const { return true; }
+    virtual bool colide() const { return true; }
 
     virtual void destruir() {}
     virtual bool getDestruido() const { return false; }

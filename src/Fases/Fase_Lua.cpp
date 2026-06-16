@@ -101,10 +101,10 @@ void Fase_Lua::criarObstaculos() {
         lista_ents.incluir(p);
     }
 
-    Entidades::Obstaculos::Chao* parede1 = new Entidades::Obstaculos::Chao(1020.f, 620.f, 120.f, 80.f, corLua);
-    Entidades::Obstaculos::Chao* parede2 = new Entidades::Obstaculos::Chao(2600.f, 300.f, 400.f, 600.f, corLua);
-    GC.incluirObstaculo(parede1);
-    GC.incluirObstaculo(parede2);
+    Entidades::Chao* parede1 = new Entidades::Chao(1020.f, 620.f, 120.f, 80.f, corLua);
+    Entidades::Chao* parede2 = new Entidades::Chao(2600.f, 300.f, 400.f, 600.f, corLua);
+    GC.incluirChao(parede1);
+    GC.incluirChao(parede2);
     lista_ents.incluir(parede1);
     lista_ents.incluir(parede2);
 

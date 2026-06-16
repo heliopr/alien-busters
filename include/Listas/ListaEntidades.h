@@ -17,6 +17,7 @@ public:
     void incluir(Entidades::Entidade *pE);
     void remover(Entidades::Entidade *pE);
     void limpar();
+    void criarExplosao(float x, float y);
     void percorrer(float dt);
     void desenhar();
 };

@@ -186,13 +186,13 @@ void Fase::criarCenario() {
 }
 
 void Fase::criarCenario(const sf::Color& cor) {
-    Entidades::Obstaculos::Chao* chao1 = new Entidades::Obstaculos::Chao(0.f, 700.f, 800.f, 100.f, cor);
-    Entidades::Obstaculos::Chao* chao2 = new Entidades::Obstaculos::Chao(920.f, 700.f, 780.f, 100.f, cor);
-    Entidades::Obstaculos::Chao* chao3 = new Entidades::Obstaculos::Chao(1850.f, 700.f, 800.f, 100.f, cor);
+    Entidades::Chao* chao1 = new Entidades::Chao(0.f, 700.f, 800.f, 100.f, cor);
+    Entidades::Chao* chao2 = new Entidades::Chao(920.f, 700.f, 780.f, 100.f, cor);
+    Entidades::Chao* chao3 = new Entidades::Chao(1850.f, 700.f, 800.f, 100.f, cor);
 
-    GC.incluirObstaculo(chao1);
-    GC.incluirObstaculo(chao2);
-    GC.incluirObstaculo(chao3);
+    GC.incluirChao(chao1);
+    GC.incluirChao(chao2);
+    GC.incluirChao(chao3);
 
     lista_ents.incluir(chao1);
     lista_ents.incluir(chao2);

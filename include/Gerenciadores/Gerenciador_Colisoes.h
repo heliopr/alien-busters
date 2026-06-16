@@ -9,7 +9,7 @@
 namespace Entidades {
     class Entidade;
     class Projetil;
-    class Explosao;
+    class Chao;
     namespace Personagens {
         class Jogador;
         class Inimigo;
@@ -37,7 +37,7 @@ private:
 
     std::vector<Entidades::Personagens::Inimigo*> LIs;
     std::list<Entidades::Obstaculos::Obstaculo*> LOs;
-    std::list<Entidades::Explosao*> LExps;
+    std::list<Entidades::Chao*> LCs;
     std::set<Entidades::Projetil*> LPs;
     Entidades::Personagens::Jogador* pJog1;
     Entidades::Personagens::Jogador* pJog2;
@@ -47,20 +47,20 @@ private:
     ResultadoColisao detectarColisaoObstaculo(const sf::FloatRect& box, const sf::FloatRect& boxObs) const;
     bool haPlataformaEm(float x, float y) const;
 
+    void resolverColisaoJogador(Entidades::Personagens::Jogador* jog, const sf::FloatRect& boxObs);
+    ResultadoColisao resolverColisaoInimigo(Entidades::Personagens::Inimigo* ini, const sf::FloatRect& boxObs);
+
     void tratarColisoesJogObstacs(Entidades::Personagens::Jogador* jog);
     void tratarColisoesInimigosObstacs();
     void removerObstaculosDestruidos();
     void tratarColisoesJogInimigs(Entidades::Personagens::Jogador* jog);
     void tratarColisoesJogsProjeteis();
 
-    bool projetilColidiuComObstaculo(Entidades::Projetil* p) const;
+    bool projetilColidiu(Entidades::Projetil* p) const;
     bool projetilColidiuComInimigo(Entidades::Projetil* p);
     bool projetilColidiuComJogador(Entidades::Projetil* p);
     bool projetilAtingiuJogador(Entidades::Projetil* p, Entidades::Personagens::Jogador* jog);
     void removerProjetil(std::set<Entidades::Projetil*>::iterator it);
-
-    void criarExplosao(float x, float y);
-    void limparExplosoes();
 
 public:
     Gerenciador_Colisoes();
@@ -72,6 +72,7 @@ public:
 
     void incluirInimigo(Entidades::Personagens::Inimigo* pi);
     void incluirObstaculo(Entidades::Obstaculos::Obstaculo* po);
+    void incluirChao(Entidades::Chao* pc);
     void incluirProjetil(Entidades::Projetil* pj);
     void limpar();
 

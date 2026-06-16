@@ -28,6 +28,8 @@ public:
     virtual void salvar() = 0;
     virtual void desenhar();
 
+    virtual bool finalizada() const { return false; }
+
     float getX() const;
     float getY() const;
     void setX(float novoX);
