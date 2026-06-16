@@ -22,6 +22,7 @@ public:
     void salvar();
     void obstaculizar(Personagens::Jogador* p);
 
+    bool ehSolido() const { return false; }
     sf::FloatRect getHitbox() const;
 };
 

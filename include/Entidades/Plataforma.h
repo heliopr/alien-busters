@@ -30,7 +30,6 @@ public:
     void obstaculizar(Personagens::Jogador* p);
     void salvar();
     sf::FloatRect getHitbox() const;
-    void jogadorPisou();
 };
 
 }

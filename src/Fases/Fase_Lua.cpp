@@ -14,7 +14,7 @@ Fase_Lua::Fase_Lua(Entidades::Personagens::Jogador* pJogador, Entidades::Persona
     criarCenario();
     criarObstaculos();
     criarInimigos();
-    //criarFoguete();
+    criarFoguete();
 }
 
 Fase_Lua::~Fase_Lua() {
@@ -135,6 +135,7 @@ void Fase_Lua::criarGosmas() {
     int quantidade = minimo + std::rand() % (total - minimo + 1);
     for (int i = 0; i < quantidade; ++i) {
         Entidades::Obstaculos::Gosma* om = new Entidades::Obstaculos::Gosma(posicoes[indices[i]][0], posicoes[indices[i]][1]);
+        GC.incluirObstaculo(om);
         lista_ents.incluir(om);
     }
 }

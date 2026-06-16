@@ -22,7 +22,11 @@ public:
     virtual void executar(float dt) = 0;
     virtual void salvar() = 0;
     virtual void obstaculizar(Personagens::Jogador *p) = 0;
-    virtual void jogadorPisou() {}
+
+    virtual bool ehSolido() const { return true; }
+
+    virtual void destruir() {}
+    virtual bool getDestruido() const { return false; }
 };
 
 }

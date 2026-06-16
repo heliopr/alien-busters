@@ -27,12 +27,6 @@ Plataforma::Plataforma(float x, float y, sf::Color cor)
 Plataforma::~Plataforma() {
 }
 
-void Plataforma::jogadorPisou() {
-    if (!pisada && !caindo && !surgindo) {
-        pisada = true;
-    }
-}
-
 void Plataforma::executar(float dt) {
     if (surgindo) {
         tempoSurgindo += dt;
@@ -95,8 +89,8 @@ void Plataforma::obstaculizar(Personagens::Jogador* p) {
     if (boxPlayer.intersects(boxPlat, interseccao)) {
         bool colisaoVertical = interseccao.width >= interseccao.height;
         bool jogadorPorCima = boxPlayer.top + boxPlayer.height / 2.f < boxPlat.top + boxPlat.height / 2.f;
-        if (colisaoVertical && jogadorPorCima) {
-            jogadorPisou();
+        if (colisaoVertical && jogadorPorCima && !pisada && !surgindo) {
+            pisada = true;
         }
     }
 }

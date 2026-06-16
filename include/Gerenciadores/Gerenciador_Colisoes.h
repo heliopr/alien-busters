@@ -16,7 +16,6 @@ namespace Entidades {
     }
     namespace Obstaculos {
         class Obstaculo;
-        class MinaExtraterrestre;
     }
 }
 
@@ -38,7 +37,6 @@ private:
 
     std::vector<Entidades::Personagens::Inimigo*> LIs;
     std::list<Entidades::Obstaculos::Obstaculo*> LOs;
-    std::list<Entidades::Obstaculos::MinaExtraterrestre*> LODs;
     std::list<Entidades::Explosao*> LExps;
     std::set<Entidades::Projetil*> LPs;
     Entidades::Personagens::Jogador* pJog1;
@@ -51,7 +49,7 @@ private:
 
     void tratarColisoesJogObstacs(Entidades::Personagens::Jogador* jog);
     void tratarColisoesInimigosObstacs();
-    void removerMinasDestruidas();
+    void removerObstaculosDestruidos();
     void tratarColisoesJogInimigs(Entidades::Personagens::Jogador* jog);
     void tratarColisoesJogsProjeteis();
 
@@ -74,7 +72,6 @@ public:
 
     void incluirInimigo(Entidades::Personagens::Inimigo* pi);
     void incluirObstaculo(Entidades::Obstaculos::Obstaculo* po);
-    void incluirObstaculoDificil(Entidades::Obstaculos::MinaExtraterrestre* pod);
     void incluirProjetil(Entidades::Projetil* pj);
     void limpar();
 

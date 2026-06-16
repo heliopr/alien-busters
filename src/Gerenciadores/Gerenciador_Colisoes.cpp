@@ -3,7 +3,6 @@
 #include "Entidades/Jogador.h"
 #include "Entidades/Obstaculo.h"
 #include "Entidades/Chao.h"
-#include "Entidades/MinaExtraterrestre.h"
 #include "Entidades/Inimigo.h"
 #include "Entidades/Projetil.h"
 #include "Entidades/Explosao.h"
@@ -31,12 +30,6 @@ void Gerenciador_Colisoes::incluirObstaculo(Entidades::Obstaculos::Obstaculo* po
     }
 }
 
-void Gerenciador_Colisoes::incluirObstaculoDificil(Entidades::Obstaculos::MinaExtraterrestre* pod) {
-    if (pod != NULL) {
-        LODs.push_back(pod);
-    }
-}
-
 void Gerenciador_Colisoes::incluirProjetil(Entidades::Projetil* pj) {
     if (pj != NULL) {
         LPs.insert(pj);
@@ -45,7 +38,6 @@ void Gerenciador_Colisoes::incluirProjetil(Entidades::Projetil* pj) {
 
 void Gerenciador_Colisoes::limpar() {
     LOs.clear();
-    LODs.clear();
     LExps.clear();
     LIs.clear();
     LPs.clear();
@@ -82,11 +74,17 @@ Gerenciador_Colisoes::ResultadoColisao Gerenciador_Colisoes::detectarColisaoObst
 void Gerenciador_Colisoes::tratarColisoesJogObstacs(Entidades::Personagens::Jogador* jog) {
     if (jog == NULL || jog->estaMorto()) return;
 
-    jog->setNoChao(false);
-
     for (std::list<Entidades::Obstaculos::Obstaculo*>::iterator it = LOs.begin(); it != LOs.end(); ++it) {
         Entidades::Obstaculos::Obstaculo* obs = *it;
-        if (obs == NULL) continue;
+        if (obs != NULL) {
+            obs->obstaculizar(jog);
+        }
+    }
+
+    jog->setNoChao(false);
+    for (std::list<Entidades::Obstaculos::Obstaculo*>::iterator it = LOs.begin(); it != LOs.end(); ++it) {
+        Entidades::Obstaculos::Obstaculo* obs = *it;
+        if (obs == NULL || !obs->ehSolido()) continue;
 
         sf::FloatRect boxObs = obs->getHitbox();
 
@@ -117,7 +115,7 @@ void Gerenciador_Colisoes::tratarColisoesJogObstacs(Entidades::Personagens::Joga
 bool Gerenciador_Colisoes::haPlataformaEm(float x, float y) const {
     for (std::list<Entidades::Obstaculos::Obstaculo*>::const_iterator it = LOs.begin(); it != LOs.end(); ++it) {
         Entidades::Obstaculos::Obstaculo* obs = *it;
-        if (obs != NULL && obs->getHitbox().contains(x, y)) {
+        if (obs != NULL && obs->ehSolido() && obs->getHitbox().contains(x, y)) {
             return true;
         }
     }
@@ -134,7 +132,7 @@ void Gerenciador_Colisoes::tratarColisoesInimigosObstacs() {
 
         for (std::list<Entidades::Obstaculos::Obstaculo*>::iterator ito = LOs.begin(); ito != LOs.end(); ++ito) {
             Entidades::Obstaculos::Obstaculo* obs = *ito;
-            if (obs == NULL) continue;
+            if (obs == NULL || !obs->ehSolido()) continue;
 
             sf::FloatRect boxIni = ini->getHitbox();
             sf::FloatRect boxObs = obs->getHitbox();
@@ -202,7 +200,8 @@ void Gerenciador_Colisoes::tratarColisoesJogInimigs(Entidades::Personagens::Joga
 
 bool Gerenciador_Colisoes::projetilColidiuComObstaculo(Entidades::Projetil* p) const {
     for (std::list<Entidades::Obstaculos::Obstaculo*>::const_iterator it = LOs.begin(); it != LOs.end(); ++it) {
-        if (verificarColisao(p, *it)) {
+        Entidades::Obstaculos::Obstaculo* obs = *it;
+        if (obs != NULL && obs->ehSolido() && verificarColisao(p, obs)) {
             return true;
         }
     }
@@ -299,25 +298,25 @@ void Gerenciador_Colisoes::tratarColisoesJogsProjeteis() {
     }
 }
 
-void Gerenciador_Colisoes::removerMinasDestruidas() {
-    for (std::list<Entidades::Obstaculos::MinaExtraterrestre*>::iterator it = LODs.begin(); it != LODs.end(); ) {
-        Entidades::Obstaculos::MinaExtraterrestre* od = *it;
-        if (od == NULL) {
-            it = LODs.erase(it);
+void Gerenciador_Colisoes::removerObstaculosDestruidos() {
+    for (std::list<Entidades::Obstaculos::Obstaculo*>::iterator it = LOs.begin(); it != LOs.end(); ) {
+        Entidades::Obstaculos::Obstaculo* obs = *it;
+        if (obs == NULL) {
+            it = LOs.erase(it);
             continue;
         }
 
-        if (od->getDestruido()) {
-            float xExp = od->getX() + 30.f;
-            float yExp = od->getY() + 30.f;
-
+        if (obs->getDestruido()) {
+            sf::FloatRect box = obs->getHitbox();
+            float xExp = box.left + box.width / 2.f;
+            float yExp = box.top + box.height / 2.f;
             criarExplosao(xExp, yExp - 50.f);
 
             if (pListaEntidades) {
-                pListaEntidades->remover(od);
+                pListaEntidades->remover(obs);
             }
-            delete od;
-            it = LODs.erase(it);
+            delete obs;
+            it = LOs.erase(it);
         } else {
             ++it;
         }
@@ -327,7 +326,7 @@ void Gerenciador_Colisoes::removerMinasDestruidas() {
 void Gerenciador_Colisoes::executar() {
     tratarColisoesJogObstacs(pJog1);
     tratarColisoesJogObstacs(pJog2);
-    removerMinasDestruidas();
+    removerObstaculosDestruidos();
     tratarColisoesInimigosObstacs();
     tratarColisoesJogInimigs(pJog1);
     tratarColisoesJogInimigs(pJog2);

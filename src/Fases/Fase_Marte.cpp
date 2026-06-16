@@ -125,7 +125,7 @@ void Fase_Marte::criarMinasExtraterrestres() {
     int quantidade = minimo + std::rand() % (total - minimo + 1);
     for (int i = 0; i < quantidade; ++i) {
         Entidades::Obstaculos::MinaExtraterrestre* od = new Entidades::Obstaculos::MinaExtraterrestre(posicoes[indices[i]][0], posicoes[indices[i]][1]);
-        GC.incluirObstaculoDificil(od);
+        GC.incluirObstaculo(od);
         lista_ents.incluir(od);
     }
 }

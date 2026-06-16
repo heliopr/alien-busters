@@ -130,9 +130,7 @@ void Fase::executar(float dt) {
         return;
     }
 
-    Entidades::Personagens::Jogador* j1 = (pJogador != 0 && !pJogador->estaMorto()) ? pJogador : 0;
-    Entidades::Personagens::Jogador* j2 = (pJogador2 != 0 && !pJogador2->estaMorto()) ? pJogador2 : 0;
-    lista_ents.percorrer(dt, j1, j2);
+    lista_ents.percorrer(dt);
     GC.executar();
 
     atualizarCamera();
