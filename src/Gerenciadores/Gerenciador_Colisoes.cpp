@@ -2,6 +2,7 @@
 #include "Entidades/Entidade.h"
 #include "Entidades/Jogador.h"
 #include "Entidades/Obstaculo.h"
+#include "Entidades/Chao.h"
 #include "Entidades/MinaExtraterrestre.h"
 #include "Entidades/Inimigo.h"
 #include "Entidades/Projetil.h"
@@ -129,6 +130,7 @@ void Gerenciador_Colisoes::tratarColisoesInimigosObstacs() {
         if (ini == NULL) continue;
 
         bool noChao = false;
+        bool sobreChao = false;
 
         for (std::list<Entidades::Obstaculos::Obstaculo*>::iterator ito = LOs.begin(); ito != LOs.end(); ++ito) {
             Entidades::Obstaculos::Obstaculo* obs = *ito;
@@ -151,6 +153,9 @@ void Gerenciador_Colisoes::tratarColisoesInimigosObstacs() {
                     ini->setVy(0.f);
                     ini->setNoChao(true);
                     noChao = true;
+                    if (dynamic_cast<Entidades::Obstaculos::Chao*>(obs) != NULL) {
+                        sobreChao = true;
+                    }
                     break;
                 case COLISAO_BAIXO:
                     ini->setY(boxObs.top + boxObs.height + boxIni.height / 2.f);
@@ -172,7 +177,11 @@ void Gerenciador_Colisoes::tratarColisoesInimigosObstacs() {
             float peY = boxIni.top + boxIni.height + 2.f;
 
             if (!haPlataformaEm(frenteX, peY)) {
-                ini->setVelocidadeX(-ini->getVelocidadeX());
+                if (sobreChao || !ini->deveCairDaBorda()) {
+                    ini->setVelocidadeX(-ini->getVelocidadeX());
+                }
+            } else {
+                ini->resetarDecisaoBorda();
             }
         }
     }

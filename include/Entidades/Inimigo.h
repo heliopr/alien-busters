@@ -19,6 +19,9 @@ protected:
     float velocidadeX;
     float tempoFlashDano;
 
+    bool decidiuBorda;
+    bool vaiCairDaBorda;
+
     static sf::SoundBuffer bufferDano;
     static sf::Sound somDano;
     static bool somCarregado;
@@ -40,6 +43,9 @@ public:
 
     float getVelocidadeX() const { return velocidadeX; }
     void setVelocidadeX(float v) { velocidadeX = v; }
+
+    bool deveCairDaBorda();
+    void resetarDecisaoBorda() { decidiuBorda = false; }
 
     void levarDano();
     bool estaFlashando() const { return tempoFlashDano > 0.f; }

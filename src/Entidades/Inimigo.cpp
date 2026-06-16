@@ -12,7 +12,7 @@ sf::SoundBuffer Inimigo::bufferDano;
 sf::Sound Inimigo::somDano;
 bool Inimigo::somCarregado = false;
 
-Inimigo::Inimigo() : Personagem(), nivel_maldade(std::rand() % 31), velocidadeX(-50.f), tempoFlashDano(0.f) {
+Inimigo::Inimigo() : Personagem(), nivel_maldade(std::rand() % 31), velocidadeX(-50.f), tempoFlashDano(0.f), decidiuBorda(false), vaiCairDaBorda(false) {
     if (!somCarregado) {
         if (bufferDano.loadFromFile("assets/sounds/hit.mp3")) {
             somDano.setBuffer(bufferDano);
@@ -34,6 +34,14 @@ void Inimigo::mover(float dt) {
         y = Config::POSICAO_INICIAL_Y;
         vy = 0.f;
     }
+}
+
+bool Inimigo::deveCairDaBorda() {
+    if (!decidiuBorda) {
+        decidiuBorda = true;
+        vaiCairDaBorda = (std::rand() % 100) < 30;
+    }
+    return vaiCairDaBorda;
 }
 
 void Inimigo::atualizarFlashDano(float dt) {

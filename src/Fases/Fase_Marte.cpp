@@ -80,13 +80,28 @@ void Fase_Marte::criarObstaculos() {
 }
 
 void Fase_Marte::criarGolems() {
-    Entidades::Personagens::Golem* inimigo1 = new Entidades::Personagens::Golem(800.f, 300.f);
-    lista_ents.incluir(inimigo1);
-    GC.incluirInimigo(inimigo1);
+    static const float posicoes[][2] = {
+        { 700.f, 600.f},
+        {2000.f, 700.f},
+        {1800.f, 700.f},
+        {2200.f, 700.f}
+    };
+    const int total  = sizeof(posicoes) / sizeof(posicoes[0]);
+    const int minimo = 3;
 
-    Entidades::Personagens::Golem* inimigo2 = new Entidades::Personagens::Golem(2000.f, 350.f);
-    lista_ents.incluir(inimigo2);
-    GC.incluirInimigo(inimigo2);
+    int indices[total];
+    for (int i = 0; i < total; ++i) indices[i] = i;
+    for (int i = total - 1; i > 0; --i) {
+        int j = std::rand() % (i + 1);
+        int tmp = indices[i]; indices[i] = indices[j]; indices[j] = tmp;
+    }
+
+    int quantidade = minimo + std::rand() % (total - minimo + 1);
+    for (int i = 0; i < quantidade; ++i) {
+        Entidades::Personagens::Golem* inimigo = new Entidades::Personagens::Golem(posicoes[indices[i]][0], posicoes[indices[i]][1]);
+        lista_ents.incluir(inimigo);
+        GC.incluirInimigo(inimigo);
+    }
 }
 
 void Fase_Marte::criarMinasExtraterrestres() {

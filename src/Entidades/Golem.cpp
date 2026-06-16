@@ -16,7 +16,7 @@ Golem::Golem(float x_ini, float y_ini)
     y = y_ini;
     num_vidas = 5;
 
-    tempoRecarga = 1.5f + ((std::rand() % 100) / 100.f * 0.5f);
+    tempoRecarga = 0;
 
     float v = 20.f + std::rand() % 20;
     velocidadeX = (std::rand() % 2 == 0) ? v : -v;
@@ -84,7 +84,8 @@ Projetil* Golem::atirar(Jogador* alvo, float dt) {
     if (tempoRecarga > 0.f) {
         return NULL;
     }
-    tempoRecarga = 1.5f + ((std::rand() % 100) / 100.f * 0.5f);
+    
+    tempoRecarga = 3.f + ((std::rand() % 100) / 100.f * 2.f);
 
     float vx, vy;
     if (std::fabs(dx) < 1.f) {
