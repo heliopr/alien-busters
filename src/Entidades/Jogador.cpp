@@ -1,5 +1,7 @@
 #include "Entidades/Jogador.h"
 #include "Entidades/Inimigo.h"
+#include "Entidades/Laser.h"
+#include "Gerenciadores/Gerenciador_Colisoes.h"
 #include "Gerenciadores/Gerenciador_Grafico.h"
 #include "Configuracao.h"
 #include <cmath>
@@ -9,11 +11,10 @@
 namespace Entidades {
 namespace Personagens {
 
-Jogador::Jogador(float xInicial, float yInicial, bool eJogadorUm, const std::string& texturaSprite) : Personagem(), pontos(0),
+Jogador::Jogador(float xInicial, float yInicial, bool eJogadorUm, const std::string& texturaSprite) : Personagem(), Atirador(), pontos(0),
     eJogadorUm(eJogadorUm), xInicial(xInicial), yInicial(yInicial),
     ultimoDx(0.f),
     olhandoDireita(true), puloPressionado(false), tiroPressionado(false),
-    tempoRecargaTiro(0.f),
     tempoLento(0.f), tempoInvulneravel(0.f), tempoFlashDano(0.f)
 {
     x = xInicial;
@@ -60,7 +61,7 @@ void Jogador::resetar() {
     olhandoDireita = true;
     puloPressionado = false;
     tiroPressionado = false;
-    tempoRecargaTiro = 0.f;
+    reiniciarRecarga(0.f);
 
     tempoLento = 0.f;
     tempoInvulneravel = 0.f;
@@ -89,12 +90,7 @@ void Jogador::executar(float dt) {
         }
     }
 
-    if (tempoRecargaTiro > 0.f) {
-        tempoRecargaTiro -= dt;
-        if (tempoRecargaTiro < 0.f) {
-            tempoRecargaTiro = 0.f;
-        }
-    }
+    atualizarRecarga(dt);
 
     mover(dt);
 
@@ -165,16 +161,21 @@ void Jogador::mover(float dt) {
     aplicarGravidade(dt);
 }
 
-bool Jogador::getAtirou() {
+void Jogador::atirar() {
     bool atirouAtual = sf::Keyboard::isKeyPressed(eJogadorUm ? sf::Keyboard::R : sf::Keyboard::Enter);
-    bool disparou = atirouAtual && !tiroPressionado && tempoRecargaTiro <= 0.f;
+    bool disparou = atirouAtual && !tiroPressionado && podeAtirar();
     tiroPressionado = atirouAtual;
 
-    if (disparou) {
-        tempoRecargaTiro = Config::TEMPO_RECARGA_TIRO;
+    if (!disparou) {
+        return;
     }
 
-    return disparou;
+    reiniciarRecarga(Config::TEMPO_RECARGA_TIRO);
+
+    float vx = olhandoDireita ? 500.f : -500.f;
+    float xLaser = x + (olhandoDireita ? 22.f : -22.f);
+    Projetil* laser = new Laser(xLaser, y - 50.f, vx, 0.f, this);
+    Gerenciadores::Gerenciador_Colisoes::getInstancia()->incluirProjetil(laser);
 }
 
 void Jogador::colidir(Inimigo* pIn) {

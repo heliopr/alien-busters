@@ -1,6 +1,7 @@
 #include "Entidades/Golem.h"
 #include "Entidades/Jogador.h"
 #include "Entidades/Pedra.h"
+#include "Gerenciadores/Gerenciador_Colisoes.h"
 #include "Configuracao.h"
 #include <cstdlib>
 #include <cstddef>
@@ -10,13 +11,11 @@ namespace Entidades {
 namespace Personagens {
 
 Golem::Golem(float x_ini, float y_ini)
-    : Inimigo(), tempoRecarga(0.f)
+    : Inimigo(), Atirador(), tempoRecarga(3.f + ((std::rand() % 100) / 100.f * 2.f))
 {
     x = x_ini;
     y = y_ini;
     num_vidas = 5;
-
-    tempoRecarga = 0;
 
     float v = 20.f + std::rand() % 20;
     velocidadeX = (std::rand() % 2 == 0) ? v : -v;
@@ -67,9 +66,9 @@ sf::FloatRect Golem::getHitbox() const {
     return sf::FloatRect(x - 52.5f, y - 48, 105.f, 96.f);
 }
 
-Projetil* Golem::atirar(Jogador* alvo, float dt) {
+void Golem::atirar(Jogador* alvo, float dt) {
     if (alvo == NULL) {
-        return NULL;
+        return;
     }
 
     float dx = alvo->getX() - x;
@@ -77,15 +76,15 @@ Projetil* Golem::atirar(Jogador* alvo, float dt) {
     float dist = std::sqrt(dx * dx + dy * dy);
 
     if (dist > Config::ALCANCE_TIRO_GOLEM) {
-        return NULL;
+        return;
     }
 
-    tempoRecarga -= dt;
-    if (tempoRecarga > 0.f) {
-        return NULL;
+    atualizarRecarga(dt);
+    if (!podeAtirar()) {
+        return;
     }
-    
-    tempoRecarga = 3.f + ((std::rand() % 100) / 100.f * 2.f);
+
+    reiniciarRecarga(tempoRecarga);
 
     float vx, vy;
     if (std::fabs(dx) < 1.f) {
@@ -97,7 +96,8 @@ Projetil* Golem::atirar(Jogador* alvo, float dt) {
         vy = (dy - 0.5f * Config::GRAVIDADE_PROJETIL * t * t) / t;
     }
 
-    return new Pedra(x, y, vx, vy, 0, true);
+    Projetil* pedra = new Pedra(x, y, vx, vy, 0, true);
+    Gerenciadores::Gerenciador_Colisoes::getInstancia()->incluirProjetil(pedra);
 }
 
 }

@@ -2,14 +2,15 @@
 #define GOLEM_H
 
 #include "Entidades/Inimigo.h"
+#include "Entidades/Atirador.h"
 #include <SFML/Graphics.hpp>
 
 namespace Entidades {
 namespace Personagens {
 
-class Golem : public Inimigo {
+class Golem : public Inimigo, public Atirador {
 private:
-    float tempoRecarga;
+    float tempoRecarga; // [3, 5]
 
 public:
     Golem(float x = 400.f, float y = 300.f);
@@ -20,7 +21,7 @@ public:
     void danificar(Jogador* p);
     sf::FloatRect getHitbox() const;
 
-    Projetil* atirar(Jogador* alvo, float dt);
+    void atirar(Jogador* alvo, float dt);
 };
 
 }

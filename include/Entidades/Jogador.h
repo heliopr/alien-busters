@@ -2,15 +2,17 @@
 #define JOGADOR_H
 
 #include "Entidades/Personagem.h"
+#include "Entidades/Atirador.h"
 #include <SFML/Audio.hpp>
 #include <string>
 
 namespace Entidades {
+
 namespace Personagens {
 
 class Inimigo;
 
-class Jogador : public Personagem {
+class Jogador : public Personagem, public Atirador {
 protected:
     int pontos;
 private:
@@ -22,7 +24,6 @@ private:
     bool olhandoDireita;
     bool puloPressionado;
     bool tiroPressionado;
-    float tempoRecargaTiro;
 
     float tempoLento;
     float tempoInvulneravel;
@@ -49,7 +50,7 @@ public:
     void colidir(Inimigo* pIn);
 
     sf::FloatRect getHitbox() const;
-    bool getAtirou();
+    void atirar();
     bool getOlhandoDireita() const { return olhandoDireita; }
     int getPontos() const { return pontos; }
     void adicionarPontos(int valor) { pontos += valor; }

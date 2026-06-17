@@ -1,7 +1,5 @@
 #include "Fases/Fase.h"
 #include "Entidades/Chao.h"
-#include "Entidades/Projetil.h"
-#include "Entidades/Laser.h"
 #include "Entidades/Inimigo.h"
 #include "Gerenciadores/Gerenciador_Grafico.h"
 #include "Configuracao.h"
@@ -42,15 +40,7 @@ void Fase::processarJogador(Entidades::Personagens::Jogador* pJog, float dt) {
         return;
     }
 
-    if (pJog->getAtirou()) {
-        float vx = pJog->getOlhandoDireita() ? 500.f : -500.f;
-        float x_proj = pJog->getX() + (pJog->getOlhandoDireita() ? 22.f : -22.f);
-        float y_proj = pJog->getY();
-        Entidades::Projetil* p = new Entidades::Laser(x_proj, y_proj - 50.f, vx, 0.f, pJog);
-        lista_ents.incluir(p);
-        pGC->incluirProjetil(p);
-    }
-
+    pJog->atirar();
     pJog->executar(dt);
 }
 
@@ -90,11 +80,7 @@ void Fase::processarInimigos(float dt) {
             continue;
         }
 
-        Entidades::Projetil* p = ini->atirar(alvo, dt);
-        if (p != 0) {
-            lista_ents.incluir(p);
-            pGC->incluirProjetil(p);
-        }
+        ini->atirar(alvo, dt);
     }
 }
 
@@ -153,7 +139,7 @@ void Fase::desenhar() {
     if (pGG != 0) {
         if (pJogador != 0) {
             pGG->desenharHUD(pJogador->getPontos(), pJogador->getX(), pJogador->getY(),
-                             pJogador->getNumVidas(), false, false);
+                             pJogador->getNumVidas(), false, true);
             
             if (!nomeJogador.empty()) {
                 sf::Text nomeText;

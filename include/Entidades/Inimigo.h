@@ -7,8 +7,6 @@
 
 namespace Entidades {
 
-class Projetil;
-
 namespace Personagens {
 
 class Jogador;
@@ -38,7 +36,7 @@ public:
     virtual void danificar(Jogador* p) = 0;
     virtual sf::FloatRect getHitbox() const = 0;
 
-    virtual Projetil* atirar(Jogador*, float) { return 0; }
+    virtual void atirar(Jogador*, float) {}
     virtual int pontosAoMorrer() const { return 100; }
 
     float getVelocidadeX() const { return velocidadeX; }

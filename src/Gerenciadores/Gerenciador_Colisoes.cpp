@@ -47,6 +47,9 @@ void Gerenciador_Colisoes::incluirChao(Entidades::Chao* pc) {
 void Gerenciador_Colisoes::incluirProjetil(Entidades::Projetil* pj) {
     if (pj != NULL) {
         LPs.insert(pj);
+        if (pListaEntidades) {
+            pListaEntidades->incluir(pj);
+        }
     }
 }
 

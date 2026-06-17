@@ -82,8 +82,8 @@ void Fase_Marte::criarObstaculos() {
 void Fase_Marte::criarGolems() {
     static const float posicoes[][2] = {
         { 700.f, 600.f},
+        {1300.f, 700.f},
         {2000.f, 700.f},
-        {1800.f, 700.f},
         {2200.f, 700.f}
     };
     const int total  = sizeof(posicoes) / sizeof(posicoes[0]);
