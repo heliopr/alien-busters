@@ -4,7 +4,7 @@
 namespace Entidades {
 
 Projetil::Projetil(float x, float y, float vx, float vy, Personagens::Jogador* dono, bool inimigo)
-    : Entidade(), ativo(true), vx(vx), dono(dono), sofreGravidade(false), inimigo(inimigo) {
+    : Entidade(), ativo(true), vx(vx), dono(dono), sofreGravidade(false), inimigo(inimigo), quicavel(false) {
     this->x = x;
     this->y = y;
     this->vy = vy;

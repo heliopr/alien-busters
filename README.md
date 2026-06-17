@@ -1,8 +1,11 @@
 # Jogo
 
 ## TODO
-- [ ] Usar nivel de maldade nos inimigos
-- [ ] Singletons: Jogo, Gerenciador_Colisoes, Gerenciador_Grafico
+- [ ] Definir atributos nas fases (ex. maxAliens, maxSlimes)
+- [ ] Criar namespace Projéteis
+- [ ] Implementar salvamento
+- [ ] Consertar algumas agregações (ex. Menu-Jogo, Gerenciador_Pontuações-Menu)
+- [ ] Focar no cumprimento da tabela de conceitos, sobretudo
 - [ ] Usar: observer, mediator, iterator... https://refactoring.guru/design-patterns
 
 - [Diagrama Jogo Modelo](https://pessoal.dainf.ct.utfpr.edu.br/jeansimao/Fundamentos2/TopicosTrab/DiagramaJogoModelo.jpg)

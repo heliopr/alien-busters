@@ -59,6 +59,7 @@ private:
     void tratarColisoesJogsProjeteis();
 
     bool projetilColidiu(Entidades::Projetil* p) const;
+    bool tratarQuiqueProjetil(Entidades::Projetil* p);
     bool projetilColidiuComInimigo(Entidades::Projetil* p);
     bool projetilColidiuComJogador(Entidades::Projetil* p);
     bool projetilAtingiuJogador(Entidades::Projetil* p, Entidades::Personagens::Jogador* jog);

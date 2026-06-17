@@ -18,6 +18,10 @@ namespace Config {
     const float VELOCIDADE_PEDRA = 350.f;
     const float GRAVIDADE_PROJETIL = 98.f;
     const float ALCANCE_TIRO_GOLEM = 600.f;
+
+    const float RESTITUICAO_PEDRA = 0.6f;
+    const float ATRITO_QUIQUE = 0.8f;
+    const float VELOCIDADE_MIN_QUIQUE = 30.f;
 }
 
 #endif

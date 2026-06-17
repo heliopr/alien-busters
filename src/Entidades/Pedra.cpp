@@ -14,6 +14,7 @@ Pedra::Pedra(float x, float y, float vx, float vy, Personagens::Jogador* dono, b
     : Projetil(x, y, vx, vy, dono, inimigo), rotacao(0.f) {
 
     sofreGravidade = true;
+    quicavel = true;
 
     if (!texturaCarregada) {
         if (texturaPedra.loadFromFile("assets/textures/pedra.png")) {
@@ -62,6 +63,12 @@ void Pedra::executar(float dt) {
 
 sf::FloatRect Pedra::getHitbox() const {
     return sf::FloatRect(x - 15.f, y - 15.f, 30.f, 30.f);
+}
+
+void Pedra::quicar() {
+    if (somCarregado) {
+        somPedra.play();
+    }
 }
 
 }

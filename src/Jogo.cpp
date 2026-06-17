@@ -198,7 +198,11 @@ void Jogo::executar() {
                                 menu.sairSubmenu();
                             }
                         } else {
-                            menu.entrarSubmenu();
+                            if (menu.getOpcaoSelecionada() == 3) {
+                                GG->fecharJanela();
+                            } else {
+                                menu.entrarSubmenu();
+                            }
                         }
                     }
                 }

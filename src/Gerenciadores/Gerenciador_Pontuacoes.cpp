@@ -4,10 +4,10 @@
 #include <iostream>
 #include <ctime>
 #include <sstream>
+#include <stdexcept>
 
 namespace Gerenciadores {
 
-// Comparador para ordenar pontuações
 bool compararPontuacoes(const EntradaPontuacao& a, const EntradaPontuacao& b) {
     return a.pontos > b.pontos;
 }
@@ -66,11 +66,17 @@ void Gerenciador_Pontuacoes::carregarRanking() {
         std::string pontosStr = linha.substr(pos1 + 1, pos2 - pos1 - 1);
         std::string data = linha.substr(pos2 + 1);
 
-        int pontos = 0;
-        std::istringstream iss(pontosStr);
-        iss >> pontos;
-
-        ranking.push_back(EntradaPontuacao(nome, pontos, data));
+        try {
+            int pontos = 0;
+            std::istringstream iss(pontosStr);
+            if (!(iss >> pontos) || !(iss >> std::ws).eof()) {
+                throw std::invalid_argument("pontuacao invalida: " + pontosStr);
+            }
+            ranking.push_back(EntradaPontuacao(nome, pontos, data));
+        } catch (const std::exception& e) {
+            std::cerr << "Linha invalida no ranking: " << "(" << e.what() << ")" << std::endl;
+            continue;
+        }
     }
 
     arquivo.close();

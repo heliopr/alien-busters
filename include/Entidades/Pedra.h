@@ -24,6 +24,7 @@ public:
 
     void executar(float dt);
     sf::FloatRect getHitbox() const;
+    void quicar();
 };
 
 }

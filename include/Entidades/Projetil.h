@@ -14,6 +14,7 @@ protected:
     Personagens::Jogador* dono;
     bool sofreGravidade;
     bool inimigo;
+    bool quicavel;
 
 public:
     Projetil(float x = 0.f, float y = 0.f, float vx = 0.f, float vy = 0.f,
@@ -26,8 +27,12 @@ public:
     bool getAtivo() const { return ativo; }
     void setAtivo(bool b) { ativo = b; }
     float getVx() const { return vx; }
+    void setVx(float v) { vx = v; }
     Personagens::Jogador* getDono() const { return dono; }
     bool getInimigo() const { return inimigo; }
+    bool getQuicavel() const { return quicavel; }
+
+    virtual void quicar() {}
 };
 
 }

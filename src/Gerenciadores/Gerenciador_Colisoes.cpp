@@ -6,7 +6,9 @@
 #include "Entidades/Inimigo.h"
 #include "Entidades/Projetil.h"
 #include "Listas/ListaEntidades.h"
+#include "Configuracao.h"
 #include <cstddef>
+#include <cmath>
 
 namespace Gerenciadores {
 
@@ -254,6 +256,67 @@ bool Gerenciador_Colisoes::projetilColidiu(Entidades::Projetil* p) const {
     return false;
 }
 
+bool Gerenciador_Colisoes::tratarQuiqueProjetil(Entidades::Projetil* p) {
+    if (p == NULL || !p->getQuicavel()) {
+        return false;
+    }
+
+    const sf::FloatRect boxP = p->getHitbox();
+
+    sf::FloatRect boxSup;
+    bool achou = false;
+    for (std::list<Entidades::Obstaculos::Obstaculo*>::const_iterator it = LOs.begin(); it != LOs.end() && !achou; ++it) {
+        Entidades::Obstaculos::Obstaculo* obs = *it;
+        if (obs != NULL && obs->colide() && boxP.intersects(obs->getHitbox())) {
+            boxSup = obs->getHitbox();
+            achou = true;
+        }
+    }
+    for (std::list<Entidades::Chao*>::const_iterator it = LCs.begin(); it != LCs.end() && !achou; ++it) {
+        if (*it != NULL && boxP.intersects((*it)->getHitbox())) {
+            boxSup = (*it)->getHitbox();
+            achou = true;
+        }
+    }
+    if (!achou) {
+        return false;
+    }
+
+    const float e = Config::RESTITUICAO_PEDRA;
+    const float meiaLargura = boxP.width / 2.f;
+    const float meiaAltura = boxP.height / 2.f;
+
+    switch (detectarColisaoObstaculo(boxP, boxSup)) {
+        case COLISAO_CIMA: {
+            float vyRefletido = -e * p->getVy();
+            if (std::fabs(vyRefletido) < Config::VELOCIDADE_MIN_QUIQUE) {
+                return false;
+            }
+            p->setY(boxSup.top - meiaAltura);
+            p->setVy(vyRefletido);
+            p->setVx(p->getVx() * Config::ATRITO_QUIQUE);
+            break;
+        }
+        case COLISAO_BAIXO:
+            p->setY(boxSup.top + boxSup.height + meiaAltura);
+            p->setVy(-e * p->getVy());
+            break;
+        case COLISAO_ESQUERDA:
+            p->setX(boxSup.left - meiaLargura);
+            p->setVx(-e * p->getVx());
+            break;
+        case COLISAO_DIREITA:
+            p->setX(boxSup.left + boxSup.width + meiaLargura);
+            p->setVx(-e * p->getVx());
+            break;
+        default:
+            return false;
+    }
+
+    p->quicar();
+    return true;
+}
+
 bool Gerenciador_Colisoes::projetilColidiuComInimigo(Entidades::Projetil* p) {
     for (std::vector<Entidades::Personagens::Inimigo*>::iterator it = LIs.begin(); it != LIs.end(); ++it) {
         Entidades::Personagens::Inimigo* ini = *it;
@@ -328,14 +391,18 @@ void Gerenciador_Colisoes::tratarColisoesJogsProjeteis() {
             continue;
         }
 
-        bool colidiu;
-        if (p->getInimigo()) {
-            colidiu = projetilColidiu(p) || projetilColidiuComJogador(p);
+        bool atingiuAlvo = p->getInimigo() ? projetilColidiuComJogador(p) : projetilColidiuComInimigo(p);
+
+        bool destruir;
+        if (atingiuAlvo) {
+            destruir = true;
+        } else if (projetilColidiu(p)) {
+            destruir = !tratarQuiqueProjetil(p);
         } else {
-            colidiu = projetilColidiu(p) || projetilColidiuComInimigo(p);
+            destruir = false;
         }
 
-        if (colidiu) {
+        if (destruir) {
             p->setAtivo(false);
             std::set<Entidades::Projetil*>::iterator atual = it;
             ++it;
