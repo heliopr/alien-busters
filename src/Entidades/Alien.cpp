@@ -5,8 +5,7 @@
 namespace Entidades {
 namespace Personagens {
 
-Alien::Alien(float x_ini, float y_ini) : Inimigo(), velocidade(0.f),
-    olhandoDireita(false)
+Alien::Alien(float x_ini, float y_ini) : Inimigo(), velocidade(0.f)
 {
     x = x_ini;
     y = y_ini;
@@ -40,7 +39,7 @@ void Alien::executar(float dt) {
 
         animacao.atualizar(dt, 0.15f, 4);
 
-        olhandoDireita = velocidadeX > 0;
+        bool olhandoDireita = velocidadeX > 0;
         animacao.aplicar(pFig, 2, !olhandoDireita);
 
         if (estaFlashando()) {

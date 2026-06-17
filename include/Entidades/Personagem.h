@@ -2,6 +2,7 @@
 #define PERSONAGEM_H
 
 #include "Entidades/Entidade.h"
+#include "Entidades/AnimacaoSprite.h"
 
 namespace Entidades {
 namespace Personagens {
@@ -10,6 +11,7 @@ class Personagem : public Entidade {
 protected:
     int num_vidas;
     bool noChao;
+    AnimacaoSprite animacao;
 
 public:
     Personagem();

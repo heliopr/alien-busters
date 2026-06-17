@@ -8,15 +8,11 @@ Jogo::Jogo() : GG(), pGerenciadorPontuacoes(0), faseAtual(0), pJog1(0), pJog2(0)
                nomeJogador2Atual(""), faseSelecionada(-1) {
     Ente::setGG(&GG);
 
-    Entidades::Personagens::ControlesJogador controles1(
-        sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W, sf::Keyboard::R);
     pJog1 = new Entidades::Personagens::Jogador(
-        Config::POSICAO_INICIAL_X, Config::POSICAO_INICIAL_Y, controles1);
+        Config::POSICAO_INICIAL_X, Config::POSICAO_INICIAL_Y, true);
 
-    Entidades::Personagens::ControlesJogador controles2(
-        sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up, sf::Keyboard::Enter);
     pJog2 = new Entidades::Personagens::Jogador(
-        Config::POSICAO_INICIAL_X + 70.f, Config::POSICAO_INICIAL_Y, controles2, "assets/textures/player2.png");
+        Config::POSICAO_INICIAL_X + 70.f, Config::POSICAO_INICIAL_Y, false, "assets/textures/player2.png");
 
     pGerenciadorPontuacoes = new Gerenciadores::Gerenciador_Pontuacoes("ranking.dat");
 }
@@ -49,6 +45,11 @@ void Jogo::executar() {
         while (GG.coletarEventos(evento)) { 
             if (evento.type == sf::Event::Closed) {
                 GG.fecharJanela();
+            }
+
+            // F1 alterna a exibicao das hitboxes (debug)
+            if (evento.type == sf::Event::KeyPressed && evento.key.code == sf::Keyboard::F1) {
+                GG.setMostrarHitboxes(!GG.getMostrarHitboxes());
             }
 
             // Tratar entrada de texto para entrada de nome

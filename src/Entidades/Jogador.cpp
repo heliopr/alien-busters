@@ -9,13 +9,12 @@
 namespace Entidades {
 namespace Personagens {
 
-Jogador::Jogador(float xInicial, float yInicial, const ControlesJogador& controles, const std::string& texturaSprite) : Personagem(), pontos(0),
-    controles(controles), xInicial(xInicial), yInicial(yInicial),
+Jogador::Jogador(float xInicial, float yInicial, bool eJogadorUm, const std::string& texturaSprite) : Personagem(), pontos(0),
+    eJogadorUm(eJogadorUm), xInicial(xInicial), yInicial(yInicial),
     ultimoDx(0.f),
     olhandoDireita(true), puloPressionado(false), tiroPressionado(false),
     tempoRecargaTiro(0.f),
-    lento(false), tempoLento(0.f),
-    invulneravel(false), tempoInvulneravel(0.f), tempoFlashDano(0.f)
+    tempoLento(0.f), tempoInvulneravel(0.f), tempoFlashDano(0.f)
 {
     x = xInicial;
     y = yInicial;
@@ -57,27 +56,22 @@ void Jogador::resetar() {
     tiroPressionado = false;
     tempoRecargaTiro = 0.f;
 
-    lento = false;
     tempoLento = 0.f;
-
-    invulneravel = false;
     tempoInvulneravel = 0.f;
     tempoFlashDano = 0.f;
 }
 
 void Jogador::executar(float dt) {
-    if (lento) {
+    if (tempoLento > 0.f) {
         tempoLento -= dt;
-        if (tempoLento <= 0.f) {
-            lento = false;
+        if (tempoLento < 0.f) {
             tempoLento = 0.f;
         }
     }
 
-    if (invulneravel) {
+    if (tempoInvulneravel > 0.f) {
         tempoInvulneravel -= dt;
-        if (tempoInvulneravel <= 0.f) {
-            invulneravel = false;
+        if (tempoInvulneravel < 0.f) {
             tempoInvulneravel = 0.f;
         }
     }
@@ -102,19 +96,19 @@ void Jogador::executar(float dt) {
 }
 
 float Jogador::processarMovimento(float dt) {
-    float velocidadeX = lento ? Config::VELOCIDADE_X * 0.4f : Config::VELOCIDADE_X;
+    float velocidadeX = (tempoLento > 0.f) ? Config::VELOCIDADE_X * 0.4f : Config::VELOCIDADE_X;
     float dx = 0;
 
-    if (sf::Keyboard::isKeyPressed(controles.esquerda)) {
+    if (sf::Keyboard::isKeyPressed(eJogadorUm ? sf::Keyboard::A : sf::Keyboard::Left)) {
         dx -= 1;
         olhandoDireita = false;
     }
-    if (sf::Keyboard::isKeyPressed(controles.direita)) {
+    if (sf::Keyboard::isKeyPressed(eJogadorUm ? sf::Keyboard::D : sf::Keyboard::Right)) {
         dx += 1;
         olhandoDireita = true;
     }
 
-    bool puloAtual = sf::Keyboard::isKeyPressed(controles.pulo);
+    bool puloAtual = sf::Keyboard::isKeyPressed(eJogadorUm ? sf::Keyboard::W : sf::Keyboard::Up);
     if (puloAtual && !puloPressionado && noChao) {
         vy = Config::FORCA_PULO;
     }
@@ -166,7 +160,7 @@ void Jogador::mover(float dt) {
 }
 
 bool Jogador::getAtirou() {
-    bool atirouAtual = sf::Keyboard::isKeyPressed(controles.tiro);
+    bool atirouAtual = sf::Keyboard::isKeyPressed(eJogadorUm ? sf::Keyboard::R : sf::Keyboard::Enter);
     bool disparou = atirouAtual && !tiroPressionado && tempoRecargaTiro <= 0.f;
     tiroPressionado = atirouAtual;
 
@@ -184,12 +178,10 @@ void Jogador::colidir(Inimigo* pIn) {
 }
 
 void Jogador::ficarLento(float duracao) {
-    lento = true;
     tempoLento = duracao;
 }
 
 void Jogador::ativarInvulnerabilidade() {
-    invulneravel = true;
     tempoInvulneravel = Config::TEMPO_INVULNERAVEL;
 }
 

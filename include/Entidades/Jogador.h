@@ -2,7 +2,6 @@
 #define JOGADOR_H
 
 #include "Entidades/Personagem.h"
-#include "Entidades/AnimacaoSprite.h"
 #include <SFML/Audio.hpp>
 #include <string>
 
@@ -11,27 +10,13 @@ namespace Personagens {
 
 class Inimigo;
 
-struct ControlesJogador {
-    sf::Keyboard::Key esquerda;
-    sf::Keyboard::Key direita;
-    sf::Keyboard::Key pulo;
-    sf::Keyboard::Key tiro;
-
-    ControlesJogador(sf::Keyboard::Key esq, sf::Keyboard::Key dir,
-                     sf::Keyboard::Key pul, sf::Keyboard::Key tir)
-        : esquerda(esq), direita(dir), pulo(pul), tiro(tir) {}
-};
-
 class Jogador : public Personagem {
 protected:
     int pontos;
 private:
-    AnimacaoSprite animacao;
-
-    ControlesJogador controles;
+    bool eJogadorUm;
     float xInicial;
     float yInicial;
-    sf::Color cor;
 
     float ultimoDx;
     bool olhandoDireita;
@@ -39,10 +24,7 @@ private:
     bool tiroPressionado;
     float tempoRecargaTiro;
 
-    bool lento;
     float tempoLento;
-
-    bool invulneravel;
     float tempoInvulneravel;
     float tempoFlashDano;
 
@@ -53,7 +35,7 @@ private:
     void atualizarSprite(float dt, float dx);
 
 public:
-    Jogador(float xInicial, float yInicial, const ControlesJogador& controles,
+    Jogador(float xInicial, float yInicial, bool eJogadorUm,
             const std::string& texturaSprite = "assets/textures/player.png");
     ~Jogador();
 
@@ -71,7 +53,7 @@ public:
     void ficarLento(float duracao);
     void perderVida();
     void morrer();
-    bool estaInvulneravel() const { return invulneravel; }
+    bool estaInvulneravel() const { return tempoInvulneravel > 0.f; }
     void ativarInvulnerabilidade();
     int getNumVidas() const { return num_vidas; }
     bool estaMorto() const { return num_vidas <= 0; }

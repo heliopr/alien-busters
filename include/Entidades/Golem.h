@@ -2,7 +2,6 @@
 #define GOLEM_H
 
 #include "Entidades/Inimigo.h"
-#include "Entidades/AnimacaoSprite.h"
 #include <SFML/Graphics.hpp>
 
 namespace Entidades {
@@ -10,7 +9,6 @@ namespace Personagens {
 
 class Golem : public Inimigo {
 private:
-    AnimacaoSprite animacao;
     float tempoRecarga;
 
 public:
