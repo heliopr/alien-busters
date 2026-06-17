@@ -17,6 +17,8 @@ struct EntradaPontuacao {
 
 class Gerenciador_Pontuacoes {
 private:
+    static Gerenciador_Pontuacoes* instancia;
+
     std::vector<EntradaPontuacao> ranking;
     std::string caminhoArquivo;
     static const int MAX_RANKING = 10;
@@ -25,9 +27,12 @@ private:
     void salvarRanking();
     std::string obterDataAtual();
 
-public:
     Gerenciador_Pontuacoes(const std::string& caminho = "ranking.dat");
+
+public:
     ~Gerenciador_Pontuacoes();
+
+    static Gerenciador_Pontuacoes* getInstancia();
 
     void adicionarPontuacao(const std::string& nome, int pontos);
     const std::vector<EntradaPontuacao>& getRanking() const { return ranking; }

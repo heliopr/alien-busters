@@ -3,18 +3,25 @@
 #include "Entidades/Plataforma.h"
 #include "Configuracao.h"
 
-Jogo::Jogo() : GG(), pGerenciadorPontuacoes(0), faseAtual(0), pJog1(0), pJog2(0), 
-               menu(this), telaMorte(), estado(ESTADO_MENU), nomeJogadorAtual(""), 
+Jogo* Jogo::instancia = 0;
+
+Jogo* Jogo::getInstancia() {
+    if (instancia == 0) {
+        instancia = new Jogo();
+    }
+    return instancia;
+}
+
+Jogo::Jogo() : faseAtual(0), pJog1(0), pJog2(0),
+               menu(this), telaMorte(), estado(ESTADO_MENU), nomeJogadorAtual(""),
                nomeJogador2Atual(""), faseSelecionada(-1) {
-    Ente::setGG(&GG);
+    Ente::setGG(Gerenciadores::Gerenciador_Grafico::getInstancia());
 
     pJog1 = new Entidades::Personagens::Jogador(
         Config::POSICAO_INICIAL_X, Config::POSICAO_INICIAL_Y, true);
 
     pJog2 = new Entidades::Personagens::Jogador(
         Config::POSICAO_INICIAL_X + 70.f, Config::POSICAO_INICIAL_Y, false, "assets/textures/player2.png");
-
-    pGerenciadorPontuacoes = new Gerenciadores::Gerenciador_Pontuacoes("ranking.dat");
 }
 
 Jogo::~Jogo() {
@@ -28,28 +35,24 @@ Jogo::~Jogo() {
 
     delete pJog2;
     pJog2 = 0;
-
-    if (pGerenciadorPontuacoes) {
-        delete pGerenciadorPontuacoes;
-        pGerenciadorPontuacoes = 0;
-    }
 }
 
 void Jogo::executar() {
+    Gerenciadores::Gerenciador_Grafico* GG = Gerenciadores::Gerenciador_Grafico::getInstancia();
     sf::Clock clock;
 
-    while (GG.estaAberto()) { 
+    while (GG->estaAberto()) {
         float dt = clock.restart().asSeconds();
 
         sf::Event evento;
-        while (GG.coletarEventos(evento)) { 
+        while (GG->coletarEventos(evento)) {
             if (evento.type == sf::Event::Closed) {
-                GG.fecharJanela();
+                GG->fecharJanela();
             }
 
             // F1 alterna a exibicao das hitboxes (debug)
             if (evento.type == sf::Event::KeyPressed && evento.key.code == sf::Keyboard::F1) {
-                GG.setMostrarHitboxes(!GG.getMostrarHitboxes());
+                GG->setMostrarHitboxes(!GG->getMostrarHitboxes());
             }
 
             // Tratar entrada de texto para entrada de nome
@@ -77,10 +80,10 @@ void Jogo::executar() {
                         } else {
                             // Salvar pontuação quando volta ao menu
                             if (!nomeJogadorAtual.empty() && pJog1->getPontos() > 0) {
-                                pGerenciadorPontuacoes->adicionarPontuacao(nomeJogadorAtual, pJog1->getPontos());
+                                Gerenciadores::Gerenciador_Pontuacoes::getInstancia()->adicionarPontuacao(nomeJogadorAtual, pJog1->getPontos());
                             }
                             if (!nomeJogador2Atual.empty() && pJog2->getPontos() > 0) {
-                                pGerenciadorPontuacoes->adicionarPontuacao(nomeJogador2Atual, pJog2->getPontos());
+                                Gerenciadores::Gerenciador_Pontuacoes::getInstancia()->adicionarPontuacao(nomeJogador2Atual, pJog2->getPontos());
                             }
                             delete faseAtual;
                             faseAtual = 0;
@@ -203,7 +206,7 @@ void Jogo::executar() {
             }
         }
 
-        GG.renderizar();
+        GG->renderizar();
 
         if (estado == ESTADO_MENU) {
             menu.desenhar();
@@ -224,6 +227,6 @@ void Jogo::executar() {
             telaMorte.desenhar();
         }
 
-        GG.mostrar();
+        GG->mostrar();
     }
 }

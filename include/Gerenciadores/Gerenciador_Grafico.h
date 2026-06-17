@@ -9,6 +9,8 @@ namespace Gerenciadores {
 
 class Gerenciador_Grafico {
 private:
+    static Gerenciador_Grafico* instancia;
+
     sf::RenderWindow janela;
     sf::Texture texturaFundo;
     sf::Sprite spriteFundo;
@@ -20,9 +22,12 @@ private:
     sf::Text textoHUD;
     sf::Text textoDebug;
 
-public:
     Gerenciador_Grafico();
+
+public:
     ~Gerenciador_Grafico();
+
+    static Gerenciador_Grafico* getInstancia();
 
     // descobrir o tam da janela fora da classe, pra plataforma e etc
     sf::Vector2u getTamanhoJanela() const { 

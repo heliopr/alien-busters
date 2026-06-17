@@ -10,6 +10,15 @@
 
 namespace Gerenciadores {
 
+Gerenciador_Colisoes* Gerenciador_Colisoes::instancia = 0;
+
+Gerenciador_Colisoes* Gerenciador_Colisoes::getInstancia() {
+    if (instancia == 0) {
+        instancia = new Gerenciador_Colisoes();
+    }
+    return instancia;
+}
+
 Gerenciador_Colisoes::Gerenciador_Colisoes() : pJog1(NULL), pJog2(NULL), pListaEntidades(NULL) {
 }
 

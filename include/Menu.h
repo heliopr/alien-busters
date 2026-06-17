@@ -27,8 +27,7 @@ private:
     
     std::string nomeJogador;
     std::string nomeJogador2;
-    Gerenciadores::Gerenciador_Pontuacoes* pGerenciadorPontuacoes;
-    
+
     std::vector<sf::Text> opcoes;
     std::vector<sf::Text> opcoesFases;
     std::vector<sf::Text> textoRanking;

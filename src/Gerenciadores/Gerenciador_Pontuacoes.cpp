@@ -12,6 +12,15 @@ bool compararPontuacoes(const EntradaPontuacao& a, const EntradaPontuacao& b) {
     return a.pontos > b.pontos;
 }
 
+Gerenciador_Pontuacoes* Gerenciador_Pontuacoes::instancia = 0;
+
+Gerenciador_Pontuacoes* Gerenciador_Pontuacoes::getInstancia() {
+    if (instancia == 0) {
+        instancia = new Gerenciador_Pontuacoes();
+    }
+    return instancia;
+}
+
 Gerenciador_Pontuacoes::Gerenciador_Pontuacoes(const std::string& caminho)
     : caminhoArquivo(caminho) {
     carregarRanking();

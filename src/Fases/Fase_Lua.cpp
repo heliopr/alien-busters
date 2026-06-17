@@ -33,23 +33,23 @@ void Fase_Lua::criarInimigos() {
 void Fase_Lua::criarAliens() {
     Entidades::Personagens::Alien* inimigo1 = new Entidades::Personagens::Alien(400.f, 300.f);
     lista_ents.incluir(inimigo1);
-    GC.incluirInimigo(inimigo1);
+    pGC->incluirInimigo(inimigo1);
 
     Entidades::Personagens::Alien* inimigo2 = new Entidades::Personagens::Alien(500.f, 300.f);
     lista_ents.incluir(inimigo2);
-    GC.incluirInimigo(inimigo2);
+    pGC->incluirInimigo(inimigo2);
 
     Entidades::Personagens::Alien* inimigo3 = new Entidades::Personagens::Alien(1200.f, 400.f);
     lista_ents.incluir(inimigo3);
-    GC.incluirInimigo(inimigo3);
+    pGC->incluirInimigo(inimigo3);
 
     Entidades::Personagens::Alien* inimigo4 = new Entidades::Personagens::Alien(1700.f, 350.f);
     lista_ents.incluir(inimigo4);
-    GC.incluirInimigo(inimigo4);
+    pGC->incluirInimigo(inimigo4);
 
     Entidades::Personagens::Alien* inimigo5 = new Entidades::Personagens::Alien(2200.f, 300.f);
     lista_ents.incluir(inimigo5);
-    GC.incluirInimigo(inimigo5);
+    pGC->incluirInimigo(inimigo5);
 }
 
 void Fase_Lua::criarObstaculos() {
@@ -97,14 +97,14 @@ void Fase_Lua::criarObstaculos() {
     for (int i = 0; i < quantidade; ++i) {
         const plataforma& d = plataformas[indices[i]];
         Entidades::Obstaculos::Plataforma* p = new Entidades::Obstaculos::Plataforma(d.x, d.y, corLua);
-        GC.incluirObstaculo(p);
+        pGC->incluirObstaculo(p);
         lista_ents.incluir(p);
     }
 
     Entidades::Chao* parede1 = new Entidades::Chao(1020.f, 620.f, 120.f, 80.f, corLua);
     Entidades::Chao* parede2 = new Entidades::Chao(2600.f, 300.f, 400.f, 600.f, corLua);
-    GC.incluirChao(parede1);
-    GC.incluirChao(parede2);
+    pGC->incluirChao(parede1);
+    pGC->incluirChao(parede2);
     lista_ents.incluir(parede1);
     lista_ents.incluir(parede2);
 
@@ -135,7 +135,7 @@ void Fase_Lua::criarGosmas() {
     int quantidade = minimo + std::rand() % (total - minimo + 1);
     for (int i = 0; i < quantidade; ++i) {
         Entidades::Obstaculos::Gosma* om = new Entidades::Obstaculos::Gosma(posicoes[indices[i]][0], posicoes[indices[i]][1]);
-        GC.incluirObstaculo(om);
+        pGC->incluirObstaculo(om);
         lista_ents.incluir(om);
     }
 }
@@ -168,7 +168,7 @@ void Fase_Lua::criarSlimes() {
     for (int i = 0; i < quantidade; ++i) {
         Entidades::Personagens::Slime* s = new Entidades::Personagens::Slime(posicoes[indices[i]][0], posicoes[indices[i]][1]);
         lista_ents.incluir(s);
-        GC.incluirInimigo(s);
+        pGC->incluirInimigo(s);
     }
 }
 

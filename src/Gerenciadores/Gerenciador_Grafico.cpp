@@ -5,6 +5,15 @@
 
 namespace Gerenciadores {
 
+Gerenciador_Grafico* Gerenciador_Grafico::instancia = 0;
+
+Gerenciador_Grafico* Gerenciador_Grafico::getInstancia() {
+    if (instancia == 0) {
+        instancia = new Gerenciador_Grafico();
+    }
+    return instancia;
+}
+
 Gerenciador_Grafico::Gerenciador_Grafico() :
     janela(sf::VideoMode(1280, 720), "Janela SFML", sf::Style::Titlebar | sf::Style::Close),
     camera(sf::FloatRect(0.f, 0.f, 1422.222f, 800.f)),

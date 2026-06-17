@@ -32,8 +32,9 @@ void Menu::gerarTextoRanking() {
     titulo.setPosition(sf::Vector2f(400.f, 50.f));
     textoRanking.push_back(titulo);
 
-    if (pGerenciadorPontuacoes) {
-        std::vector<Gerenciadores::EntradaPontuacao> top = pGerenciadorPontuacoes->getRankingTop(10);
+    {
+        std::vector<Gerenciadores::EntradaPontuacao> top =
+            Gerenciadores::Gerenciador_Pontuacoes::getInstancia()->getRankingTop(10);
 
         for (size_t i = 0; i < top.size(); ++i) {
             sf::Text entrada;
@@ -73,8 +74,7 @@ Menu::Menu(Jogo* pJ) :
     emSubmenu(false),
     telaAtual(TELA_PRINCIPAL),
     nomeJogador(""),
-    nomeJogador2(""),
-    pGerenciadorPontuacoes(0)
+    nomeJogador2("")
 {
     if (!fonte.loadFromFile("assets/fonts/PixelifySans-Regular.ttf")) {
         std::cerr << "Erro ao carregar a fonte Pixelify Sans!" << std::endl;
@@ -93,8 +93,6 @@ Menu::Menu(Jogo* pJ) :
     std::string nomesFases[] = { "FASE LUA", "FASE MARTE", "VOLTAR" };
     criarTextos(opcoesFases, nomesFases, 3, 190.f);
 
-    pGerenciadorPontuacoes = new Gerenciadores::Gerenciador_Pontuacoes("ranking.dat");
-
     textoCursor.setFont(fonte);
     textoCursor.setCharacterSize(50);
     textoCursor.setFillColor(sf::Color::White);
@@ -106,10 +104,6 @@ Menu::~Menu() {
     opcoes.clear();
     opcoesFases.clear();
     textoRanking.clear();
-    if (pGerenciadorPontuacoes) {
-        delete pGerenciadorPontuacoes;
-        pGerenciadorPontuacoes = 0;
-    }
 }
 
 void Menu::subirOpcao() {

@@ -27,6 +27,8 @@ namespace Gerenciadores {
 
 class Gerenciador_Colisoes {
 private:
+    static Gerenciador_Colisoes* instancia;
+
     enum ResultadoColisao {
         SEM_COLISAO,
         COLISAO_ESQUERDA,
@@ -62,9 +64,12 @@ private:
     bool projetilAtingiuJogador(Entidades::Projetil* p, Entidades::Personagens::Jogador* jog);
     void removerProjetil(std::set<Entidades::Projetil*>::iterator it);
 
-public:
     Gerenciador_Colisoes();
+
+public:
     ~Gerenciador_Colisoes();
+
+    static Gerenciador_Colisoes* getInstancia();
 
     void setJogador(Entidades::Personagens::Jogador* pJ) { pJog1 = pJ; }
     void setJogador2(Entidades::Personagens::Jogador* pJ) { pJog2 = pJ; }

@@ -12,7 +12,7 @@ namespace Fases {
 class Fase : public Ente {
 protected:
     Listas::ListaEntidades lista_ents;
-    Gerenciadores::Gerenciador_Colisoes GC;
+    Gerenciadores::Gerenciador_Colisoes* pGC;
     Entidades::Personagens::Jogador* pJogador;
     Entidades::Personagens::Jogador* pJogador2;
     std::string nomeJogador;

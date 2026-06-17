@@ -65,14 +65,14 @@ void Fase_Marte::criarObstaculos() {
     for (int i = 0; i < quantidade; ++i) {
         const plataforma& d = plataformas[indices[i]];
         Entidades::Obstaculos::Plataforma* p = new Entidades::Obstaculos::Plataforma(d.x, d.y);
-        GC.incluirObstaculo(p);
+        pGC->incluirObstaculo(p);
         lista_ents.incluir(p);
     }
 
     Entidades::Chao* parede1 = new Entidades::Chao(980.f, 600.f, 120.f, 80.f);
     Entidades::Chao* parede2 = new Entidades::Chao(2500.f, 300.f, 400.f, 600.f);
-    GC.incluirChao(parede1);
-    GC.incluirChao(parede2);
+    pGC->incluirChao(parede1);
+    pGC->incluirChao(parede2);
     lista_ents.incluir(parede1);
     lista_ents.incluir(parede2);
 
@@ -100,7 +100,7 @@ void Fase_Marte::criarGolems() {
     for (int i = 0; i < quantidade; ++i) {
         Entidades::Personagens::Golem* inimigo = new Entidades::Personagens::Golem(posicoes[indices[i]][0], posicoes[indices[i]][1]);
         lista_ents.incluir(inimigo);
-        GC.incluirInimigo(inimigo);
+        pGC->incluirInimigo(inimigo);
     }
 }
 
@@ -125,7 +125,7 @@ void Fase_Marte::criarMinasExtraterrestres() {
     int quantidade = minimo + std::rand() % (total - minimo + 1);
     for (int i = 0; i < quantidade; ++i) {
         Entidades::Obstaculos::MinaExtraterrestre* od = new Entidades::Obstaculos::MinaExtraterrestre(posicoes[indices[i]][0], posicoes[indices[i]][1]);
-        GC.incluirObstaculo(od);
+        pGC->incluirObstaculo(od);
         lista_ents.incluir(od);
     }
 }
@@ -153,7 +153,7 @@ void Fase_Marte::criarSlimes() {
     for (int i = 0; i < quantidade; ++i) {
         Entidades::Personagens::Slime* s = new Entidades::Personagens::Slime(posicoes[indices[i]][0], posicoes[indices[i]][1]);
         lista_ents.incluir(s);
-        GC.incluirInimigo(s);
+        pGC->incluirInimigo(s);
     }
 }
 

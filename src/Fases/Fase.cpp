@@ -12,11 +12,12 @@ namespace Fases {
 
 Fase::Fase(Entidades::Personagens::Jogador* pJogador, Entidades::Personagens::Jogador* pJogador2,
            const std::string& nome1, const std::string& nome2)
-    : Ente(), lista_ents(), GC(), pJogador(pJogador), pJogador2(pJogador2), 
+    : Ente(), lista_ents(), pGC(Gerenciadores::Gerenciador_Colisoes::getInstancia()),
+      pJogador(pJogador), pJogador2(pJogador2),
       nomeJogador(nome1), nomeJogador2(nome2) {
-    GC.setJogador(pJogador);
-    GC.setJogador2(pJogador2);
-    GC.setListaEntidades(&lista_ents);
+    pGC->setJogador(pJogador);
+    pGC->setJogador2(pJogador2);
+    pGC->setListaEntidades(&lista_ents);
 
     if (pJogador) {
         pJogador->resetar();
@@ -27,7 +28,7 @@ Fase::Fase(Entidades::Personagens::Jogador* pJogador, Entidades::Personagens::Jo
 }
 
 Fase::~Fase() {
-    GC.limpar();
+    pGC->limpar();
     lista_ents.limpar();
 }
 
@@ -47,7 +48,7 @@ void Fase::processarJogador(Entidades::Personagens::Jogador* pJog, float dt) {
         float y_proj = pJog->getY();
         Entidades::Projetil* p = new Entidades::Laser(x_proj, y_proj - 50.f, vx, 0.f, pJog);
         lista_ents.incluir(p);
-        GC.incluirProjetil(p);
+        pGC->incluirProjetil(p);
     }
 
     pJog->executar(dt);
@@ -76,7 +77,7 @@ Entidades::Personagens::Jogador* Fase::jogadorMaisProximo(float x, float y) cons
 }
 
 void Fase::processarInimigos(float dt) {
-    const std::vector<Entidades::Personagens::Inimigo*>& inimigos = GC.getInimigos();
+    const std::vector<Entidades::Personagens::Inimigo*>& inimigos = pGC->getInimigos();
 
     for (std::size_t i = 0; i < inimigos.size(); ++i) {
         Entidades::Personagens::Inimigo* ini = inimigos[i];
@@ -92,7 +93,7 @@ void Fase::processarInimigos(float dt) {
         Entidades::Projetil* p = ini->atirar(alvo, dt);
         if (p != 0) {
             lista_ents.incluir(p);
-            GC.incluirProjetil(p);
+            pGC->incluirProjetil(p);
         }
     }
 }
@@ -131,7 +132,7 @@ void Fase::executar(float dt) {
     }
 
     lista_ents.percorrer(dt);
-    GC.executar();
+    pGC->executar();
 
     atualizarCamera();
     desenhar();
@@ -190,9 +191,9 @@ void Fase::criarCenario(const sf::Color& cor) {
     Entidades::Chao* chao2 = new Entidades::Chao(920.f, 700.f, 780.f, 100.f, cor);
     Entidades::Chao* chao3 = new Entidades::Chao(1850.f, 700.f, 800.f, 100.f, cor);
 
-    GC.incluirChao(chao1);
-    GC.incluirChao(chao2);
-    GC.incluirChao(chao3);
+    pGC->incluirChao(chao1);
+    pGC->incluirChao(chao2);
+    pGC->incluirChao(chao3);
 
     lista_ents.incluir(chao1);
     lista_ents.incluir(chao2);
@@ -206,7 +207,7 @@ bool Fase::jogadorPerdeu() const {
 }
 
 void Fase::reiniciar() {
-    GC.limpar();
+    pGC->limpar();
     lista_ents.limpar();
 
     if (pJogador) {

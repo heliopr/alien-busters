@@ -16,8 +16,8 @@ private:
         ESTADO_TELA_MORTE
     };
 
-    Gerenciadores::Gerenciador_Grafico GG;
-    Gerenciadores::Gerenciador_Pontuacoes* pGerenciadorPontuacoes;
+    static Jogo* instancia;
+
     Fases::Fase* faseAtual;
     Entidades::Personagens::Jogador* pJog1;
     Entidades::Personagens::Jogador* pJog2;
@@ -28,9 +28,13 @@ private:
     std::string nomeJogador2Atual;
     int faseSelecionada;
 
-public:
     Jogo();
+
+public:
     ~Jogo();
+
+    static Jogo* getInstancia();
+
     void executar();
     void setNomeJogador(const std::string& nome) { nomeJogadorAtual = nome; }
 };
