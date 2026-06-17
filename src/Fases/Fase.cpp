@@ -1,5 +1,6 @@
 #include "Fases/Fase.h"
 #include "Entidades/Chao.h"
+#include "Entidades/Foguete.h"
 #include "Entidades/Inimigo.h"
 #include "Gerenciadores/Gerenciador_Grafico.h"
 #include "Configuracao.h"
@@ -12,7 +13,7 @@ namespace Fases {
 Fase::Fase(Entidades::Personagens::Jogador* pJogador, Entidades::Personagens::Jogador* pJogador2,
            const std::string& nome1, const std::string& nome2)
     : Ente(), lista_ents(), pGC(Gerenciadores::Gerenciador_Colisoes::getInstancia()),
-      pJogador(pJogador), pJogador2(pJogador2),
+      pJogador(pJogador), pJogador2(pJogador2), pFoguete(0), concluida(false),
       nomeJogador(nome1), nomeJogador2(nome2) {
     pGC->setJogador(pJogador);
     pGC->setJogador2(pJogador2);
@@ -147,8 +148,27 @@ void Fase::executar(float dt) {
     lista_ents.percorrer(dt);
     pGC->executar();
 
+    verificarFoguete();
+
     atualizarCamera();
     desenhar();
+}
+
+void Fase::verificarFoguete() {
+    if (pFoguete == 0 || concluida) {
+        return;
+    }
+
+    sf::FloatRect hitboxFoguete = pFoguete->getHitbox();
+
+    bool p1Encostou = (pJogador != 0) && !pJogador->estaMorto() && pJogador->getHitbox().intersects(hitboxFoguete);
+    bool p2Encostou = (pJogador2 != 0) && !pJogador2->estaMorto() && pJogador2->getHitbox().intersects(hitboxFoguete);
+
+    if (p1Encostou || p2Encostou)
+        concluida = true;
+}
+
+void Fase::criarFoguete() {
 }
 
 void Fase::desenhar() {
@@ -223,6 +243,9 @@ void Fase::reiniciar() {
     pGC->limpar();
     lista_ents.limpar();
 
+    pFoguete = 0;
+    concluida = false;
+
     if (pJogador) {
         pJogador->resetar();
     }
@@ -233,6 +256,7 @@ void Fase::reiniciar() {
     criarCenario();
     criarObstaculos();
     criarInimigos();
+    criarFoguete();
 }
 
 }

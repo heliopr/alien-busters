@@ -21,6 +21,7 @@ public:
 protected:
     void criarInimigos();
     void criarObstaculos();
+    void criarFoguete();
     void criarMinasExtraterrestres();
     void criarSlimes();
     void criarGolems();

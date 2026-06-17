@@ -22,10 +22,10 @@ protected:
     void criarCenario();
     void criarInimigos();
     void criarObstaculos();
+    void criarFoguete();
     void criarAliens();
     void criarGosmas();
     void criarSlimes();
-    void criarFoguete();
 };
 
 }

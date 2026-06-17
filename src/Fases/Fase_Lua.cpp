@@ -131,8 +131,8 @@ void Fase_Lua::criarGosmas() {
 }
 
 void Fase_Lua::criarFoguete() {
-    Entidades::Foguete* foguete = new Entidades::Foguete(2380.f, 540.f);
-    lista_ents.incluir(foguete);
+    pFoguete = new Entidades::Foguete(2380.f, 540.f);
+    lista_ents.incluir(pFoguete);
 }
 
 void Fase_Lua::criarSlimes() {

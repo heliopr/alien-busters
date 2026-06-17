@@ -8,6 +8,10 @@
 #include <string>
 #include <vector>
 
+namespace Entidades {
+class Foguete;
+}
+
 namespace Fases {
 
 class Fase : public Ente {
@@ -16,6 +20,8 @@ protected:
     Gerenciadores::Gerenciador_Colisoes* pGC;
     Entidades::Personagens::Jogador* pJogador;
     Entidades::Personagens::Jogador* pJogador2;
+    Entidades::Foguete* pFoguete;
+    bool concluida;
     std::string nomeJogador;
     std::string nomeJogador2;
 
@@ -29,15 +35,18 @@ public:
     virtual void desenhar();
     virtual void reiniciar();
     bool jogadorPerdeu() const;
+    bool faseConcluida() const { return concluida; }
 
 protected:
     void processarJogador(Entidades::Personagens::Jogador* pJog, float dt);
     void processarInimigos(float dt);
+    void verificarFoguete();
     std::vector<sf::Vector2f> sortearPosicoes(const float posicoes[][2], int total, int minimo, int maximo) const;
     Entidades::Personagens::Jogador* jogadorMaisProximo(float x, float y) const;
     void atualizarCamera();
     virtual void criarInimigos() = 0;
     virtual void criarObstaculos() = 0;
+    virtual void criarFoguete();
     virtual void criarCenario();
     void criarCenario(const sf::Color& cor);
     virtual void criarSlimes() = 0;

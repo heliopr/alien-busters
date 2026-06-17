@@ -4,6 +4,7 @@
 #include "Entidades/Slime.h"
 #include "Entidades/MinaExtraterrestre.h"
 #include "Entidades/Golem.h"
+#include "Entidades/Foguete.h"
 #include <cstdlib>
 #include <ctime>
 
@@ -15,6 +16,7 @@ Fase_Marte::Fase_Marte(Entidades::Personagens::Jogador* pJogador, Entidades::Per
     criarCenario();
     criarObstaculos();
     criarInimigos();
+    criarFoguete();
 }
 
 Fase_Marte::~Fase_Marte() {
@@ -79,6 +81,11 @@ void Fase_Marte::criarObstaculos() {
     lista_ents.incluir(parede2);
 
     criarMinasExtraterrestres();
+}
+
+void Fase_Marte::criarFoguete() {
+    pFoguete = new Entidades::Foguete(2350.f, 540.f);
+    lista_ents.incluir(pFoguete);
 }
 
 void Fase_Marte::criarGolems() {

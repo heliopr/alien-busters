@@ -13,8 +13,9 @@ Jogo* Jogo::getInstancia() {
 }
 
 Jogo::Jogo() : faseAtual(0), pJog1(0), pJog2(0),
-               menu(this), telaMorte(), estado(ESTADO_MENU), nomeJogadorAtual(""),
-               nomeJogador2Atual(""), faseSelecionada(-1) {
+               menu(this), telaMorte(), telaVitoria(), estado(ESTADO_MENU), nomeJogadorAtual(""),
+               nomeJogador2Atual(""), faseSelecionada(-1), faseEmAndamento(-1),
+               doisJogadoresAtual(false), pontuacaoSalva(false) {
     Ente::setGG(Gerenciadores::Gerenciador_Grafico::getInstancia());
 
     pJog1 = new Entidades::Personagens::Jogador(
@@ -73,6 +74,8 @@ void Jogo::processarEventos() {
 
         if (estado == ESTADO_TELA_MORTE) {
             tratarEventoTelaMorte(evento);
+        } else if (estado == ESTADO_TELA_VITORIA) {
+            tratarEventoTelaVitoria(evento);
         } else if (menu.emTelaEntradaNome()) {
             tratarEventoEntradaNome(evento);
         } else if (menu.emTelaEntradaNomeJ2()) {
@@ -100,8 +103,15 @@ void Jogo::atualizarEDesenhar(float dt) {
             if (faseAtual->jogadorPerdeu()) {
                 telaMorte.tocarGameOver();
                 estado = ESTADO_TELA_MORTE;
+            } else if (faseAtual->faseConcluida()) {
+                avancarFase();
             }
         }
+    } else if (estado == ESTADO_TELA_VITORIA) {
+        if (faseAtual) {
+            faseAtual->desenhar();
+        }
+        telaVitoria.desenhar();
     } else {
         if (faseAtual) {
             faseAtual->desenhar();
@@ -124,6 +134,20 @@ void Jogo::tratarEventoTelaMorte(const sf::Event& evento) {
             }
             telaMorte.resetar();
             estado = ESTADO_JOGANDO;
+        } else {
+            voltarAoMenu();
+        }
+    }
+}
+
+void Jogo::tratarEventoTelaVitoria(const sf::Event& evento) {
+    if (evento.key.code == sf::Keyboard::Up || evento.key.code == sf::Keyboard::W) {
+        telaVitoria.subirOpcao();
+    } else if (evento.key.code == sf::Keyboard::Down || evento.key.code == sf::Keyboard::S) {
+        telaVitoria.descerOpcao();
+    } else if (evento.key.code == sf::Keyboard::Enter) {
+        if (telaVitoria.getOpcaoSelecionada() == 0) {
+            iniciarFase(FASE_LUA, doisJogadoresAtual);
         } else {
             voltarAoMenu();
         }
@@ -215,6 +239,31 @@ void Jogo::iniciarFase(int fase, bool doisJogadores) {
         }
         estado = ESTADO_JOGANDO;
         faseSelecionada = -1;
+        faseEmAndamento = fase;
+        doisJogadoresAtual = doisJogadores;
+        pontuacaoSalva = false;
+    }
+}
+
+void Jogo::avancarFase() {
+    int proximaFase = faseEmAndamento + 1;
+
+    if (proximaFase > FASE_MARTE) {
+        salvarPontuacoes();
+        telaVitoria.resetar();
+        telaVitoria.tocarVitoria();
+        estado = ESTADO_TELA_VITORIA;
+        return;
+    }
+
+    int pontos1 = pJog1->getPontos();
+    int pontos2 = pJog2->getPontos();
+
+    iniciarFase(proximaFase, doisJogadoresAtual);
+
+    pJog1->adicionarPontos(pontos1);
+    if (doisJogadoresAtual) {
+        pJog2->adicionarPontos(pontos2);
     }
 }
 
@@ -229,9 +278,16 @@ void Jogo::voltarAoMenu() {
     nomeJogadorAtual = "";
     nomeJogador2Atual = "";
     faseSelecionada = -1;
+    faseEmAndamento = -1;
+    doisJogadoresAtual = false;
+    pontuacaoSalva = false;
 }
 
 void Jogo::salvarPontuacoes() {
+    if (pontuacaoSalva) {
+        return;
+    }
+
     Gerenciadores::Gerenciador_Pontuacoes* gp =
         Gerenciadores::Gerenciador_Pontuacoes::getInstancia();
 
@@ -241,4 +297,6 @@ void Jogo::salvarPontuacoes() {
     if (!nomeJogador2Atual.empty() && pJog2->getPontos() > 0) {
         gp->adicionarPontuacao(nomeJogador2Atual, pJog2->getPontos());
     }
+
+    pontuacaoSalva = true;
 }
