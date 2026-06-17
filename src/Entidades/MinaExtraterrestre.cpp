@@ -8,10 +8,8 @@
 namespace Entidades {
 namespace Obstaculos {
 
-namespace {
-    const float INTERVALO_PISCAR = 0.15f;
-    const float RAIO_EXPLOSAO = 100.f;
-}
+const float MinaExtraterrestre::INTERVALO_PISCAR = 0.15f;
+const float MinaExtraterrestre::RAIO_EXPLOSAO = 100.f;
 
 MinaExtraterrestre::MinaExtraterrestre(float x, float y)
     : Obstaculo(), largura(60.f), altura(60.f),

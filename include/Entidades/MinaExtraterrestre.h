@@ -9,6 +9,9 @@ namespace Obstaculos {
 
 class MinaExtraterrestre : public Obstaculo {
 private:
+    static const float INTERVALO_PISCAR;
+    static const float RAIO_EXPLOSAO;
+
     float largura;
     float altura;
     float tempoExplosao;
