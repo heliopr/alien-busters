@@ -36,6 +36,12 @@ Jogador::Jogador(float xInicial, float yInicial, bool eJogadorUm, const std::str
     } else {
         std::cerr << "Erro ao carregar som assets/sounds/hit.mp3!" << std::endl;
     }
+
+    if (bufferMorte.loadFromFile("assets/sounds/oof.mp3")) {
+        somMorte.setBuffer(bufferMorte);
+    } else {
+        std::cerr << "Erro ao carregar som assets/sounds/oof.mp3!" << std::endl;
+    }
 }
 
 Jogador::~Jogador() {
@@ -188,11 +194,17 @@ void Jogador::ativarInvulnerabilidade() {
 void Jogador::perderVida() {
     num_vidas--;
     tempoFlashDano = Config::DURACAO_FLASH_DANO;
-    somDano.play();
+
+    if (num_vidas <= 0) {
+        somMorte.play();
+    } else {
+        somDano.play();
+    }
 }
 
 void Jogador::morrer() {
     num_vidas = 0;
+    somMorte.play();
 }
 
 }

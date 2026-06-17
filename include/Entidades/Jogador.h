@@ -31,6 +31,9 @@ private:
     sf::SoundBuffer bufferDano;
     sf::Sound somDano;
 
+    sf::SoundBuffer bufferMorte;
+    sf::Sound somMorte;
+
     float processarMovimento(float dt);
     void atualizarSprite(float dt, float dx);
 
