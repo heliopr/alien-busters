@@ -1,8 +1,6 @@
 # Jogo
 
 ## TODO
-- [ ] Definir atributos nas fases (ex. maxAliens, maxSlimes)
-- [ ] Criar namespace Projéteis
 - [ ] Implementar salvamento
 - [ ] Consertar algumas agregações (ex. Menu-Jogo, Gerenciador_Pontuações-Menu)
 - [ ] Focar no cumprimento da tabela de conceitos, sobretudo

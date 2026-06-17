@@ -7,6 +7,11 @@
 namespace Fases {
 
 class Fase_Marte : public Fase {
+private:
+    const int maxSlimes;
+    const int maxGolems;
+    const int maxMinas;
+
 public:
     Fase_Marte(Entidades::Personagens::Jogador* pJogador,
                Entidades::Personagens::Jogador* pJogador2 = 0,

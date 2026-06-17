@@ -5,6 +5,7 @@
 #include <SFML/Audio.hpp>
 
 namespace Entidades {
+namespace Projeteis {
 
 class Laser : public Projetil {
 private:
@@ -20,6 +21,7 @@ public:
     sf::FloatRect getHitbox() const;
 };
 
+}
 }
 
 #endif

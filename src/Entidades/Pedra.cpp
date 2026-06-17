@@ -2,6 +2,7 @@
 #include <iostream>
 
 namespace Entidades {
+namespace Projeteis {
 
 sf::SoundBuffer Pedra::bufferPedra;
 sf::Sound Pedra::somPedra;
@@ -71,4 +72,5 @@ void Pedra::quicar() {
     }
 }
 
+}
 }

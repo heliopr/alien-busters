@@ -7,6 +7,8 @@ namespace Entidades {
 
 namespace Personagens { class Jogador; }
 
+namespace Projeteis {
+
 class Projetil : public Entidade {
 protected:
     bool ativo;
@@ -35,6 +37,7 @@ public:
     virtual void quicar() {}
 };
 
+}
 }
 
 #endif

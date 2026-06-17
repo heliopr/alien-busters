@@ -7,6 +7,11 @@
 namespace Fases {
 
 class Fase_Lua : public Fase {
+private:
+    const int maxAliens;
+    const int maxSlimes;
+    const int maxGosmas;
+
 public:
     Fase_Lua(Entidades::Personagens::Jogador* pJogador,
              Entidades::Personagens::Jogador* pJogador2 = 0,

@@ -12,7 +12,7 @@ sf::SoundBuffer Inimigo::bufferDano;
 sf::Sound Inimigo::somDano;
 bool Inimigo::somCarregado = false;
 
-Inimigo::Inimigo() : Personagem(), nivel_maldade(std::rand() % 31), velocidadeX(-50.f), tempoFlashDano(0.f), decidiuBorda(false), vaiCairDaBorda(false) {
+Inimigo::Inimigo() : Personagem(), nivel_maldade(std::rand() % 21), velocidadeX(-50.f), tempoFlashDano(0.f), decidiuBorda(false), vaiCairDaBorda(false) {
     if (!somCarregado) {
         if (bufferDano.loadFromFile("assets/sounds/hit.mp3")) {
             somDano.setBuffer(bufferDano);

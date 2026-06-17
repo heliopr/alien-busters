@@ -5,6 +5,7 @@
 #include <SFML/Audio.hpp>
 
 namespace Entidades {
+namespace Projeteis {
 
 class Pedra : public Projetil {
 private:
@@ -27,6 +28,7 @@ public:
     void quicar();
 };
 
+}
 }
 
 #endif

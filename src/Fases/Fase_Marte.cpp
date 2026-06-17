@@ -9,7 +9,9 @@
 
 namespace Fases {
 
-Fase_Marte::Fase_Marte(Entidades::Personagens::Jogador* pJogador, Entidades::Personagens::Jogador* pJogador2, const std::string& nome1, const std::string& nome2) : Fase(pJogador, pJogador2, nome1, nome2) {
+Fase_Marte::Fase_Marte(Entidades::Personagens::Jogador* pJogador, Entidades::Personagens::Jogador* pJogador2, const std::string& nome1, const std::string& nome2)
+    : Fase(pJogador, pJogador2, nome1, nome2),
+      maxSlimes(5), maxGolems(4), maxMinas(4) {
     criarCenario();
     criarObstaculos();
     criarInimigos();
@@ -86,19 +88,11 @@ void Fase_Marte::criarGolems() {
         {2000.f, 700.f},
         {2200.f, 700.f}
     };
-    const int total  = sizeof(posicoes) / sizeof(posicoes[0]);
-    const int minimo = 3;
+    const int total = sizeof(posicoes) / sizeof(posicoes[0]);
 
-    int indices[total];
-    for (int i = 0; i < total; ++i) indices[i] = i;
-    for (int i = total - 1; i > 0; --i) {
-        int j = std::rand() % (i + 1);
-        int tmp = indices[i]; indices[i] = indices[j]; indices[j] = tmp;
-    }
-
-    int quantidade = minimo + std::rand() % (total - minimo + 1);
-    for (int i = 0; i < quantidade; ++i) {
-        Entidades::Personagens::Golem* inimigo = new Entidades::Personagens::Golem(posicoes[indices[i]][0], posicoes[indices[i]][1]);
+    std::vector<sf::Vector2f> p = sortearPosicoes(posicoes, total, 3, maxGolems);
+    for (size_t i = 0; i < p.size(); ++i) {
+        Entidades::Personagens::Golem* inimigo = new Entidades::Personagens::Golem(p[i].x, p[i].y);
         lista_ents.incluir(inimigo);
         pGC->incluirInimigo(inimigo);
     }
@@ -112,19 +106,11 @@ void Fase_Marte::criarMinasExtraterrestres() {
         {1980.f, 660.f},
         {2300.f, 660.f}
     };
-    const int total  = sizeof(posicoes) / sizeof(posicoes[0]);
-    const int minimo = 3;
+    const int total = sizeof(posicoes) / sizeof(posicoes[0]);
 
-    int indices[total];
-    for (int i = 0; i < total; ++i) indices[i] = i;
-    for (int i = total - 1; i > 0; --i) {
-        int j = std::rand() % (i + 1);
-        int tmp = indices[i]; indices[i] = indices[j]; indices[j] = tmp;
-    }
-
-    int quantidade = minimo + std::rand() % (total - minimo + 1);
-    for (int i = 0; i < quantidade; ++i) {
-        Entidades::Obstaculos::MinaExtraterrestre* od = new Entidades::Obstaculos::MinaExtraterrestre(posicoes[indices[i]][0], posicoes[indices[i]][1]);
+    std::vector<sf::Vector2f> p = sortearPosicoes(posicoes, total, 3, maxMinas);
+    for (size_t i = 0; i < p.size(); ++i) {
+        Entidades::Obstaculos::MinaExtraterrestre* od = new Entidades::Obstaculos::MinaExtraterrestre(p[i].x, p[i].y);
         pGC->incluirObstaculo(od);
         lista_ents.incluir(od);
     }
@@ -139,19 +125,11 @@ void Fase_Marte::criarSlimes() {
         {2000.f, 400.f},
         {2400.f, 300.f}
     };
-    const int total   = sizeof(posicoes) / sizeof(posicoes[0]);
-    const int minimo  = 3;
+    const int total = sizeof(posicoes) / sizeof(posicoes[0]);
 
-    int indices[total];
-    for (int i = 0; i < total; ++i) indices[i] = i;
-    for (int i = total - 1; i > 0; --i) {
-        int j = std::rand() % (i + 1);
-        int tmp = indices[i]; indices[i] = indices[j]; indices[j] = tmp;
-    }
-
-    int quantidade = minimo + std::rand() % (total - minimo + 1);
-    for (int i = 0; i < quantidade; ++i) {
-        Entidades::Personagens::Slime* s = new Entidades::Personagens::Slime(posicoes[indices[i]][0], posicoes[indices[i]][1]);
+    std::vector<sf::Vector2f> p = sortearPosicoes(posicoes, total, 3, maxSlimes);
+    for (size_t i = 0; i < p.size(); ++i) {
+        Entidades::Personagens::Slime* s = new Entidades::Personagens::Slime(p[i].x, p[i].y);
         lista_ents.incluir(s);
         pGC->incluirInimigo(s);
     }

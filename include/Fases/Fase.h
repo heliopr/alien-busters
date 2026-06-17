@@ -6,6 +6,7 @@
 #include "Gerenciadores/Gerenciador_Colisoes.h"
 #include "Entidades/Jogador.h"
 #include <string>
+#include <vector>
 
 namespace Fases {
 
@@ -32,6 +33,7 @@ public:
 protected:
     void processarJogador(Entidades::Personagens::Jogador* pJog, float dt);
     void processarInimigos(float dt);
+    std::vector<sf::Vector2f> sortearPosicoes(const float posicoes[][2], int total, int minimo, int maximo) const;
     Entidades::Personagens::Jogador* jogadorMaisProximo(float x, float y) const;
     void atualizarCamera();
     virtual void criarInimigos() = 0;

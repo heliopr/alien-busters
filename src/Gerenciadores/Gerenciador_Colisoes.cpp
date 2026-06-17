@@ -46,7 +46,7 @@ void Gerenciador_Colisoes::incluirChao(Entidades::Chao* pc) {
     }
 }
 
-void Gerenciador_Colisoes::incluirProjetil(Entidades::Projetil* pj) {
+void Gerenciador_Colisoes::incluirProjetil(Entidades::Projeteis::Projetil* pj) {
     if (pj != NULL) {
         LPs.insert(pj);
         if (pListaEntidades) {
@@ -241,7 +241,7 @@ void Gerenciador_Colisoes::tratarColisoesJogInimigs(Entidades::Personagens::Joga
     }
 }
 
-bool Gerenciador_Colisoes::projetilColidiu(Entidades::Projetil* p) const {
+bool Gerenciador_Colisoes::projetilColidiu(Entidades::Projeteis::Projetil* p) const {
     for (std::list<Entidades::Obstaculos::Obstaculo*>::const_iterator it = LOs.begin(); it != LOs.end(); ++it) {
         Entidades::Obstaculos::Obstaculo* obs = *it;
         if (obs != NULL && obs->colide() && verificarColisao(p, obs)) {
@@ -256,7 +256,7 @@ bool Gerenciador_Colisoes::projetilColidiu(Entidades::Projetil* p) const {
     return false;
 }
 
-bool Gerenciador_Colisoes::tratarQuiqueProjetil(Entidades::Projetil* p) {
+bool Gerenciador_Colisoes::tratarQuiqueProjetil(Entidades::Projeteis::Projetil* p) {
     if (p == NULL || !p->getQuicavel()) {
         return false;
     }
@@ -317,7 +317,7 @@ bool Gerenciador_Colisoes::tratarQuiqueProjetil(Entidades::Projetil* p) {
     return true;
 }
 
-bool Gerenciador_Colisoes::projetilColidiuComInimigo(Entidades::Projetil* p) {
+bool Gerenciador_Colisoes::projetilColidiuComInimigo(Entidades::Projeteis::Projetil* p) {
     for (std::vector<Entidades::Personagens::Inimigo*>::iterator it = LIs.begin(); it != LIs.end(); ++it) {
         Entidades::Personagens::Inimigo* ini = *it;
         if (ini != NULL && verificarColisao(p, ini)) {
@@ -351,7 +351,7 @@ bool Gerenciador_Colisoes::projetilColidiuComInimigo(Entidades::Projetil* p) {
     return false;
 }
 
-bool Gerenciador_Colisoes::projetilAtingiuJogador(Entidades::Projetil* p, Entidades::Personagens::Jogador* jog) {
+bool Gerenciador_Colisoes::projetilAtingiuJogador(Entidades::Projeteis::Projetil* p, Entidades::Personagens::Jogador* jog) {
     if (jog == NULL || jog->estaMorto()) return false;
 
     if (verificarColisao(p, jog)) {
@@ -364,14 +364,14 @@ bool Gerenciador_Colisoes::projetilAtingiuJogador(Entidades::Projetil* p, Entida
     return false;
 }
 
-bool Gerenciador_Colisoes::projetilColidiuComJogador(Entidades::Projetil* p) {
+bool Gerenciador_Colisoes::projetilColidiuComJogador(Entidades::Projeteis::Projetil* p) {
     bool atingiu = projetilAtingiuJogador(p, pJog1);
     atingiu = projetilAtingiuJogador(p, pJog2) || atingiu;
     return atingiu;
 }
 
-void Gerenciador_Colisoes::removerProjetil(std::set<Entidades::Projetil*>::iterator it) {
-    Entidades::Projetil* p = *it;
+void Gerenciador_Colisoes::removerProjetil(std::set<Entidades::Projeteis::Projetil*>::iterator it) {
+    Entidades::Projeteis::Projetil* p = *it;
     LPs.erase(it);
     if (pListaEntidades) {
         pListaEntidades->remover(p);
@@ -380,12 +380,12 @@ void Gerenciador_Colisoes::removerProjetil(std::set<Entidades::Projetil*>::itera
 }
 
 void Gerenciador_Colisoes::tratarColisoesJogsProjeteis() {
-    std::set<Entidades::Projetil*>::iterator it = LPs.begin();
+    std::set<Entidades::Projeteis::Projetil*>::iterator it = LPs.begin();
     while (it != LPs.end()) {
-        Entidades::Projetil* p = *it;
+        Entidades::Projeteis::Projetil* p = *it;
 
         if (!p->getAtivo()) {
-            std::set<Entidades::Projetil*>::iterator atual = it;
+            std::set<Entidades::Projeteis::Projetil*>::iterator atual = it;
             ++it;
             removerProjetil(atual);
             continue;
@@ -404,7 +404,7 @@ void Gerenciador_Colisoes::tratarColisoesJogsProjeteis() {
 
         if (destruir) {
             p->setAtivo(false);
-            std::set<Entidades::Projetil*>::iterator atual = it;
+            std::set<Entidades::Projeteis::Projetil*>::iterator atual = it;
             ++it;
             removerProjetil(atual);
         } else {

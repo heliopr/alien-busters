@@ -10,7 +10,9 @@
 
 namespace Fases {
 
-Fase_Lua::Fase_Lua(Entidades::Personagens::Jogador* pJogador, Entidades::Personagens::Jogador* pJogador2, const std::string& nome1, const std::string& nome2) : Fase(pJogador, pJogador2, nome1, nome2) {
+Fase_Lua::Fase_Lua(Entidades::Personagens::Jogador* pJogador, Entidades::Personagens::Jogador* pJogador2, const std::string& nome1, const std::string& nome2)
+    : Fase(pJogador, pJogador2, nome1, nome2),
+      maxAliens(5), maxSlimes(4), maxGosmas(6) {
     criarCenario();
     criarObstaculos();
     criarInimigos();
@@ -31,25 +33,21 @@ void Fase_Lua::criarInimigos() {
 }
 
 void Fase_Lua::criarAliens() {
-    Entidades::Personagens::Alien* inimigo1 = new Entidades::Personagens::Alien(400.f, 300.f);
-    lista_ents.incluir(inimigo1);
-    pGC->incluirInimigo(inimigo1);
+    static const float posicoes[][2] = {
+        { 400.f, 300.f},
+        { 500.f, 300.f},
+        {1200.f, 400.f},
+        {1700.f, 350.f},
+        {2200.f, 300.f}
+    };
+    const int total = sizeof(posicoes) / sizeof(posicoes[0]);
 
-    Entidades::Personagens::Alien* inimigo2 = new Entidades::Personagens::Alien(500.f, 300.f);
-    lista_ents.incluir(inimigo2);
-    pGC->incluirInimigo(inimigo2);
-
-    Entidades::Personagens::Alien* inimigo3 = new Entidades::Personagens::Alien(1200.f, 400.f);
-    lista_ents.incluir(inimigo3);
-    pGC->incluirInimigo(inimigo3);
-
-    Entidades::Personagens::Alien* inimigo4 = new Entidades::Personagens::Alien(1700.f, 350.f);
-    lista_ents.incluir(inimigo4);
-    pGC->incluirInimigo(inimigo4);
-
-    Entidades::Personagens::Alien* inimigo5 = new Entidades::Personagens::Alien(2200.f, 300.f);
-    lista_ents.incluir(inimigo5);
-    pGC->incluirInimigo(inimigo5);
+    int quantidade = (maxAliens < total) ? maxAliens : total;
+    for (int i = 0; i < quantidade; ++i) {
+        Entidades::Personagens::Alien* inimigo = new Entidades::Personagens::Alien(posicoes[i][0], posicoes[i][1]);
+        lista_ents.incluir(inimigo);
+        pGC->incluirInimigo(inimigo);
+    }
 }
 
 void Fase_Lua::criarObstaculos() {
@@ -122,19 +120,11 @@ void Fase_Lua::criarGosmas() {
         {1980.f, 640.f},
         {2400.f, 640.f}
     };
-    const int total  = sizeof(posicoes) / sizeof(posicoes[0]);
-    const int minimo = 3;
+    const int total = sizeof(posicoes) / sizeof(posicoes[0]);
 
-    int indices[total];
-    for (int i = 0; i < total; ++i) indices[i] = i;
-    for (int i = total - 1; i > 0; --i) {
-        int j = std::rand() % (i + 1);
-        int tmp = indices[i]; indices[i] = indices[j]; indices[j] = tmp;
-    }
-
-    int quantidade = minimo + std::rand() % (total - minimo + 1);
-    for (int i = 0; i < quantidade; ++i) {
-        Entidades::Obstaculos::Gosma* om = new Entidades::Obstaculos::Gosma(posicoes[indices[i]][0], posicoes[indices[i]][1]);
+    std::vector<sf::Vector2f> p = sortearPosicoes(posicoes, total, 3, maxGosmas);
+    for (size_t i = 0; i < p.size(); ++i) {
+        Entidades::Obstaculos::Gosma* om = new Entidades::Obstaculos::Gosma(p[i].x, p[i].y);
         pGC->incluirObstaculo(om);
         lista_ents.incluir(om);
     }
@@ -154,19 +144,11 @@ void Fase_Lua::criarSlimes() {
         {1900.f, 400.f},
         {2350.f, 300.f}
     };
-    const int total  = sizeof(posicoes) / sizeof(posicoes[0]);
-    const int minimo = 2;
+    const int total = sizeof(posicoes) / sizeof(posicoes[0]);
 
-    int indices[total];
-    for (int i = 0; i < total; ++i) indices[i] = i;
-    for (int i = total - 1; i > 0; --i) {
-        int j = std::rand() % (i + 1);
-        int tmp = indices[i]; indices[i] = indices[j]; indices[j] = tmp;
-    }
-
-    int quantidade = minimo + std::rand() % (total - minimo + 1);
-    for (int i = 0; i < quantidade; ++i) {
-        Entidades::Personagens::Slime* s = new Entidades::Personagens::Slime(posicoes[indices[i]][0], posicoes[indices[i]][1]);
+    std::vector<sf::Vector2f> p = sortearPosicoes(posicoes, total, 2, maxSlimes);
+    for (size_t i = 0; i < p.size(); ++i) {
+        Entidades::Personagens::Slime* s = new Entidades::Personagens::Slime(p[i].x, p[i].y);
         lista_ents.incluir(s);
         pGC->incluirInimigo(s);
     }

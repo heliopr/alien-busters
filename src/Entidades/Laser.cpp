@@ -2,6 +2,7 @@
 #include <iostream>
 
 namespace Entidades {
+namespace Projeteis {
 
 sf::SoundBuffer Laser::bufferLaser;
 sf::Sound Laser::somLaser;
@@ -37,4 +38,5 @@ sf::FloatRect Laser::getHitbox() const {
     return sf::FloatRect(x - 10.f, y - 3.f, 20.f, 6.f);
 }
 
+}
 }

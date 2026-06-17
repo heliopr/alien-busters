@@ -174,7 +174,7 @@ void Jogador::atirar() {
 
     float vx = olhandoDireita ? 500.f : -500.f;
     float xLaser = x + (olhandoDireita ? 22.f : -22.f);
-    Projetil* laser = new Laser(xLaser, y - 50.f, vx, 0.f, this);
+    Projeteis::Projetil* laser = new Projeteis::Laser(xLaser, y - 50.f, vx, 0.f, this);
     Gerenciadores::Gerenciador_Colisoes::getInstancia()->incluirProjetil(laser);
 }
 

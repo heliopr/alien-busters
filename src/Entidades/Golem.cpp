@@ -96,7 +96,7 @@ void Golem::atirar(Jogador* alvo, float dt) {
         vy = (dy - 0.5f * Config::GRAVIDADE_PROJETIL * t * t) / t;
     }
 
-    Projetil* pedra = new Pedra(x, y, vx, vy, 0, true);
+    Projeteis::Projetil* pedra = new Projeteis::Pedra(x, y, vx, vy, 0, true);
     Gerenciadores::Gerenciador_Colisoes::getInstancia()->incluirProjetil(pedra);
 }
 

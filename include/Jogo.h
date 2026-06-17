@@ -15,6 +15,19 @@ private:
         ESTADO_JOGANDO,
         ESTADO_TELA_MORTE
     };
+    
+    enum OpcaoMenu {
+        OPCAO_1JOGADOR = 0,
+        OPCAO_FASES,
+        OPCAO_RANKING,
+        OPCAO_SAIR
+    };
+
+    enum OpcaoFase {
+        FASE_LUA = 0,
+        FASE_MARTE,
+        FASE_VOLTAR
+    };
 
     static Jogo* instancia;
 
@@ -29,6 +42,18 @@ private:
     int faseSelecionada;
 
     Jogo();
+
+    void processarEventos();
+    void atualizarEDesenhar(float dt);
+
+    void tratarEventoTelaMorte(const sf::Event& evento);
+    void tratarEventoEntradaNome(const sf::Event& evento);
+    void tratarEventoEntradaNomeJ2(const sf::Event& evento);
+    void tratarEventoMenu(const sf::Event& evento);
+
+    void iniciarFase(int fase, bool doisJogadores);
+    void voltarAoMenu();
+    void salvarPontuacoes();
 
 public:
     ~Jogo();

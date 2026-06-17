@@ -5,6 +5,7 @@
 #include "Configuracao.h"
 #include <cmath>
 #include <vector>
+#include <cstdlib>
 
 namespace Fases {
 
@@ -82,6 +83,32 @@ void Fase::processarInimigos(float dt) {
 
         ini->atirar(alvo, dt);
     }
+}
+
+std::vector<sf::Vector2f> Fase::sortearPosicoes(const float posicoes[][2], int total, int minimo, int maximo) const {
+    int teto = (maximo < total) ? maximo : total;
+    if (teto < minimo) {
+        teto = minimo;
+    }
+
+    std::vector<int> indices(total);
+    for (int i = 0; i < total; ++i) {
+        indices[i] = i;
+    }
+    for (int i = total - 1; i > 0; --i) {
+        int j = std::rand() % (i+1);
+        int tmp = indices[i];
+        indices[i] = indices[j];
+        indices[j] = tmp;
+    }
+
+    int quantidade = minimo + std::rand() % (teto-minimo+1);
+
+    std::vector<sf::Vector2f> escolhidas;
+    for (int i = 0; i < quantidade; ++i) {
+        escolhidas.push_back(sf::Vector2f(posicoes[indices[i]][0], posicoes[indices[i]][1]));
+    }
+    return escolhidas;
 }
 
 void Fase::atualizarCamera() {
