@@ -25,6 +25,7 @@ public:
     ~Pedra();
 
     void executar(float dt);
+    std::string serializar() const;
     sf::FloatRect getHitbox() const;
     void quicar();
 };

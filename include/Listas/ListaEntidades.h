@@ -3,6 +3,8 @@
 
 #include "Listas/Lista.h"
 #include "Entidades/Entidade.h"
+#include <string>
+#include <vector>
 
 namespace AlienBusters {
 namespace Listas {
@@ -23,6 +25,7 @@ public:
     void criarExplosao(float x, float y);
     void percorrer(float dt);
     void desenhar();
+    void serializar(std::vector<std::string>& linhas) const;
 };
 
 }

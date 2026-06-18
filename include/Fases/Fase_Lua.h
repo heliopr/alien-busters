@@ -16,7 +16,8 @@ private:
 public:
     Fase_Lua(Entidades::Personagens::Jogador* pJogador,
              Entidades::Personagens::Jogador* pJogador2 = 0,
-             const std::string& nome1 = "", const std::string& nome2 = "");
+             const std::string& nome1 = "", const std::string& nome2 = "",
+             bool gerarConteudo = true);
     ~Fase_Lua();
 
 protected:

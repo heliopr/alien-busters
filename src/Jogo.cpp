@@ -57,6 +57,11 @@ void Jogo::processarEventos() {
     sf::Event evento;
     while (GG->coletarEventos(evento)) {
         if (evento.type == sf::Event::Closed) {
+            // Ao fechar o jogo durante uma partida, salva o estado completo
+            // da fase para permitir continuar exatamente de onde parou.
+            if (estado == ESTADO_JOGANDO && faseAtual != 0 && !faseAtual->jogadorPerdeu()) {
+                salvarEstadoCompleto();
+            }
             GG->fecharJanela();
         }
 
@@ -303,13 +308,92 @@ void Jogo::salvarProgresso() {
     Gerenciadores::Gerenciador_Salvamento::getInstancia()->salvarJogo(dados);
 }
 
+void Jogo::salvarEstadoCompleto() {
+    if (nomeJogadorAtual.empty() || faseAtual == 0) {
+        return;
+    }
+
+    Gerenciadores::DadosSalvos dados;
+    dados.nome1 = nomeJogadorAtual;
+    dados.nome2 = nomeJogador2Atual;
+    dados.numJogadores = doisJogadoresAtual ? 2 : 1;
+    dados.fase = faseEmAndamento;
+    dados.pontos1 = pJog1->getPontos();
+    dados.pontos2 = doisJogadoresAtual ? pJog2->getPontos() : 0;
+    dados.vidas1 = pJog1->getNumVidas();
+    dados.vidas2 = doisJogadoresAtual ? pJog2->getNumVidas() : 3;
+
+    dados.temSnapshot = true;
+    dados.x1 = pJog1->getX();
+    dados.y1 = pJog1->getY();
+    dados.vy1 = pJog1->getVy();
+    if (doisJogadoresAtual) {
+        dados.x2 = pJog2->getX();
+        dados.y2 = pJog2->getY();
+        dados.vy2 = pJog2->getVy();
+    }
+
+    faseAtual->montarSnapshot(dados.entidades);
+
+    Gerenciadores::Gerenciador_Salvamento::getInstancia()->salvarJogo(dados);
+}
+
+void Jogo::iniciarFaseSnapshot(const Gerenciadores::DadosSalvos& dados) {
+    bool dois = (dados.numJogadores == 2);
+    Entidades::Personagens::Jogador* p2 = dois ? pJog2 : 0;
+    std::string nome2 = dois ? nomeJogador2Atual : "";
+
+    delete faseAtual;
+    faseAtual = 0;
+
+    // gerarConteudo = false: a fase nasce vazia e e preenchida pelo snapshot.
+    if (dados.fase == FASE_LUA) {
+        faseAtual = new Fases::Fase_Lua(pJog1, p2, nomeJogadorAtual, nome2, false);
+    } else if (dados.fase == FASE_MARTE) {
+        faseAtual = new Fases::Fase_Marte(pJog1, p2, nomeJogadorAtual, nome2, false);
+    }
+
+    if (faseAtual == 0) {
+        return;
+    }
+
+    pJog1->resetar();
+    pJog1->restaurarEstado(dados.pontos1, dados.vidas1);
+    pJog1->setX(dados.x1);
+    pJog1->setY(dados.y1);
+    pJog1->setVy(dados.vy1);
+
+    if (dois) {
+        pJog2->resetar();
+        pJog2->restaurarEstado(dados.pontos2, dados.vidas2);
+        pJog2->setX(dados.x2);
+        pJog2->setY(dados.y2);
+        pJog2->setVy(dados.vy2);
+        menu.confirmarNomeJ2();
+    } else {
+        menu.confirmarNome();
+    }
+
+    faseAtual->carregarSnapshot(dados.entidades);
+
+    estado = ESTADO_JOGANDO;
+    faseSelecionada = -1;
+    faseEmAndamento = dados.fase;
+    doisJogadoresAtual = dois;
+    pontuacaoSalva = false;
+}
+
 void Jogo::continuarJogo(const Gerenciadores::DadosSalvos& dados) {
     bool dois = (dados.numJogadores == 2);
 
     nomeJogadorAtual = dados.nome1;
     nomeJogador2Atual = dois ? dados.nome2 : "";
 
-    iniciarFase(dados.fase, dois, dados.pontos1, dados.pontos2, dados.vidas1, dados.vidas2);
+    if (dados.temSnapshot) {
+        iniciarFaseSnapshot(dados);
+    } else {
+        iniciarFase(dados.fase, dois, dados.pontos1, dados.pontos2, dados.vidas1, dados.vidas2);
+    }
 }
 
 void Jogo::voltarAoMenu() {

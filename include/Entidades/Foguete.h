@@ -20,6 +20,7 @@ public:
 
     void executar(float dt);
     void salvar();
+    std::string serializar() const;
     sf::FloatRect getHitbox() const;
 };
 

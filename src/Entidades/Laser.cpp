@@ -1,5 +1,6 @@
 #include "Entidades/Laser.h"
 #include <iostream>
+#include <sstream>
 
 namespace AlienBusters {
 namespace Entidades {
@@ -34,6 +35,13 @@ Laser::Laser(float x, float y, float vx, float vy, Personagens::Jogador* dono, b
 }
 
 Laser::~Laser() {}
+
+std::string Laser::serializar() const {
+    std::ostringstream ss;
+    ss << "LASER " << x << " " << y << " " << vx << " " << vy << " "
+       << (inimigo ? 1 : 0);
+    return ss.str();
+}
 
 sf::FloatRect Laser::getHitbox() const {
     return sf::FloatRect(x - 10.f, y - 3.f, 20.f, 6.f);

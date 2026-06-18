@@ -1,5 +1,6 @@
 #include "Entidades/Pedra.h"
 #include <iostream>
+#include <sstream>
 
 namespace AlienBusters {
 namespace Entidades {
@@ -61,6 +62,13 @@ void Pedra::executar(float dt) {
         rotacao += 180.f * dt;
         pFig->setRotation(rotacao);
     }
+}
+
+std::string Pedra::serializar() const {
+    std::ostringstream ss;
+    ss << "PEDRA " << x << " " << y << " " << vx << " " << vy << " "
+       << (inimigo ? 1 : 0);
+    return ss.str();
 }
 
 sf::FloatRect Pedra::getHitbox() const {

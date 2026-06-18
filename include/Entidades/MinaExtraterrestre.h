@@ -29,6 +29,7 @@ public:
 
     void executar(float dt);
     void salvar();
+    std::string serializar() const;
     void obstaculizar(Personagens::Jogador* p);
     void aplicarDano(Personagens::Jogador* p);
 

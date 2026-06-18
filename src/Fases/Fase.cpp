@@ -2,20 +2,30 @@
 #include "Entidades/Chao.h"
 #include "Entidades/Foguete.h"
 #include "Entidades/Inimigo.h"
+#include "Entidades/Plataforma.h"
+#include "Entidades/Gosma.h"
+#include "Entidades/MinaExtraterrestre.h"
+#include "Entidades/Alien.h"
+#include "Entidades/Slime.h"
+#include "Entidades/Golem.h"
+#include "Entidades/Laser.h"
+#include "Entidades/Pedra.h"
 #include "Gerenciadores/Gerenciador_Grafico.h"
 #include "Configuracao.h"
 #include <cmath>
 #include <vector>
 #include <cstdlib>
+#include <sstream>
+#include <string>
 
 namespace AlienBusters {
 namespace Fases {
 
 Fase::Fase(Entidades::Personagens::Jogador* pJogador, Entidades::Personagens::Jogador* pJogador2,
-           const std::string& nome1, const std::string& nome2)
+           const std::string& nome1, const std::string& nome2, bool gerarConteudo)
     : Ente(), lista_ents(), pGC(Gerenciadores::Gerenciador_Colisoes::getInstancia()),
       pJogador(pJogador), pJogador2(pJogador2), pFoguete(0), concluida(false),
-      nomeJogador(nome1), nomeJogador2(nome2) {
+      nomeJogador(nome1), nomeJogador2(nome2), gerarConteudo(gerarConteudo) {
     pGC->setJogador(pJogador);
     pGC->setJogador2(pJogador2);
     pGC->setListaEntidades(&lista_ents);
@@ -258,6 +268,124 @@ void Fase::reiniciar() {
     criarObstaculos();
     criarInimigos();
     criarFoguete();
+}
+
+void Fase::montarSnapshot(std::vector<std::string>& linhas) const {
+    lista_ents.serializar(linhas);
+}
+
+Entidades::Entidade* Fase::criarEntidadeDeLinha(const std::string& linha, int& categoria) const {
+    std::istringstream ss(linha);
+    std::string tipo;
+    ss >> tipo;
+    categoria = CAT_OUTRO;
+
+    if (tipo == "CHAO") {
+        float x, y, largura, altura;
+        int r, g, b;
+        ss >> x >> y >> largura >> altura >> r >> g >> b;
+        categoria = CAT_CHAO;
+        return new Entidades::Chao(x, y, largura, altura,
+                                   sf::Color(static_cast<sf::Uint8>(r), static_cast<sf::Uint8>(g), static_cast<sf::Uint8>(b)));
+    } else if (tipo == "PLATAFORMA") {
+        float x, y;
+        int r, g, b;
+        ss >> x >> y >> r >> g >> b;
+        categoria = CAT_OBSTACULO;
+        return new Entidades::Obstaculos::Plataforma(x, y,
+                                   sf::Color(static_cast<sf::Uint8>(r), static_cast<sf::Uint8>(g), static_cast<sf::Uint8>(b)));
+    } else if (tipo == "GOSMA") {
+        float x, y;
+        ss >> x >> y;
+        categoria = CAT_OBSTACULO;
+        return new Entidades::Obstaculos::Gosma(x, y);
+    } else if (tipo == "MINA") {
+        float x, y;
+        ss >> x >> y;
+        categoria = CAT_OBSTACULO;
+        return new Entidades::Obstaculos::MinaExtraterrestre(x, y);
+    } else if (tipo == "ALIEN") {
+        float x, y;
+        ss >> x >> y;
+        categoria = CAT_INIMIGO;
+        return new Entidades::Personagens::Alien(x, y);
+    } else if (tipo == "SLIME") {
+        float x, y;
+        ss >> x >> y;
+        categoria = CAT_INIMIGO;
+        return new Entidades::Personagens::Slime(x, y);
+    } else if (tipo == "GOLEM") {
+        float x, y;
+        ss >> x >> y;
+        categoria = CAT_INIMIGO;
+        return new Entidades::Personagens::Golem(x, y);
+    } else if (tipo == "FOGUETE") {
+        float x, y;
+        ss >> x >> y;
+        categoria = CAT_FOGUETE;
+        return new Entidades::Foguete(x, y);
+    } else if (tipo == "LASER" || tipo == "PEDRA") {
+        float x, y, vx, vy;
+        int inimigoFlag = 0;
+        ss >> x >> y >> vx >> vy >> inimigoFlag;
+        categoria = CAT_PROJETIL;
+        if (tipo == "LASER") {
+            return new Entidades::Projeteis::Laser(x, y, vx, vy, 0, inimigoFlag != 0);
+        }
+        return new Entidades::Projeteis::Pedra(x, y, vx, vy, 0, inimigoFlag != 0);
+    }
+
+    return 0;
+}
+
+void Fase::carregarSnapshot(const std::vector<std::string>& linhas) {
+    pGC->limpar();
+    lista_ents.limpar();
+    pFoguete = 0;
+    concluida = false;
+
+    for (std::size_t i = 0; i < linhas.size(); ++i) {
+        int categoria = CAT_OUTRO;
+        Entidades::Entidade* ent = criarEntidadeDeLinha(linhas[i], categoria);
+        if (ent == 0) {
+            continue;
+        }
+
+        switch (categoria) {
+            case CAT_CHAO: {
+                Entidades::Chao* chao = static_cast<Entidades::Chao*>(ent);
+                pGC->incluirChao(chao);
+                lista_ents += chao;
+                break;
+            }
+            case CAT_OBSTACULO: {
+                Entidades::Obstaculos::Obstaculo* obs = static_cast<Entidades::Obstaculos::Obstaculo*>(ent);
+                pGC->incluirObstaculo(obs);
+                lista_ents.incluir(obs);
+                break;
+            }
+            case CAT_INIMIGO: {
+                Entidades::Personagens::Inimigo* ini = static_cast<Entidades::Personagens::Inimigo*>(ent);
+                lista_ents.incluir(ini);
+                pGC->incluirInimigo(ini);
+                break;
+            }
+            case CAT_FOGUETE: {
+                Entidades::Foguete* fog = static_cast<Entidades::Foguete*>(ent);
+                pFoguete = fog;
+                lista_ents += fog;
+                break;
+            }
+            case CAT_PROJETIL: {
+                // incluirProjetil ja adiciona o projetil a lista de entidades.
+                pGC->incluirProjetil(static_cast<Entidades::Projeteis::Projetil*>(ent));
+                break;
+            }
+            default:
+                delete ent;
+                break;
+        }
+    }
 }
 
 }

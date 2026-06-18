@@ -1,6 +1,7 @@
 #include "Entidades/Golem.h"
 #include "Entidades/Jogador.h"
 #include "Entidades/Pedra.h"
+#include <sstream>
 #include "Gerenciadores/Gerenciador_Colisoes.h"
 #include "Configuracao.h"
 #include <cstdlib>
@@ -57,6 +58,12 @@ void Golem::executar(float dt) {
 }
 
 void Golem::salvar() {
+}
+
+std::string Golem::serializar() const {
+    std::ostringstream ss;
+    ss << "GOLEM " << x << " " << y;
+    return ss.str();
 }
 
 void Golem::danificar(Jogador* p) {

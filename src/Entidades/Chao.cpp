@@ -1,11 +1,12 @@
 #include "Entidades/Chao.h"
 #include <cstddef>
+#include <sstream>
 
 namespace AlienBusters {
 namespace Entidades {
 
 Chao::Chao(float x, float y, float largura, float altura, sf::Color cor) :
-    Entidade(), altura(altura), largura(largura)
+    Entidade(), altura(altura), largura(largura), cor(cor)
 {
     this->x = x;
     this->y = y;
@@ -31,6 +32,14 @@ void Chao::executar(float dt) {
 
 void Chao::salvar() {
     // TODO
+}
+
+std::string Chao::serializar() const {
+    std::ostringstream ss;
+    ss << "CHAO " << x << " " << y << " " << largura << " " << altura << " "
+       << static_cast<int>(cor.r) << " " << static_cast<int>(cor.g) << " "
+       << static_cast<int>(cor.b);
+    return ss.str();
 }
 
 sf::FloatRect Chao::getHitbox() const {

@@ -1,4 +1,5 @@
 #include "Entidades/Slime.h"
+#include <sstream>
 #include <cstdlib>
 #include <cstddef>
 
@@ -54,6 +55,12 @@ void Slime::executar(float dt) {
 }
 
 void Slime::salvar() {
+}
+
+std::string Slime::serializar() const {
+    std::ostringstream ss;
+    ss << "SLIME " << x << " " << y;
+    return ss.str();
 }
 
 void Slime::danificar(Jogador* p) {

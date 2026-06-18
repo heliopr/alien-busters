@@ -1,5 +1,6 @@
 #include "Entidades/Gosma.h"
 #include "Entidades/Jogador.h"
+#include <sstream>
 #include <cstddef>
 #include <cstdlib>
 #include <iostream>
@@ -39,6 +40,12 @@ void Gosma::executar(float dt) {
 }
 
 void Gosma::salvar() {
+}
+
+std::string Gosma::serializar() const {
+    std::ostringstream ss;
+    ss << "GOSMA " << x << " " << y;
+    return ss.str();
 }
 
 void Gosma::obstaculizar(Personagens::Jogador* p) {

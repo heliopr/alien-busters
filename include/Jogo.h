@@ -67,6 +67,8 @@ private:
     void voltarAoMenu();
     void salvarPontuacoes();
     void salvarProgresso();
+    void salvarEstadoCompleto();
+    void iniciarFaseSnapshot(const Gerenciadores::DadosSalvos& dados);
     void continuarJogo(const Gerenciadores::DadosSalvos& dados);
 
 public:

@@ -1,4 +1,5 @@
 #include "Entidades/Alien.h"
+#include <sstream>
 #include <cstdlib>
 #include <cstddef>
 
@@ -52,6 +53,12 @@ void Alien::executar(float dt) {
 }
 
 void Alien::salvar() {
+}
+
+std::string Alien::serializar() const {
+    std::ostringstream ss;
+    ss << "ALIEN " << x << " " << y;
+    return ss.str();
 }
 
 void Alien::danificar(Jogador* p) {

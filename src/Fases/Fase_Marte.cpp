@@ -11,13 +11,15 @@
 namespace AlienBusters {
 namespace Fases {
 
-Fase_Marte::Fase_Marte(Entidades::Personagens::Jogador* pJogador, Entidades::Personagens::Jogador* pJogador2, const std::string& nome1, const std::string& nome2)
-    : Fase(pJogador, pJogador2, nome1, nome2),
+Fase_Marte::Fase_Marte(Entidades::Personagens::Jogador* pJogador, Entidades::Personagens::Jogador* pJogador2, const std::string& nome1, const std::string& nome2, bool gerarConteudo)
+    : Fase(pJogador, pJogador2, nome1, nome2, gerarConteudo),
       maxSlimes(5), maxGolems(4), maxMinas(4) {
-    criarCenario();
-    criarObstaculos();
-    criarInimigos();
-    criarFoguete();
+    if (gerarConteudo) {
+        criarCenario();
+        criarObstaculos();
+        criarInimigos();
+        criarFoguete();
+    }
 }
 
 Fase_Marte::~Fase_Marte() {

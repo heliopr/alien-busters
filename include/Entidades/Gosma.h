@@ -21,6 +21,7 @@ public:
 
     void executar(float dt);
     void salvar();
+    std::string serializar() const;
     void obstaculizar(Personagens::Jogador* p);
 
     bool colide() const { return false; }

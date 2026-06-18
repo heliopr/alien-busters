@@ -10,6 +10,7 @@ class Chao : public Entidade {
 private:
     float altura;
     float largura;
+    sf::Color cor;
 
 public:
     Chao(float x, float y, float largura, float altura, sf::Color cor = sf::Color(145, 60, 25));
@@ -17,6 +18,7 @@ public:
 
     void executar(float dt);
     void salvar();
+    std::string serializar() const;
     sf::FloatRect getHitbox() const;
 };
 

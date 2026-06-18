@@ -1,6 +1,7 @@
 #include "Entidades/Foguete.h"
 #include <cstddef>
 #include <iostream>
+#include <sstream>
 
 namespace AlienBusters {
 namespace Entidades {
@@ -33,6 +34,12 @@ void Foguete::executar(float dt) {
 }
 
 void Foguete::salvar() {
+}
+
+std::string Foguete::serializar() const {
+    std::ostringstream ss;
+    ss << "FOGUETE " << x << " " << y;
+    return ss.str();
 }
 
 sf::FloatRect Foguete::getHitbox() const {

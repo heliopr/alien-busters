@@ -1,5 +1,6 @@
 #include "Entidades/MinaExtraterrestre.h"
 #include "Entidades/Jogador.h"
+#include <sstream>
 #include <cstddef>
 #include <cstdlib>
 #include <cmath>
@@ -60,6 +61,15 @@ void MinaExtraterrestre::executar(float dt) {
 }
 
 void MinaExtraterrestre::salvar() {
+}
+
+std::string MinaExtraterrestre::serializar() const {
+    if (destruido) {
+        return "";
+    }
+    std::ostringstream ss;
+    ss << "MINA " << x << " " << y;
+    return ss.str();
 }
 
 void MinaExtraterrestre::obstaculizar(Personagens::Jogador* p) {

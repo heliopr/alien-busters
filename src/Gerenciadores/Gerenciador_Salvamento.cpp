@@ -24,6 +24,31 @@ Gerenciador_Salvamento::Gerenciador_Salvamento(const std::string& caminho)
 Gerenciador_Salvamento::~Gerenciador_Salvamento() {
 }
 
+bool Gerenciador_Salvamento::parseCabecalho(const std::string& linha, DadosSalvos& dados) {
+    // Formato: nome1|nome2|numJogadores|fase|pontos1|pontos2|vidas1|vidas2
+    std::vector<std::string> campos;
+    std::stringstream ss(linha);
+    std::string campo;
+    while (std::getline(ss, campo, '|')) {
+        campos.push_back(campo);
+    }
+
+    if (campos.size() != 8) {
+        return false;
+    }
+
+    dados.nome1 = campos[0];
+    dados.nome2 = campos[1];
+    std::istringstream(campos[2]) >> dados.numJogadores;
+    std::istringstream(campos[3]) >> dados.fase;
+    std::istringstream(campos[4]) >> dados.pontos1;
+    std::istringstream(campos[5]) >> dados.pontos2;
+    std::istringstream(campos[6]) >> dados.vidas1;
+    std::istringstream(campos[7]) >> dados.vidas2;
+
+    return !dados.nome1.empty();
+}
+
 void Gerenciador_Salvamento::carregarSaves() {
     saves.clear();
 
@@ -34,41 +59,43 @@ void Gerenciador_Salvamento::carregarSaves() {
 
     std::string linha;
     while (std::getline(arquivo, linha)) {
-        if (linha.empty()) continue;
-
-        // Formato: nome1|nome2|numJogadores|fase|pontos1|pontos2|vidas1|vidas2
-        std::vector<std::string> campos;
-        std::stringstream ss(linha);
-        std::string campo;
-        while (std::getline(ss, campo, '|')) {
-            campos.push_back(campo);
-        }
-
-        if (campos.size() != 8) {
-            std::cerr << "Linha invalida no salvamento (campos): " << linha << std::endl;
+        if (linha.empty()) {
             continue;
         }
 
-        try {
+        if (linha == "SAVE") {
+            // Bloco com snapshot completo da fase.
             DadosSalvos dados;
-            dados.nome1 = campos[0];
-            dados.nome2 = campos[1];
+            std::string cabecalho;
+            if (!std::getline(arquivo, cabecalho) || !parseCabecalho(cabecalho, dados)) {
+                std::cerr << "Cabecalho invalido no salvamento: " << cabecalho << std::endl;
+                continue;
+            }
 
-            std::istringstream(campos[2]) >> dados.numJogadores;
-            std::istringstream(campos[3]) >> dados.fase;
-            std::istringstream(campos[4]) >> dados.pontos1;
-            std::istringstream(campos[5]) >> dados.pontos2;
-            std::istringstream(campos[6]) >> dados.vidas1;
-            std::istringstream(campos[7]) >> dados.vidas2;
-
-            if (dados.nome1.empty()) {
-                throw std::invalid_argument("nome do jogador vazio");
+            std::string l;
+            while (std::getline(arquivo, l) && l != "ENDSAVE") {
+                if (l.empty()) {
+                    continue;
+                }
+                if (l.compare(0, 5, "JOG1 ") == 0) {
+                    std::istringstream(l.substr(5)) >> dados.x1 >> dados.y1 >> dados.vy1;
+                    dados.temSnapshot = true;
+                } else if (l.compare(0, 5, "JOG2 ") == 0) {
+                    std::istringstream(l.substr(5)) >> dados.x2 >> dados.y2 >> dados.vy2;
+                } else if (l.compare(0, 4, "ENT ") == 0) {
+                    dados.entidades.push_back(l.substr(4));
+                }
             }
 
             saves.push_back(dados);
-        } catch (const std::exception& e) {
-            std::cerr << "Linha invalida no salvamento: (" << e.what() << ")" << std::endl;
-            continue;
+        } else {
+            // Formato legado: uma linha por save, sem snapshot.
+            DadosSalvos dados;
+            if (parseCabecalho(linha, dados)) {
+                saves.push_back(dados);
+            } else {
+                std::cerr << "Linha invalida no salvamento: " << linha << std::endl;
+            }
         }
     }
 
@@ -83,14 +110,29 @@ void Gerenciador_Salvamento::escreverArquivo() {
     }
 
     for (size_t i = 0; i < saves.size(); ++i) {
-        arquivo << saves[i].nome1 << "|"
-                << saves[i].nome2 << "|"
-                << saves[i].numJogadores << "|"
-                << saves[i].fase << "|"
-                << saves[i].pontos1 << "|"
-                << saves[i].pontos2 << "|"
-                << saves[i].vidas1 << "|"
-                << saves[i].vidas2 << "\n";
+        const DadosSalvos& d = saves[i];
+
+        arquivo << "SAVE\n";
+        arquivo << d.nome1 << "|"
+                << d.nome2 << "|"
+                << d.numJogadores << "|"
+                << d.fase << "|"
+                << d.pontos1 << "|"
+                << d.pontos2 << "|"
+                << d.vidas1 << "|"
+                << d.vidas2 << "\n";
+
+        if (d.temSnapshot) {
+            arquivo << "JOG1 " << d.x1 << " " << d.y1 << " " << d.vy1 << "\n";
+            if (d.numJogadores == 2) {
+                arquivo << "JOG2 " << d.x2 << " " << d.y2 << " " << d.vy2 << "\n";
+            }
+            for (size_t j = 0; j < d.entidades.size(); ++j) {
+                arquivo << "ENT " << d.entidades[j] << "\n";
+            }
+        }
+
+        arquivo << "ENDSAVE\n";
     }
 
     arquivo.close();
