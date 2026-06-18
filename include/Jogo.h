@@ -9,6 +9,7 @@
 #include "Menu.h"
 #include "TelaMorte.h"
 #include "TelaVitoria.h"
+#include "TelaPause.h"
 
 namespace AlienBusters {
 
@@ -17,6 +18,7 @@ private:
     enum Estado {
         ESTADO_MENU,
         ESTADO_JOGANDO,
+        ESTADO_PAUSE,
         ESTADO_TELA_MORTE,
         ESTADO_TELA_VITORIA
     };
@@ -42,6 +44,7 @@ private:
     Menu menu;
     TelaMorte telaMorte;
     TelaVitoria telaVitoria;
+    TelaPause telaPause;
     Estado estado;
     std::string nomeJogadorAtual;
     std::string nomeJogador2Atual;
@@ -57,6 +60,7 @@ private:
 
     void tratarEventoTelaMorte(const sf::Event& evento);
     void tratarEventoTelaVitoria(const sf::Event& evento);
+    void tratarEventoPause(const sf::Event& evento);
     void tratarEventoEntradaNome(const sf::Event& evento);
     void tratarEventoEntradaNomeJ2(const sf::Event& evento);
     void tratarEventoMenu(const sf::Event& evento);

@@ -15,7 +15,7 @@ Jogo* Jogo::getInstancia() {
 }
 
 Jogo::Jogo() : faseAtual(0), pJog1(0), pJog2(0),
-               menu(this), telaMorte(), telaVitoria(), estado(ESTADO_MENU), nomeJogadorAtual(""),
+               menu(this), telaMorte(), telaVitoria(), telaPause(), estado(ESTADO_MENU), nomeJogadorAtual(""),
                nomeJogador2Atual(""), faseSelecionada(-1), faseEmAndamento(-1),
                doisJogadoresAtual(false), pontuacaoSalva(false) {
     Ente::setGG(Gerenciadores::Gerenciador_Grafico::getInstancia());
@@ -59,7 +59,8 @@ void Jogo::processarEventos() {
         if (evento.type == sf::Event::Closed) {
             // Ao fechar o jogo durante uma partida, salva o estado completo
             // da fase para permitir continuar exatamente de onde parou.
-            if (estado == ESTADO_JOGANDO && faseAtual != 0 && !faseAtual->jogadorPerdeu()) {
+            if ((estado == ESTADO_JOGANDO || estado == ESTADO_PAUSE) &&
+                faseAtual != 0 && !faseAtual->jogadorPerdeu()) {
                 salvarEstadoCompleto();
             }
             GG->fecharJanela();
@@ -83,6 +84,13 @@ void Jogo::processarEventos() {
             tratarEventoTelaMorte(evento);
         } else if (estado == ESTADO_TELA_VITORIA) {
             tratarEventoTelaVitoria(evento);
+        } else if (estado == ESTADO_PAUSE) {
+            tratarEventoPause(evento);
+        } else if (estado == ESTADO_JOGANDO) {
+            if (evento.key.code == sf::Keyboard::Escape) {
+                telaPause.resetar();
+                estado = ESTADO_PAUSE;
+            }
         } else if (menu.emTelaEntradaNome()) {
             tratarEventoEntradaNome(evento);
         } else if (menu.emTelaEntradaNomeJ2()) {
@@ -114,6 +122,11 @@ void Jogo::atualizarEDesenhar(float dt) {
                 avancarFase();
             }
         }
+    } else if (estado == ESTADO_PAUSE) {
+        if (faseAtual) {
+            faseAtual->desenhar();
+        }
+        telaPause.desenhar();
     } else if (estado == ESTADO_TELA_VITORIA) {
         if (faseAtual) {
             faseAtual->desenhar();
@@ -155,6 +168,32 @@ void Jogo::tratarEventoTelaVitoria(const sf::Event& evento) {
     } else if (evento.key.code == sf::Keyboard::Enter) {
         if (telaVitoria.getOpcaoSelecionada() == 0) {
             iniciarFase(FASE_LUA, doisJogadoresAtual);
+        } else {
+            voltarAoMenu();
+        }
+    }
+}
+
+void Jogo::tratarEventoPause(const sf::Event& evento) {
+    if (evento.key.code == sf::Keyboard::Escape) {
+        // Escape volta a jogar (alterna a pausa).
+        estado = ESTADO_JOGANDO;
+        return;
+    }
+
+    if (evento.key.code == sf::Keyboard::Up || evento.key.code == sf::Keyboard::W) {
+        telaPause.subirOpcao();
+    } else if (evento.key.code == sf::Keyboard::Down || evento.key.code == sf::Keyboard::S) {
+        telaPause.descerOpcao();
+    } else if (evento.key.code == sf::Keyboard::Enter) {
+        int opcao = telaPause.getOpcaoSelecionada();
+        if (opcao == TelaPause::OPCAO_CONTINUAR) {
+            estado = ESTADO_JOGANDO;
+        } else if (opcao == TelaPause::OPCAO_REINICIAR) {
+            if (faseAtual) {
+                faseAtual->reiniciar();
+            }
+            estado = ESTADO_JOGANDO;
         } else {
             voltarAoMenu();
         }
