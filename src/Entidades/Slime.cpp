@@ -15,7 +15,7 @@ Slime::Slime(float x_ini, float y_ini)
 
     nivel = (std::rand() % 100);
 
-    float v = 40.f + std::rand() % 60;
+    float v = 50.f;
     velocidadeX = (std::rand() % 2 == 0) ? v : -v;
 
     pFig = new sf::RectangleShape(sf::Vector2f(128.f, 128.f));

@@ -18,7 +18,7 @@ Golem::Golem(float x_ini, float y_ini)
     y = y_ini;
     num_vidas = 5;
 
-    float v = 20.f + std::rand() % 20;
+    float v = 30.f;
     velocidadeX = (std::rand() % 2 == 0) ? v : -v;
 
     pFig = new sf::RectangleShape(sf::Vector2f(202.5f, 144.f));

@@ -78,15 +78,15 @@ void Fase_Marte::criarObstaculos() {
     Entidades::Chao* parede2 = new Entidades::Chao(2500.f, 300.f, 400.f, 600.f);
     pGC->incluirChao(parede1);
     pGC->incluirChao(parede2);
-    lista_ents.incluir(parede1);
-    lista_ents.incluir(parede2);
+    lista_ents += parede1;
+    lista_ents += parede2;
 
     criarMinasExtraterrestres();
 }
 
 void Fase_Marte::criarFoguete() {
     pFoguete = new Entidades::Foguete(2350.f, 540.f);
-    lista_ents.incluir(pFoguete);
+    lista_ents += pFoguete;
 }
 
 void Fase_Marte::criarGolems() {
@@ -100,8 +100,8 @@ void Fase_Marte::criarGolems() {
 
     std::vector<sf::Vector2f> p = sortearPosicoes(posicoes, total, 3, maxGolems);
     for (size_t i = 0; i < p.size(); ++i) {
-        Entidades::Personagens::Golem* inimigo = new Entidades::Personagens::Golem(p[i].x, p[i].y);
-        lista_ents.incluir(inimigo);
+        Entidades::Personagens::Golem* inimigo = new Entidades::Personagens::Golem();
+        lista_ents.incluir(inimigo, p[i].x, p[i].y);
         pGC->incluirInimigo(inimigo);
     }
 }

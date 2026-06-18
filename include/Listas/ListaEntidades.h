@@ -16,6 +16,8 @@ public:
     ~ListaEntidades();
 
     void incluir(Entidades::Entidade *pE);
+    void incluir(Entidades::Entidade *pE, float x, float y);
+    ListaEntidades& operator+=(Entidades::Entidade *pE);
     void remover(Entidades::Entidade *pE);
     void limpar();
     void criarExplosao(float x, float y);

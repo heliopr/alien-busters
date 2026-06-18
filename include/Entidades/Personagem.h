@@ -16,12 +16,15 @@ protected:
 
 public:
     Personagem();
+    Personagem(int num_vidas);
     virtual ~Personagem();
 
     void salvarDataBuffer();
     virtual void executar(float dt) = 0;
     virtual void salvar() = 0;
     virtual void mover(float dt = 0) = 0;
+
+    Personagem& operator--();
 
     bool getNoChao() const { return noChao; }
     void setNoChao(bool b) { noChao = b; }

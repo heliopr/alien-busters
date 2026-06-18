@@ -12,7 +12,7 @@ namespace AlienBusters {
 namespace Entidades {
 namespace Personagens {
 
-Jogador::Jogador(float xInicial, float yInicial, bool eJogadorUm, const std::string& texturaSprite) : Personagem(), Atirador(), pontos(0),
+Jogador::Jogador(float xInicial, float yInicial, bool eJogadorUm, const std::string& texturaSprite) : Personagem(3), Atirador(), pontos(0),
     eJogadorUm(eJogadorUm), xInicial(xInicial), yInicial(yInicial),
     ultimoDx(0.f),
     olhandoDireita(true), puloPressionado(false), tiroPressionado(false),
@@ -20,7 +20,6 @@ Jogador::Jogador(float xInicial, float yInicial, bool eJogadorUm, const std::str
 {
     x = xInicial;
     y = yInicial;
-    num_vidas = 3;
 
     pFig = new sf::RectangleShape(sf::Vector2f(60.f, 100.f));
     if (pFig != NULL) {
@@ -194,7 +193,7 @@ void Jogador::ativarInvulnerabilidade() {
 }
 
 void Jogador::perderVida() {
-    num_vidas--;
+    --(*this);
     tempoFlashDano = Config::DURACAO_FLASH_DANO;
 
     if (num_vidas <= 0) {

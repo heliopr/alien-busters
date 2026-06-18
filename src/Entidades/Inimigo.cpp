@@ -59,7 +59,7 @@ void Inimigo::levarDano() {
         return;
     }
 
-    num_vidas--;
+    --(*this);
     tempoFlashDano = Config::DURACAO_FLASH_DANO;
     if (somCarregado && num_vidas > 0) {
         somDano.play();

@@ -45,8 +45,8 @@ void Fase_Lua::criarAliens() {
 
     int quantidade = (maxAliens < total) ? maxAliens : total;
     for (int i = 0; i < quantidade; ++i) {
-        Entidades::Personagens::Alien* inimigo = new Entidades::Personagens::Alien(posicoes[i][0], posicoes[i][1]);
-        lista_ents.incluir(inimigo);
+        Entidades::Personagens::Alien* inimigo = new Entidades::Personagens::Alien();
+        lista_ents.incluir(inimigo, posicoes[i][0], posicoes[i][1]);
         pGC->incluirInimigo(inimigo);
     }
 }
@@ -104,8 +104,8 @@ void Fase_Lua::criarObstaculos() {
     Entidades::Chao* parede2 = new Entidades::Chao(2600.f, 300.f, 400.f, 600.f, corLua);
     pGC->incluirChao(parede1);
     pGC->incluirChao(parede2);
-    lista_ents.incluir(parede1);
-    lista_ents.incluir(parede2);
+    lista_ents += parede1;
+    lista_ents += parede2;
 
     criarGosmas();
 }
@@ -133,7 +133,7 @@ void Fase_Lua::criarGosmas() {
 
 void Fase_Lua::criarFoguete() {
     pFoguete = new Entidades::Foguete(2380.f, 540.f);
-    lista_ents.incluir(pFoguete);
+    lista_ents += pFoguete;
 }
 
 void Fase_Lua::criarSlimes() {

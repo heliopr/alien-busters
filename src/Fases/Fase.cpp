@@ -229,9 +229,9 @@ void Fase::criarCenario(const sf::Color& cor) {
     pGC->incluirChao(chao2);
     pGC->incluirChao(chao3);
 
-    lista_ents.incluir(chao1);
-    lista_ents.incluir(chao2);
-    lista_ents.incluir(chao3);
+    lista_ents += chao1;
+    lista_ents += chao2;
+    lista_ents += chao3;
 }
 
 bool Fase::jogadorPerdeu() const {

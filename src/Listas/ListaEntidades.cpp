@@ -12,6 +12,19 @@ void ListaEntidades::incluir(Entidades::Entidade *pE) {
     LEs.incluir(pE);
 }
 
+void ListaEntidades::incluir(Entidades::Entidade *pE, float x, float y) {
+    if (pE != 0) {
+        pE->setX(x);
+        pE->setY(y);
+    }
+    LEs.incluir(pE);
+}
+
+ListaEntidades& ListaEntidades::operator+=(Entidades::Entidade *pE) {
+    LEs.incluir(pE);
+    return *this;
+}
+
 void ListaEntidades::remover(Entidades::Entidade *pE) {
     LEs.remover(pE);
 }
