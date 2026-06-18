@@ -25,9 +25,14 @@ Jogo::Jogo() : faseAtual(0), pJog1(0), pJog2(0),
 
     pJog2 = new Entidades::Personagens::Jogador(
         Config::POSICAO_INICIAL_X + 70.f, Config::POSICAO_INICIAL_Y, false, "assets/textures/player2.png");
+
+    // Inscreve o Jogo como observador dos eventos de entrada (padrao Observer).
+    Gerenciadores::Gerenciador_Eventos::getInstancia()->inscrever(this);
 }
 
 Jogo::~Jogo() {
+    Gerenciadores::Gerenciador_Eventos::getInstancia()->desinscrever(this);
+
     if (faseAtual) {
         delete faseAtual;
         faseAtual = 0;
@@ -52,56 +57,59 @@ void Jogo::executar() {
 }
 
 void Jogo::processarEventos() {
+    // Delega a coleta dos eventos ao Subject (Gerenciador_Eventos), que os
+    // repassa a este Jogo (e a quaisquer outros observadores inscritos).
+    Gerenciadores::Gerenciador_Eventos::getInstancia()->processar();
+}
+
+void Jogo::aoReceberEvento(const sf::Event& evento) {
     Gerenciadores::Gerenciador_Grafico* GG = Gerenciadores::Gerenciador_Grafico::getInstancia();
 
-    sf::Event evento;
-    while (GG->coletarEventos(evento)) {
-        if (evento.type == sf::Event::Closed) {
-            // Ao fechar o jogo durante uma partida, salva o estado completo
-            // da fase para permitir continuar exatamente de onde parou.
-            if ((estado == ESTADO_JOGANDO || estado == ESTADO_PAUSE) &&
-                faseAtual != 0 && !faseAtual->jogadorPerdeu()) {
-                salvarEstadoCompleto();
-            }
-            GG->fecharJanela();
+    if (evento.type == sf::Event::Closed) {
+        // Ao fechar o jogo durante uma partida, salva o estado completo
+        // da fase para permitir continuar exatamente de onde parou.
+        if ((estado == ESTADO_JOGANDO || estado == ESTADO_PAUSE) &&
+            faseAtual != 0 && !faseAtual->jogadorPerdeu()) {
+            salvarEstadoCompleto();
         }
+        GG->fecharJanela();
+    }
 
-        if (evento.type == sf::Event::KeyPressed && evento.key.code == sf::Keyboard::F1) {
-            GG->setMostrarHitboxes(!GG->getMostrarHitboxes());
-        }
+    if (evento.type == sf::Event::KeyPressed && evento.key.code == sf::Keyboard::F1) {
+        GG->setMostrarHitboxes(!GG->getMostrarHitboxes());
+    }
 
-        if (evento.type == sf::Event::TextEntered) {
-            if (menu.emTelaEntradaNome() || menu.emTelaEntradaNomeJ2()) {
-                menu.adicionarLetraAoNome(evento.text.unicode);
-            }
+    if (evento.type == sf::Event::TextEntered) {
+        if (menu.emTelaEntradaNome() || menu.emTelaEntradaNomeJ2()) {
+            menu.adicionarLetraAoNome(evento.text.unicode);
         }
+    }
 
-        if (evento.type != sf::Event::KeyPressed) {
-            continue;
-        }
+    if (evento.type != sf::Event::KeyPressed) {
+        return;
+    }
 
-        if (estado == ESTADO_TELA_MORTE) {
-            tratarEventoTelaMorte(evento);
-        } else if (estado == ESTADO_TELA_VITORIA) {
-            tratarEventoTelaVitoria(evento);
-        } else if (estado == ESTADO_PAUSE) {
-            tratarEventoPause(evento);
-        } else if (estado == ESTADO_JOGANDO) {
-            if (evento.key.code == sf::Keyboard::Escape) {
-                telaPause.resetar();
-                estado = ESTADO_PAUSE;
-            }
-        } else if (menu.emTelaEntradaNome()) {
-            tratarEventoEntradaNome(evento);
-        } else if (menu.emTelaEntradaNomeJ2()) {
-            tratarEventoEntradaNomeJ2(evento);
-        } else if (menu.emTelaRanking()) {
-            if (evento.key.code == sf::Keyboard::Enter) {
-                menu.voltarDoRanking();
-            }
-        } else if (estado == ESTADO_MENU) {
-            tratarEventoMenu(evento);
+    if (estado == ESTADO_TELA_MORTE) {
+        tratarEventoTelaMorte(evento);
+    } else if (estado == ESTADO_TELA_VITORIA) {
+        tratarEventoTelaVitoria(evento);
+    } else if (estado == ESTADO_PAUSE) {
+        tratarEventoPause(evento);
+    } else if (estado == ESTADO_JOGANDO) {
+        if (evento.key.code == sf::Keyboard::Escape) {
+            telaPause.resetar();
+            estado = ESTADO_PAUSE;
         }
+    } else if (menu.emTelaEntradaNome()) {
+        tratarEventoEntradaNome(evento);
+    } else if (menu.emTelaEntradaNomeJ2()) {
+        tratarEventoEntradaNomeJ2(evento);
+    } else if (menu.emTelaRanking()) {
+        if (evento.key.code == sf::Keyboard::Enter) {
+            menu.voltarDoRanking();
+        }
+    } else if (estado == ESTADO_MENU) {
+        tratarEventoMenu(evento);
     }
 }
 

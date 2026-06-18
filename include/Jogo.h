@@ -4,6 +4,8 @@
 #include "Gerenciadores/Gerenciador_Grafico.h"
 #include "Gerenciadores/Gerenciador_Pontuacoes.h"
 #include "Gerenciadores/Gerenciador_Salvamento.h"
+#include "Gerenciadores/Gerenciador_Eventos.h"
+#include "Gerenciadores/ObservadorEventos.h"
 #include "Fases/Fase_Lua.h"
 #include "Fases/Fase_Marte.h"
 #include "Menu.h"
@@ -13,7 +15,7 @@
 
 namespace AlienBusters {
 
-class Jogo {
+class Jogo : public Gerenciadores::ObservadorEventos {
 private:
     enum Estado {
         ESTADO_MENU,
@@ -57,6 +59,7 @@ private:
 
     void processarEventos();
     void atualizarEDesenhar(float dt);
+    void tratarEvento(const sf::Event& evento);
 
     void tratarEventoTelaMorte(const sf::Event& evento);
     void tratarEventoTelaVitoria(const sf::Event& evento);
@@ -82,6 +85,9 @@ public:
 
     void executar();
     void setNomeJogador(const std::string& nome) { nomeJogadorAtual = nome; }
+
+    // ObservadorEventos: recebe cada evento repassado pelo Gerenciador_Eventos.
+    void aoReceberEvento(const sf::Event& evento);
 };
 
 }
