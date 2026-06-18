@@ -2,6 +2,7 @@
 #include <cstddef>
 #include <iostream>
 
+namespace AlienBusters {
 namespace Entidades {
 
 const float Foguete::LARGURA = 160.f;
@@ -38,4 +39,5 @@ sf::FloatRect Foguete::getHitbox() const {
     return sf::FloatRect(x, y, LARGURA, ALTURA);
 }
 
+}
 }

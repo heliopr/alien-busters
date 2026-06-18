@@ -8,6 +8,8 @@
 #include <string>
 #include <vector>
 
+namespace AlienBusters {
+
 namespace Entidades {
 class Foguete;
 }
@@ -52,6 +54,7 @@ protected:
     virtual void criarSlimes() = 0;
 };
 
+}
 }
 
 #endif

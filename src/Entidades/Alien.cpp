@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <cstddef>
 
+namespace AlienBusters {
 namespace Entidades {
 namespace Personagens {
 
@@ -61,5 +62,6 @@ sf::FloatRect Alien::getHitbox() const {
     return sf::FloatRect(x - 24.0f, y - 24.0f, 48.0f, 48.0f);
 }
 
+}
 }
 }

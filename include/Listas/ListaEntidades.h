@@ -4,6 +4,7 @@
 #include "Listas/Lista.h"
 #include "Entidades/Entidade.h"
 
+namespace AlienBusters {
 namespace Listas {
 
 class ListaEntidades {
@@ -22,6 +23,7 @@ public:
     void desenhar();
 };
 
+}
 }
 
 #endif

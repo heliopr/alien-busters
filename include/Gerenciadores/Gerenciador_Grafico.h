@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
+namespace AlienBusters {
+
 class Ente;
 
 namespace Gerenciadores {
@@ -52,6 +54,7 @@ public:
     void desenharHUD(int pontos, float posX, float posY, int vidas, bool ladoDireito = false, bool mostrarDebug = true);
 };
 
+}
 }
 
 #endif

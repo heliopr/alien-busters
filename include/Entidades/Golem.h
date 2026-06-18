@@ -5,6 +5,7 @@
 #include "Entidades/Atirador.h"
 #include <SFML/Graphics.hpp>
 
+namespace AlienBusters {
 namespace Entidades {
 namespace Personagens {
 
@@ -24,6 +25,7 @@ public:
     void atirar(Jogador* alvo, float dt);
 };
 
+}
 }
 }
 

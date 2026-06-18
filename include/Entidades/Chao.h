@@ -3,6 +3,7 @@
 
 #include "Entidades/Entidade.h"
 
+namespace AlienBusters {
 namespace Entidades {
 
 class Chao : public Entidade {
@@ -19,6 +20,7 @@ public:
     sf::FloatRect getHitbox() const;
 };
 
+}
 }
 
 #endif

@@ -3,6 +3,8 @@
 #include "Entidades/Plataforma.h"
 #include "Configuracao.h"
 
+namespace AlienBusters {
+
 Jogo* Jogo::instancia = 0;
 
 Jogo* Jogo::getInstancia() {
@@ -299,4 +301,6 @@ void Jogo::salvarPontuacoes() {
     }
 
     pontuacaoSalva = true;
+}
+
 }

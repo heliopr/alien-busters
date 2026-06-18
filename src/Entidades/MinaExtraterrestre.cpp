@@ -5,6 +5,7 @@
 #include <cmath>
 #include <iostream>
 
+namespace AlienBusters {
 namespace Entidades {
 namespace Obstaculos {
 
@@ -104,5 +105,6 @@ sf::FloatRect MinaExtraterrestre::getHitbox() const {
     return sf::FloatRect(x, y, largura, altura);
 }
 
+}
 }
 }

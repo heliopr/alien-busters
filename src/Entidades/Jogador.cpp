@@ -8,6 +8,7 @@
 #include <cstddef>
 #include <iostream>
 
+namespace AlienBusters {
 namespace Entidades {
 namespace Personagens {
 
@@ -208,5 +209,6 @@ void Jogador::morrer() {
     somMorte.play();
 }
 
+}
 }
 }

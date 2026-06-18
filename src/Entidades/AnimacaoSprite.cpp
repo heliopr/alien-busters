@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstddef>
 
+namespace AlienBusters {
 namespace Entidades {
 
 AnimacaoSprite::AnimacaoSprite()
@@ -74,4 +75,5 @@ void AnimacaoSprite::setFrameAtual(int frame) {
     frameAtual = frame;
 }
 
+}
 }

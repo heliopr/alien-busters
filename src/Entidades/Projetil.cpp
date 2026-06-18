@@ -1,6 +1,7 @@
 #include "Entidades/Projetil.h"
 #include "Configuracao.h"
 
+namespace AlienBusters {
 namespace Entidades {
 namespace Projeteis {
 
@@ -37,5 +38,6 @@ void Projetil::executar(float dt) {
     }
 }
 
+}
 }
 }

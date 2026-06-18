@@ -4,6 +4,7 @@
 #include "Entidades/Inimigo.h"
 #include <SFML/Graphics.hpp>
 
+namespace AlienBusters {
 namespace Entidades {
 namespace Personagens {
 
@@ -22,6 +23,7 @@ public:
     sf::FloatRect getHitbox() const;
 };
 
+}
 }
 }
 

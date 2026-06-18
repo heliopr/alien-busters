@@ -6,6 +6,8 @@
 #include <string>
 #include <SFML/Audio.hpp>
 
+namespace AlienBusters {
+
 class TelaMorte : public Ente {
 private:
     int opcaoSelecionada;
@@ -31,5 +33,7 @@ public:
     
     void tocarGameOver();
 };
+
+}
 
 #endif

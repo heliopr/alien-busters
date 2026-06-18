@@ -1,5 +1,6 @@
 #include "Entidades/Personagem.h"
 
+namespace AlienBusters {
 namespace Entidades {
 namespace Personagens {
 
@@ -13,5 +14,6 @@ void Personagem::salvarDataBuffer() {
     // TODO
 }
 
+}
 }
 }

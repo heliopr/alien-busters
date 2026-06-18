@@ -2,6 +2,8 @@
 #include "Gerenciadores/Gerenciador_Grafico.h"
 #include <iostream>
 
+namespace AlienBusters {
+
 TelaMorte::TelaMorte() : Ente(), opcaoSelecionada(0) {
     if (!fonte.loadFromFile("assets/fonts/PixelifySans-Regular.ttf")) {
         std::cerr << "Erro ao carregar a fonte Pixelify Sans!" << std::endl;
@@ -83,4 +85,6 @@ void TelaMorte::desenhar() {
 
 void TelaMorte::tocarGameOver() {
     somGameOver.play();
+}
+
 }

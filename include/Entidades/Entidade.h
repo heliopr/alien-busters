@@ -5,6 +5,7 @@
 #include "Configuracao.h"
 #include <sstream>
 
+namespace AlienBusters {
 namespace Entidades {
 
 class Entidade : public Ente {
@@ -39,6 +40,7 @@ public:
     virtual sf::FloatRect getHitbox() const = 0;
 };
 
+}
 }
 
 #endif

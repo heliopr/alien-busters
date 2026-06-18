@@ -3,6 +3,6 @@
 #include "Jogo.h"
 
 int main() {
-    Jogo::getInstancia()->executar();
+    AlienBusters::Jogo::getInstancia()->executar();
     return 0;
 }

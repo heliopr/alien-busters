@@ -4,6 +4,7 @@
 #include "Entidades/Obstaculo.h"
 #include <SFML/Graphics.hpp>
 
+namespace AlienBusters {
 namespace Entidades {
 namespace Obstaculos {
 
@@ -38,6 +39,7 @@ public:
     void destruir() { destruido = true; }
 };
 
+}
 }
 }
 

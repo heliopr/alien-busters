@@ -3,6 +3,8 @@
 #include "Gerenciadores/Gerenciador_Grafico.h"
 #include <iostream>
 
+namespace AlienBusters {
+
 void Menu::criarTextos(std::vector<sf::Text>& lista, std::string nomes[], int total, float yInicio) {
     for (int i = 0; i < total; ++i) {
         sf::Text texto;
@@ -360,4 +362,6 @@ void Menu::desenhar() {
             pGG->desenharTextoTela(&lista[i]);
         }
     }
+}
+
 }

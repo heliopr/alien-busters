@@ -4,6 +4,7 @@
 #include "Entidades/Entidade.h"
 #include <SFML/Graphics.hpp>
 
+namespace AlienBusters {
 namespace Entidades {
 
 class Foguete : public Entidade {
@@ -22,6 +23,7 @@ public:
     sf::FloatRect getHitbox() const;
 };
 
+}
 }
 
 #endif

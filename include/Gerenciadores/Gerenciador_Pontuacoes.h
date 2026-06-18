@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+namespace AlienBusters {
 namespace Gerenciadores {
 
 struct EntradaPontuacao {
@@ -41,6 +42,7 @@ public:
     bool ehNovaAlta(int pontos) const;
 };
 
+}
 }
 
 #endif

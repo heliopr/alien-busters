@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
+namespace AlienBusters {
 namespace Entidades {
 
 class AnimacaoSprite {
@@ -31,6 +32,7 @@ public:
     void setFrameAtual(int frame);
 };
 
+}
 }
 
 #endif

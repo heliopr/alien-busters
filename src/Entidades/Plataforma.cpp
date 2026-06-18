@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <cmath>
 
+namespace AlienBusters {
 namespace Entidades {
 namespace Obstaculos {
 
@@ -102,5 +103,6 @@ sf::FloatRect Plataforma::getHitbox() const {
 void Plataforma::salvar() {
 }
 
+}
 }
 }

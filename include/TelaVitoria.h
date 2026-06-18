@@ -6,6 +6,8 @@
 #include <string>
 #include <SFML/Audio.hpp>
 
+namespace AlienBusters {
+
 class TelaVitoria : public Ente {
 private:
     int opcaoSelecionada;
@@ -31,5 +33,7 @@ public:
 
     void tocarVitoria();
 };
+
+}
 
 #endif

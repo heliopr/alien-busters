@@ -9,6 +9,8 @@
 #include "TelaMorte.h"
 #include "TelaVitoria.h"
 
+namespace AlienBusters {
+
 class Jogo {
 private:
     enum Estado {
@@ -71,5 +73,7 @@ public:
     void executar();
     void setNomeJogador(const std::string& nome) { nomeJogadorAtual = nome; }
 };
+
+}
 
 #endif

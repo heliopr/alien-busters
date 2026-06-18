@@ -3,7 +3,7 @@
 
 #include "Listas/Lista.h"
 
-using namespace Listas;
+using namespace AlienBusters::Listas;
 
 void teste_lista_vazia() {
     Lista<int> lista;
@@ -59,7 +59,7 @@ void teste_incluir_varios() {
     int cont = 0;
     while (atual != 0) {
         cont++;
-        atual = atual->getProximo();
+        atual = atual->getProx();
     }
 
     assert(cont == num);
@@ -84,17 +84,17 @@ void teste_ordem_elementos() {
     assert(atual != 0);
     assert(*(atual->getInfo()) == 10);
     
-    atual = atual->getProximo();
+    atual = atual->getProx();
     assert(atual != 0);
     assert(*(atual->getInfo()) == 20);
     
-    atual = atual->getProximo();
+    atual = atual->getProx();
     assert(atual != 0);
     assert(*(atual->getInfo()) == 30);
     
     assert(atual == lista.getUltimo());
     
-    assert(atual->getProximo() == 0);
+    assert(atual->getProx() == 0);
 
     std::cout << "OK teste_ordem_elementos" << std::endl;
 }

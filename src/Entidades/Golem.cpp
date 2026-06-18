@@ -7,6 +7,7 @@
 #include <cstddef>
 #include <cmath>
 
+namespace AlienBusters {
 namespace Entidades {
 namespace Personagens {
 
@@ -100,5 +101,6 @@ void Golem::atirar(Jogador* alvo, float dt) {
     Gerenciadores::Gerenciador_Colisoes::getInstancia()->incluirProjetil(pedra);
 }
 
+}
 }
 }

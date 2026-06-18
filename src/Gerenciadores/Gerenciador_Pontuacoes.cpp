@@ -6,6 +6,7 @@
 #include <sstream>
 #include <stdexcept>
 
+namespace AlienBusters {
 namespace Gerenciadores {
 
 bool compararPontuacoes(const EntradaPontuacao& a, const EntradaPontuacao& b) {
@@ -134,4 +135,5 @@ bool Gerenciador_Pontuacoes::ehNovaAlta(int pontos) const {
     return pontos > ranking.back().pontos;
 }
 
+}
 }

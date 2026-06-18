@@ -4,6 +4,7 @@
 #include "Entidades/Entidade.h"
 #include "Entidades/AnimacaoSprite.h"
 
+namespace AlienBusters {
 namespace Entidades {
 namespace Personagens {
 
@@ -26,6 +27,7 @@ public:
     void setNoChao(bool b) { noChao = b; }
 };
 
+}
 }
 }
 

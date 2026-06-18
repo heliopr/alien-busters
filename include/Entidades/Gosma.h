@@ -4,6 +4,7 @@
 #include "Entidades/Obstaculo.h"
 #include <SFML/Graphics.hpp>
 
+namespace AlienBusters {
 namespace Entidades {
 namespace Obstaculos {
 
@@ -26,6 +27,7 @@ public:
     sf::FloatRect getHitbox() const;
 };
 
+}
 }
 }
 

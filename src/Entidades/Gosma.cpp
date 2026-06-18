@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <iostream>
 
+namespace AlienBusters {
 namespace Entidades {
 namespace Obstaculos {
 
@@ -50,5 +51,6 @@ sf::FloatRect Gosma::getHitbox() const {
     return sf::FloatRect(x, y, largura, altura);
 }
 
+}
 }
 }

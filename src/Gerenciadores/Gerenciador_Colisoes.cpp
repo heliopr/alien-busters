@@ -10,6 +10,7 @@
 #include <cstddef>
 #include <cmath>
 
+namespace AlienBusters {
 namespace Gerenciadores {
 
 Gerenciador_Colisoes* Gerenciador_Colisoes::instancia = 0;
@@ -447,4 +448,5 @@ void Gerenciador_Colisoes::executar() {
     tratarColisoesJogsProjeteis();
 }
 
+}
 }

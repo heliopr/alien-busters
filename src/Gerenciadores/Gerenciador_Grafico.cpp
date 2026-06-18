@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 
+namespace AlienBusters {
 namespace Gerenciadores {
 
 Gerenciador_Grafico* Gerenciador_Grafico::instancia = 0;
@@ -218,4 +219,5 @@ void Gerenciador_Grafico::atualizarCamera(sf::Vector2f posicaoJogador) {
     janela.setView(camera);
 }
 
-} 
+}
+}

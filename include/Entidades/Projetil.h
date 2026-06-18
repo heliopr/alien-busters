@@ -3,6 +3,7 @@
 
 #include "Entidades/Entidade.h"
 
+namespace AlienBusters {
 namespace Entidades {
 
 namespace Personagens { class Jogador; }
@@ -37,6 +38,7 @@ public:
     virtual void quicar() {}
 };
 
+}
 }
 }
 

@@ -2,6 +2,8 @@
 #include "Gerenciadores/Gerenciador_Grafico.h"
 #include <iostream>
 
+namespace AlienBusters {
+
 TelaVitoria::TelaVitoria() : Ente(), opcaoSelecionada(0) {
     if (!fonte.loadFromFile("assets/fonts/PixelifySans-Regular.ttf")) {
         std::cerr << "Erro ao carregar a fonte Pixelify Sans!" << std::endl;
@@ -83,4 +85,6 @@ void TelaVitoria::desenhar() {
 
 void TelaVitoria::tocarVitoria() {
     somVitoria.play();
+}
+
 }

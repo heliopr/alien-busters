@@ -4,6 +4,7 @@
 #include "Entidades/Projetil.h"
 #include <SFML/Audio.hpp>
 
+namespace AlienBusters {
 namespace Entidades {
 namespace Projeteis {
 
@@ -28,6 +29,7 @@ public:
     void quicar();
 };
 
+}
 }
 }
 

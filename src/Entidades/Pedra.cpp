@@ -1,6 +1,7 @@
 #include "Entidades/Pedra.h"
 #include <iostream>
 
+namespace AlienBusters {
 namespace Entidades {
 namespace Projeteis {
 
@@ -72,5 +73,6 @@ void Pedra::quicar() {
     }
 }
 
+}
 }
 }

@@ -5,6 +5,7 @@
 
 #include <SFML/Audio.hpp>
 
+namespace AlienBusters {
 namespace Entidades {
 
 namespace Personagens {
@@ -51,6 +52,7 @@ public:
     bool morreu() const { return num_vidas <= 0; }
 };
 
+}
 }
 }
 

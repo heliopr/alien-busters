@@ -3,6 +3,7 @@
 
 #include "Entidades/Obstaculo.h"
 
+namespace AlienBusters {
 namespace Entidades {
 namespace Obstaculos {
 
@@ -32,6 +33,7 @@ public:
     sf::FloatRect getHitbox() const;
 };
 
+}
 }
 }
 

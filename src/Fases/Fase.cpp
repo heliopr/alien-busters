@@ -8,6 +8,7 @@
 #include <vector>
 #include <cstdlib>
 
+namespace AlienBusters {
 namespace Fases {
 
 Fase::Fase(Entidades::Personagens::Jogador* pJogador, Entidades::Personagens::Jogador* pJogador2,
@@ -259,4 +260,5 @@ void Fase::reiniciar() {
     criarFoguete();
 }
 
+}
 }

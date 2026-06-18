@@ -1,6 +1,7 @@
 #ifndef LISTA_H
 #define LISTA_H
 
+namespace AlienBusters {
 namespace Listas {
 
 template <typename TL>
@@ -106,6 +107,7 @@ bool Lista<TL>::vazia() const {
     return pPrimeiro == 0;
 }
 
+}
 }
 
 #endif

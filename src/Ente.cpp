@@ -1,6 +1,8 @@
 #include "Gerenciadores/Gerenciador_Grafico.h"
 #include "Ente.h"
 
+namespace AlienBusters {
+
 Gerenciadores::Gerenciador_Grafico *Ente::pGG = 0;
 
 Ente::Ente() : id(0), pFig(0) {}
@@ -24,4 +26,6 @@ sf::RectangleShape *Ente::getFigura() const {
 
 void Ente::setGG(Gerenciadores::Gerenciador_Grafico *pG) {
     pGG = pG;
+}
+
 }

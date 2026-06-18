@@ -1,6 +1,7 @@
 #include "Entidades/Entidade.h"
 #include "Gerenciadores/Gerenciador_Grafico.h"
 
+namespace AlienBusters {
 namespace Entidades {
 
 Entidade::Entidade() : Ente(), x(0.0f), y(0.0f), vy(0.0f) {
@@ -65,4 +66,5 @@ void Entidade::contrariarGravidade(float dt) {
     vy = 0.f;
 }
 
+}
 }

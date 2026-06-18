@@ -1,6 +1,7 @@
 #include "Entidades/Laser.h"
 #include <iostream>
 
+namespace AlienBusters {
 namespace Entidades {
 namespace Projeteis {
 
@@ -38,5 +39,6 @@ sf::FloatRect Laser::getHitbox() const {
     return sf::FloatRect(x - 10.f, y - 3.f, 20.f, 6.f);
 }
 
+}
 }
 }

@@ -4,6 +4,7 @@
 #include "Fases/Fase.h"
 #include <string>
 
+namespace AlienBusters {
 namespace Fases {
 
 class Fase_Marte : public Fase {
@@ -27,6 +28,7 @@ protected:
     void criarGolems();
 };
 
+}
 }
 
 #endif

@@ -1,6 +1,7 @@
 #include "Entidades/Chao.h"
 #include <cstddef>
 
+namespace AlienBusters {
 namespace Entidades {
 
 Chao::Chao(float x, float y, float largura, float altura, sf::Color cor) :
@@ -36,4 +37,5 @@ sf::FloatRect Chao::getHitbox() const {
     return sf::FloatRect(x, y, largura, altura);
 }
 
+}
 }

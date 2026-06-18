@@ -6,6 +6,8 @@
 #include <vector>
 #include <set>
 
+namespace AlienBusters {
+
 namespace Entidades {
     class Entidade;
     class Chao;
@@ -89,6 +91,7 @@ public:
     void executar();
 };
 
+}
 }
 
 #endif

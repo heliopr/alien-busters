@@ -1,6 +1,7 @@
 #ifndef ATIRADOR_H
 #define ATIRADOR_H
 
+namespace AlienBusters {
 namespace Entidades {
 
 class Atirador {
@@ -16,6 +17,7 @@ public:
     virtual ~Atirador();
 };
 
+}
 }
 
 #endif

@@ -1,6 +1,7 @@
 #ifndef CONFIGURACAO_H
 #define CONFIGURACAO_H
 
+namespace AlienBusters {
 namespace Config {
 
     const float GRAVIDADE = 980.f;
@@ -22,6 +23,7 @@ namespace Config {
     const float RESTITUICAO_PEDRA = 0.6f;
     const float ATRITO_QUIQUE = 0.8f;
     const float VELOCIDADE_MIN_QUIQUE = 30.f;
+}
 }
 
 #endif

@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
+namespace AlienBusters {
+
 namespace Gerenciadores { class Gerenciador_Grafico; }
 
 class Ente {
@@ -22,5 +24,7 @@ public:
 
     void static setGG(Gerenciadores::Gerenciador_Grafico *pG);
 };
+
+}
 
 #endif

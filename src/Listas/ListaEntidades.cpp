@@ -1,6 +1,7 @@
 #include "Listas/ListaEntidades.h"
 #include "Entidades/Explosao.h"
 
+namespace AlienBusters {
 namespace Listas {
 
 ListaEntidades::ListaEntidades() : LEs() {}
@@ -58,4 +59,5 @@ void ListaEntidades::desenhar() {
     }
 }
 
+}
 }

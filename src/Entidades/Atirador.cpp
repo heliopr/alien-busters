@@ -1,5 +1,6 @@
 #include "Entidades/Atirador.h"
 
+namespace AlienBusters {
 namespace Entidades {
 
 Atirador::Atirador() : tempoRestante(0.f) {
@@ -25,4 +26,5 @@ void Atirador::reiniciarRecarga(float tempo) {
     tempoRestante = tempo;
 }
 
+}
 }

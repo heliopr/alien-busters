@@ -6,6 +6,8 @@
 #include <vector>
 #include <string>
 
+namespace AlienBusters {
+
 class Jogo;
 
 class Menu : public Ente {
@@ -75,5 +77,7 @@ public:
     void executar(float dt = 0.f);
     void desenhar();
 };
+
+}
 
 #endif

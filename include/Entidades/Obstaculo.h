@@ -3,6 +3,7 @@
 
 #include "Entidades/Entidade.h"
 
+namespace AlienBusters {
 namespace Entidades {
 namespace Personagens { class Jogador; }
 namespace Obstaculos {
@@ -29,6 +30,7 @@ public:
     virtual bool getDestruido() const { return false; }
 };
 
+}
 }
 }
 

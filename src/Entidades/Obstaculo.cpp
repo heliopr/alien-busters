@@ -2,6 +2,7 @@
 #include "Entidades/Jogador.h"
 #include <cstddef>
 
+namespace AlienBusters {
 namespace Entidades {
 namespace Obstaculos {
 
@@ -15,5 +16,6 @@ bool Obstaculo::colidiuComJogador(Personagens::Jogador *p) const {
     return p != NULL && p->getHitbox().intersects(getHitbox());
 }
 
+}
 }
 }

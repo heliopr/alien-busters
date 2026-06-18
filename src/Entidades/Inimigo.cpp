@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <iostream>
 
+namespace AlienBusters {
 namespace Entidades {
 namespace Personagens {
 
@@ -72,5 +73,6 @@ void Inimigo::danificar(Jogador* p) {
     }
 }
 
+}
 }
 }

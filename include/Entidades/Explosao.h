@@ -4,6 +4,7 @@
 #include "Entidades/Entidade.h"
 #include <SFML/Audio.hpp>
 
+namespace AlienBusters {
 namespace Entidades {
 
 class Explosao : public Entidade {
@@ -31,6 +32,7 @@ public:
     bool finalizada() const { return terminada; }
 };
 
+}
 }
 
 #endif

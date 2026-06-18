@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstddef>
 
+namespace AlienBusters {
 namespace Entidades {
 
 const int Explosao::NUM_FRAMES  = 12;
@@ -73,4 +74,5 @@ sf::FloatRect Explosao::getHitbox() const {
     return sf::FloatRect(x, y, 0.f, 0.f); // sem colisão
 }
 
+}
 }

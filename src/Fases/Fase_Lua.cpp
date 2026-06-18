@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <ctime>
 
+namespace AlienBusters {
 namespace Fases {
 
 Fase_Lua::Fase_Lua(Entidades::Personagens::Jogador* pJogador, Entidades::Personagens::Jogador* pJogador2, const std::string& nome1, const std::string& nome2)
@@ -154,4 +155,5 @@ void Fase_Lua::criarSlimes() {
     }
 }
 
+}
 }
