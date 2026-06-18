@@ -272,6 +272,10 @@ void Jogo::avancarFase() {
 void Jogo::voltarAoMenu() {
     salvarPontuacoes();
 
+    // Recarrega o ranking do arquivo em segundo plano (thread) para que a tela
+    // de ranking no menu ja apareca atualizada, sem precisar reiniciar o jogo.
+    Gerenciadores::Gerenciador_Pontuacoes::getInstancia()->recarregarRankingAsync();
+
     delete faseAtual;
     faseAtual = 0;
     menu.resetarMenu();

@@ -23,11 +23,16 @@ Gerenciador_Pontuacoes* Gerenciador_Pontuacoes::getInstancia() {
 }
 
 Gerenciador_Pontuacoes::Gerenciador_Pontuacoes(const std::string& caminho)
-    : caminhoArquivo(caminho) {
+    : caminhoArquivo(caminho), threadRecarga(0) {
     carregarRanking();
 }
 
 Gerenciador_Pontuacoes::~Gerenciador_Pontuacoes() {
+    if (threadRecarga != 0) {
+        threadRecarga->wait();
+        delete threadRecarga;
+        threadRecarga = 0;
+    }
 }
 
 std::string Gerenciador_Pontuacoes::obterDataAtual() {
@@ -45,45 +50,49 @@ std::string Gerenciador_Pontuacoes::obterDataAtual() {
 }
 
 void Gerenciador_Pontuacoes::carregarRanking() {
-    ranking.clear();
+    // Le o arquivo num vetor temporario para minimizar o tempo de bloqueio e
+    // evitar que outra thread leia um ranking parcialmente carregado.
+    std::vector<EntradaPontuacao> novoRanking;
 
     std::ifstream arquivo(caminhoArquivo.c_str());
-    if (!arquivo.is_open()) {
-        return;
-    }
+    if (arquivo.is_open()) {
+        std::string linha;
+        while (std::getline(arquivo, linha)) {
+            if (linha.empty()) continue;
 
-    std::string linha;
-    while (std::getline(arquivo, linha)) {
-        if (linha.empty()) continue;
+            size_t pos1 = linha.find('|');
+            if (pos1 == std::string::npos) continue;
 
-        size_t pos1 = linha.find('|');
-        if (pos1 == std::string::npos) continue;
+            std::string nome = linha.substr(0, pos1);
 
-        std::string nome = linha.substr(0, pos1);
+            size_t pos2 = linha.find('|', pos1 + 1);
+            if (pos2 == std::string::npos) continue;
 
-        size_t pos2 = linha.find('|', pos1 + 1);
-        if (pos2 == std::string::npos) continue;
+            std::string pontosStr = linha.substr(pos1 + 1, pos2 - pos1 - 1);
+            std::string data = linha.substr(pos2 + 1);
 
-        std::string pontosStr = linha.substr(pos1 + 1, pos2 - pos1 - 1);
-        std::string data = linha.substr(pos2 + 1);
-
-        try {
-            int pontos = 0;
-            std::istringstream iss(pontosStr);
-            if (!(iss >> pontos) || !(iss >> std::ws).eof()) {
-                throw std::invalid_argument("pontuacao invalida: " + pontosStr);
+            try {
+                int pontos = 0;
+                std::istringstream iss(pontosStr);
+                if (!(iss >> pontos) || !(iss >> std::ws).eof()) {
+                    throw std::invalid_argument("pontuacao invalida: " + pontosStr);
+                }
+                novoRanking.push_back(EntradaPontuacao(nome, pontos, data));
+            } catch (const std::exception& e) {
+                std::cerr << "Linha invalida no ranking: " << "(" << e.what() << ")" << std::endl;
+                continue;
             }
-            ranking.push_back(EntradaPontuacao(nome, pontos, data));
-        } catch (const std::exception& e) {
-            std::cerr << "Linha invalida no ranking: " << "(" << e.what() << ")" << std::endl;
-            continue;
         }
+
+        arquivo.close();
+
+        // Ordenar por pontos decrescentes
+        std::sort(novoRanking.begin(), novoRanking.end(), compararPontuacoes);
     }
 
-    arquivo.close();
-
-    // Ordenar por pontos decrescentes
-    std::sort(ranking.begin(), ranking.end(), compararPontuacoes);
+    // Publica o novo ranking de forma atomica para os leitores.
+    sf::Lock lock(mutex);
+    ranking.swap(novoRanking);
 }
 
 void Gerenciador_Pontuacoes::salvarRanking() {
@@ -107,6 +116,8 @@ void Gerenciador_Pontuacoes::adicionarPontuacao(const std::string& nome, int pon
         return;
     }
 
+    sf::Lock lock(mutex);
+
     ranking.push_back(EntradaPontuacao(nome, pontos, obterDataAtual()));
 
     // Ordenar por pontos decrescentes
@@ -121,6 +132,8 @@ void Gerenciador_Pontuacoes::adicionarPontuacao(const std::string& nome, int pon
 }
 
 std::vector<EntradaPontuacao> Gerenciador_Pontuacoes::getRankingTop(int quantidade) const {
+    sf::Lock lock(mutex);
+
     std::vector<EntradaPontuacao> top;
     for (int i = 0; i < quantidade && i < (int)ranking.size(); ++i) {
         top.push_back(ranking[i]);
@@ -128,7 +141,21 @@ std::vector<EntradaPontuacao> Gerenciador_Pontuacoes::getRankingTop(int quantida
     return top;
 }
 
+void Gerenciador_Pontuacoes::recarregarRankingAsync() {
+    // Espera uma eventual recarga anterior terminar antes de iniciar outra.
+    if (threadRecarga != 0) {
+        threadRecarga->wait();
+        delete threadRecarga;
+        threadRecarga = 0;
+    }
+
+    threadRecarga = new sf::Thread(&Gerenciador_Pontuacoes::carregarRanking, this);
+    threadRecarga->launch();
+}
+
 bool Gerenciador_Pontuacoes::ehNovaAlta(int pontos) const {
+    sf::Lock lock(mutex);
+
     if (ranking.size() < (size_t)MAX_RANKING) {
         return true;
     }

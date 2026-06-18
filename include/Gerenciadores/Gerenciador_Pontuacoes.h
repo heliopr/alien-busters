@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <SFML/System.hpp>
 
 namespace AlienBusters {
 namespace Gerenciadores {
@@ -24,6 +25,9 @@ private:
     std::string caminhoArquivo;
     static const int MAX_RANKING = 10;
 
+    mutable sf::Mutex mutex;
+    sf::Thread* threadRecarga;
+
     void carregarRanking();
     void salvarRanking();
     std::string obterDataAtual();
@@ -36,8 +40,11 @@ public:
     static Gerenciador_Pontuacoes* getInstancia();
 
     void adicionarPontuacao(const std::string& nome, int pontos);
-    const std::vector<EntradaPontuacao>& getRanking() const { return ranking; }
     std::vector<EntradaPontuacao> getRankingTop(int quantidade = MAX_RANKING) const;
+
+    // Recarrega o ranking do arquivo numa thread em segundo plano, para que
+    // o menu reflita as pontuacoes mais recentes sem reiniciar o jogo.
+    void recarregarRankingAsync();
 
     bool ehNovaAlta(int pontos) const;
 };
