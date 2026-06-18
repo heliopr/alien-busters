@@ -6,3 +6,6 @@ bin/
 *.o
 *.out
 *.exe
+
+saves.dat
+ranking.dat
