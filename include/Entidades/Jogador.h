@@ -45,6 +45,7 @@ public:
     ~Jogador();
 
     void resetar();
+    void restaurarEstado(int novosPontos, int novasVidas);
     void executar(float dt);
     void salvar();
     void mover(float dt = 0);

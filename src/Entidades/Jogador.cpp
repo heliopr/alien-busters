@@ -68,6 +68,14 @@ void Jogador::resetar() {
     tempoFlashDano = 0.f;
 }
 
+void Jogador::restaurarEstado(int novosPontos, int novasVidas) {
+    if (novasVidas < 0) {
+        novasVidas = 0;
+    }
+    num_vidas = novasVidas;
+    pontos = novosPontos;
+}
+
 void Jogador::executar(float dt) {
     if (tempoLento > 0.f) {
         tempoLento -= dt;

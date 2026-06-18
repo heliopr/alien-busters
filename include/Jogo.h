@@ -3,6 +3,7 @@
 
 #include "Gerenciadores/Gerenciador_Grafico.h"
 #include "Gerenciadores/Gerenciador_Pontuacoes.h"
+#include "Gerenciadores/Gerenciador_Salvamento.h"
 #include "Fases/Fase_Lua.h"
 #include "Fases/Fase_Marte.h"
 #include "Menu.h"
@@ -21,8 +22,8 @@ private:
     };
     
     enum OpcaoMenu {
-        OPCAO_1JOGADOR = 0,
-        OPCAO_FASES,
+        OPCAO_NOVO_JOGO = 0,
+        OPCAO_CONTINUAR,
         OPCAO_RANKING,
         OPCAO_SAIR
     };
@@ -60,10 +61,13 @@ private:
     void tratarEventoEntradaNomeJ2(const sf::Event& evento);
     void tratarEventoMenu(const sf::Event& evento);
 
-    void iniciarFase(int fase, bool doisJogadores);
+    void iniciarFase(int fase, bool doisJogadores,
+                     int pontos1 = 0, int pontos2 = 0, int vidas1 = 3, int vidas2 = 3);
     void avancarFase();
     void voltarAoMenu();
     void salvarPontuacoes();
+    void salvarProgresso();
+    void continuarJogo(const Gerenciadores::DadosSalvos& dados);
 
 public:
     ~Jogo();

@@ -202,12 +202,24 @@ void Jogo::tratarEventoMenu(const sf::Event& evento) {
     } else if (evento.key.code == sf::Keyboard::Down || evento.key.code == sf::Keyboard::S) {
         menu.descerOpcao();
     } else if (evento.key.code == sf::Keyboard::Enter) {
-        if (menu.emTelaFases()) {
-            int fase = menu.getOpcaoFaseSelecionada();
-            if (fase == FASE_LUA || fase == FASE_MARTE) {
-                faseSelecionada = fase;
+        if (menu.emTelaNovoJogo()) {
+            int sel = menu.getOpcaoNovoJogoSelecionada();
+            if (sel == 0) {
+                // Alternar entre 1 e 2 jogadores
+                menu.alternarJogadores();
+            } else if (sel == 1) {
+                faseSelecionada = FASE_LUA;
                 menu.entrarTelaNome();
-            } else if (fase == FASE_VOLTAR) {
+            } else if (sel == 2) {
+                faseSelecionada = FASE_MARTE;
+                menu.entrarTelaNome();
+            } else {
+                menu.sairSubmenu();
+            }
+        } else if (menu.emTelaContinuar()) {
+            if (menu.getOpcaoContinuarSelecionada() < menu.getNumSaves()) {
+                continuarJogo(menu.getSaveSelecionado());
+            } else {
                 menu.sairSubmenu();
             }
         } else if (menu.getOpcaoSelecionada() == OPCAO_SAIR) {
@@ -218,7 +230,8 @@ void Jogo::tratarEventoMenu(const sf::Event& evento) {
     }
 }
 
-void Jogo::iniciarFase(int fase, bool doisJogadores) {
+void Jogo::iniciarFase(int fase, bool doisJogadores,
+                       int pontos1, int pontos2, int vidas1, int vidas2) {
     Entidades::Personagens::Jogador* p2 = doisJogadores ? pJog2 : 0;
     std::string nome2 = doisJogadores ? nomeJogador2Atual : "";
 
@@ -233,8 +246,10 @@ void Jogo::iniciarFase(int fase, bool doisJogadores) {
 
     if (faseAtual) {
         pJog1->resetar();
+        pJog1->restaurarEstado(pontos1, vidas1);
         if (doisJogadores) {
             pJog2->resetar();
+            pJog2->restaurarEstado(pontos2, vidas2);
             menu.confirmarNomeJ2();
         } else {
             menu.confirmarNome();
@@ -244,6 +259,9 @@ void Jogo::iniciarFase(int fase, bool doisJogadores) {
         faseEmAndamento = fase;
         doisJogadoresAtual = doisJogadores;
         pontuacaoSalva = false;
+
+        // Grava um checkpoint no inicio da fase, para poder continuar depois.
+        salvarProgresso();
     }
 }
 
@@ -252,6 +270,8 @@ void Jogo::avancarFase() {
 
     if (proximaFase > FASE_MARTE) {
         salvarPontuacoes();
+        // Jogo concluido: nao ha mais o que continuar, remove o save.
+        Gerenciadores::Gerenciador_Salvamento::getInstancia()->removerJogo(nomeJogadorAtual);
         telaVitoria.resetar();
         telaVitoria.tocarVitoria();
         estado = ESTADO_TELA_VITORIA;
@@ -259,14 +279,37 @@ void Jogo::avancarFase() {
     }
 
     int pontos1 = pJog1->getPontos();
-    int pontos2 = pJog2->getPontos();
+    int pontos2 = doisJogadoresAtual ? pJog2->getPontos() : 0;
 
-    iniciarFase(proximaFase, doisJogadoresAtual);
+    // Os pontos sao carregados para a proxima fase; as vidas voltam ao maximo.
+    iniciarFase(proximaFase, doisJogadoresAtual, pontos1, pontos2);
+}
 
-    pJog1->adicionarPontos(pontos1);
-    if (doisJogadoresAtual) {
-        pJog2->adicionarPontos(pontos2);
+void Jogo::salvarProgresso() {
+    if (nomeJogadorAtual.empty()) {
+        return;
     }
+
+    Gerenciadores::DadosSalvos dados;
+    dados.nome1 = nomeJogadorAtual;
+    dados.nome2 = nomeJogador2Atual;
+    dados.numJogadores = doisJogadoresAtual ? 2 : 1;
+    dados.fase = faseEmAndamento;
+    dados.pontos1 = pJog1->getPontos();
+    dados.pontos2 = doisJogadoresAtual ? pJog2->getPontos() : 0;
+    dados.vidas1 = pJog1->getNumVidas();
+    dados.vidas2 = doisJogadoresAtual ? pJog2->getNumVidas() : 3;
+
+    Gerenciadores::Gerenciador_Salvamento::getInstancia()->salvarJogo(dados);
+}
+
+void Jogo::continuarJogo(const Gerenciadores::DadosSalvos& dados) {
+    bool dois = (dados.numJogadores == 2);
+
+    nomeJogadorAtual = dados.nome1;
+    nomeJogador2Atual = dois ? dados.nome2 : "";
+
+    iniciarFase(dados.fase, dois, dados.pontos1, dados.pontos2, dados.vidas1, dados.vidas2);
 }
 
 void Jogo::voltarAoMenu() {

@@ -71,7 +71,8 @@ Menu::Menu(Jogo* pJ) :
     Ente(),
     pJog(pJ),
     opcaoSelecionada(0),
-    opcaoFaseSelecionada(0),
+    opcaoNovoJogoSelecionada(0),
+    opcaoContinuarSelecionada(0),
     numJogadores(1),
     emSubmenu(false),
     telaAtual(TELA_PRINCIPAL),
@@ -89,11 +90,11 @@ Menu::Menu(Jogo* pJ) :
         spriteFundo.setScale(1422.222f / texturaFundo.getSize().x, 800.f / texturaFundo.getSize().y);
     }
 
-    std::string nomesOpcoes[] = { "1 JOGADOR", "FASES", "RANKING", "SAIR" };
+    std::string nomesOpcoes[] = { "NOVO JOGO", "CONTINUAR", "RANKING", "SAIR" };
     criarTextos(opcoes, nomesOpcoes, 4, 180.f);
 
-    std::string nomesFases[] = { "FASE LUA", "FASE MARTE", "VOLTAR" };
-    criarTextos(opcoesFases, nomesFases, 3, 190.f);
+    std::string nomesNovoJogo[] = { "1 JOGADOR", "FASE LUA", "FASE MARTE", "VOLTAR" };
+    criarTextos(opcoesNovoJogo, nomesNovoJogo, 4, 150.f);
 
     textoCursor.setFont(fonte);
     textoCursor.setCharacterSize(50);
@@ -104,16 +105,23 @@ Menu::Menu(Jogo* pJ) :
 Menu::~Menu() {
     pJog = 0;
     opcoes.clear();
-    opcoesFases.clear();
+    opcoesNovoJogo.clear();
     textoRanking.clear();
+    opcoesContinuar.clear();
+    saves.clear();
 }
 
 void Menu::subirOpcao() {
-    if (telaAtual == TELA_FASES) {
-        if (opcaoFaseSelecionada - 1 >= 0) {
-            opcoesFases[opcaoFaseSelecionada].setFillColor(sf::Color::White);
-            opcaoFaseSelecionada--;
-            opcoesFases[opcaoFaseSelecionada].setFillColor(sf::Color::Red);
+    if (telaAtual == TELA_NOVO_JOGO) {
+        if (opcaoNovoJogoSelecionada - 1 >= 0) {
+            opcoesNovoJogo[opcaoNovoJogoSelecionada].setFillColor(sf::Color::White);
+            opcaoNovoJogoSelecionada--;
+            opcoesNovoJogo[opcaoNovoJogoSelecionada].setFillColor(sf::Color::Red);
+        }
+    } else if (telaAtual == TELA_CONTINUAR) {
+        if (opcaoContinuarSelecionada - 1 >= 0) {
+            opcaoContinuarSelecionada--;
+            atualizarCoresContinuar();
         }
     } else if (telaAtual == TELA_PRINCIPAL) {
         if (opcaoSelecionada - 1 >= 0) {
@@ -125,11 +133,16 @@ void Menu::subirOpcao() {
 }
 
 void Menu::descerOpcao() {
-    if (telaAtual == TELA_FASES) {
-        if (opcaoFaseSelecionada + 1 < (int)opcoesFases.size()) {
-            opcoesFases[opcaoFaseSelecionada].setFillColor(sf::Color::White);
-            opcaoFaseSelecionada++;
-            opcoesFases[opcaoFaseSelecionada].setFillColor(sf::Color::Red);
+    if (telaAtual == TELA_NOVO_JOGO) {
+        if (opcaoNovoJogoSelecionada + 1 < (int)opcoesNovoJogo.size()) {
+            opcoesNovoJogo[opcaoNovoJogoSelecionada].setFillColor(sf::Color::White);
+            opcaoNovoJogoSelecionada++;
+            opcoesNovoJogo[opcaoNovoJogoSelecionada].setFillColor(sf::Color::Red);
+        }
+    } else if (telaAtual == TELA_CONTINUAR) {
+        if (opcaoContinuarSelecionada + 1 < (int)opcoesContinuar.size()) {
+            opcaoContinuarSelecionada++;
+            atualizarCoresContinuar();
         }
     } else if (telaAtual == TELA_PRINCIPAL) {
         if (opcaoSelecionada + 1 < (int)opcoes.size()) {
@@ -143,15 +156,15 @@ void Menu::descerOpcao() {
 void Menu::entrarSubmenu() {
     if (telaAtual == TELA_PRINCIPAL) {
         if (opcaoSelecionada == 0) {
-            // Alternar entre 1 e 2 jogadores
-            alternarJogadores();
-        } else if (opcaoSelecionada == 1) {
-            // Entrar em fases
-            telaAtual = TELA_FASES;
-            opcaoFaseSelecionada = 0;
-            for (int i = 0; i < (int)opcoesFases.size(); ++i) {
-                opcoesFases[i].setFillColor(i == 0 ? sf::Color::Red : sf::Color::White);
+            // Novo jogo: escolher jogadores e fase inicial
+            telaAtual = TELA_NOVO_JOGO;
+            opcaoNovoJogoSelecionada = 0;
+            for (int i = 0; i < (int)opcoesNovoJogo.size(); ++i) {
+                opcoesNovoJogo[i].setFillColor(i == 0 ? sf::Color::Red : sf::Color::White);
             }
+        } else if (opcaoSelecionada == 1) {
+            // Continuar jogo salvo
+            entrarTelaContinuar();
         } else if (opcaoSelecionada == 2) {
             // Entrar em ranking
             telaAtual = TELA_RANKING;
@@ -226,35 +239,91 @@ void Menu::voltarDoRanking() {
     telaAtual = TELA_PRINCIPAL;
 }
 
+void Menu::entrarTelaContinuar() {
+    telaAtual = TELA_CONTINUAR;
+    opcaoContinuarSelecionada = 0;
+
+    saves = Gerenciadores::Gerenciador_Salvamento::getInstancia()->getSaves();
+    opcoesContinuar.clear();
+
+    const char* nomesFases[] = { "LUA", "MARTE" };
+
+    for (size_t i = 0; i < saves.size(); ++i) {
+        sf::Text entrada;
+        entrada.setFont(fonte);
+
+        std::string nomeFase = (saves[i].fase >= 0 && saves[i].fase <= 1)
+            ? nomesFases[saves[i].fase] : "?";
+
+        std::stringstream ss;
+        ss << saves[i].nome1;
+        if (saves[i].numJogadores == 2 && !saves[i].nome2.empty()) {
+            ss << " & " << saves[i].nome2;
+        }
+        ss << "  -  Fase " << nomeFase << "  -  " << saves[i].pontos1 << " pts";
+
+        entrada.setString(ss.str());
+        entrada.setCharacterSize(34);
+        entrada.setFillColor(sf::Color::White);
+
+        sf::FloatRect limites = entrada.getLocalBounds();
+        entrada.setOrigin(limites.left + limites.width / 2.0f, limites.top + limites.height / 2.0f);
+        entrada.setPosition(sf::Vector2f(400.f, 200.f + (i * 70.f)));
+
+        opcoesContinuar.push_back(entrada);
+    }
+
+    // Entrada final "VOLTAR" (sempre presente)
+    sf::Text voltar;
+    voltar.setFont(fonte);
+    voltar.setString("VOLTAR");
+    voltar.setCharacterSize(40);
+    voltar.setFillColor(sf::Color::White);
+    sf::FloatRect limitesVoltar = voltar.getLocalBounds();
+    voltar.setOrigin(limitesVoltar.left + limitesVoltar.width / 2.0f,
+                     limitesVoltar.top + limitesVoltar.height / 2.0f);
+    voltar.setPosition(sf::Vector2f(400.f, 200.f + (saves.size() * 70.f) + 40.f));
+    opcoesContinuar.push_back(voltar);
+
+    atualizarCoresContinuar();
+}
+
+void Menu::atualizarCoresContinuar() {
+    for (size_t i = 0; i < opcoesContinuar.size(); ++i) {
+        opcoesContinuar[i].setFillColor(
+            (int)i == opcaoContinuarSelecionada ? sf::Color::Red : sf::Color::White);
+    }
+}
+
 void Menu::resetarMenu() {
     telaAtual = TELA_PRINCIPAL;
     opcaoSelecionada = 0;
-    opcaoFaseSelecionada = 0;
+    opcaoNovoJogoSelecionada = 0;
+    opcaoContinuarSelecionada = 0;
     numJogadores = 1;
     emSubmenu = false;
     nomeJogador = "";
     nomeJogador2 = "";
-    
+
+    atualizarTextoJogadores();
+
     // Resetar cores das opções
     for (size_t i = 0; i < opcoes.size(); ++i) {
         opcoes[i].setFillColor(i == 0 ? sf::Color::Red : sf::Color::White);
     }
-    for (size_t i = 0; i < opcoesFases.size(); ++i) {
-        opcoesFases[i].setFillColor(i == 0 ? sf::Color::Red : sf::Color::White);
+    for (size_t i = 0; i < opcoesNovoJogo.size(); ++i) {
+        opcoesNovoJogo[i].setFillColor(i == 0 ? sf::Color::Red : sf::Color::White);
     }
 }
 
 void Menu::atualizarTextoJogadores() {
-    if (opcoes.empty()) return;
+    if (opcoesNovoJogo.empty()) return;
 
     std::string texto = (numJogadores == 1) ? "1 JOGADOR" : "2 JOGADORES";
-    if (!nomeJogador.empty()) {
-        texto = "JOGADOR: " + nomeJogador;
-    }
-    opcoes[0].setString(texto);
+    opcoesNovoJogo[0].setString(texto);
 
-    sf::FloatRect limites = opcoes[0].getLocalBounds();
-    opcoes[0].setOrigin(limites.left + limites.width / 2.0f, limites.top + limites.height / 2.0f);
+    sf::FloatRect limites = opcoesNovoJogo[0].getLocalBounds();
+    opcoesNovoJogo[0].setOrigin(limites.left + limites.width / 2.0f, limites.top + limites.height / 2.0f);
 }
 
 void Menu::executar(float /*dt*/) {
@@ -356,10 +425,36 @@ void Menu::desenhar() {
         for (size_t i = 0; i < textoRanking.size(); ++i) {
             pGG->desenharTextoTela(&textoRanking[i]);
         }
-    } else if (telaAtual == TELA_FASES) {
-        std::vector<sf::Text>& lista = opcoesFases;
+    } else if (telaAtual == TELA_NOVO_JOGO) {
+        std::vector<sf::Text>& lista = opcoesNovoJogo;
         for (size_t i = 0; i < lista.size(); ++i) {
             pGG->desenharTextoTela(&lista[i]);
+        }
+    } else if (telaAtual == TELA_CONTINUAR) {
+        sf::Text titulo;
+        titulo.setFont(fonte);
+        titulo.setString("JOGOS SALVOS");
+        titulo.setCharacterSize(60);
+        titulo.setFillColor(sf::Color::Yellow);
+        sf::FloatRect limites = titulo.getLocalBounds();
+        titulo.setOrigin(limites.left + limites.width / 2.0f, limites.top + limites.height / 2.0f);
+        titulo.setPosition(sf::Vector2f(400.f, 80.f));
+        pGG->desenharTextoTela(&titulo);
+
+        if (saves.empty()) {
+            sf::Text vazio;
+            vazio.setFont(fonte);
+            vazio.setString("Nenhum jogo salvo");
+            vazio.setCharacterSize(36);
+            vazio.setFillColor(sf::Color(180, 180, 180));
+            sf::FloatRect lim = vazio.getLocalBounds();
+            vazio.setOrigin(lim.left + lim.width / 2.0f, lim.top + lim.height / 2.0f);
+            vazio.setPosition(sf::Vector2f(400.f, 300.f));
+            pGG->desenharTextoTela(&vazio);
+        }
+
+        for (size_t i = 0; i < opcoesContinuar.size(); ++i) {
+            pGG->desenharTextoTela(&opcoesContinuar[i]);
         }
     }
 }
