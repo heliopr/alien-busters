@@ -202,7 +202,7 @@ void Fase::desenhar() {
     if (pGG != 0) {
         if (pJogador != 0) {
             pGG->desenharHUD(pJogador->getPontos(), pJogador->getX(), pJogador->getY(),
-                             pJogador->getNumVidas(), false, true);
+                             pJogador->getNumVidas(), false, false);
             
             if (!nomeJogador.empty()) {
                 sf::Text nomeText;
