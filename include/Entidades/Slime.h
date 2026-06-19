@@ -21,6 +21,9 @@ public:
     void danificar(Jogador* p);
     int pontosAoMorrer() const;
     sf::FloatRect getHitbox() const;
+
+    float getNivel() const { return nivel; }
+    void setNivel(float n) { nivel = n; }
 };
 
 }

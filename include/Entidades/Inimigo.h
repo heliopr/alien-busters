@@ -43,12 +43,16 @@ public:
     float getVelocidadeX() const { return velocidadeX; }
     void setVelocidadeX(float v) { velocidadeX = v; }
 
+    int getNivelMaldade() const { return nivel_maldade; }
+    void setNivelMaldade(int n) { nivel_maldade = n; }
+
     bool deveCairDaBorda();
     void resetarDecisaoBorda() { decidiuBorda = false; }
 
     void levarDano();
     bool estaFlashando() const { return tempoFlashDano > 0.f; }
     int getNumVidas() const { return num_vidas; }
+    void setNumVidas(int n) { num_vidas = n; }
     bool morreu() const { return num_vidas <= 0; }
 };
 

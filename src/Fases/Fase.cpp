@@ -305,20 +305,53 @@ Entidades::Entidade* Fase::criarEntidadeDeLinha(const std::string& linha, int& c
         categoria = CAT_OBSTACULO;
         return new Entidades::Obstaculos::MinaExtraterrestre(x, y);
     } else if (tipo == "ALIEN") {
-        float x, y;
+        float x, y, velocidade;
+        int nivelMaldade, numVidas;
         ss >> x >> y;
         categoria = CAT_INIMIGO;
-        return new Entidades::Personagens::Alien(x, y);
+        Entidades::Personagens::Alien* alien = new Entidades::Personagens::Alien(x, y);
+        if (ss >> velocidade) {
+            alien->setVelocidade(velocidade);
+        }
+        if (ss >> nivelMaldade) {
+            alien->setNivelMaldade(nivelMaldade);
+        }
+        if (ss >> numVidas) {
+            alien->setNumVidas(numVidas);
+        }
+        return alien;
     } else if (tipo == "SLIME") {
-        float x, y;
+        float x, y, nivel;
+        int nivelMaldade, numVidas;
         ss >> x >> y;
         categoria = CAT_INIMIGO;
-        return new Entidades::Personagens::Slime(x, y);
+        Entidades::Personagens::Slime* slime = new Entidades::Personagens::Slime(x, y);
+        if (ss >> nivel) {
+            slime->setNivel(nivel);
+        }
+        if (ss >> nivelMaldade) {
+            slime->setNivelMaldade(nivelMaldade);
+        }
+        if (ss >> numVidas) {
+            slime->setNumVidas(numVidas);
+        }
+        return slime;
     } else if (tipo == "GOLEM") {
-        float x, y;
+        float x, y, tempoRecarga;
+        int nivelMaldade, numVidas;
         ss >> x >> y;
         categoria = CAT_INIMIGO;
-        return new Entidades::Personagens::Golem(x, y);
+        Entidades::Personagens::Golem* golem = new Entidades::Personagens::Golem(x, y);
+        if (ss >> tempoRecarga) {
+            golem->setTempoRecarga(tempoRecarga);
+        }
+        if (ss >> nivelMaldade) {
+            golem->setNivelMaldade(nivelMaldade);
+        }
+        if (ss >> numVidas) {
+            golem->setNumVidas(numVidas);
+        }
+        return golem;
     } else if (tipo == "FOGUETE") {
         float x, y;
         ss >> x >> y;

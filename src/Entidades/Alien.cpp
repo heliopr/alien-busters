@@ -57,6 +57,7 @@ void Alien::salvar() {
     buffer.clear();
     buffer << "ALIEN ";
     salvarDataBuffer();
+    buffer << " " << velocidade << " " << nivel_maldade << " " << num_vidas;
 }
 
 void Alien::danificar(Jogador* p) {

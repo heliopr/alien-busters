@@ -22,6 +22,9 @@ public:
     void danificar(Jogador* p);
     sf::FloatRect getHitbox() const;
 
+    float getTempoRecarga() const { return tempoRecarga; }
+    void setTempoRecarga(float t) { tempoRecarga = t; }
+
     void atirar(Jogador* alvo, float dt);
 };
 

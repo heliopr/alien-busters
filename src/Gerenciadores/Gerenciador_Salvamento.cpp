@@ -63,7 +63,7 @@ void Gerenciador_Salvamento::carregarSaves() {
             continue;
         }
 
-        if (linha == "SAVE") {
+        if (linha == "{") {
             DadosSalvos dados;
             std::string cabecalho;
             if (!std::getline(arquivo, cabecalho) || !parseCabecalho(cabecalho, dados)) {
@@ -72,7 +72,7 @@ void Gerenciador_Salvamento::carregarSaves() {
             }
 
             std::string l;
-            while (std::getline(arquivo, l) && l != "ENDSAVE") {
+            while (std::getline(arquivo, l) && l != "}") {
                 if (l.empty()) {
                     continue;
                 }
@@ -109,7 +109,7 @@ void Gerenciador_Salvamento::escreverArquivo() {
     for (size_t i = 0; i < saves.size(); ++i) {
         const DadosSalvos& d = saves[i];
 
-        arquivo << "SAVE\n";
+        arquivo << "{\n";
         arquivo << d.nome1 << "|"
             << d.nome2 << "|"
             << d.numJogadores << "|"
@@ -127,7 +127,7 @@ void Gerenciador_Salvamento::escreverArquivo() {
             arquivo << "ENT " << d.entidades[j] << "\n";
         }
 
-        arquivo << "ENDSAVE\n";
+        arquivo << "}\n";
     }
 
     arquivo.close();
