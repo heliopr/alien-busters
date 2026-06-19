@@ -66,6 +66,9 @@ void Jogo::aoReceberEvento(const sf::Event& evento) {
         if ((estado == ESTADO_JOGANDO || estado == ESTADO_PAUSE) &&
             faseAtual != 0 && !faseAtual->jogadorPerdeu()) {
             salvarEstadoCompleto();
+        } else if (estado == ESTADO_TELA_MORTE) {
+            salvarPontuacoes();
+            Gerenciadores::Gerenciador_Salvamento::getInstancia()->removerJogo(nomeJogadorAtual);
         }
         GG->fecharJanela();
     }

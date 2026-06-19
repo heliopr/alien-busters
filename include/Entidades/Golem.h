@@ -11,7 +11,7 @@ namespace Personagens {
 
 class Golem : public Inimigo, public Atirador {
 private:
-    float tempoRecarga; // [3, 5]
+    float tempoRecarga;
 
 public:
     Golem(float x = 400.f, float y = 300.f);

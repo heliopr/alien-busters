@@ -66,11 +66,8 @@ void Inimigo::levarDano() {
     }
 }
 
-void Inimigo::danificar(Jogador* p) {
-    if (p != NULL && !p->estaInvulneravel()) {
-        p->perderVida();
-        p->ativarInvulnerabilidade();
-    }
+bool Inimigo::podeDanificar(Jogador* p) const {
+    return p != NULL && !p->estaInvulneravel();
 }
 
 }

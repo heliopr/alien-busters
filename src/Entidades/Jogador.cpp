@@ -16,7 +16,8 @@ Jogador::Jogador(float xInicial, float yInicial, bool eJogadorUm, const std::str
     eJogadorUm(eJogadorUm), xInicial(xInicial), yInicial(yInicial),
     ultimoDx(0.f),
     olhandoDireita(true), puloPressionado(false), tiroPressionado(false),
-    tempoLento(0.f), tempoInvulneravel(0.f), tempoFlashDano(0.f)
+    tempoLento(0.f), tempoInvulneravel(0.f), tempoFlashDano(0.f),
+    knockbackVx(0.f)
 {
     x = xInicial;
     y = yInicial;
@@ -64,6 +65,7 @@ void Jogador::resetar() {
     reiniciarRecarga(0.f);
 
     tempoLento = 0.f;
+    knockbackVx = 0.f;
     tempoInvulneravel = 0.f;
     tempoFlashDano = 0.f;
 }
@@ -124,7 +126,14 @@ float Jogador::processarMovimento(float dt) {
     }
     puloPressionado = puloAtual;
 
-    x += dx * velocidadeX * dt;
+    x += dx * velocidadeX * dt + knockbackVx * dt;
+
+    float atrito = 800.f * dt;
+    if (knockbackVx > 0.f) {
+        knockbackVx = (knockbackVx > atrito) ? knockbackVx - atrito : 0.f;
+    } else if (knockbackVx < 0.f) {
+        knockbackVx = (knockbackVx < -atrito) ? knockbackVx + atrito : 0.f;
+    }
 
     return dx;
 }
@@ -211,6 +220,10 @@ void Jogador::perderVida() {
     } else {
         somDano.play();
     }
+}
+
+void Jogador::aplicarKnockback(float vx) {
+    knockbackVx = vx;
 }
 
 void Jogador::morrer() {

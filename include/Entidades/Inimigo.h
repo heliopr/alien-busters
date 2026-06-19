@@ -26,6 +26,7 @@ protected:
     static bool somCarregado;
 
     void atualizarFlashDano(float dt);
+    bool podeDanificar(Jogador* p) const;
 
 public:
     Inimigo();

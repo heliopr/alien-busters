@@ -13,7 +13,7 @@ namespace Entidades {
 namespace Personagens {
 
 Golem::Golem(float x_ini, float y_ini)
-    : Inimigo(), Atirador(), tempoRecarga(3.f + ((std::rand() % 100) / 100.f * 2.f))
+    : Inimigo(), Atirador(), tempoRecarga(5.f + ((std::rand() % 100) / 100.f * 2.f))
 {
     x = x_ini;
     y = y_ini;
@@ -68,7 +68,12 @@ void Golem::salvar() {
 }
 
 void Golem::danificar(Jogador* p) {
-    Inimigo::danificar(p);
+    if (!podeDanificar(p)) return;
+    p->perderVida();
+    float direcao = (p->getX() >= x) ? 1.f : -1.f;
+    p->aplicarKnockback(direcao * 600.f);
+    p->setVy(-500.f);
+    p->ativarInvulnerabilidade();
 }
 
 sf::FloatRect Golem::getHitbox() const {

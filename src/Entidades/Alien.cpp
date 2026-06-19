@@ -1,4 +1,5 @@
 #include "Entidades/Alien.h"
+#include "Entidades/Jogador.h"
 #include <sstream>
 #include <cstdlib>
 #include <cstddef>
@@ -61,7 +62,9 @@ void Alien::salvar() {
 }
 
 void Alien::danificar(Jogador* p) {
-    Inimigo::danificar(p);
+    if (!podeDanificar(p)) return;
+    p->perderVida();
+    p->ativarInvulnerabilidade();
 }
 
 sf::FloatRect Alien::getHitbox() const {

@@ -1,4 +1,5 @@
 #include "Entidades/Slime.h"
+#include "Entidades/Jogador.h"
 #include <sstream>
 #include <cstdlib>
 #include <cstddef>
@@ -63,7 +64,10 @@ void Slime::salvar() {
 }
 
 void Slime::danificar(Jogador* p) {
-    Inimigo::danificar(p);
+    if (!podeDanificar(p)) return;
+    p->perderVida();
+    p->ficarLento(1.0f);
+    p->ativarInvulnerabilidade();
 }
 
 int Slime::pontosAoMorrer() const {

@@ -29,6 +29,7 @@ private:
     float tempoLento;
     float tempoInvulneravel;
     float tempoFlashDano;
+    float knockbackVx;
 
     sf::SoundBuffer bufferDano;
     sf::Sound somDano;
@@ -61,6 +62,7 @@ public:
     void morrer();
     bool estaInvulneravel() const { return tempoInvulneravel > 0.f; }
     void ativarInvulnerabilidade();
+    void aplicarKnockback(float vx);
     int getNumVidas() const { return num_vidas; }
     bool estaMorto() const { return num_vidas <= 0; }
 };
