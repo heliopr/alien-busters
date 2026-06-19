@@ -24,10 +24,10 @@ private:
     bool jogadorDentroDoRaio(Personagens::Jogador* p) const;
 
 public:
-    MinaExtraterrestre(float x, float y);
+    MinaExtraterrestre(float x = 0.f, float y = 0.f);
     ~MinaExtraterrestre();
 
-    void executar(float dt);
+    void executar(float dt = 0.f);
     void salvar();
     void obstaculizar(Personagens::Jogador* p);
     void aplicarDano(Personagens::Jogador* p);

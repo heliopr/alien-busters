@@ -44,7 +44,7 @@ public:
          bool gerarConteudo = true);
     virtual ~Fase();
 
-    virtual void executar(float dt);
+    virtual void executar(float dt = 0.f);
     virtual void desenhar();
     virtual void reiniciar();
     bool jogadorPerdeu() const;

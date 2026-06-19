@@ -16,7 +16,7 @@ public:
     Chao(float x, float y, float largura, float altura, sf::Color cor = sf::Color(145, 60, 25));
     ~Chao();
 
-    void executar(float dt);
+    void executar(float dt = 0.f);
     void salvar();
     sf::FloatRect getHitbox() const;
 };

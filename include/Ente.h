@@ -18,7 +18,7 @@ public:
     Ente();
     virtual ~Ente();
 
-    virtual void executar(float dt) = 0;
+    virtual void executar(float dt = 0.f) = 0;
     virtual void desenhar();
 
     int getId() const;

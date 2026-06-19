@@ -32,7 +32,7 @@ public:
     Inimigo();
     virtual ~Inimigo();
 
-    virtual void executar(float dt) = 0;
+    virtual void executar(float dt = 0.f) = 0;
     virtual void salvar() = 0;
     void mover(float dt = 0);
     virtual void danificar(Jogador* p) = 0;

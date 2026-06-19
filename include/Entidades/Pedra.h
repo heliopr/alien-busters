@@ -24,7 +24,7 @@ public:
           Personagens::Jogador* dono = 0, bool inimigo = false);
     ~Pedra();
 
-    void executar(float dt);
+    void executar(float dt = 0.f);
     void salvar();
     sf::FloatRect getHitbox() const;
     void quicar();

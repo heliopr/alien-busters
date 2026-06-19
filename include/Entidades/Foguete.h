@@ -18,7 +18,7 @@ public:
     Foguete(float x, float y);
     ~Foguete();
 
-    void executar(float dt);
+    void executar(float dt = 0.f);
     void salvar();
     sf::FloatRect getHitbox() const;
 };

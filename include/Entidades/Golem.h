@@ -17,7 +17,7 @@ public:
     Golem(float x = 400.f, float y = 300.f);
     ~Golem();
 
-    void executar(float dt);
+    void executar(float dt = 0.f);
     void salvar();
     void danificar(Jogador* p);
     sf::FloatRect getHitbox() const;

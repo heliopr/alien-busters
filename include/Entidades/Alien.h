@@ -16,7 +16,7 @@ public:
     Alien(float x = 400.f, float y = 300.f);
     ~Alien();
 
-    void executar(float dt);
+    void executar(float dt = 0.f);
     void salvar();
     void danificar(Jogador* p);
     sf::FloatRect getHitbox() const;

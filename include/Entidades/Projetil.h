@@ -25,7 +25,7 @@ public:
              Personagens::Jogador* dono = 0, bool inimigo = false);
     ~Projetil();
 
-    void executar(float dt);
+    void executar(float dt = 0.f);
     void salvar();
 
     bool getAtivo() const { return ativo; }

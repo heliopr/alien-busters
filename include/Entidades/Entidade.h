@@ -26,7 +26,7 @@ public:
     virtual ~Entidade();
 
 public:
-    virtual void executar(float dt) = 0;
+    virtual void executar(float dt = 0.f) = 0;
     virtual void salvar() = 0;
     virtual void desenhar();
 

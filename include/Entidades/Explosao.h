@@ -25,7 +25,7 @@ public:
     Explosao(float x, float y);
     ~Explosao();
 
-    void executar(float dt);
+    void executar(float dt = 0.f);
     void salvar();
     sf::FloatRect getHitbox() const;
 

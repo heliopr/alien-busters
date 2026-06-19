@@ -24,10 +24,10 @@ private:
     float tempoSurgindo;
 
 public:
-    Plataforma(float x, float y, sf::Color cor = sf::Color(145, 60, 25));
+    Plataforma(float x = 0.f, float y = 0.f, sf::Color cor = sf::Color(145, 60, 25));
     ~Plataforma();
 
-    void executar(float dt);
+    void executar(float dt = 0.f);
     void obstaculizar(Personagens::Jogador* p);
     void salvar();
     sf::FloatRect getHitbox() const;

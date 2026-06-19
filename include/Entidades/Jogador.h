@@ -41,13 +41,13 @@ private:
     void atualizarSprite(float dt, float dx);
 
 public:
-    Jogador(float xInicial, float yInicial, bool eJogadorUm,
+    Jogador(float xInicial = 0.f, float yInicial = 0.f, bool eJogadorUm = true,
             const std::string& texturaSprite = "assets/textures/player.png");
     ~Jogador();
 
     void resetar();
     void restaurarEstado(int novosPontos, int novasVidas);
-    void executar(float dt);
+    void executar(float dt = 0.f);
     void salvar();
     void mover(float dt = 0);
     void colidir(Inimigo* pIn);

@@ -13,10 +13,10 @@ private:
     float nivel;
 
 public:
-    Slime(float x = 400.f, float y = 300.f);
+    Slime(float x = 0.f, float y = 0.f);
     ~Slime();
 
-    void executar(float dt);
+    void executar(float dt = 0.f);
     void salvar();
     void danificar(Jogador* p);
     int pontosAoMorrer() const;

@@ -16,10 +16,10 @@ private:
     float tempoLentidao;
 
 public:
-    Gosma(float x, float y);
+    Gosma(float x = 0.f, float y = 0.f);
     ~Gosma();
 
-    void executar(float dt);
+    void executar(float dt = 0.f);
     void salvar();
     void obstaculizar(Personagens::Jogador* p);
 
