@@ -56,10 +56,13 @@ private:
     void resolverColisaoJogador(Entidades::Personagens::Jogador* jog, const sf::FloatRect& boxObs);
     ResultadoColisao resolverColisaoInimigo(Entidades::Personagens::Inimigo* ini, const sf::FloatRect& boxObs);
 
-    void tratarColisoesJogObstacs(Entidades::Personagens::Jogador* jog);
+    void tratarColisaoJogadorObstacs(Entidades::Personagens::Jogador* jog);
+    void tratarColisaoJogadorInimigs(Entidades::Personagens::Jogador* jog);
     void tratarColisoesInimigosObstacs();
     void removerObstaculosDestruidos();
-    void tratarColisoesJogInimigs(Entidades::Personagens::Jogador* jog);
+
+    void tratarColisoesJogsObtacs();
+    void tratarColisoesJogsInimgs();
     void tratarColisoesJogsProjeteis();
 
     bool projetilColidiu(Entidades::Projeteis::Projetil* p) const;

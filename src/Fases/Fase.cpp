@@ -287,7 +287,7 @@ Entidades::Entidade* Fase::criarEntidadeDeLinha(const std::string& linha, int& c
     }
 
     std::string tipo = linha.substr(0, espaco);
-    std::map<std::string, std::string> c = Utilidades::parsearCampos(linha.substr(espaco + 1));
+    std::map<std::string, std::string> c = Utilidades::lerCampos(linha.substr(espaco + 1));
     int idSalvo = Utilidades::campoInt(c, "id", -1);
     float x = Utilidades::campoFloat(c, "x");
     float y = Utilidades::campoFloat(c, "y");

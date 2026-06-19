@@ -115,7 +115,7 @@ void Gerenciador_Colisoes::resolverColisaoJogador(Entidades::Personagens::Jogado
     }
 }
 
-void Gerenciador_Colisoes::tratarColisoesJogObstacs(Entidades::Personagens::Jogador* jog) {
+void Gerenciador_Colisoes::tratarColisaoJogadorObstacs(Entidades::Personagens::Jogador* jog) {
     if (jog == NULL || jog->estaMorto()) return;
 
     for (std::list<Entidades::Obstaculos::Obstaculo*>::iterator it = LOs.begin(); it != LOs.end(); ++it) {
@@ -229,7 +229,7 @@ void Gerenciador_Colisoes::tratarColisoesInimigosObstacs() {
     }
 }
 
-void Gerenciador_Colisoes::tratarColisoesJogInimigs(Entidades::Personagens::Jogador* jog) {
+void Gerenciador_Colisoes::tratarColisaoJogadorInimigs(Entidades::Personagens::Jogador* jog) {
     if (jog == NULL || jog->estaMorto()) return;
 
     for (std::vector<Entidades::Personagens::Inimigo*>::iterator iti = LIs.begin(); iti != LIs.end(); ++iti) {
@@ -438,13 +438,21 @@ void Gerenciador_Colisoes::removerObstaculosDestruidos() {
     }
 }
 
+void Gerenciador_Colisoes::tratarColisoesJogsObtacs() {
+    tratarColisaoJogadorObstacs(pJog1);
+    tratarColisaoJogadorObstacs(pJog2);
+}
+
+void Gerenciador_Colisoes::tratarColisoesJogsInimgs() {
+    tratarColisaoJogadorInimigs(pJog1);
+    tratarColisaoJogadorInimigs(pJog2);
+}
+
 void Gerenciador_Colisoes::executar() {
-    tratarColisoesJogObstacs(pJog1);
-    tratarColisoesJogObstacs(pJog2);
+    tratarColisoesJogsObtacs();
     removerObstaculosDestruidos();
     tratarColisoesInimigosObstacs();
-    tratarColisoesJogInimigs(pJog1);
-    tratarColisoesJogInimigs(pJog2);
+    tratarColisoesJogsInimgs();
     tratarColisoesJogsProjeteis();
 }
 

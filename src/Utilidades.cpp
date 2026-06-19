@@ -3,7 +3,7 @@
 
 namespace AlienBusters {
 
-std::map<std::string, std::string> Utilidades::parsearCampos(const std::string& s) {
+std::map<std::string, std::string> Utilidades::lerCampos(const std::string& s) {
     std::map<std::string, std::string> campos;
     std::istringstream ss(s);
     std::string par;

@@ -29,7 +29,7 @@ Gerenciador_Salvamento::~Gerenciador_Salvamento() {
 }
 
 bool Gerenciador_Salvamento::parseCabecalho(const std::string& linha, DadosSalvos& dados) {
-    std::map<std::string, std::string> c = Utilidades::parsearCampos(linha);
+    std::map<std::string, std::string> c = Utilidades::lerCampos(linha);
     if (c.find("nome1") == c.end()) {
         return false;
     }
@@ -73,14 +73,14 @@ void Gerenciador_Salvamento::carregarSaves() {
                 if (l.empty()) {
                     continue;
                 }
-                if (l.compare(0, 5, "JOG1 ") == 0) {
-                    std::map<std::string, std::string> c = Utilidades::parsearCampos(l.substr(5));
+                if (l.compare(0, 9, "JOGADOR1 ") == 0) {
+                    std::map<std::string, std::string> c = Utilidades::lerCampos(l.substr(9));
                     dados.x1 = Utilidades::campoFloat(c, "x");
                     dados.y1 = Utilidades::campoFloat(c, "y");
                     dados.vy1 = Utilidades::campoFloat(c, "vy");
                     dados.idJog1 = Utilidades::campoInt(c, "id", -1);
-                } else if (l.compare(0, 5, "JOG2 ") == 0) {
-                    std::map<std::string, std::string> c = Utilidades::parsearCampos(l.substr(5));
+                } else if (l.compare(0, 9, "JOGADOR2 ") == 0) {
+                    std::map<std::string, std::string> c = Utilidades::lerCampos(l.substr(9));
                     dados.x2 = Utilidades::campoFloat(c, "x");
                     dados.y2 = Utilidades::campoFloat(c, "y");
                     dados.vy2 = Utilidades::campoFloat(c, "vy");
@@ -124,9 +124,9 @@ void Gerenciador_Salvamento::escreverArquivo() {
             << ",vidas1:" << d.vidas1
             << ",vidas2:" << d.vidas2 << "\n";
 
-        arquivo << "JOG1 id:" << d.idJog1 << ",x:" << d.x1 << ",y:" << d.y1 << ",vy:" << d.vy1 << "\n";
+        arquivo << "JOGADOR1 id:" << d.idJog1 << ",x:" << d.x1 << ",y:" << d.y1 << ",vy:" << d.vy1 << "\n";
         if (d.numJogadores == 2) {
-            arquivo << "JOG2 id:" << d.idJog2 << ",x:" << d.x2 << ",y:" << d.y2 << ",vy:" << d.vy2 << "\n";
+            arquivo << "JOGADOR2 id:" << d.idJog2 << ",x:" << d.x2 << ",y:" << d.y2 << ",vy:" << d.vy2 << "\n";
         }
         for (size_t j = 0; j < d.entidades.size(); ++j) {
             arquivo << "ENTIDADE " << d.entidades[j] << "\n";
