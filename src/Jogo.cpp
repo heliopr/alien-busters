@@ -26,7 +26,6 @@ Jogo::Jogo() : faseAtual(0), pJog1(0), pJog2(0),
     pJog2 = new Entidades::Personagens::Jogador(
         Config::POSICAO_INICIAL_X + 70.f, Config::POSICAO_INICIAL_Y, false, "assets/textures/player2.png");
 
-    // Inscreve o Jogo como observador dos eventos de entrada (padrao Observer).
     Gerenciadores::Gerenciador_Eventos::getInstancia()->inscrever(this);
 }
 
@@ -57,8 +56,6 @@ void Jogo::executar() {
 }
 
 void Jogo::processarEventos() {
-    // Delega a coleta dos eventos ao Subject (Gerenciador_Eventos), que os
-    // repassa a este Jogo (e a quaisquer outros observadores inscritos).
     Gerenciadores::Gerenciador_Eventos::getInstancia()->processar();
 }
 
@@ -66,8 +63,6 @@ void Jogo::aoReceberEvento(const sf::Event& evento) {
     Gerenciadores::Gerenciador_Grafico* GG = Gerenciadores::Gerenciador_Grafico::getInstancia();
 
     if (evento.type == sf::Event::Closed) {
-        // Ao fechar o jogo durante uma partida, salva o estado completo
-        // da fase para permitir continuar exatamente de onde parou.
         if ((estado == ESTADO_JOGANDO || estado == ESTADO_PAUSE) &&
             faseAtual != 0 && !faseAtual->jogadorPerdeu()) {
             salvarEstadoCompleto();
@@ -157,12 +152,11 @@ void Jogo::tratarEventoTelaMorte(const sf::Event& evento) {
         telaMorte.descerOpcao();
     } else if (evento.key.code == sf::Keyboard::Enter) {
         if (telaMorte.getOpcaoSelecionada() == 0) {
-            if (faseAtual) {
-                faseAtual->reiniciar();
-            }
             telaMorte.resetar();
-            estado = ESTADO_JOGANDO;
+            iniciarFase(FASE_LUA, doisJogadoresAtual);
         } else {
+            salvarPontuacoes();
+            Gerenciadores::Gerenciador_Salvamento::getInstancia()->removerJogo(nomeJogadorAtual);
             voltarAoMenu();
         }
     }
@@ -197,10 +191,7 @@ void Jogo::tratarEventoPause(const sf::Event& evento) {
         if (opcao == TelaPause::OPCAO_CONTINUAR) {
             estado = ESTADO_JOGANDO;
         } else if (opcao == TelaPause::OPCAO_REINICIAR) {
-            if (faseAtual) {
-                faseAtual->reiniciar();
-            }
-            estado = ESTADO_JOGANDO;
+            iniciarFase(FASE_LUA, doisJogadoresAtual);
         } else {
             if (faseAtual != 0 && !faseAtual->jogadorPerdeu()) {
                 salvarEstadoCompleto();
@@ -242,7 +233,6 @@ void Jogo::tratarEventoEntradaNomeJ2(const sf::Event& evento) {
     } else if (evento.key.code == sf::Keyboard::BackSpace) {
         menu.removerLetraDoNome();
     } else if (evento.key.code == sf::Keyboard::Escape) {
-        // Volta para a tela de entrada do jogador 1
         nomeJogador2Atual = "";
         menu.entrarTelaNome();
     }
@@ -310,7 +300,6 @@ void Jogo::iniciarFase(int fase, bool doisJogadores,
         doisJogadoresAtual = doisJogadores;
         pontuacaoSalva = false;
 
-        // Grava um checkpoint no inicio da fase, para poder continuar depois.
         salvarProgresso();
     }
 }
@@ -320,7 +309,6 @@ void Jogo::avancarFase() {
 
     if (proximaFase > FASE_MARTE) {
         salvarPontuacoes();
-        // Jogo concluido: nao ha mais o que continuar, remove o save.
         Gerenciadores::Gerenciador_Salvamento::getInstancia()->removerJogo(nomeJogadorAtual);
         telaVitoria.resetar();
         telaVitoria.tocarVitoria();
@@ -331,7 +319,6 @@ void Jogo::avancarFase() {
     int pontos1 = pJog1->getPontos();
     int pontos2 = doisJogadoresAtual ? pJog2->getPontos() : 0;
 
-    // Os pontos sao carregados para a proxima fase; as vidas voltam ao maximo.
     iniciarFase(proximaFase, doisJogadoresAtual, pontos1, pontos2);
 }
 
@@ -436,10 +423,6 @@ void Jogo::continuarJogo(const Gerenciadores::DadosSalvos& dados) {
 }
 
 void Jogo::voltarAoMenu() {
-    salvarPontuacoes();
-
-    // Recarrega o ranking do arquivo em segundo plano (thread) para que a tela
-    // de ranking no menu ja apareca atualizada, sem precisar reiniciar o jogo.
     Gerenciadores::Gerenciador_Pontuacoes::getInstancia()->recarregarRankingAsync();
 
     delete faseAtual;

@@ -80,8 +80,8 @@ void Gerenciador_Salvamento::carregarSaves() {
                     std::istringstream(l.substr(5)) >> dados.x1 >> dados.y1 >> dados.vy1;
                 } else if (l.compare(0, 5, "JOG2 ") == 0) {
                     std::istringstream(l.substr(5)) >> dados.x2 >> dados.y2 >> dados.vy2;
-                } else if (l.compare(0, 4, "ENT ") == 0) {
-                    dados.entidades.push_back(l.substr(4));
+                } else if (l.compare(0, 9, "ENTIDADE ") == 0) {
+                    dados.entidades.push_back(l.substr(9));
                 }
             }
 
@@ -124,7 +124,7 @@ void Gerenciador_Salvamento::escreverArquivo() {
             arquivo << "JOG2 " << d.x2 << " " << d.y2 << " " << d.vy2 << "\n";
         }
         for (size_t j = 0; j < d.entidades.size(); ++j) {
-            arquivo << "ENT " << d.entidades[j] << "\n";
+            arquivo << "ENTIDADE " << d.entidades[j] << "\n";
         }
 
         arquivo << "}\n";
