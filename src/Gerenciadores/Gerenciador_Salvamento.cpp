@@ -64,7 +64,6 @@ void Gerenciador_Salvamento::carregarSaves() {
         }
 
         if (linha == "SAVE") {
-            // Bloco com snapshot completo da fase.
             DadosSalvos dados;
             std::string cabecalho;
             if (!std::getline(arquivo, cabecalho) || !parseCabecalho(cabecalho, dados)) {
@@ -79,7 +78,6 @@ void Gerenciador_Salvamento::carregarSaves() {
                 }
                 if (l.compare(0, 5, "JOG1 ") == 0) {
                     std::istringstream(l.substr(5)) >> dados.x1 >> dados.y1 >> dados.vy1;
-                    dados.temSnapshot = true;
                 } else if (l.compare(0, 5, "JOG2 ") == 0) {
                     std::istringstream(l.substr(5)) >> dados.x2 >> dados.y2 >> dados.vy2;
                 } else if (l.compare(0, 4, "ENT ") == 0) {
@@ -89,7 +87,6 @@ void Gerenciador_Salvamento::carregarSaves() {
 
             saves.push_back(dados);
         } else {
-            // Formato legado: uma linha por save, sem snapshot.
             DadosSalvos dados;
             if (parseCabecalho(linha, dados)) {
                 saves.push_back(dados);
@@ -114,22 +111,20 @@ void Gerenciador_Salvamento::escreverArquivo() {
 
         arquivo << "SAVE\n";
         arquivo << d.nome1 << "|"
-                << d.nome2 << "|"
-                << d.numJogadores << "|"
-                << d.fase << "|"
-                << d.pontos1 << "|"
-                << d.pontos2 << "|"
-                << d.vidas1 << "|"
-                << d.vidas2 << "\n";
+            << d.nome2 << "|"
+            << d.numJogadores << "|"
+            << d.fase << "|"
+            << d.pontos1 << "|"
+            << d.pontos2 << "|"
+            << d.vidas1 << "|"
+            << d.vidas2 << "\n";
 
-        if (d.temSnapshot) {
-            arquivo << "JOG1 " << d.x1 << " " << d.y1 << " " << d.vy1 << "\n";
-            if (d.numJogadores == 2) {
-                arquivo << "JOG2 " << d.x2 << " " << d.y2 << " " << d.vy2 << "\n";
-            }
-            for (size_t j = 0; j < d.entidades.size(); ++j) {
-                arquivo << "ENT " << d.entidades[j] << "\n";
-            }
+        arquivo << "JOG1 " << d.x1 << " " << d.y1 << " " << d.vy1 << "\n";
+        if (d.numJogadores == 2) {
+            arquivo << "JOG2 " << d.x2 << " " << d.y2 << " " << d.vy2 << "\n";
+        }
+        for (size_t j = 0; j < d.entidades.size(); ++j) {
+            arquivo << "ENT " << d.entidades[j] << "\n";
         }
 
         arquivo << "ENDSAVE\n";
@@ -143,7 +138,6 @@ void Gerenciador_Salvamento::salvarJogo(const DadosSalvos& dados) {
         return;
     }
 
-    // Atualiza o save existente do mesmo jogador, ou adiciona um novo.
     for (size_t i = 0; i < saves.size(); ++i) {
         if (saves[i].nome1 == dados.nome1) {
             saves[i] = dados;

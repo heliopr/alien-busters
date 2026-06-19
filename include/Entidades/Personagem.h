@@ -19,7 +19,6 @@ public:
     Personagem(int num_vidas);
     virtual ~Personagem();
 
-    void salvarDataBuffer();
     virtual void executar(float dt) = 0;
     virtual void salvar() = 0;
     virtual void mover(float dt = 0) = 0;

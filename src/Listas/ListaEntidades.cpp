@@ -72,12 +72,13 @@ void ListaEntidades::desenhar() {
     }
 }
 
-void ListaEntidades::serializar(std::vector<std::string>& linhas) const {
+void ListaEntidades::salvar(std::vector<std::string>& linhas) const {
     Lista<Entidades::Entidade>::Elemento *atual = LEs.getPrimeiro();
     while (atual != 0) {
         Entidades::Entidade *entidade = atual->getInfo();
         if (entidade != 0) {
-            std::string linha = entidade->serializar();
+            entidade->salvar();
+            std::string linha = entidade->getBuffer();
             if (!linha.empty()) {
                 linhas.push_back(linha);
             }

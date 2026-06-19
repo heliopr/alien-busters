@@ -68,6 +68,8 @@ void Explosao::executar(float dt) {
 }
 
 void Explosao::salvar() {
+    buffer.str("");
+    buffer.clear();
 }
 
 sf::FloatRect Explosao::getHitbox() const {

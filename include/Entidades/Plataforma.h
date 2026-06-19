@@ -30,7 +30,6 @@ public:
     void executar(float dt);
     void obstaculizar(Personagens::Jogador* p);
     void salvar();
-    std::string serializar() const;
     sf::FloatRect getHitbox() const;
 };
 

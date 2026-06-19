@@ -64,11 +64,12 @@ void Pedra::executar(float dt) {
     }
 }
 
-std::string Pedra::serializar() const {
-    std::ostringstream ss;
-    ss << "PEDRA " << x << " " << y << " " << vx << " " << vy << " "
-       << (inimigo ? 1 : 0);
-    return ss.str();
+void Pedra::salvar() {
+    buffer.str("");
+    buffer.clear();
+    buffer << "PEDRA ";
+    salvarDataBuffer();
+    buffer << " " << vx << " " << vy << " " << (inimigo ? 1 : 0);
 }
 
 sf::FloatRect Pedra::getHitbox() const {

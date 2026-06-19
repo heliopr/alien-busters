@@ -36,11 +36,12 @@ Laser::Laser(float x, float y, float vx, float vy, Personagens::Jogador* dono, b
 
 Laser::~Laser() {}
 
-std::string Laser::serializar() const {
-    std::ostringstream ss;
-    ss << "LASER " << x << " " << y << " " << vx << " " << vy << " "
-       << (inimigo ? 1 : 0);
-    return ss.str();
+void Laser::salvar() {
+    buffer.str("");
+    buffer.clear();
+    buffer << "LASER ";
+    salvarDataBuffer();
+    buffer << " " << vx << " " << vy << " " << (inimigo ? 1 : 0);
 }
 
 sf::FloatRect Laser::getHitbox() const {

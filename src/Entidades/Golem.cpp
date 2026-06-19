@@ -58,12 +58,10 @@ void Golem::executar(float dt) {
 }
 
 void Golem::salvar() {
-}
-
-std::string Golem::serializar() const {
-    std::ostringstream ss;
-    ss << "GOLEM " << x << " " << y;
-    return ss.str();
+    buffer.str("");
+    buffer.clear();
+    buffer << "GOLEM ";
+    salvarDataBuffer();
 }
 
 void Golem::danificar(Jogador* p) {

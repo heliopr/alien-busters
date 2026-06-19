@@ -19,7 +19,7 @@ public:
           Personagens::Jogador* dono = 0, bool inimigo = false);
     ~Laser();
 
-    std::string serializar() const;
+    void salvar();
     sf::FloatRect getHitbox() const;
 };
 

@@ -40,12 +40,10 @@ void Gosma::executar(float dt) {
 }
 
 void Gosma::salvar() {
-}
-
-std::string Gosma::serializar() const {
-    std::ostringstream ss;
-    ss << "GOSMA " << x << " " << y;
-    return ss.str();
+    buffer.str("");
+    buffer.clear();
+    buffer << "GOSMA ";
+    salvarDataBuffer();
 }
 
 void Gosma::obstaculizar(Personagens::Jogador* p) {

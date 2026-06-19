@@ -18,8 +18,6 @@ public:
     Obstaculo();
     virtual ~Obstaculo();
 
-    void salvarDataBuffer();
-
     virtual void executar(float dt) = 0;
     virtual void salvar() = 0;
     virtual void obstaculizar(Personagens::Jogador *p) = 0;

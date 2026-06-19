@@ -17,19 +17,16 @@ struct DadosSalvos {
     int vidas1;
     int vidas2;
 
-    // Snapshot completo da fase em andamento (posicoes dos jogadores e
-    // linhas serializadas de todas as entidades). Quando temSnapshot e
-    // falso, o save e apenas um checkpoint de inicio de fase.
-    bool temSnapshot;
     float x1, y1, vy1;
     float x2, y2, vy2;
     std::vector<std::string> entidades;
 
-    DadosSalvos()
-        : nome1(""), nome2(""), numJogadores(1), fase(0),
-          pontos1(0), pontos2(0), vidas1(3), vidas2(3),
-          temSnapshot(false), x1(0.f), y1(0.f), vy1(0.f),
-          x2(0.f), y2(0.f), vy2(0.f), entidades() {}
+    DadosSalvos() : nome1(""), nome2(""), numJogadores(1), fase(0),
+        pontos1(0), pontos2(0), vidas1(3), vidas2(3),
+        x1(0.f), y1(0.f), vy1(0.f),
+        x2(0.f), y2(0.f), vy2(0.f), entidades() {
+
+    }
 };
 
 class Gerenciador_Salvamento {
@@ -43,14 +40,13 @@ private:
     void escreverArquivo();
     static bool parseCabecalho(const std::string& linha, DadosSalvos& dados);
 
-    Gerenciador_Salvamento(const std::string& caminho = "saves.dat");
+    Gerenciador_Salvamento(const std::string& caminho = "saves.txt");
 
 public:
     ~Gerenciador_Salvamento();
 
     static Gerenciador_Salvamento* getInstancia();
 
-    // Insere um novo save ou atualiza o existente (identificado pelo nome1).
     void salvarJogo(const DadosSalvos& dados);
     void removerJogo(const std::string& nome1);
 

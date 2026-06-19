@@ -270,8 +270,8 @@ void Fase::reiniciar() {
     criarFoguete();
 }
 
-void Fase::montarSnapshot(std::vector<std::string>& linhas) const {
-    lista_ents.serializar(linhas);
+void Fase::salvar(std::vector<std::string>& linhas) const {
+    lista_ents.salvar(linhas);
 }
 
 Entidades::Entidade* Fase::criarEntidadeDeLinha(const std::string& linha, int& categoria) const {
@@ -338,7 +338,7 @@ Entidades::Entidade* Fase::criarEntidadeDeLinha(const std::string& linha, int& c
     return 0;
 }
 
-void Fase::carregarSnapshot(const std::vector<std::string>& linhas) {
+void Fase::carregar(const std::vector<std::string>& linhas) {
     pGC->limpar();
     lista_ents.limpar();
     pFoguete = 0;

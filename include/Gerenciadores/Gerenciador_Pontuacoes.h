@@ -32,7 +32,7 @@ private:
     void salvarRanking();
     std::string obterDataAtual();
 
-    Gerenciador_Pontuacoes(const std::string& caminho = "ranking.dat");
+    Gerenciador_Pontuacoes(const std::string& caminho = "ranking.txt");
 
 public:
     ~Gerenciador_Pontuacoes();
@@ -41,9 +41,7 @@ public:
 
     void adicionarPontuacao(const std::string& nome, int pontos);
     std::vector<EntradaPontuacao> getRankingTop(int quantidade = MAX_RANKING) const;
-
-    // Recarrega o ranking do arquivo numa thread em segundo plano, para que
-    // o menu reflita as pontuacoes mais recentes sem reiniciar o jogo.
+    
     void recarregarRankingAsync();
 
     bool ehNovaAlta(int pontos) const;

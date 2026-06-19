@@ -25,7 +25,7 @@ public:
     void criarExplosao(float x, float y);
     void percorrer(float dt);
     void desenhar();
-    void serializar(std::vector<std::string>& linhas) const;
+    void salvar(std::vector<std::string>& linhas) const;
 };
 
 }

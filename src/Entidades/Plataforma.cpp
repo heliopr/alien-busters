@@ -102,14 +102,11 @@ sf::FloatRect Plataforma::getHitbox() const {
 }
 
 void Plataforma::salvar() {
-}
-
-std::string Plataforma::serializar() const {
-    std::ostringstream ss;
-    ss << "PLATAFORMA " << posXOriginal << " " << posYOriginal << " "
-       << static_cast<int>(cor.r) << " " << static_cast<int>(cor.g) << " "
-       << static_cast<int>(cor.b);
-    return ss.str();
+    buffer.str("");
+    buffer.clear();
+    buffer << "PLATAFORMA " << posXOriginal << " " << posYOriginal << " "
+           << static_cast<int>(cor.r) << " " << static_cast<int>(cor.g) << " "
+           << static_cast<int>(cor.b);
 }
 
 }

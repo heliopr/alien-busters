@@ -30,10 +30,7 @@ public:
     virtual void salvar() = 0;
     virtual void desenhar();
 
-    // Serializa a entidade em uma unica linha de texto para o salvamento.
-    // Entidades persistentes sobrescrevem este metodo; as transitorias
-    // (ex.: Explosao) retornam "" e sao ignoradas no salvamento.
-    virtual std::string serializar() const { return ""; }
+    std::string getBuffer() const { return buffer.str(); }
 
     virtual bool finalizada() const { return false; }
 

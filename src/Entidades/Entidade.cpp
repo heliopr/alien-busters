@@ -23,7 +23,7 @@ void Entidade::desenhar() {
 }
 
 void Entidade::salvarDataBuffer() {
-    
+    buffer << x << " " << y;
 }
 
 float Entidade::getX() const {

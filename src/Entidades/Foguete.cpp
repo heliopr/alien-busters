@@ -34,12 +34,10 @@ void Foguete::executar(float dt) {
 }
 
 void Foguete::salvar() {
-}
-
-std::string Foguete::serializar() const {
-    std::ostringstream ss;
-    ss << "FOGUETE " << x << " " << y;
-    return ss.str();
+    buffer.str("");
+    buffer.clear();
+    buffer << "FOGUETE ";
+    salvarDataBuffer();
 }
 
 sf::FloatRect Foguete::getHitbox() const {

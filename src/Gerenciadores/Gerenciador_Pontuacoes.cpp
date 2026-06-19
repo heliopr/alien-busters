@@ -50,8 +50,6 @@ std::string Gerenciador_Pontuacoes::obterDataAtual() {
 }
 
 void Gerenciador_Pontuacoes::carregarRanking() {
-    // Le o arquivo num vetor temporario para minimizar o tempo de bloqueio e
-    // evitar que outra thread leia um ranking parcialmente carregado.
     std::vector<EntradaPontuacao> novoRanking;
 
     std::ifstream arquivo(caminhoArquivo.c_str());
@@ -86,11 +84,9 @@ void Gerenciador_Pontuacoes::carregarRanking() {
 
         arquivo.close();
 
-        // Ordenar por pontos decrescentes
         std::sort(novoRanking.begin(), novoRanking.end(), compararPontuacoes);
     }
 
-    // Publica o novo ranking de forma atomica para os leitores.
     sf::Lock lock(mutex);
     ranking.swap(novoRanking);
 }
@@ -120,10 +116,8 @@ void Gerenciador_Pontuacoes::adicionarPontuacao(const std::string& nome, int pon
 
     ranking.push_back(EntradaPontuacao(nome, pontos, obterDataAtual()));
 
-    // Ordenar por pontos decrescentes
     std::sort(ranking.begin(), ranking.end(), compararPontuacoes);
 
-    // Manter apenas os top MAX_RANKING
     if (ranking.size() > (size_t)MAX_RANKING) {
         ranking.erase(ranking.begin() + MAX_RANKING, ranking.end());
     }
@@ -142,7 +136,6 @@ std::vector<EntradaPontuacao> Gerenciador_Pontuacoes::getRankingTop(int quantida
 }
 
 void Gerenciador_Pontuacoes::recarregarRankingAsync() {
-    // Espera uma eventual recarga anterior terminar antes de iniciar outra.
     if (threadRecarga != 0) {
         threadRecarga->wait();
         delete threadRecarga;

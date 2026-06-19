@@ -18,7 +18,6 @@ public:
 
     void executar(float dt);
     void salvar();
-    std::string serializar() const;
     void danificar(Jogador* p);
     int pontosAoMorrer() const;
     sf::FloatRect getHitbox() const;

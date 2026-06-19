@@ -61,15 +61,13 @@ void MinaExtraterrestre::executar(float dt) {
 }
 
 void MinaExtraterrestre::salvar() {
-}
-
-std::string MinaExtraterrestre::serializar() const {
+    buffer.str("");
+    buffer.clear();
     if (destruido) {
-        return "";
+        return;
     }
-    std::ostringstream ss;
-    ss << "MINA " << x << " " << y;
-    return ss.str();
+    buffer << "MINA ";
+    salvarDataBuffer();
 }
 
 void MinaExtraterrestre::obstaculizar(Personagens::Jogador* p) {

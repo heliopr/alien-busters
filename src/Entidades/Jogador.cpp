@@ -158,6 +158,8 @@ void Jogador::atualizarSprite(float dt, float dx) {
 }
 
 void Jogador::salvar() {
+    buffer.str("");
+    buffer.clear();
 }
 
 sf::FloatRect Jogador::getHitbox() const {

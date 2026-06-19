@@ -31,15 +31,13 @@ void Chao::executar(float dt) {
 }
 
 void Chao::salvar() {
-    // TODO
-}
-
-std::string Chao::serializar() const {
-    std::ostringstream ss;
-    ss << "CHAO " << x << " " << y << " " << largura << " " << altura << " "
-       << static_cast<int>(cor.r) << " " << static_cast<int>(cor.g) << " "
-       << static_cast<int>(cor.b);
-    return ss.str();
+    buffer.str("");
+    buffer.clear();
+    buffer << "CHAO ";
+    salvarDataBuffer();
+    buffer << " " << largura << " " << altura << " "
+           << static_cast<int>(cor.r) << " " << static_cast<int>(cor.g) << " "
+           << static_cast<int>(cor.b);
 }
 
 sf::FloatRect Chao::getHitbox() const {

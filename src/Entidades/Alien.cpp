@@ -53,12 +53,10 @@ void Alien::executar(float dt) {
 }
 
 void Alien::salvar() {
-}
-
-std::string Alien::serializar() const {
-    std::ostringstream ss;
-    ss << "ALIEN " << x << " " << y;
-    return ss.str();
+    buffer.str("");
+    buffer.clear();
+    buffer << "ALIEN ";
+    salvarDataBuffer();
 }
 
 void Alien::danificar(Jogador* p) {

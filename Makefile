@@ -2,7 +2,7 @@ ifeq ($(OS),Windows_NT)
     TARGET = bin/jogo.exe
     TEST_EXT = .exe
     
-    INCLUDES = -Iinclude -Ilibs -IC:\SFML-2.5.1\include
+    INCLUDES = -Iinclude -IC:\SFML-2.5.1\include
     LIBS = -LC:\SFML-2.5.1\lib -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
     
     MKDIR_BUILD = if not exist "$(subst /,\,$(dir $@))" mkdir "$(subst /,\,$(dir $@))"
@@ -16,7 +16,7 @@ else
     TARGET = bin/jogo
     TEST_EXT = .out
     
-    INCLUDES = -Iinclude -Ilibs
+    INCLUDES = -Iinclude
     LIBS = -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
     
     MKDIR_BUILD = mkdir -p $(dir $@)

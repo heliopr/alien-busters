@@ -8,4 +8,6 @@ bin/
 *.exe
 
 saves.dat
+saves.txt
 ranking.dat
+ranking.txt

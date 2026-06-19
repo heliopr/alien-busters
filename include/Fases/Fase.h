@@ -50,13 +50,8 @@ public:
     bool jogadorPerdeu() const;
     bool faseConcluida() const { return concluida; }
 
-    // Serializa todas as entidades vivas da fase (cenario, inimigos,
-    // obstaculos, foguete e projeteis) em linhas de texto.
-    void montarSnapshot(std::vector<std::string>& linhas) const;
-
-    // Recria as entidades a partir das linhas salvas, registrando-as nos
-    // gerenciadores apropriados. Usado ao continuar um jogo salvo.
-    void carregarSnapshot(const std::vector<std::string>& linhas);
+    void salvar(std::vector<std::string>& linhas) const;
+    void carregar(const std::vector<std::string>& linhas);
 
 protected:
     void processarJogador(Entidades::Personagens::Jogador* pJog, float dt);

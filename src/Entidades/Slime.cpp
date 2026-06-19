@@ -55,12 +55,10 @@ void Slime::executar(float dt) {
 }
 
 void Slime::salvar() {
-}
-
-std::string Slime::serializar() const {
-    std::ostringstream ss;
-    ss << "SLIME " << x << " " << y;
-    return ss.str();
+    buffer.str("");
+    buffer.clear();
+    buffer << "SLIME ";
+    salvarDataBuffer();
 }
 
 void Slime::danificar(Jogador* p) {

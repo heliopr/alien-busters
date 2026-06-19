@@ -18,10 +18,6 @@ Personagem& Personagem::operator--() {
     return *this;
 }
 
-void Personagem::salvarDataBuffer() {
-    // TODO
-}
-
 }
 }
 }

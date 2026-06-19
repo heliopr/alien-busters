@@ -370,7 +370,6 @@ void Jogo::salvarEstadoCompleto() {
     dados.vidas1 = pJog1->getNumVidas();
     dados.vidas2 = doisJogadoresAtual ? pJog2->getNumVidas() : 3;
 
-    dados.temSnapshot = true;
     dados.x1 = pJog1->getX();
     dados.y1 = pJog1->getY();
     dados.vy1 = pJog1->getVy();
@@ -380,12 +379,12 @@ void Jogo::salvarEstadoCompleto() {
         dados.vy2 = pJog2->getVy();
     }
 
-    faseAtual->montarSnapshot(dados.entidades);
+    faseAtual->salvar(dados.entidades);
 
     Gerenciadores::Gerenciador_Salvamento::getInstancia()->salvarJogo(dados);
 }
 
-void Jogo::iniciarFaseSnapshot(const Gerenciadores::DadosSalvos& dados) {
+void Jogo::iniciarFaseSalva(const Gerenciadores::DadosSalvos& dados) {
     bool dois = (dados.numJogadores == 2);
     Entidades::Personagens::Jogador* p2 = dois ? pJog2 : 0;
     std::string nome2 = dois ? nomeJogador2Atual : "";
@@ -393,7 +392,6 @@ void Jogo::iniciarFaseSnapshot(const Gerenciadores::DadosSalvos& dados) {
     delete faseAtual;
     faseAtual = 0;
 
-    // gerarConteudo = false: a fase nasce vazia e e preenchida pelo snapshot.
     if (dados.fase == FASE_LUA) {
         faseAtual = new Fases::Fase_Lua(pJog1, p2, nomeJogadorAtual, nome2, false);
     } else if (dados.fase == FASE_MARTE) {
@@ -421,7 +419,7 @@ void Jogo::iniciarFaseSnapshot(const Gerenciadores::DadosSalvos& dados) {
         menu.confirmarNome();
     }
 
-    faseAtual->carregarSnapshot(dados.entidades);
+    faseAtual->carregar(dados.entidades);
 
     estado = ESTADO_JOGANDO;
     faseSelecionada = -1;
@@ -436,11 +434,7 @@ void Jogo::continuarJogo(const Gerenciadores::DadosSalvos& dados) {
     nomeJogadorAtual = dados.nome1;
     nomeJogador2Atual = dois ? dados.nome2 : "";
 
-    if (dados.temSnapshot) {
-        iniciarFaseSnapshot(dados);
-    } else {
-        iniciarFase(dados.fase, dois, dados.pontos1, dados.pontos2, dados.vidas1, dados.vidas2);
-    }
+    iniciarFaseSalva(dados);
 }
 
 void Jogo::voltarAoMenu() {

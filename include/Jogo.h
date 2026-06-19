@@ -75,7 +75,7 @@ private:
     void salvarPontuacoes();
     void salvarProgresso();
     void salvarEstadoCompleto();
-    void iniciarFaseSnapshot(const Gerenciadores::DadosSalvos& dados);
+    void iniciarFaseSalva(const Gerenciadores::DadosSalvos& dados);
     void continuarJogo(const Gerenciadores::DadosSalvos& dados);
 
 public:
@@ -86,7 +86,6 @@ public:
     void executar();
     void setNomeJogador(const std::string& nome) { nomeJogadorAtual = nome; }
 
-    // ObservadorEventos: recebe cada evento repassado pelo Gerenciador_Eventos.
     void aoReceberEvento(const sf::Event& evento);
 };
 

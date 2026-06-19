@@ -15,7 +15,8 @@ Projetil::Projetil(float x, float y, float vx, float vy, Personagens::Jogador* d
 Projetil::~Projetil() {}
 
 void Projetil::salvar() {
-    // TODO
+    buffer.str("");
+    buffer.clear();
 }
 
 void Projetil::executar(float dt) {
