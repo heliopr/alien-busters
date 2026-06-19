@@ -22,6 +22,8 @@ Golem::Golem(float x_ini, float y_ini)
     float v = 30.f;
     velocidadeX = (std::rand() % 2 == 0) ? v : -v;
 
+    tempoRestante = 1.f;
+
     pFig = new sf::RectangleShape(sf::Vector2f(202.5f, 144.f));
     if (pFig != NULL) {
         pFig->setOrigin(101.25f, 96.f);

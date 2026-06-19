@@ -93,8 +93,8 @@ Menu::Menu(Jogo* pJ) :
     std::string nomesOpcoes[] = { "NOVO JOGO", "CONTINUAR", "RANKING", "SAIR" };
     criarTextos(opcoes, nomesOpcoes, 4, 180.f);
 
-    std::string nomesNovoJogo[] = { "1 JOGADOR", "FASE LUA", "FASE MARTE", "VOLTAR" };
-    criarTextos(opcoesNovoJogo, nomesNovoJogo, 4, 150.f);
+    std::string nomesNovoJogo[] = { "1 JOGADOR", "JOGAR", "VOLTAR" };
+    criarTextos(opcoesNovoJogo, nomesNovoJogo, 3, 150.f);
 
     textoCursor.setFont(fonte);
     textoCursor.setCharacterSize(50);

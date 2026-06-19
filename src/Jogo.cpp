@@ -184,7 +184,6 @@ void Jogo::tratarEventoTelaVitoria(const sf::Event& evento) {
 
 void Jogo::tratarEventoPause(const sf::Event& evento) {
     if (evento.key.code == sf::Keyboard::Escape) {
-        // Escape volta a jogar (alterna a pausa).
         estado = ESTADO_JOGANDO;
         return;
     }
@@ -203,6 +202,9 @@ void Jogo::tratarEventoPause(const sf::Event& evento) {
             }
             estado = ESTADO_JOGANDO;
         } else {
+            if (faseAtual != 0 && !faseAtual->jogadorPerdeu()) {
+                salvarEstadoCompleto();
+            }
             voltarAoMenu();
         }
     }
@@ -257,13 +259,9 @@ void Jogo::tratarEventoMenu(const sf::Event& evento) {
         if (menu.emTelaNovoJogo()) {
             int sel = menu.getOpcaoNovoJogoSelecionada();
             if (sel == 0) {
-                // Alternar entre 1 e 2 jogadores
                 menu.alternarJogadores();
             } else if (sel == 1) {
                 faseSelecionada = FASE_LUA;
-                menu.entrarTelaNome();
-            } else if (sel == 2) {
-                faseSelecionada = FASE_MARTE;
                 menu.entrarTelaNome();
             } else {
                 menu.sairSubmenu();
