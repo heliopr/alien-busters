@@ -1,4 +1,5 @@
 #include "Entidades/Projetil.h"
+#include "Entidades/Jogador.h"
 #include "Configuracao.h"
 
 namespace AlienBusters {
@@ -6,7 +7,8 @@ namespace Entidades {
 namespace Projeteis {
 
 Projetil::Projetil(float x, float y, float vx, float vy, Personagens::Jogador* dono, bool inimigo)
-    : Entidade(), ativo(true), vx(vx), dono(dono), sofreGravidade(false), inimigo(inimigo), quicavel(false) {
+    : Entidade(), ativo(true), vx(vx), dono(dono), donoId(dono ? dono->getId() : -1),
+      sofreGravidade(false), inimigo(inimigo), quicavel(false) {
     this->x = x;
     this->y = y;
     this->vy = vy;

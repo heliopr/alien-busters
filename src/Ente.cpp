@@ -4,8 +4,9 @@
 namespace AlienBusters {
 
 Gerenciadores::Gerenciador_Grafico *Ente::pGG = 0;
+int Ente::proximoId = 1;
 
-Ente::Ente() : id(0), pFig(0) {}
+Ente::Ente() : id(proximoId++), pFig(0) {}
 
 Ente::~Ente() {
     if (pFig) {
@@ -18,6 +19,22 @@ void Ente::desenhar() {
     if (pGG) {
         pGG->desenharEnte(this);
     }
+}
+
+int Ente::getId() const {
+    return id;
+}
+
+void Ente::setId(int novoId) {
+    id = novoId;
+}
+
+int Ente::getProximoId() {
+    return proximoId;
+}
+
+void Ente::setProximoId(int id) {
+    proximoId = id;
 }
 
 sf::RectangleShape *Ente::getFigura() const {

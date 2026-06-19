@@ -8,15 +8,20 @@
 #include "Entidades/Alien.h"
 #include "Entidades/Slime.h"
 #include "Entidades/Golem.h"
+#include "Entidades/Projetil.h"
 #include "Entidades/Laser.h"
 #include "Entidades/Pedra.h"
 #include "Gerenciadores/Gerenciador_Grafico.h"
 #include "Configuracao.h"
+#include "Utilidades.h"
 #include <cmath>
+#include <map>
 #include <vector>
 #include <cstdlib>
 #include <sstream>
 #include <string>
+
+using AlienBusters::Utilidades;
 
 namespace AlienBusters {
 namespace Fases {
@@ -275,97 +280,89 @@ void Fase::salvar(std::vector<std::string>& linhas) const {
 }
 
 Entidades::Entidade* Fase::criarEntidadeDeLinha(const std::string& linha, int& categoria) const {
-    std::istringstream ss(linha);
-    std::string tipo;
-    ss >> tipo;
+    std::size_t espaco = linha.find(' ');
+    if (espaco == std::string::npos) {
+        categoria = CAT_OUTRO;
+        return 0;
+    }
+
+    std::string tipo = linha.substr(0, espaco);
+    std::map<std::string, std::string> c = Utilidades::parsearCampos(linha.substr(espaco + 1));
+    int idSalvo = Utilidades::campoInt(c, "id", -1);
+    float x = Utilidades::campoFloat(c, "x");
+    float y = Utilidades::campoFloat(c, "y");
     categoria = CAT_OUTRO;
 
     if (tipo == "CHAO") {
-        float x, y, largura, altura;
-        int r, g, b;
-        ss >> x >> y >> largura >> altura >> r >> g >> b;
         categoria = CAT_CHAO;
-        return new Entidades::Chao(x, y, largura, altura,
-                                   sf::Color(static_cast<sf::Uint8>(r), static_cast<sf::Uint8>(g), static_cast<sf::Uint8>(b)));
+        Entidades::Chao* chao = new Entidades::Chao(x, y,
+            Utilidades::campoFloat(c, "largura"), Utilidades::campoFloat(c, "altura"),
+            sf::Color(static_cast<sf::Uint8>(Utilidades::campoInt(c, "r")),
+                      static_cast<sf::Uint8>(Utilidades::campoInt(c, "g")),
+                      static_cast<sf::Uint8>(Utilidades::campoInt(c, "b"))));
+        if (idSalvo >= 0) chao->setId(idSalvo);
+        return chao;
     } else if (tipo == "PLATAFORMA") {
-        float x, y;
-        int r, g, b;
-        ss >> x >> y >> r >> g >> b;
         categoria = CAT_OBSTACULO;
-        return new Entidades::Obstaculos::Plataforma(x, y,
-                                   sf::Color(static_cast<sf::Uint8>(r), static_cast<sf::Uint8>(g), static_cast<sf::Uint8>(b)));
+        Entidades::Obstaculos::Plataforma* plat = new Entidades::Obstaculos::Plataforma(x, y,
+            sf::Color(static_cast<sf::Uint8>(Utilidades::campoInt(c, "r")),
+                      static_cast<sf::Uint8>(Utilidades::campoInt(c, "g")),
+                      static_cast<sf::Uint8>(Utilidades::campoInt(c, "b"))));
+        if (idSalvo >= 0) plat->setId(idSalvo);
+        return plat;
     } else if (tipo == "GOSMA") {
-        float x, y;
-        ss >> x >> y;
         categoria = CAT_OBSTACULO;
-        return new Entidades::Obstaculos::Gosma(x, y);
+        Entidades::Obstaculos::Gosma* gosma = new Entidades::Obstaculos::Gosma(x, y);
+        if (idSalvo >= 0) gosma->setId(idSalvo);
+        return gosma;
     } else if (tipo == "MINA") {
-        float x, y;
-        ss >> x >> y;
         categoria = CAT_OBSTACULO;
-        return new Entidades::Obstaculos::MinaExtraterrestre(x, y);
+        Entidades::Obstaculos::MinaExtraterrestre* mina = new Entidades::Obstaculos::MinaExtraterrestre(x, y);
+        if (idSalvo >= 0) mina->setId(idSalvo);
+        return mina;
     } else if (tipo == "ALIEN") {
-        float x, y, velocidade;
-        int nivelMaldade, numVidas;
-        ss >> x >> y;
         categoria = CAT_INIMIGO;
         Entidades::Personagens::Alien* alien = new Entidades::Personagens::Alien(x, y);
-        if (ss >> velocidade) {
-            alien->setVelocidade(velocidade);
-        }
-        if (ss >> nivelMaldade) {
-            alien->setNivelMaldade(nivelMaldade);
-        }
-        if (ss >> numVidas) {
-            alien->setNumVidas(numVidas);
-        }
+        if (idSalvo >= 0) alien->setId(idSalvo);
+        alien->setVelocidade(Utilidades::campoFloat(c, "vel"));
+        alien->setNivelMaldade(Utilidades::campoInt(c, "maldade"));
+        alien->setNumVidas(Utilidades::campoInt(c, "vidas", 1));
         return alien;
     } else if (tipo == "SLIME") {
-        float x, y, nivel;
-        int nivelMaldade, numVidas;
-        ss >> x >> y;
         categoria = CAT_INIMIGO;
         Entidades::Personagens::Slime* slime = new Entidades::Personagens::Slime(x, y);
-        if (ss >> nivel) {
-            slime->setNivel(nivel);
-        }
-        if (ss >> nivelMaldade) {
-            slime->setNivelMaldade(nivelMaldade);
-        }
-        if (ss >> numVidas) {
-            slime->setNumVidas(numVidas);
-        }
+        if (idSalvo >= 0) slime->setId(idSalvo);
+        slime->setNivel(Utilidades::campoFloat(c, "nivel"));
+        slime->setNivelMaldade(Utilidades::campoInt(c, "maldade"));
+        slime->setNumVidas(Utilidades::campoInt(c, "vidas", 1));
         return slime;
     } else if (tipo == "GOLEM") {
-        float x, y, tempoRecarga;
-        int nivelMaldade, numVidas;
-        ss >> x >> y;
         categoria = CAT_INIMIGO;
         Entidades::Personagens::Golem* golem = new Entidades::Personagens::Golem(x, y);
-        if (ss >> tempoRecarga) {
-            golem->setTempoRecarga(tempoRecarga);
-        }
-        if (ss >> nivelMaldade) {
-            golem->setNivelMaldade(nivelMaldade);
-        }
-        if (ss >> numVidas) {
-            golem->setNumVidas(numVidas);
-        }
+        if (idSalvo >= 0) golem->setId(idSalvo);
+        golem->setTempoRecarga(Utilidades::campoFloat(c, "recarga", 5.f));
+        golem->setNivelMaldade(Utilidades::campoInt(c, "maldade"));
+        golem->setNumVidas(Utilidades::campoInt(c, "vidas", 5));
         return golem;
     } else if (tipo == "FOGUETE") {
-        float x, y;
-        ss >> x >> y;
         categoria = CAT_FOGUETE;
-        return new Entidades::Foguete(x, y);
+        Entidades::Foguete* fog = new Entidades::Foguete(x, y);
+        if (idSalvo >= 0) fog->setId(idSalvo);
+        return fog;
     } else if (tipo == "LASER" || tipo == "PEDRA") {
-        float x, y, vx, vy;
-        int inimigoFlag = 0;
-        ss >> x >> y >> vx >> vy >> inimigoFlag;
         categoria = CAT_PROJETIL;
+        float vx = Utilidades::campoFloat(c, "vx");
+        float vy = Utilidades::campoFloat(c, "vy");
+        bool inimigo = Utilidades::campoInt(c, "inimigo") != 0;
+        Entidades::Projeteis::Projetil* proj;
         if (tipo == "LASER") {
-            return new Entidades::Projeteis::Laser(x, y, vx, vy, 0, inimigoFlag != 0);
+            proj = new Entidades::Projeteis::Laser(x, y, vx, vy, 0, inimigo);
+        } else {
+            proj = new Entidades::Projeteis::Pedra(x, y, vx, vy, 0, inimigo);
         }
-        return new Entidades::Projeteis::Pedra(x, y, vx, vy, 0, inimigoFlag != 0);
+        if (idSalvo >= 0) proj->setId(idSalvo);
+        proj->setDonoId(Utilidades::campoInt(c, "dono", -1));
+        return proj;
     }
 
     return 0;
@@ -377,11 +374,18 @@ void Fase::carregar(const std::vector<std::string>& linhas) {
     pFoguete = 0;
     concluida = false;
 
+    int maiorId = Ente::getProximoId();
+    std::vector<Entidades::Projeteis::Projetil*> projeteis;
+
     for (std::size_t i = 0; i < linhas.size(); ++i) {
         int categoria = CAT_OUTRO;
         Entidades::Entidade* ent = criarEntidadeDeLinha(linhas[i], categoria);
         if (ent == 0) {
             continue;
+        }
+
+        if (ent->getId() >= maiorId) {
+            maiorId = ent->getId() + 1;
         }
 
         switch (categoria) {
@@ -410,8 +414,9 @@ void Fase::carregar(const std::vector<std::string>& linhas) {
                 break;
             }
             case CAT_PROJETIL: {
-                // incluirProjetil ja adiciona o projetil a lista de entidades.
-                pGC->incluirProjetil(static_cast<Entidades::Projeteis::Projetil*>(ent));
+                Entidades::Projeteis::Projetil* proj = static_cast<Entidades::Projeteis::Projetil*>(ent);
+                projeteis.push_back(proj);
+                pGC->incluirProjetil(proj);
                 break;
             }
             default:
@@ -419,6 +424,19 @@ void Fase::carregar(const std::vector<std::string>& linhas) {
                 break;
         }
     }
+
+    for (std::size_t i = 0; i < projeteis.size(); ++i) {
+        int donoId = projeteis[i]->getDonoId();
+        if (donoId >= 0) {
+            if (pJogador && pJogador->getId() == donoId) {
+                projeteis[i]->setDono(pJogador);
+            } else if (pJogador2 && pJogador2->getId() == donoId) {
+                projeteis[i]->setDono(pJogador2);
+            }
+        }
+    }
+
+    Ente::setProximoId(maiorId);
 }
 
 }

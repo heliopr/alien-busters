@@ -104,9 +104,9 @@ sf::FloatRect Plataforma::getHitbox() const {
 void Plataforma::salvar() {
     buffer.str("");
     buffer.clear();
-    buffer << "PLATAFORMA " << posXOriginal << " " << posYOriginal << " "
-           << static_cast<int>(cor.r) << " " << static_cast<int>(cor.g) << " "
-           << static_cast<int>(cor.b);
+    buffer << "PLATAFORMA id:" << id << ",x:" << posXOriginal << ",y:" << posYOriginal
+           << ",r:" << static_cast<int>(cor.r) << ",g:" << static_cast<int>(cor.g)
+           << ",b:" << static_cast<int>(cor.b);
 }
 
 }

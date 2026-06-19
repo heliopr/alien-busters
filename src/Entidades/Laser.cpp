@@ -41,7 +41,7 @@ void Laser::salvar() {
     buffer.clear();
     buffer << "LASER ";
     salvarDataBuffer();
-    buffer << " " << vx << " " << vy << " " << (inimigo ? 1 : 0);
+    buffer << ",vx:" << vx << ",vy:" << vy << ",inimigo:" << (inimigo ? 1 : 0) << ",dono:" << donoId;
 }
 
 sf::FloatRect Laser::getHitbox() const {

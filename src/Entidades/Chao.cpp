@@ -35,9 +35,9 @@ void Chao::salvar() {
     buffer.clear();
     buffer << "CHAO ";
     salvarDataBuffer();
-    buffer << " " << largura << " " << altura << " "
-           << static_cast<int>(cor.r) << " " << static_cast<int>(cor.g) << " "
-           << static_cast<int>(cor.b);
+    buffer << ",largura:" << largura << ",altura:" << altura
+           << ",r:" << static_cast<int>(cor.r) << ",g:" << static_cast<int>(cor.g)
+           << ",b:" << static_cast<int>(cor.b);
 }
 
 sf::FloatRect Chao::getHitbox() const {

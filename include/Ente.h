@@ -10,7 +10,8 @@ namespace Gerenciadores { class Gerenciador_Grafico; }
 class Ente {
 protected:
     int id;
-    static Gerenciadores::Gerenciador_Grafico *pGG; 
+    static int proximoId;
+    static Gerenciadores::Gerenciador_Grafico *pGG;
     sf::RectangleShape *pFig;
 
 public:
@@ -19,6 +20,11 @@ public:
 
     virtual void executar(float dt) = 0;
     virtual void desenhar();
+
+    int getId() const;
+    void setId(int novoId);
+    static int getProximoId();
+    static void setProximoId(int id);
 
     sf::RectangleShape *getFigura() const;
 

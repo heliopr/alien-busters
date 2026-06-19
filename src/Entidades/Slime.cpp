@@ -60,7 +60,7 @@ void Slime::salvar() {
     buffer.clear();
     buffer << "SLIME ";
     salvarDataBuffer();
-    buffer << " " << nivel << " " << nivel_maldade << " " << num_vidas;
+    buffer << ",nivel:" << nivel << ",maldade:" << nivel_maldade << ",vidas:" << num_vidas;
 }
 
 void Slime::danificar(Jogador* p) {

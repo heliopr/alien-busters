@@ -64,7 +64,7 @@ void Golem::salvar() {
     buffer.clear();
     buffer << "GOLEM ";
     salvarDataBuffer();
-    buffer << " " << tempoRecarga << " " << nivel_maldade << " " << num_vidas;
+    buffer << ",recarga:" << tempoRecarga << ",maldade:" << nivel_maldade << ",vidas:" << num_vidas;
 }
 
 void Golem::danificar(Jogador* p) {

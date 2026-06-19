@@ -69,7 +69,7 @@ void Pedra::salvar() {
     buffer.clear();
     buffer << "PEDRA ";
     salvarDataBuffer();
-    buffer << " " << vx << " " << vy << " " << (inimigo ? 1 : 0);
+    buffer << ",vx:" << vx << ",vy:" << vy << ",inimigo:" << (inimigo ? 1 : 0) << ",dono:" << donoId;
 }
 
 sf::FloatRect Pedra::getHitbox() const {

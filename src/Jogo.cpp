@@ -361,10 +361,12 @@ void Jogo::salvarEstadoCompleto() {
     dados.x1 = pJog1->getX();
     dados.y1 = pJog1->getY();
     dados.vy1 = pJog1->getVy();
+    dados.idJog1 = pJog1->getId();
     if (doisJogadoresAtual) {
         dados.x2 = pJog2->getX();
         dados.y2 = pJog2->getY();
         dados.vy2 = pJog2->getVy();
+        dados.idJog2 = pJog2->getId();
     }
 
     faseAtual->salvar(dados.entidades);
@@ -395,6 +397,9 @@ void Jogo::iniciarFaseSalva(const Gerenciadores::DadosSalvos& dados) {
     pJog1->setX(dados.x1);
     pJog1->setY(dados.y1);
     pJog1->setVy(dados.vy1);
+    if (dados.idJog1 >= 0) {
+        pJog1->setId(dados.idJog1);
+    }
 
     if (dois) {
         pJog2->resetar();
@@ -402,6 +407,9 @@ void Jogo::iniciarFaseSalva(const Gerenciadores::DadosSalvos& dados) {
         pJog2->setX(dados.x2);
         pJog2->setY(dados.y2);
         pJog2->setVy(dados.vy2);
+        if (dados.idJog2 >= 0) {
+            pJog2->setId(dados.idJog2);
+        }
         menu.confirmarNomeJ2();
     } else {
         menu.confirmarNome();

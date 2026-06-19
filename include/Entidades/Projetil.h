@@ -15,6 +15,7 @@ protected:
     bool ativo;
     float vx;
     Personagens::Jogador* dono;
+    int donoId;
     bool sofreGravidade;
     bool inimigo;
     bool quicavel;
@@ -32,6 +33,9 @@ public:
     float getVx() const { return vx; }
     void setVx(float v) { vx = v; }
     Personagens::Jogador* getDono() const { return dono; }
+    void setDono(Personagens::Jogador* d) { dono = d; }
+    int getDonoId() const { return donoId; }
+    void setDonoId(int id) { donoId = id; }
     bool getInimigo() const { return inimigo; }
     bool getQuicavel() const { return quicavel; }
 
