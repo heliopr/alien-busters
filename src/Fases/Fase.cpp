@@ -201,8 +201,7 @@ void Fase::desenhar() {
 
     if (pGG != 0) {
         if (pJogador != 0) {
-            pGG->desenharHUD(pJogador->getPontos(), pJogador->getX(), pJogador->getY(),
-                             pJogador->getNumVidas(), false, false);
+            pGG->desenharHUD(pJogador->getPontos(), pJogador->getX(), pJogador->getY(), pJogador->getNumVidas(), false, false);
             
             if (!nomeJogador.empty()) {
                 sf::Text nomeText;
@@ -215,8 +214,7 @@ void Fase::desenhar() {
             }
         }
         if (pJogador2 != 0) {
-            pGG->desenharHUD(pJogador2->getPontos(), pJogador2->getX(), pJogador2->getY(),
-                             pJogador2->getNumVidas(), true, false);
+            pGG->desenharHUD(pJogador2->getPontos(), pJogador2->getX(), pJogador2->getY(), pJogador2->getNumVidas(), true, false);
             
             if (!nomeJogador2.empty()) {
                 sf::Text nomeText;
