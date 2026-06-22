@@ -1,10 +1,6 @@
 # Alien Busters
 Criado por Hélio Procailo Repczuk e Raquel de Toledo Cardoso para o trabalho final da matéria de Técnicas de Programação da UTFPR. Orientado pelo Prof. Dr. Jean Marcelo Simão.
 
-## TODO
-- [ ] Consertar algumas agregações (ex. Menu-Jogo, Gerenciador_Pontuações-Menu)
-- [ ] Usar: observer, mediator, iterator... https://refactoring.guru/design-patterns
-
 - [Diagrama Jogo Modelo](https://pessoal.dainf.ct.utfpr.edu.br/jeansimao/Fundamentos2/TopicosTrab/DiagramaJogoModelo.jpg)
 - [Modelo Especificação para Trabalho](https://pessoal.dainf.ct.utfpr.edu.br/jeansimao/Fundamentos2/TopicosTrab/Modelo_Especificacao_para_Trabalho_TecnicasProgramacao.pdf)
 
