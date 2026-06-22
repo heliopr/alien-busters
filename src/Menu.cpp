@@ -459,4 +459,60 @@ void Menu::desenhar() {
     }
 }
 
+bool Menu::getEmSubmenu() const {
+    return emSubmenu;
+}
+
+bool Menu::emTelaEntradaNome() const {
+    return telaAtual == TELA_ENTRADA_NOME;
+}
+
+bool Menu::emTelaEntradaNomeJ2() const {
+    return telaAtual == TELA_ENTRADA_NOME_J2;
+}
+
+bool Menu::emTelaRanking() const {
+    return telaAtual == TELA_RANKING;
+}
+
+bool Menu::emTelaNovoJogo() const {
+    return telaAtual == TELA_NOVO_JOGO;
+}
+
+bool Menu::emTelaContinuar() const {
+    return telaAtual == TELA_CONTINUAR;
+}
+
+int Menu::getOpcaoSelecionada() const {
+    return opcaoSelecionada;
+}
+
+int Menu::getOpcaoNovoJogoSelecionada() const {
+    return opcaoNovoJogoSelecionada;
+}
+
+int Menu::getOpcaoContinuarSelecionada() const {
+    return opcaoContinuarSelecionada;
+}
+
+int Menu::getNumSaves() const {
+    return (int)saves.size();
+}
+
+const Gerenciadores::DadosSalvos& Menu::getSaveSelecionado() const {
+    return saves[opcaoContinuarSelecionada];
+}
+
+int Menu::getNumJogadores() const {
+    return numJogadores;
+}
+
+std::string Menu::getNomeJogador() const {
+    return nomeJogador;
+}
+
+std::string Menu::getNomeJogador2() const {
+    return nomeJogador2;
+}
+
 }

@@ -21,8 +21,8 @@ public:
     void danificar(Jogador* p);
     sf::FloatRect getHitbox() const;
 
-    float getVelocidade() const { return velocidade; }
-    void setVelocidade(float v) { velocidade = v; velocidadeX = v; }
+    float getVelocidade() const;
+    void setVelocidade(float v);
 };
 
 }

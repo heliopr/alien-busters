@@ -13,8 +13,7 @@ struct EntradaPontuacao {
     int pontos;
     std::string data;
 
-    EntradaPontuacao(const std::string& n = "", int p = 0, const std::string& d = "")
-        : nome(n), pontos(p), data(d) {}
+    EntradaPontuacao(const std::string& n = "", int p = 0, const std::string& d = "");
 };
 
 class Gerenciador_Pontuacoes {

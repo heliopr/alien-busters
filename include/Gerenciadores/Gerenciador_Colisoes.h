@@ -79,9 +79,9 @@ public:
 
     static Gerenciador_Colisoes* getInstancia();
 
-    void setJogador(Entidades::Personagens::Jogador* pJ) { pJog1 = pJ; }
-    void setJogador2(Entidades::Personagens::Jogador* pJ) { pJog2 = pJ; }
-    void setListaEntidades(Listas::ListaEntidades* pLE) { pListaEntidades = pLE; }
+    void setJogador(Entidades::Personagens::Jogador* pJ);
+    void setJogador2(Entidades::Personagens::Jogador* pJ);
+    void setListaEntidades(Listas::ListaEntidades* pLE);
 
     void incluirInimigo(Entidades::Personagens::Inimigo* pi);
     void incluirObstaculo(Entidades::Obstaculos::Obstaculo* po);
@@ -89,7 +89,7 @@ public:
     void incluirProjetil(Entidades::Projeteis::Projetil* pj);
     void limpar();
 
-    const std::vector<Entidades::Personagens::Inimigo*>& getInimigos() const { return LIs; }
+    const std::vector<Entidades::Personagens::Inimigo*>& getInimigos() const;
 
     void executar();
 };

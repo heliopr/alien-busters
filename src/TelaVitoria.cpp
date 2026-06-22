@@ -87,4 +87,8 @@ void TelaVitoria::tocarVitoria() {
     somVitoria.play();
 }
 
+int TelaVitoria::getOpcaoSelecionada() const {
+    return opcaoSelecionada;
+}
+
 }

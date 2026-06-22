@@ -114,6 +114,14 @@ void Golem::atirar(Jogador* alvo, float dt) {
     Gerenciadores::Gerenciador_Colisoes::getInstancia()->incluirProjetil(pedra);
 }
 
+float Golem::getTempoRecarga() const {
+    return tempoRecarga;
+}
+
+void Golem::setTempoRecarga(float t) {
+    tempoRecarga = t;
+}
+
 }
 }
 }

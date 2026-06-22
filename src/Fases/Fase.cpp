@@ -253,6 +253,10 @@ bool Fase::jogadorPerdeu() const {
     return p1Morto && p2Morto;
 }
 
+bool Fase::faseConcluida() const {
+    return concluida;
+}
+
 void Fase::reiniciar() {
     pGC->limpar();
     lista_ents.limpar();

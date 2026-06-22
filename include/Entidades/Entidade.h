@@ -30,9 +30,9 @@ public:
     virtual void salvar() = 0;
     virtual void desenhar();
 
-    std::string getBuffer() const { return buffer.str(); }
+    std::string getBuffer() const;
 
-    virtual bool finalizada() const { return false; }
+    virtual bool finalizada() const;
 
     float getX() const;
     float getY() const;

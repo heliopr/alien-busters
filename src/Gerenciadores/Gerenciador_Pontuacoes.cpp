@@ -9,6 +9,10 @@
 namespace AlienBusters {
 namespace Gerenciadores {
 
+EntradaPontuacao::EntradaPontuacao(const std::string& n, int p, const std::string& d)
+    : nome(n), pontos(p), data(d) {
+}
+
 bool compararPontuacoes(const EntradaPontuacao& a, const EntradaPontuacao& b) {
     return a.pontos > b.pontos;
 }

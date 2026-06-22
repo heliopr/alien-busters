@@ -77,4 +77,8 @@ void TelaPause::desenhar() {
     }
 }
 
+int TelaPause::getOpcaoSelecionada() const {
+    return opcaoSelecionada;
+}
+
 }

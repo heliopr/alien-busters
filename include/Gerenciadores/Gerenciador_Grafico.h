@@ -32,12 +32,10 @@ public:
     static Gerenciador_Grafico* getInstancia();
 
     // descobrir o tam da janela fora da classe, pra plataforma e etc
-    sf::Vector2u getTamanhoJanela() const { 
-        return janela.getSize();
-    }
-    bool getMostrarHitboxes() const { return mostrarHitboxes; }
-    void setMostrarHitboxes(bool b) { mostrarHitboxes = b; }
-    const sf::Font& getFont() const { return fontHUD; }
+    sf::Vector2u getTamanhoJanela() const;
+    bool getMostrarHitboxes() const;
+    void setMostrarHitboxes(bool b);
+    const sf::Font& getFont() const;
     void desenharEnte(Ente *pE);
     void desenharTexto(sf::Text *pT);
     void desenharTextoTela(sf::Text *pT);

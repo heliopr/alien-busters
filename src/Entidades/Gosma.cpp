@@ -56,6 +56,10 @@ sf::FloatRect Gosma::getHitbox() const {
     return sf::FloatRect(x, y, largura, altura);
 }
 
+bool Gosma::colide() const {
+    return false;
+}
+
 }
 }
 }

@@ -70,6 +70,49 @@ bool Inimigo::podeDanificar(Jogador* p) const {
     return p != NULL && !p->estaInvulneravel();
 }
 
+void Inimigo::atirar(Jogador*, float) {
+}
+
+int Inimigo::pontosAoMorrer() const {
+    return 100;
+}
+
+float Inimigo::getVelocidadeX() const {
+    return velocidadeX;
+}
+
+void Inimigo::setVelocidadeX(float v) {
+    velocidadeX = v;
+}
+
+int Inimigo::getNivelMaldade() const {
+    return nivel_maldade;
+}
+
+void Inimigo::setNivelMaldade(int n) {
+    nivel_maldade = n;
+}
+
+void Inimigo::resetarDecisaoBorda() {
+    decidiuBorda = false;
+}
+
+bool Inimigo::estaFlashando() const {
+    return tempoFlashDano > 0.f;
+}
+
+int Inimigo::getNumVidas() const {
+    return num_vidas;
+}
+
+void Inimigo::setNumVidas(int n) {
+    num_vidas = n;
+}
+
+bool Inimigo::morreu() const {
+    return num_vidas <= 0;
+}
+
 }
 }
 }

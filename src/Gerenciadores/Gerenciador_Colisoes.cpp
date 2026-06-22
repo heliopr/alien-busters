@@ -29,6 +29,22 @@ Gerenciador_Colisoes::~Gerenciador_Colisoes() {
     limpar();
 }
 
+void Gerenciador_Colisoes::setJogador(Entidades::Personagens::Jogador* pJ) {
+    pJog1 = pJ;
+}
+
+void Gerenciador_Colisoes::setJogador2(Entidades::Personagens::Jogador* pJ) {
+    pJog2 = pJ;
+}
+
+void Gerenciador_Colisoes::setListaEntidades(Listas::ListaEntidades* pLE) {
+    pListaEntidades = pLE;
+}
+
+const std::vector<Entidades::Personagens::Inimigo*>& Gerenciador_Colisoes::getInimigos() const {
+    return LIs;
+}
+
 void Gerenciador_Colisoes::incluirInimigo(Entidades::Personagens::Inimigo* pi) {
     if (pi != NULL) {
         LIs.push_back(pi);

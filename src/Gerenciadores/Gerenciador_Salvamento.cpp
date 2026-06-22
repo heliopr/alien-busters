@@ -20,6 +20,12 @@ Gerenciador_Salvamento* Gerenciador_Salvamento::getInstancia() {
     return instancia;
 }
 
+DadosSalvos::DadosSalvos() : nome1(""), nome2(""), numJogadores(1), fase(0),
+    pontos1(0), pontos2(0), vidas1(3), vidas2(3),
+    x1(0.f), y1(0.f), vy1(0.f), idJog1(-1),
+    x2(0.f), y2(0.f), vy2(0.f), idJog2(-1), entidades() {
+}
+
 Gerenciador_Salvamento::Gerenciador_Salvamento(const std::string& caminho)
     : caminhoArquivo(caminho) {
     carregarSaves();
@@ -172,6 +178,10 @@ bool Gerenciador_Salvamento::existeJogo(const std::string& nome1) const {
         }
     }
     return false;
+}
+
+const std::vector<DadosSalvos>& Gerenciador_Salvamento::getSaves() const {
+    return saves;
 }
 
 }

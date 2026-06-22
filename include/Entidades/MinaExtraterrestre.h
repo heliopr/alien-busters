@@ -34,9 +34,9 @@ public:
 
     sf::FloatRect getHitbox() const;
 
-    bool colide() const { return false; }
-    bool getDestruido() const { return destruido; }
-    void destruir() { destruido = true; }
+    bool colide() const;
+    bool getDestruido() const;
+    void destruir();
 };
 
 }

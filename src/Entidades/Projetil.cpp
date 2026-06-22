@@ -41,6 +41,49 @@ void Projetil::executar(float dt) {
     }
 }
 
+bool Projetil::getAtivo() const {
+    return ativo;
+}
+
+void Projetil::setAtivo(bool b) {
+    ativo = b;
+}
+
+float Projetil::getVx() const {
+    return vx;
+}
+
+void Projetil::setVx(float v) {
+    vx = v;
+}
+
+Personagens::Jogador* Projetil::getDono() const {
+    return dono;
+}
+
+void Projetil::setDono(Personagens::Jogador* d) {
+    dono = d;
+}
+
+int Projetil::getDonoId() const {
+    return donoId;
+}
+
+void Projetil::setDonoId(int id) {
+    donoId = id;
+}
+
+bool Projetil::getInimigo() const {
+    return inimigo;
+}
+
+bool Projetil::getQuicavel() const {
+    return quicavel;
+}
+
+void Projetil::quicar() {
+}
+
 }
 }
 }

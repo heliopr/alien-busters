@@ -22,10 +22,10 @@ public:
     virtual void salvar() = 0;
     virtual void obstaculizar(Personagens::Jogador *p) = 0;
 
-    virtual bool colide() const { return true; }
+    virtual bool colide() const;
 
-    virtual void destruir() {}
-    virtual bool getDestruido() const { return false; }
+    virtual void destruir();
+    virtual bool getDestruido() const;
 };
 
 }

@@ -25,8 +25,8 @@ public:
 
     Personagem& operator--();
 
-    bool getNoChao() const { return noChao; }
-    void setNoChao(bool b) { noChao = b; }
+    bool getNoChao() const;
+    void setNoChao(bool b);
 };
 
 }

@@ -71,6 +71,15 @@ sf::FloatRect Alien::getHitbox() const {
     return sf::FloatRect(x - 24.0f, y - 24.0f, 48.0f, 48.0f);
 }
 
+float Alien::getVelocidade() const {
+    return velocidade;
+}
+
+void Alien::setVelocidade(float v) {
+    velocidade = v;
+    velocidadeX = v;
+}
+
 }
 }
 }

@@ -113,6 +113,18 @@ sf::FloatRect MinaExtraterrestre::getHitbox() const {
     return sf::FloatRect(x, y, largura, altura);
 }
 
+bool MinaExtraterrestre::colide() const {
+    return false;
+}
+
+bool MinaExtraterrestre::getDestruido() const {
+    return destruido;
+}
+
+void MinaExtraterrestre::destruir() {
+    destruido = true;
+}
+
 }
 }
 }

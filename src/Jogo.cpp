@@ -59,6 +59,10 @@ void Jogo::processarEventos() {
     Gerenciadores::Gerenciador_Eventos::getInstancia()->processar();
 }
 
+void Jogo::setNomeJogador(const std::string& nome) {
+    nomeJogadorAtual = nome;
+}
+
 void Jogo::aoReceberEvento(const sf::Event& evento) {
     Gerenciadores::Gerenciador_Grafico* GG = Gerenciadores::Gerenciador_Grafico::getInstancia();
 

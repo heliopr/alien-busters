@@ -28,18 +28,18 @@ public:
     void executar(float dt = 0.f);
     void salvar();
 
-    bool getAtivo() const { return ativo; }
-    void setAtivo(bool b) { ativo = b; }
-    float getVx() const { return vx; }
-    void setVx(float v) { vx = v; }
-    Personagens::Jogador* getDono() const { return dono; }
-    void setDono(Personagens::Jogador* d) { dono = d; }
-    int getDonoId() const { return donoId; }
-    void setDonoId(int id) { donoId = id; }
-    bool getInimigo() const { return inimigo; }
-    bool getQuicavel() const { return quicavel; }
+    bool getAtivo() const;
+    void setAtivo(bool b);
+    float getVx() const;
+    void setVx(float v);
+    Personagens::Jogador* getDono() const;
+    void setDono(Personagens::Jogador* d);
+    int getDonoId() const;
+    void setDonoId(int id);
+    bool getInimigo() const;
+    bool getQuicavel() const;
 
-    virtual void quicar() {}
+    virtual void quicar();
 };
 
 }

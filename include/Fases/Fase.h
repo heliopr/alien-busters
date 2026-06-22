@@ -48,7 +48,7 @@ public:
     virtual void desenhar();
     virtual void reiniciar();
     bool jogadorPerdeu() const;
-    bool faseConcluida() const { return concluida; }
+    bool faseConcluida() const;
 
     void salvar(std::vector<std::string>& linhas) const;
     void carregar(const std::vector<std::string>& linhas);

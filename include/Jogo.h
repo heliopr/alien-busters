@@ -84,7 +84,7 @@ public:
     static Jogo* getInstancia();
 
     void executar();
-    void setNomeJogador(const std::string& nome) { nomeJogadorAtual = nome; }
+    void setNomeJogador(const std::string& nome);
 
     void aoReceberEvento(const sf::Event& evento);
 };

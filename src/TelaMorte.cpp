@@ -87,4 +87,8 @@ void TelaMorte::tocarGameOver() {
     somGameOver.play();
 }
 
+int TelaMorte::getOpcaoSelecionada() const {
+    return opcaoSelecionada;
+}
+
 }

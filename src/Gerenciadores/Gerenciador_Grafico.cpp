@@ -58,6 +58,23 @@ Gerenciador_Grafico::Gerenciador_Grafico() :
 
 Gerenciador_Grafico::~Gerenciador_Grafico() {}
 
+// descobrir o tam da janela fora da classe, pra plataforma e etc
+sf::Vector2u Gerenciador_Grafico::getTamanhoJanela() const {
+    return janela.getSize();
+}
+
+bool Gerenciador_Grafico::getMostrarHitboxes() const {
+    return mostrarHitboxes;
+}
+
+void Gerenciador_Grafico::setMostrarHitboxes(bool b) {
+    mostrarHitboxes = b;
+}
+
+const sf::Font& Gerenciador_Grafico::getFont() const {
+    return fontHUD;
+}
+
 void Gerenciador_Grafico::desenharEnte(Ente *pE) {
     if (pE) {
         sf::RectangleShape *fig = pE->getFigura();

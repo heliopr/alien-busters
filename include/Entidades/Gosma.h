@@ -23,7 +23,7 @@ public:
     void salvar();
     void obstaculizar(Personagens::Jogador* p);
 
-    bool colide() const { return false; }
+    bool colide() const;
     sf::FloatRect getHitbox() const;
 };
 

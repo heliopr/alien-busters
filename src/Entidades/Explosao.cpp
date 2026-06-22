@@ -76,5 +76,9 @@ sf::FloatRect Explosao::getHitbox() const {
     return sf::FloatRect(x, y, 0.f, 0.f); // sem colisão
 }
 
+bool Explosao::finalizada() const {
+    return terminada;
+}
+
 }
 }

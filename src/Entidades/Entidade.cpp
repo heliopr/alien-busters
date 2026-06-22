@@ -26,6 +26,14 @@ void Entidade::salvarDataBuffer() {
     buffer << "id:" << id << ",x:" << x << ",y:" << y;
 }
 
+std::string Entidade::getBuffer() const {
+    return buffer.str();
+}
+
+bool Entidade::finalizada() const {
+    return false;
+}
+
 float Entidade::getX() const {
     return x;
 }

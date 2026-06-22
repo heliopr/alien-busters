@@ -70,20 +70,20 @@ public:
     void entrarTelaContinuar();
     void resetarMenu();
 
-    bool getEmSubmenu() const { return emSubmenu; }
-    bool emTelaEntradaNome() const { return telaAtual == TELA_ENTRADA_NOME; }
-    bool emTelaEntradaNomeJ2() const { return telaAtual == TELA_ENTRADA_NOME_J2; }
-    bool emTelaRanking() const { return telaAtual == TELA_RANKING; }
-    bool emTelaNovoJogo() const { return telaAtual == TELA_NOVO_JOGO; }
-    bool emTelaContinuar() const { return telaAtual == TELA_CONTINUAR; }
-    int getOpcaoSelecionada() const { return opcaoSelecionada; }
-    int getOpcaoNovoJogoSelecionada() const { return opcaoNovoJogoSelecionada; }
-    int getOpcaoContinuarSelecionada() const { return opcaoContinuarSelecionada; }
-    int getNumSaves() const { return (int)saves.size(); }
-    const Gerenciadores::DadosSalvos& getSaveSelecionado() const { return saves[opcaoContinuarSelecionada]; }
-    int getNumJogadores() const { return numJogadores; }
-    std::string getNomeJogador() const { return nomeJogador; }
-    std::string getNomeJogador2() const { return nomeJogador2; }
+    bool getEmSubmenu() const;
+    bool emTelaEntradaNome() const;
+    bool emTelaEntradaNomeJ2() const;
+    bool emTelaRanking() const;
+    bool emTelaNovoJogo() const;
+    bool emTelaContinuar() const;
+    int getOpcaoSelecionada() const;
+    int getOpcaoNovoJogoSelecionada() const;
+    int getOpcaoContinuarSelecionada() const;
+    int getNumSaves() const;
+    const Gerenciadores::DadosSalvos& getSaveSelecionado() const;
+    int getNumJogadores() const;
+    std::string getNomeJogador() const;
+    std::string getNomeJogador2() const;
 
     void executar(float dt = 0.f);
     void desenhar();

@@ -54,17 +54,17 @@ public:
 
     sf::FloatRect getHitbox() const;
     void atirar();
-    bool getOlhandoDireita() const { return olhandoDireita; }
-    int getPontos() const { return pontos; }
-    void adicionarPontos(int valor) { pontos += valor; }
+    bool getOlhandoDireita() const;
+    int getPontos() const;
+    void adicionarPontos(int valor);
     void ficarLento(float duracao);
     void perderVida();
     void morrer();
-    bool estaInvulneravel() const { return tempoInvulneravel > 0.f; }
+    bool estaInvulneravel() const;
     void ativarInvulnerabilidade();
     void aplicarKnockback(float vx);
-    int getNumVidas() const { return num_vidas; }
-    bool estaMorto() const { return num_vidas <= 0; }
+    int getNumVidas() const;
+    bool estaMorto() const;
 };
 
 }

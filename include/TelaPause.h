@@ -28,7 +28,7 @@ public:
     void descerOpcao();
     void resetar();
 
-    int getOpcaoSelecionada() const { return opcaoSelecionada; }
+    int getOpcaoSelecionada() const;
 
     void executar(float dt = 0.f);
     void desenhar();

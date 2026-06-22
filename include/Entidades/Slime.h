@@ -22,8 +22,8 @@ public:
     int pontosAoMorrer() const;
     sf::FloatRect getHitbox() const;
 
-    float getNivel() const { return nivel; }
-    void setNivel(float n) { nivel = n; }
+    float getNivel() const;
+    void setNivel(float n);
 };
 
 }

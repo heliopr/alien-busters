@@ -18,6 +18,14 @@ Personagem& Personagem::operator--() {
     return *this;
 }
 
+bool Personagem::getNoChao() const {
+    return noChao;
+}
+
+void Personagem::setNoChao(bool b) {
+    noChao = b;
+}
+
 }
 }
 }

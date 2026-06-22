@@ -38,23 +38,23 @@ public:
     virtual void danificar(Jogador* p) = 0;
     virtual sf::FloatRect getHitbox() const = 0;
 
-    virtual void atirar(Jogador*, float) {}
-    virtual int pontosAoMorrer() const { return 100; }
+    virtual void atirar(Jogador*, float);
+    virtual int pontosAoMorrer() const;
 
-    float getVelocidadeX() const { return velocidadeX; }
-    void setVelocidadeX(float v) { velocidadeX = v; }
+    float getVelocidadeX() const;
+    void setVelocidadeX(float v);
 
-    int getNivelMaldade() const { return nivel_maldade; }
-    void setNivelMaldade(int n) { nivel_maldade = n; }
+    int getNivelMaldade() const;
+    void setNivelMaldade(int n);
 
     bool deveCairDaBorda();
-    void resetarDecisaoBorda() { decidiuBorda = false; }
+    void resetarDecisaoBorda();
 
     void levarDano();
-    bool estaFlashando() const { return tempoFlashDano > 0.f; }
-    int getNumVidas() const { return num_vidas; }
-    void setNumVidas(int n) { num_vidas = n; }
-    bool morreu() const { return num_vidas <= 0; }
+    bool estaFlashando() const;
+    int getNumVidas() const;
+    void setNumVidas(int n);
+    bool morreu() const;
 };
 
 }

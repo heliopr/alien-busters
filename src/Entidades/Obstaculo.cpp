@@ -14,6 +14,17 @@ bool Obstaculo::colidiuComJogador(Personagens::Jogador *p) const {
     return p != NULL && p->getHitbox().intersects(getHitbox());
 }
 
+bool Obstaculo::colide() const {
+    return true;
+}
+
+void Obstaculo::destruir() {
+}
+
+bool Obstaculo::getDestruido() const {
+    return false;
+}
+
 }
 }
 }

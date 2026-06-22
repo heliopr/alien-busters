@@ -85,6 +85,14 @@ sf::FloatRect Slime::getHitbox() const {
     return sf::FloatRect(x - 28.f, y - 28.f, 56.f, 56.f);
 }
 
+float Slime::getNivel() const {
+    return nivel;
+}
+
+void Slime::setNivel(float n) {
+    nivel = n;
+}
+
 }
 }
 }

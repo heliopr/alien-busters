@@ -231,6 +231,30 @@ void Jogador::morrer() {
     somMorte.play();
 }
 
+bool Jogador::getOlhandoDireita() const {
+    return olhandoDireita;
+}
+
+int Jogador::getPontos() const {
+    return pontos;
+}
+
+void Jogador::adicionarPontos(int valor) {
+    pontos += valor;
+}
+
+bool Jogador::estaInvulneravel() const {
+    return tempoInvulneravel > 0.f;
+}
+
+int Jogador::getNumVidas() const {
+    return num_vidas;
+}
+
+bool Jogador::estaMorto() const {
+    return num_vidas <= 0;
+}
+
 }
 }
 }
