@@ -13,7 +13,7 @@ namespace Fases {
 
 Fase_Lua::Fase_Lua(Entidades::Personagens::Jogador* pJogador, Entidades::Personagens::Jogador* pJogador2, const std::string& nome1, const std::string& nome2, bool gerarConteudo)
     : Fase(pJogador, pJogador2, nome1, nome2, gerarConteudo),
-      maxAliens(5), maxSlimes(4), maxGosmas(6) {
+      maxAliens(5), maxSlimes(5), maxGosmas(6) {
     if (gerarConteudo) {
         criarCenario();
         criarObstaculos();
